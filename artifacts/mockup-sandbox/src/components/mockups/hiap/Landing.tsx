@@ -12,8 +12,8 @@ const STATS = [
 ];
 
 const HOW_STEPS = [
-  { n: "1", title: "Select your city", desc: "Search by city name or LOCODE to find your city's existing emissions inventory." },
-  { n: "2", title: "Complete your profile", desc: "Review and confirm emissions data, socioeconomic context, and strategic preferences." },
+  { n: "1", title: "Select your city", desc: "Search by city name to find your city's existing emissions inventory." },
+  { n: "2", title: "Complete your profile", desc: "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, and strategic preferences." },
   { n: "3", title: "Generate recommendations", desc: "Run HIAP's scoring pipeline across 345 mitigation actions ranked for your city." },
   { n: "4", title: "Act on the ranking", desc: "Download your ranked action plan and share with your city's climate team." },
 ];
