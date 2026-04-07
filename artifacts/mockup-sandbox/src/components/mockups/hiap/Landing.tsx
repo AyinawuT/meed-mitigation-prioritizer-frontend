@@ -35,15 +35,12 @@ export function Landing() {
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ display: "flex", gap: "80px", alignItems: "center" }}>
             {/* Left: headline */}
-            <div style={{ flex: "0 0 340px" }}>
-              <p style={{ fontSize: "22px", fontWeight: "400", color: "#111827", margin: "0 0 2px", lineHeight: "1.3" }}>
-                Take action.
-              </p>
-              <p style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 14px", lineHeight: "1.3" }}>
-                Drive impact.
+            <div style={{ flex: "0 0 380px" }}>
+              <p style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.3" }}>
+                Prioritise climate actions for your city
               </p>
               <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: "0" }}>
-                Empower your city to prioritize climate actions that make a difference with data-driven insights.
+                HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.
               </p>
             </div>
 
