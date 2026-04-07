@@ -3,11 +3,11 @@ import { StepBar } from "./_shared/StepBar";
 import { useState } from "react";
 
 const SECTORS = [
-  { sector: "Transportation", sub: "All road modes", ref: "II.1.1", emissions: 2450320, share: 47, source: "SECCTIVAL 2023", status: "Confirmed" },
-  { sector: "Stationary Energy", sub: "Electricity & gas", ref: "I.1.1–I.1.3", emissions: 1830510, share: 35.5, source: "DEC 2023", status: "Confirmed" },
-  { sector: "Waste", sub: "Solid waste & Composting", ref: "III.1.1–III.4.1", emissions: 885050, share: 17.2, source: "MRC 2022", status: "Confirmed" },
-  { sector: "Industrial Processes & Product Use (IPPU)", sub: "", ref: "IV.1–IV.2", emissions: null, share: null, source: null, status: "Not mapped" },
-  { sector: "Agriculture, Forestry & Other Land Use (AFOLU)", sub: "", ref: "V.1", emissions: null, share: null, source: null, status: "Not mapped" },
+  { sector: "Transportation", sub: "II.1.1 On-road · II.1.2 Railways · II.1.3 Waterborne", ref: "II.1", emissions: 2450320, share: 47, source: "SECCTIVAL 2023", status: "Confirmed" },
+  { sector: "Stationary Energy", sub: "I.1.1 Residential · I.2.1 Commercial & institutional · I.3.1 Manufacturing", ref: "I.1–I.3", emissions: 1830510, share: 35.5, source: "DEC 2023", status: "Confirmed" },
+  { sector: "Waste", sub: "III.1.1 Solid waste disposal · III.3.1 Wastewater treatment", ref: "III.1–III.3", emissions: 885050, share: 17.2, source: "MRC 2022", status: "Confirmed" },
+  { sector: "Industrial Processes & Product Use (IPPU)", sub: "IV.1 Industrial processes · IV.2 Product use", ref: "IV.1–IV.2", emissions: null, share: null, source: null, status: "Not mapped" },
+  { sector: "Agriculture, Forestry & Other Land Use (AFOLU)", sub: "V.1 Livestock · V.2 Land · V.3 Aggregate sources", ref: "V.1–V.3", emissions: null, share: null, source: null, status: "Not mapped" },
 ];
 
 export function EmissionsReview({ defaultTab = "review" }: { defaultTab?: "review" | "adjust" } = {}) {
