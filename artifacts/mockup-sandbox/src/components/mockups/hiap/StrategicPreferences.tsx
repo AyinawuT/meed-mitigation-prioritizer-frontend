@@ -41,18 +41,18 @@ export function StrategicPreferences() {
           {/* MEED+ impact bar */}
           <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <span style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", letterSpacing: "0.04em" }}>MEED+ IMPACT</span>
-              <span style={{ fontSize: "12px", color: "#15803D" }}>Implementation timeline shapes <strong>20%</strong> of the impact score</span>
-              <span style={{ color: "#BBF7D0" }}>·</span>
-              <span style={{ fontSize: "12px", color: "#15803D" }}>Impact = <strong>55%</strong> of final ranking</span>
+              <span style={{ fontSize: "11px", fontWeight: "700", color: "#16A34A", letterSpacing: "0.04em" }}>MEED+ IMPACT:</span>
+              <span style={{ fontSize: "12px", color: "#16A34A" }}>Implementation timeline shapes <strong>20%</strong> of the impact score</span>
+              <span style={{ color: "#16A34A" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#16A34A" }}>Impact = <strong>55%</strong> of final ranking</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <span style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", letterSpacing: "0.04em" }}>MEED+ ALIGNMENT</span>
-              <span style={{ fontSize: "12px", color: "#15803D" }}>Shapes <strong>22%</strong> of ranking</span>
-              <span style={{ color: "#BBF7D0" }}>·</span>
-              <span style={{ fontSize: "12px", color: "#15803D" }}>Priority sectors <strong>15%</strong></span>
-              <span style={{ color: "#BBF7D0" }}>·</span>
-              <span style={{ fontSize: "12px", color: "#15803D" }}>Strategic priorities <strong>5%</strong></span>
+              <span style={{ fontSize: "11px", fontWeight: "700", color: "#16A34A", letterSpacing: "0.04em" }}>MEED+ ALIGNMENT:</span>
+              <span style={{ fontSize: "12px", color: "#16A34A" }}>Shapes <strong>22%</strong> of ranking</span>
+              <span style={{ color: "#16A34A" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#16A34A" }}>Priority sectors <strong>15%</strong> of alignment score</span>
+              <span style={{ color: "#16A34A" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#16A34A" }}>Strategic priorities <strong>5%</strong> of alignment score</span>
             </div>
           </div>
         </div>
