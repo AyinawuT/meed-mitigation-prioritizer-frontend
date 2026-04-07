@@ -89,7 +89,7 @@ export function EmissionsReview({ defaultTab = "review" }: { defaultTab?: "revie
             gap: "8px",
           }}>
             <span>⚠️</span>
-            <span>Changes will not affect rankings until you save.</span>
+            <span>You are in edit mode. Changes will not affect rankings until you save.</span>
           </div>
         )}
 
