@@ -156,11 +156,6 @@ export function PolicyAlignment() {
           📄 Upload Iquique PACCC or municipal climate strategy (PDF)
         </button>
 
-        {/* MEED+ bar */}
-        <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "8px", padding: "10px 16px", marginBottom: "24px", fontSize: "12px", color: "#15803D" }}>
-          ✦ Policy signals shape the alignment pillar — weighted 22% of final score by default
-        </div>
-
         {/* Footer */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <button style={{ background: "white", border: "1px solid #DDDDE1", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", color: "#6B7280", cursor: "pointer" }}>← Back</button>
