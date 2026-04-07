@@ -39,16 +39,21 @@ export function StrategicPreferences() {
             Strategic Preferences
           </h1>
           {/* MEED+ impact bar */}
-          <div style={{
-            background: "#F0FDF4",
-            border: "1px solid #BBF7D0",
-            borderRadius: "8px",
-            padding: "10px 14px",
-            fontSize: "12px",
-            color: "#15803D",
-            lineHeight: "1.5",
-          }}>
-            MEED+ Impact &amp; Alignment: Alignment shapes 22% of the ranking with priority sectors and strategic priorities taking 15% and 5% respectively of the alignment score. Implementation timeline shapes 20% of the impact score which as mentioned earlier shaped 55% of the ranking.
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <span style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", letterSpacing: "0.04em" }}>MEED+ IMPACT</span>
+              <span style={{ fontSize: "12px", color: "#15803D" }}>Implementation timeline shapes <strong>20%</strong> of the impact score</span>
+              <span style={{ color: "#BBF7D0" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#15803D" }}>Impact = <strong>55%</strong> of final ranking</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <span style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", letterSpacing: "0.04em" }}>MEED+ ALIGNMENT</span>
+              <span style={{ fontSize: "12px", color: "#15803D" }}>Shapes <strong>22%</strong> of ranking</span>
+              <span style={{ color: "#BBF7D0" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#15803D" }}>Priority sectors <strong>15%</strong></span>
+              <span style={{ color: "#BBF7D0" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#15803D" }}>Strategic priorities <strong>5%</strong></span>
+            </div>
           </div>
         </div>
       </div>
