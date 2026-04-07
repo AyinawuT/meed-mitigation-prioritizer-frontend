@@ -1,5 +1,4 @@
 import { Navbar } from "./_shared/Navbar";
-import { useState } from "react";
 
 const TOP_ACTIONS = [
   {
@@ -55,8 +54,6 @@ const TABLE_ACTIONS = [
 ];
 
 export function Results() {
-  const [activeTab, setActiveTab] = useState("mitigation");
-
   return (
     <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar />
@@ -64,50 +61,24 @@ export function Results() {
       {/* White header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", color: "#2563EB", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
-            Climate Actions
-          </div>
+          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>Santiago / Mitigation actions</div>
           <h1 style={{ fontSize: "22px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>
-            Top actions for your city
+            Top mitigation actions for your city
           </h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0" }}>
-            Discover the ranking of your city's climate actions according to their effectiveness, costs and benefits, helping you to prioritize those with the greatest potential for impact.
+            Ranked by reduction potential, feasibility, and alignment with your city's priorities. Apply your local expertise to reorder as needed.
           </p>
         </div>
       </div>
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 48px" }}>
-        {/* Tabs */}
-        <div style={{ display: "flex", borderBottom: "1px solid #EBEBEB", marginBottom: "20px" }}>
-          {[{ key: "mitigation", label: "Mitigation" }, { key: "adaptation", label: "Adaptation", disabled: true }].map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => !tab.disabled && setActiveTab(tab.key)}
-              style={{
-                padding: "10px 20px",
-                border: "none",
-                borderBottom: activeTab === tab.key ? "2px solid #001EA7" : "2px solid transparent",
-                background: "none",
-                fontSize: "13px",
-                fontWeight: activeTab === tab.key ? "600" : "400",
-                color: tab.disabled ? "#D1D5DB" : activeTab === tab.key ? "#001EA7" : "#6B7280",
-                cursor: tab.disabled ? "not-allowed" : "pointer",
-                marginBottom: "-1px",
-              }}
-            >
-              {tab.label}
-              {tab.disabled && <span style={{ fontSize: "10px", marginLeft: "6px" }}>(coming soon)</span>}
-            </button>
-          ))}
-        </div>
-
         {/* Top 3 */}
         <div style={{ marginBottom: "28px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
             <div>
-              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Top mitigation climate actions</div>
+              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Top 3 mitigation actions</div>
               <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
-                Here are your top climate actions, initially prioritized by our experts. Reorder the table below to set new priorities in this Section.
+                Highest-ranked actions based on your city's data and preferences. Reorder the table below to adjust priorities.
               </div>
             </div>
             <button style={{ background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "8px 16px", fontSize: "12px", fontWeight: "500", cursor: "pointer" }}>
@@ -161,9 +132,9 @@ export function Results() {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
             <div>
-              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Climate actions ranking</div>
+              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Mitigation actions ranking</div>
               <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
-                Apply your local expertise to customize action priorities. Reorder based on your city's specific needs.
+                Apply your local expertise to adjust priorities. Reorder based on your city's specific needs.
               </div>
             </div>
             <div style={{ display: "flex", gap: "8px" }}>
