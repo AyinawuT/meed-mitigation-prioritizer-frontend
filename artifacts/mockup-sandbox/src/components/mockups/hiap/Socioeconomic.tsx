@@ -77,6 +77,9 @@ export function Socioeconomic() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>Socioeconomic context</h1>
+              <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "4px" }}>
+                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>MEED+ FEASIBILITY: Shapes 23% of ranking — socioeconomic context shapes 50% of the feasibility score</span>
+              </div>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: "0" }}>Review the indicators we use to assess implementation feasibility. Confirm values or correct anything that is wrong.</p>
             </div>
             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
