@@ -281,7 +281,6 @@ export function Landing() {
                   { icon: "↗", label: `Total emissions in ${selectedCity.emissionsYear}`, value: selectedCity.emissions, valueSize: "22px", valueWeight: "700" },
                   { icon: "👥", label: "Total population", value: selectedCity.population, valueSize: "16px", valueWeight: "600" },
                   { icon: "⬜", label: "Total land area", value: selectedCity.area, valueSize: "16px", valueWeight: "600" },
-                  { icon: "🌿", label: "Biome", value: selectedCity.biome, valueSize: "16px", valueWeight: "600" },
                 ].map((stat) => (
                   <div key={stat.label} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                     <span style={{ fontSize: "16px", marginTop: "2px", color: "#9CA3AF", width: "20px", textAlign: "center" }}>{stat.icon}</span>
