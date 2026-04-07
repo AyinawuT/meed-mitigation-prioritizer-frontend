@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Navbar } from "@/components/Navbar";
-import { CITIES, STATS, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
+import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 
 const QUICK_CITIES = ["Iquique", "Antofagasta", "Arica", "Alto Hospicio", "Taltal"];
 
@@ -251,9 +251,6 @@ export function Landing() {
                   <span>Open {selectedCity.name} City Profile</span>
                   <span style={{ fontSize: "16px" }}>→</span>
                 </button>
-                <div style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center" }}>
-                  Joined {selectedCity.joinedYear} · {selectedCity.region}
-                </div>
               </div>
 
               {/* Stats */}
@@ -302,25 +299,6 @@ export function Landing() {
         </div>
       )}
 
-      {/* Stats bar */}
-      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "10px 64px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex" }}>
-          {STATS.map((s, i) => (
-            <div
-              key={i}
-              style={{
-                flex: "1",
-                textAlign: "center",
-                borderRight: i < STATS.length - 1 ? "1px solid #EBEBEB" : "none",
-                padding: "6px 0",
-              }}
-            >
-              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>{s.value}</div>
-              <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* Body */}
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 64px 60px" }}>
