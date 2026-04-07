@@ -340,14 +340,14 @@ export function Landing() {
       </div>
 
       {/* Body */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 28px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 64px 40px" }}>
         {/* How it works */}
         <div>
           <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", marginBottom: "3px" }}>How it works</h2>
-          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "12px" }}>
+          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "16px" }}>
             HIAP guides you through four steps to generate a ranked action plan for your city.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
             {HOW_STEPS.map((step) => (
               <div
                 key={step.n}
@@ -355,8 +355,11 @@ export function Landing() {
                   background: "white",
                   border: "1px solid #EBEBEB",
                   borderRadius: "12px",
-                  padding: "14px",
+                  padding: "24px 20px",
                   boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                  minHeight: "160px",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
                 <div
