@@ -84,6 +84,9 @@ export function Regulations() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>Regulations &amp; laws</h1>
+              <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "4px" }}>
+                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>MEED+ FEASIBILITY: Shapes 23% of ranking — regulations &amp; laws shapes 50% of the feasibility score</span>
+              </div>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: "0" }}>Review legal signals for Chile that affect what your city can implement. These determine which actions are removed before ranking begins.</p>
             </div>
             <span style={{ fontSize: "11px", background: "#FFF3E0", color: "#C05621", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", alignSelf: "center" }}>MEDIUM</span>
