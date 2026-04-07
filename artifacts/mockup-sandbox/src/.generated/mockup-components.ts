@@ -10,6 +10,7 @@ export const modules: ModuleMap = {
   "./components/mockups/hiap/Processing.tsx": () => import("../components/mockups/hiap/Processing.tsx"),
   "./components/mockups/hiap/Regulations.tsx": () => import("../components/mockups/hiap/Regulations.tsx"),
   "./components/mockups/hiap/Results.tsx": () => import("../components/mockups/hiap/Results.tsx"),
+  "./components/mockups/hiap/ResultsPanel.tsx": () => import("../components/mockups/hiap/ResultsPanel.tsx"),
   "./components/mockups/hiap/Socioeconomic.tsx": () => import("../components/mockups/hiap/Socioeconomic.tsx"),
   "./components/mockups/hiap/StrategicPreferences.tsx": () => import("../components/mockups/hiap/StrategicPreferences.tsx")
 };
