@@ -251,14 +251,6 @@ export function Landing() {
                     valueWeight: "600",
                     valueColor: "#111827",
                   },
-                  {
-                    icon: "🌿",
-                    label: "Biome",
-                    value: selectedCity.biome,
-                    valueSize: "14px",
-                    valueWeight: "500",
-                    valueColor: "#374151",
-                  },
                 ].map((stat) => (
                   <div key={stat.label} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                     <span style={{ fontSize: "16px", marginTop: "2px", color: "#9CA3AF", width: "20px", textAlign: "center" }}>
