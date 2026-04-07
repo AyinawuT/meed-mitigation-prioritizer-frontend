@@ -134,7 +134,6 @@ export function EmissionsReview({ defaultTab = "review" }: { defaultTab?: "revie
                 <tr key={i} style={{ borderBottom: "1px solid #F5F5F5" }}>
                   <td style={{ padding: "12px 16px" }}>
                     <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{row.sector}</div>
-                    <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{row.sub}</div>
                   </td>
                   <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
                     {row.sub || "—"}
