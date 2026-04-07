@@ -1,4 +1,5 @@
 import { Navbar } from "./_shared/Navbar";
+import { StepBar } from "./_shared/StepBar";
 import { useState } from "react";
 
 const SECTORS = [
@@ -17,6 +18,7 @@ export function EmissionsReview() {
   return (
     <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar />
+      <StepBar activeStep={0} />
 
       {/* White page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 48px 18px" }}>
