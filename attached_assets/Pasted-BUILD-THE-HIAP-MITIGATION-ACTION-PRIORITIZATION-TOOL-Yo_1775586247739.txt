@@ -1,0 +1,678 @@
+BUILD THE HIAP MITIGATION ACTION PRIORITIZATION TOOL
+You are building a full-stack web application called HIAP (High Impact Action Prioritizer), a climate mitigation action ranking tool for Chilean cities. This is a real working application — not a prototype. Build it completely and correctly from the start.
+
+TECH STACK
+
+Backend: Python with FastAPI
+Frontend: Vanilla HTML, CSS, JavaScript (no React, no framework)
+Data: JSON and CSV files loaded at startup — no external database needed
+Server: Uvicorn
+Package manager: pip
+
+
+FOLDER STRUCTURE
+Create exactly this structure:
+hiap/
+├── main.py                  # FastAPI app entry point
+├── requirements.txt
+├── pipeline/
+│   ├── __init__.py
+│   ├── hard_filter.py       # Legal hard filter logic
+│   ├── impact.py            # Impact pillar scoring
+│   ├── alignment.py         # Alignment pillar scoring
+│   ├── feasibility.py       # Feasibility pillar scoring
+│   ├── final_scoring.py     # Weighted sum + ranking
+│   └── utils.py             # Shared helpers
+├── data/
+│   ├── actions_api_mock_v2.json
+│   ├── actions_legal_api_mock.json
+│   ├── actions_policy_signals_api_mock.json
+│   ├── city_api_mock.json
+│   ├── cities_api_mock.json
+│   ├── projects_api_mock.json
+│   ├── prioritizer_request_mock.json
+│   └── prioritizer_bulk_request_mock.json
+├── designs/                 # Upload your Figma exports here
+│   └── README.md            # "Place design reference images here"
+├── static/
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       └── app.js
+└── templates/
+    ├── landing.html
+    ├── city_profile.html
+    ├── emissions.html
+    ├── socioeconomic.html
+    ├── regulations.html
+    ├── strategic_preferences.html
+    ├── policy_alignment.html
+    ├── preflight.html
+    ├── processing.html
+    └── results.html
+
+DESIGN SYSTEM
+Apply this design system consistently across every page. Do not deviate from these values.
+Colours:
+
+Primary / nav background: #1E3A8A
+Primary dark: #1E40AF
+Active blue: #2563EB
+Blue light bg: #EFF6FF
+Blue border: #BFDBFE
+Action green: #16A34A
+Green hover: #15803D
+Green light bg: #DCFCE7
+Amber warning: #D97706
+Amber light bg: #FEF9C3
+Red error: #DC2626
+Red light bg: #FEE2E2
+Page background: #F9FAFB
+Card background: #FFFFFF
+Border default: #E5E7EB
+Text primary: #111827
+Text secondary: #6B7280
+Text muted: #9CA3AF
+Nav text: #FFFFFF
+Nav muted: #93C5FD
+
+Typography:
+
+Font: system-ui, -apple-system, sans-serif
+Headings: font-weight 500 (not bold/700)
+Body: 14px, line-height 1.6
+Labels/meta: 12px
+Page titles: 20px
+
+Components:
+
+Cards: white background, border: 0.5px solid #E5E7EB, border-radius: 10px, padding: 16px
+Buttons primary: background: #16A34A, color: white, border: none, border-radius: 8px, padding: 10px 24px, font-size: 14px, font-weight: 500
+Buttons secondary: background: white, border: 0.5px solid #D1D5DB, border-radius: 8px, padding: 10px 20px
+Nav bar: background: #1E3A8A, height: 52px
+Step bar: white background, border-bottom: 0.5px solid #E5E7EB, active step has border-bottom: 2px solid #1E3A8A
+Status badges: small pills with coloured backgrounds, border-radius: 4px, font-size: 11px, padding: 2px 8px
+Priority HIGH: amber bg #FEF9C3, text #854D0E
+Priority MEDIUM: same amber
+Priority LOW: green bg #DCFCE7, text #166634
+Status complete: green bg #DCFCE7, text #15803D
+Status in progress: amber bg #FEF9C3, text #854D0E
+Status not started: grey bg #F3F4F6, text #6B7280
+
+
+PAGE 1 — LANDING PAGE
+URL: /
+This is the entry point where users discover the tool and search for their city.
+Top navigation:
+
+Left: MEED+ · HIAP logo (deep blue background, white text, HIAP in lighter blue)
+Right: About, Documentation, Cities links + Sign in button (green)
+
+Hero section (deep blue #1E3A8A background):
+
+Badge: "Powered by CityCatalyst · Chile pilot" with green dot
+Headline: "Prioritise climate actions for your city" — "city" in lighter blue #60A5FA
+Subtext: "HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on."
+City search box (white card, flush to stats bar below):
+
+Label: "Select your city to begin"
+Input: placeholder "Search by city name or LOCODE (e.g. Iquique, CL IQQ)..."
+Button: "Find city" (green)
+Quick-select hints below: Iquique, Santiago, Antofagasta, Valparaíso, Concepción
+On submit: redirect to /onboard/{locode}
+
+
+
+Stats bar (white, sits flush below search box, rounded bottom corners):
+
+4 stats: "345 Mitigation actions", "12 Cities onboarded", "5 GPC sectors covered", "1–2 min Time to recommendations"
+
+Recently onboarded cities section:
+
+Section label: "Recently onboarded cities"
+3 city cards in a grid, each showing: flag emoji, city name, region + population, total emissions, Active/In progress status badge
+Pre-populate with: Iquique (CL IQQ, Active, 9.8M tCO₂e), Arica (CL ARI, In progress, 7.4M tCO₂e), Antofagasta (CL ANF, Active, 12.1M tCO₂e)
+Clicking a city card goes to /city/{locode}
+
+How it works section:
+
+4 step cards: 1. Select your city, 2. Complete your profile, 3. Generate recommendations, 4. Act on the ranking
+
+Bottom CTA strip (deep blue background):
+
+"Ready to generate your city's recommendations?"
+Green "Get started" button that focuses the search input
+
+
+PAGE 2 — CITY PROFILE HUB
+URL: /city/{locode}
+This is the central onboarding dashboard. It shows all data input sections as cards with progress tracking.
+Top navigation: Same nav as landing, with city name + locode shown on right
+Page header:
+
+Left: City name (large), Region · Population · Year joined (meta)
+Right: Green "⚡ Generate Recommendations" button (disabled until minimum sections complete)
+
+5 section cards in a grid (2 columns):
+Each card has:
+
+Priority badge (HIGH / MEDIUM / LOW)
+Status badge (Not started / In progress / Complete)
+Section title and description
+Progress indicator where relevant
+CTA button (Start / Continue / Review)
+
+Cards:
+
+Emissions Data — HIGH priority — "Confirm your city's GHG inventory by sector. Most important input for ranking." — shows "X/5 sectors confirmed" — links to /emissions/{locode}
+Socioeconomic Context — HIGH priority — "Population, employment, income, and poverty indicators used for feasibility scoring." — links to /socioeconomic/{locode}
+Regulations & Laws — MEDIUM priority — "Legal signals that determine which actions are eligible for your city." — links to /regulations/{locode}
+Strategic Preferences — LOW priority — "Your city's sector priorities, timeline, budget, and excluded actions." — links to /preferences/{locode}
+Policy Alignment — LOW priority (OPTIONAL badge) — "Policy signals from national, regional, and municipal plans." — links to /policy/{locode}
+
+Bottom status bar:
+
+"X in progress · Y not started · Z complete"
+Guidance: "Complete Emissions Data + 2 more sections to unlock recommendations"
+
+
+PAGE 3 — EMISSIONS DATA
+URL: /emissions/{locode}
+Step progress bar at top: 6 steps — Emissions data (active), Socioeconomic context, Regulations & laws, Strategic preferences, Policy alignment, Pre-flight check
+Page header:
+
+Title: "Emissions data"
+Subtitle: "Review your city's GHG inventory by sector. Confirm what is correct and adjust anything that needs updating."
+Priority badge: HIGH
+"Confirm all sectors" shortcut button
+
+Data source bar (blue info strip):
+
+"Data sourced from CityCatalyst GPC inventory"
+Inventory year + data source name
+"View source" button
+
+Emissions table:
+Columns: Sector, Sub-sector, Total emissions (tCO₂e), % share, Data source, Status (Confirmed / Needs review / Not mapped)
+Load data from the cityEmissionsData.gpcData in prioritizer_request_mock.json. Aggregate emissions by GPC reference. Calculate % share from total. Each row has an "Edit" and "Confirm" button.
+GPC sectors to show:
+
+I.1.1, I.1.2, I.1.3 → Stationary Energy / Residential Buildings
+II.1.1 → Transportation / On-road
+III.1.1, III.2.1, III.4.1 → Waste
+IV.1, IV.2 → IPPU / Industrial processes
+V.1 → AFOLU / Livestock
+
+Summary bar above table:
+
+Total emissions (sum of all sectors in tCO₂e)
+Inventory year
+Completeness (X/5 sectors)
+
+MEED+ impact note:
+"Emissions data shapes 55% of ranking impact — most important input"
+Footer navigation:
+
+Back button
+"Save & continue to socioeconomic context" button (green)
+
+
+PAGE 4 — SOCIOECONOMIC CONTEXT
+URL: /socioeconomic/{locode}
+Step bar: Step 2 active, Step 1 done with checkmark
+Page header:
+
+Title: "Socioeconomic context"
+Subtitle: "Review the indicators we use to assess implementation feasibility. Confirm values or correct anything that is wrong."
+Priority: HIGH
+"Confirm all as correct" button
+
+Data source bar (blue): "Data sourced from CityCatalyst global-api · City context endpoint"
+Indicator cards in a 3-column grid. Load from city_api_mock.json. Each card shows:
+
+Indicator label
+Category badge (Very high / High / Medium / Low / Very low) — use colour coding: red for very high/high poverty/unemployment, green for positive indicators
+Value + unit
+Data source
+"Edit" button that opens an inline edit state with input field, Save and Cancel buttons
+
+Section 1 — Population & economy:
+
+Population size
+Unemployment rate (9.44% — High — red badge)
+Median household income (1,200,000 CLP — High)
+Poverty rate (26.77% — Very high — red badge)
+Home ownership rate (40% — Very low)
+Renter share (43.48% — High)
+
+Section 2 — Sector employment & infrastructure:
+
+Transport & logistics employment (7.35% — Low)
+Industry & construction employment (22.79% — High)
+Electricity access (100% — label this "Very low impact" not "Very low" since 100% is good)
+Public transport share (31.84% — Medium)
+
+Missing indicators panel (amber warning card):
+
+"2 indicators could improve your feasibility score"
+GDP per capita and vehicle ownership rate missing
+"+ Add" buttons for each
+
+IMPORTANT BUG TO FIX: The city data uses transport_logistics_employment and electricity_access as keys. The action socioeconomic rules use employment_in_transport_and_logistics and electricity_access_rate. In the feasibility scoring pipeline, add a key mapping layer that translates city indicator keys to action rule keys before matching. This mapping must be applied before any socioeconomic score calculation:
+pythonINDICATOR_KEY_MAP = {
+    "transport_logistics_employment": "employment_in_transport_and_logistics",
+    "electricity_access": "electricity_access_rate",
+    "industry_construction_employment": "industry_and_construction_employment",
+    "public_transport_share": "public_transport_mode_share",
+}
+```
+
+**MEED+ impact bar** (green): "Socioeconomic data shapes feasibility scoring for 155 actions — 35%"
+
+**Footer:** Back / Save & continue to regulations
+
+---
+
+## PAGE 5 — REGULATIONS & LAWS
+
+URL: `/regulations/{locode}`
+
+**Step bar:** Step 3 active
+
+**Page header:**
+- Title: "Regulations & laws"
+- Subtitle: "Review legal signals for Chile that affect what your city can implement. These determine which actions are removed before ranking begins."
+- Priority: MEDIUM
+
+**Data source bar:** "Legal signals sourced from legal-api · National Chile scope"
+
+**Summary row** (4 metric cards):
+- Actions fully aligned (green)
+- Partially aligned (amber)
+- Blocked by hard filter (red)
+- No legal requirements (grey)
+
+Calculate these numbers by running the hard filter logic against `actions_legal_api_mock.json`.
+
+**Hard filter alert** (red): "X actions have been automatically removed from ranking because they fail a mandatory or required legal requirement for Chile."
+
+**Three sections with collapsible signal cards:**
+
+1. **Blocked actions** — show actions where alignment_status = not_aligned on a mandatory or required requirement
+2. **Fully aligned actions** — show actions where all requirements align
+3. **Actions with missing evidence** — show actions with no_evidence on any requirement
+
+Each signal card shows:
+- Scope pill (National · Chile)
+- Action ID and name
+- Signal code and description
+- Alignment badge (Blocked red / Aligned green / No evidence grey)
+- Expandable body showing: signal code, required value, actual value, strength pill (mandatory/required/recommended/optional/informational)
+
+**Strength pill colours:**
+- mandatory: red bg `#FEE2E2`, text `#991B1B`
+- required: orange bg `#FFEDD5`, text `#9A3412`
+- recommended: amber bg `#FEF9C3`, text `#854D0E`
+- optional: grey bg `#F3F4F6`, text `#6B7280`
+- informational: blue bg `#EFF6FF`, text `#1E40AF`
+
+**MEED+ hard filter impact bar** (amber): "Legal alignment removes ineligible actions before ranking — X actions blocked"
+
+**Footer:** Back / Save & continue to strategic preferences
+
+---
+
+## PAGE 6 — STRATEGIC PREFERENCES
+
+URL: `/preferences/{locode}`
+
+**Step bar:** Step 4 active
+
+**Page header:**
+- Title: "Strategic preferences"
+- Subtitle: "Tell us your city's priorities, constraints, and timeline. This shapes the alignment and feasibility scores."
+
+**Form sections:**
+
+1. **Sector prioritisation** — multi-select chips (max 5): Transportation, Stationary Energy, Waste, AFOLU, IPPU. Selected chips highlight in deep blue.
+
+2. **Strategic priorities** — free text input: "Describe your city's key priorities (e.g. jobs, air quality, economy, resilience)"
+
+3. **Implementation timeline** — radio buttons: < 5 years, 5–10 years, 10+ years
+
+4. **Budget range** — radio buttons: < $50M, $50M–$200M, $200M–$1B, $1B+
+
+5. **Weight overrides** (collapsible advanced section):
+   - Three sliders: Impact (default 0.5), Alignment (default 0.3), Feasibility (default 0.2)
+   - Sliders must sum to 1.0 — auto-adjust when one changes
+   - Show warning if sum ≠ 1.0
+
+6. **Excluded actions** (optional) — free text: "Describe any actions to exclude (e.g. no fossil fuel infrastructure)"
+
+**Pre-populate** from `prioritizer_request_mock.json` where values exist.
+
+**Footer:** Back / Save & continue to policy alignment
+
+---
+
+## PAGE 7 — POLICY ALIGNMENT
+
+URL: `/policy/{locode}`
+
+**Step bar:** Step 5 active — labelled "optional"
+
+**Page header:**
+- Title: "Policy alignment"
+- Subtitle: "Review policy signals from national, regional, and municipal plans. These shape the alignment score."
+- Priority: LOW · optional badge
+
+**Data source bar:** "Policy signals sourced from policy-signals-api · CL IQQ · Tarapacá region"
+
+**3 score summary cards:**
+- National plan alignment: score bar (high — green)
+- Regional plan alignment: score bar (medium — amber)
+- Municipal plan alignment: score bar (low — grey)
+
+Load actual policy support scores from `actions_policy_signals_api_mock.json` and aggregate by scope.
+
+**Plan cards by scope (National → Regional → Municipal):**
+
+Each plan card shows:
+- Scope pill (colour coded: national blue, regional purple, municipal green)
+- Plan name
+- Number of signals
+- Score chip
+- Expandable body showing individual signals with: signal type badge (sector priority / action alignment / emissions target / funding signal), description, strength pill (Strong / Moderate / Weak)
+
+**Municipal coverage note** (amber): "Limited PACCC data available for this city. Upload a PACCC or municipal climate strategy to improve alignment accuracy."
+
+**PDF upload button:** "Upload Iquique PACCC or municipal climate strategy (PDF)" — full width, blue outline style
+
+**MEED+ impact bar** (green): "Policy signals shape the alignment pillar — weighted 30% of final score by default"
+
+**Footer:** Back / Continue to pre-flight check
+
+---
+
+## PAGE 8 — PRE-FLIGHT CHECK
+
+URL: `/preflight/{locode}`
+
+**Step bar:** Step 6 active
+
+**Page header:**
+- Title: "Pre-flight check"
+- Subtitle: "Review your data completeness before running the model."
+
+**Data completeness checklist** (5 rows):
+Each row shows section name + COMPLETE (green) / PARTIAL (amber) / NOT ENTERED (grey) badge + what is missing
+
+Sections: Emissions Data, Socioeconomic Context, Regulations & Laws, Strategic Preferences, Policy Alignment
+
+**Model confidence indicator card:**
+- Large percentage (e.g. 62%)
+- Label: "Moderate confidence"
+- Suggestion: "Adding socioeconomic data would raise confidence to ~85%"
+- Confidence bar
+
+**Pilot data availability** (3 mini cards):
+- Impact → Good (green)
+- Alignment → Good (green)
+- Feasibility → Fair (amber)
+
+**System info row:**
+- 345 actions
+- 1–2 min estimated time
+- 3 scenarios generated
+
+**Large CTA button:** "⚡ Generate Recommendations" — green, full width, prominent
+- On click: POST to `/api/prioritize` with all city data, then redirect to `/processing/{locode}`
+
+**Footer:** Back to city profile
+
+---
+
+## PAGE 9 — PROCESSING STATE
+
+URL: `/processing/{locode}`
+
+**Page header:**
+- Title: "Generating action recommendations"
+- City name + locode
+- Time estimate: "Estimated time: 1–2 minutes"
+
+**Overall progress bar:**
+- Wide green progress bar showing overall % complete
+- Animated — fills over the duration of processing
+
+**Pipeline steps** (4 steps, sequential):
+1. Data validation — description: "Validating emissions data, legal requirements, and city context"
+2. Impact analysis — description: "Matching actions to your city's emission sources and calculating reduction potential"
+3. Alignment analysis — description: "Scoring actions against policy signals and strategic preferences"
+4. Feasibility analysis — description: "Evaluating legal, socioeconomic, and institutional conditions"
+
+Each step shows:
+- Status icon: ✓ (complete, green), spinning indicator (in progress), clock (pending)
+- Step name
+- Description
+- Progress % when in progress
+
+**Animate the steps sequentially.** Each step takes approximately 2–3 seconds. Use setTimeout to progress through steps. When all steps complete, auto-redirect to `/results/{locode}`.
+
+**Bottom message:** "You can safely close this tab. We will notify you when results are ready."
+
+---
+
+## PAGE 10 — RESULTS / RECOMMENDED ACTIONS
+
+URL: `/results/{locode}`
+
+**Top section (hero):**
+- Title: "Take action. Drive impact."
+- City selector / search (allow switching city)
+- Key stats row: Total emissions, Population, Land area, Top sector
+- These pull from city data loaded via API
+
+**Main section tabs:**
+- Mitigation (active)
+- Adaptation (coming soon — disabled)
+
+**Top 3 actions** (highlighted cards):
+Each card shows:
+- Rank number (#1, #2, #3) in deep blue circle
+- "Expert choice" tag (green badge) on rank 1
+- Action title
+- Description (2 lines)
+- Sector badge
+- Reduction potential bar (High / Medium / Low)
+- Cost indicator
+- Implementation time
+- "See more details" button
+
+**Ranking table** (all 20 ranked actions):
+Columns: Rank, Action title, Sector, Reduction potential (visual bar), Alignment score, Feasibility score, Final score
+
+Features:
+- Sortable columns (click header to sort)
+- "Modify priorities" button — opens weight slider panel
+- "Download results" button — exports as CSV
+- Each row expandable to show evidence breakdown
+
+**Score breakdown panel** (opens on row click):
+Shows: Impact score + Alignment score + Feasibility score → Final score with the formula visible
+Shows which legal requirements passed, which policy signals contributed, which socioeconomic indicators were used
+
+---
+
+## THE SCORING PIPELINE
+
+Implement this exactly. This is the core logic of the application.
+
+### Data loading
+
+On startup, load all mock data files from `/data/`. The pipeline uses:
+- `actions_api_mock_v2.json` → action catalog (155 actions)
+- `actions_legal_api_mock.json` → legal requirements per action
+- `actions_policy_signals_api_mock.json` → policy signals per action
+- `city_api_mock.json` → city context data
+- `cities_api_mock.json` → city list for search
+
+### API endpoint
+```
+POST /api/prioritize
+Request body matches PrioritizerRequestData from prioritizer_request_mock.json:
+json{
+  "locode": "CL IQQ",
+  "countryCode": "CL",
+  "populationSize": 214857,
+  "weightsOverride": {"impact": 0.5, "alignment": 0.3, "feasibility": 0.2},
+  "cityStrategicPreferenceSectors": ["transportation"],
+  "cityStrategicPreferenceOther": "...",
+  "excludedActionsFreeText": "...",
+  "cityEmissionsData": { "inventoryYear": 2022, "gpcData": {...} }
+}
+Step 1 — Derive city emissions by GPC ref
+Sum totalEmissions for all activities within each GPC ref key from cityEmissionsData.gpcData. Skip entries with notationKey of "IE" (included elsewhere) or "NE" (not estimated). Build a dict: {gpc_ref: total_tco2e}.
+Calculate total_city_emissions = sum of all GPC ref values.
+Step 2 — Hard filter
+Load legal requirements from actions_legal_api_mock.json.
+For each action:
+
+Get its requirements list
+Check each requirement where strength is "mandatory" or "required"
+If any such requirement has alignment_status = "not_aligned" → DISCARD the action (reason: legal_hard_requirement_failed)
+"no_evidence" on a mandatory/required requirement does NOT discard — action passes with a flag
+Actions with no legal requirements pass automatically
+
+Return: list of valid action IDs + list of discarded action IDs with reasons.
+Step 3 — Impact scoring
+For each valid action, load its emissions data from actions_api_mock_v2.json.
+Each action has gpcReferenceNumbers (list of GPC refs it addresses) and emissions.impactText (very_low / low / medium / high / very_high).
+Impact text multiplier:
+pythonIMPACT_MULTIPLIER = {
+    "very_low": 0.2, "low": 0.4, "medium": 0.6, "high": 0.8, "very_high": 1.0
+}
+Reduction share:
+pythonmatched_emissions = sum(city_emissions[ref] for ref in action.gpcReferenceNumbers if ref in city_emissions)
+reduction_share = (matched_emissions * impact_multiplier) / total_city_emissions
+Timeline score:
+pythonTIMELINE_SCORE = {"<5_years": 1.0, "5-10_years": 0.5, ">10_years": 0.0, None: 0.0}
+Impact block score:
+pythonimpact_score = (0.80 * reduction_share) + (0.20 * timeline_score)
+Step 4 — Alignment scoring
+Load policy signals from actions_policy_signals_api_mock.json.
+Formula:
+pythonalignment_score = (0.80 * policy_component) + (0.15 * sector_component) + (0.05 * other_component)
+Policy component: Use policy_support_score from the policy signals data (0–1 value already computed per action). If action has no policy signals, use 0.0.
+Sector component: 1.0 if any of the action's sectors matches cityStrategicPreferenceSectors, else 0.0.
+Other component: 0.0 (placeholder — not yet implemented, leave as 0).
+Step 5 — Feasibility scoring
+Formula:
+pythonfeasibility_score = (0.50 * soft_legal_component) + (0.50 * socioeconomic_component)
+Soft legal component:
+From the action's legal requirements, take only requirements where strength is "recommended" or "optional". Score each:
+
+aligns → 1.0
+not_aligned → 0.0
+no_evidence → 0.5
+
+Average across all soft requirements. If no soft requirements → 0.0.
+Socioeconomic component:
+Apply the indicator key mapping first (see Page 4 bug fix above).
+Each action in actions_api_mock_v2.json has socioeconomicIndicatorFit — a list of rules with indicatorKey, direction (supportive / constraining), weight, and city indicator bucket thresholds.
+Bucket to score mapping:
+pythonBUCKET_SCORE = {"very_low": -2, "low": -1, "medium": 0, "high": 1, "very_high": 2}
+For each rule:
+
+Look up city_indicators[indicatorKey] → get attribute_category → convert to bucket score
+If direction is constraining, reverse the sign
+Multiply by rule weight
+Sum contributions, divide by sum of weights
+Normalise to 0–1: (average + 2) / 4
+
+If no rules match → default to 0.5 (neutral).
+Step 6 — Final scoring
+pythonfinal_score = (impact_score * weight_impact) + (alignment_score * weight_alignment) + (feasibility_score * weight_feasibility)
+```
+
+Use weights from `weightsOverride` if provided, else defaults (0.55 / 0.22 / 0.23). Validate weights sum to 1.0.
+
+Sort all valid actions by `final_score` descending. Take top N (default 20).
+
+Return full evidence breakdown for each ranked action including all sub-scores and the inputs that produced them.
+
+---
+
+## API ENDPOINTS
+```
+GET  /                          → landing page
+GET  /city/{locode}             → city profile hub
+GET  /emissions/{locode}        → emissions page
+GET  /socioeconomic/{locode}    → socioeconomic page
+GET  /regulations/{locode}      → regulations page
+GET  /preferences/{locode}      → strategic preferences page
+GET  /policy/{locode}           → policy alignment page
+GET  /preflight/{locode}        → pre-flight check page
+GET  /processing/{locode}       → processing state page
+GET  /results/{locode}          → results page
+
+POST /api/prioritize            → run scoring pipeline, return ranked actions
+GET  /api/city/{locode}         → return city data from city_api_mock.json
+GET  /api/cities                → return list of all cities from cities_api_mock.json
+GET  /api/actions               → return action catalog
+GET  /api/results/{locode}      → return cached results for a locode
+
+SESSION STATE
+Use browser sessionStorage to persist onboarding progress as the user moves between pages. Store:
+javascript{
+  locode: "CL IQQ",
+  completedSteps: ["emissions", "socioeconomic"],
+  emissions: { confirmed: [...], adjusted: {...} },
+  preferences: { sectors: [...], weights: {...}, excludedText: "..." },
+  weightsOverride: { impact: 0.5, alignment: 0.3, feasibility: 0.2 }
+}
+The City Profile Hub reads from sessionStorage to show correct step completion status.
+
+KNOWN BUGS TO AVOID
+
+Indicator key mismatch — city uses transport_logistics_employment, actions use employment_in_transport_and_logistics. Apply the key mapping dict in feasibility.py before any lookup. Without this fix, all socioeconomic scores will be wrong.
+Sparse legal coverage — only 10 of 155 actions have legal requirements. This means soft_legal_component will be 0.0 for most actions. This is expected given the mock data — do not treat it as a bug. The feasibility score for most actions will be driven entirely by the socioeconomic component.
+Explanation field — every ranked action must have an explanation field in the API response. Populate it with a human-readable string:
+
+pythonexplanation = f"Ranked #{rank} with a final score of {final_score:.2f}. Impact: {impact_score:.2f} (reduction share: {reduction_share:.1%}). Alignment: {alignment_score:.2f} (policy support: {policy_component:.2f}, sector match: {'yes' if sector_component else 'no'}). Feasibility: {feasibility_score:.2f}."
+```
+
+4. **Timeline 0.0 floor** — actions with timeline > 10 years or unknown get 0.0 timeline score. This is intentional but means long-term structural actions are penalised. This is by design in the current model.
+
+5. **notationKey filtering** — when summing city emissions, skip GPC refs where `notationKey` is `"IE"` (included elsewhere) or `"NE"` (not estimated). Including them would double-count or inflate the total.
+
+---
+
+## REQUIREMENTS.TXT
+```
+fastapi==0.110.0
+uvicorn==0.27.1
+python-multipart==0.0.9
+jinja2==3.1.3
+aiofiles==23.2.1
+
+STARTUP
+In main.py:
+
+Load all JSON data files into memory on startup using FastAPI lifespan
+Serve static files from /static
+Serve templates using Jinja2
+Run on port 8000
+
+
+AFTER SCAFFOLDING — HOW TO USE YOUR DESIGN IMAGES
+Once the app is built:
+
+Export each screen from Figma as JPG at 1x resolution
+Upload them into the /designs folder in this Replit project
+Then tell the Replit Agent: "Update the City Profile Hub page to match /designs/city-profile-hub.jpg"
+Repeat for each screen: emissions, strategic preferences, pre-flight, processing, and results
+The landing page, socioeconomic context, regulations & laws, and policy alignment pages are already designed — implement them exactly as specified above
+
+
+Build the complete application now. Start with requirements.txt, then main.py, then the pipeline modules, then the templates, then the static CSS and JS. Make sure every page renders correctly and the scoring pipeline produces real ranked output when /api/prioritize is called with data from prioritizer_request_mock.json.

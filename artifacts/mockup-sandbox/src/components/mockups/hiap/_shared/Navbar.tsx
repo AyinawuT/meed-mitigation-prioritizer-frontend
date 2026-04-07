@@ -1,0 +1,60 @@
+export function Navbar({ cityName }: { cityName?: string }) {
+  return (
+    <nav
+      style={{
+        background: "#1E3A8A",
+        height: "52px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 24px",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div
+          style={{
+            background: "#16A34A",
+            borderRadius: "6px",
+            width: "28px",
+            height: "28px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "11px",
+            fontWeight: "700",
+            color: "white",
+          }}
+        >
+          M+
+        </div>
+        <span style={{ color: "white", fontWeight: "500", fontSize: "14px" }}>
+          MEED+
+        </span>
+        <span style={{ color: "#93C5FD", fontSize: "12px", marginLeft: "4px" }}>
+          · HIAP
+        </span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+        <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
+          Explore
+        </a>
+        <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
+          Compare
+        </a>
+        <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
+          Resources
+        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#93C5FD", fontSize: "13px" }}>
+          <span>🇨🇱</span>
+          <span>EN ▾</span>
+        </div>
+        {cityName && (
+          <span style={{ color: "#BFDBFE", fontSize: "12px", borderLeft: "1px solid #3B5FA0", paddingLeft: "16px" }}>
+            {cityName}
+          </span>
+        )}
+      </div>
+    </nav>
+  );
+}
