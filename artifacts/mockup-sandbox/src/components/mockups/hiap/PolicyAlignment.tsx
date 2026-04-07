@@ -158,7 +158,7 @@ export function PolicyAlignment() {
 
         {/* MEED+ bar */}
         <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "8px", padding: "10px 16px", marginBottom: "24px", fontSize: "12px", color: "#15803D" }}>
-          ✦ Policy signals shape the alignment pillar — weighted 30% of final score by default
+          ✦ Policy signals shape the alignment pillar — weighted 22% of final score by default
         </div>
 
         {/* Footer */}
