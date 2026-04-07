@@ -77,7 +77,6 @@ The City Profile Hub is the page reached after clicking "Open {City} City Profil
 It should show:
 - City name, region, locode, key stats (population, area, emissions year)
 - Entry point to start the HIAP prioritization wizard (6-step flow)
-- Any existing funded projects for that city (from `projects.json`)
 - Socioeconomic indicators overview (from `city-context.csv` / `city.json`)
 
 Route: `/city/:locode` (e.g. `/city/CL-IQQ`)
