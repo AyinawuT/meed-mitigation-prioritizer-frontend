@@ -10,8 +10,8 @@ const SECTORS = [
   { sector: "Agriculture, Forestry & Other Land Use (AFOLU)", sub: "", ref: "V.1", emissions: null, share: null, source: null, status: "Not mapped" },
 ];
 
-export function EmissionsReview() {
-  const [activeTab, setActiveTab] = useState<"review" | "adjust">("review");
+export function EmissionsReview({ defaultTab = "review" }: { defaultTab?: "review" | "adjust" } = {}) {
+  const [activeTab, setActiveTab] = useState<"review" | "adjust">(defaultTab as "review" | "adjust");
 
   const totalEmissions = SECTORS.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
 
