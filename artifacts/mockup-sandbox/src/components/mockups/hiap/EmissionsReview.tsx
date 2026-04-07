@@ -42,12 +42,13 @@ export function EmissionsReview({ defaultTab = "review" }: { defaultTab?: "revie
                 style={{
                   padding: "7px 18px",
                   borderRadius: "6px",
-                  border: activeTab === "review" ? "1.5px solid #001EA7" : "1px solid #DDDDE1",
-                  background: activeTab === "review" ? "#EFF6FF" : "white",
-                  color: activeTab === "review" ? "#001EA7" : "#9CA3AF",
+                  border: "none",
+                  background: activeTab === "review" ? "#001EA7" : "white",
+                  color: activeTab === "review" ? "white" : "#9CA3AF",
                   fontSize: "13px",
                   fontWeight: "500",
                   cursor: "pointer",
+                  outline: activeTab === "review" ? "none" : "1px solid #DDDDE1",
                 }}
               >
                 Review
