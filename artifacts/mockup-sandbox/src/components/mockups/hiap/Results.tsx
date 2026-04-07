@@ -86,11 +86,11 @@ export function Results() {
               style={{
                 padding: "10px 20px",
                 border: "none",
-                borderBottom: activeTab === tab.key ? "2px solid #1E3A8A" : "2px solid transparent",
+                borderBottom: activeTab === tab.key ? "2px solid #001EA7" : "2px solid transparent",
                 background: "none",
                 fontSize: "13px",
                 fontWeight: activeTab === tab.key ? "600" : "400",
-                color: tab.disabled ? "#D1D5DB" : activeTab === tab.key ? "#1E3A8A" : "#6B7280",
+                color: tab.disabled ? "#D1D5DB" : activeTab === tab.key ? "#001EA7" : "#6B7280",
                 cursor: tab.disabled ? "not-allowed" : "pointer",
                 marginBottom: "-1px",
               }}
@@ -110,7 +110,7 @@ export function Results() {
                 Here are your top climate actions, initially prioritized by our experts. Reorder the table below to set new priorities in this Section.
               </div>
             </div>
-            <button style={{ background: "#1E3A8A", color: "white", border: "none", borderRadius: "8px", padding: "8px 16px", fontSize: "12px", fontWeight: "500", cursor: "pointer" }}>
+            <button style={{ background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "8px 16px", fontSize: "12px", fontWeight: "500", cursor: "pointer" }}>
               ⚡ Generate Plan
             </button>
           </div>
@@ -119,7 +119,7 @@ export function Results() {
             {TOP_ACTIONS.map((action) => (
               <div key={action.rank} style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "12px", padding: "16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
-                  <div style={{ width: "30px", height: "30px", borderRadius: "50%", background: "#1E3A8A", color: "white", fontSize: "13px", fontWeight: "700", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: "30px", height: "30px", borderRadius: "50%", background: "#001EA7", color: "white", fontSize: "13px", fontWeight: "700", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     #{action.rank}
                   </div>
                   {action.expert && (
@@ -149,7 +149,7 @@ export function Results() {
                     <span style={{ color: "#9CA3AF" }}>Implementation time</span><span style={{ color: "#6B7280" }}>{action.time}</span>
                   </div>
                 </div>
-                <button style={{ width: "100%", background: "none", border: "1px solid #EBEBEB", borderRadius: "6px", padding: "7px", fontSize: "12px", color: "#1E3A8A", cursor: "pointer", fontWeight: "500" }}>
+                <button style={{ width: "100%", background: "none", border: "1px solid #EBEBEB", borderRadius: "6px", padding: "7px", fontSize: "12px", color: "#001EA7", cursor: "pointer", fontWeight: "500" }}>
                   See more details
                 </button>
               </div>
@@ -190,13 +190,13 @@ export function Results() {
               <tbody>
                 {TABLE_ACTIONS.map((action, i) => (
                   <tr key={i} style={{ borderBottom: "1px solid #F5F5F5" }}>
-                    <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#1E3A8A" }}>#{action.rank}</td>
+                    <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#001EA7" }}>#{action.rank}</td>
                     <td style={{ padding: "10px 14px", fontSize: "12px", color: "#111827", maxWidth: "300px" }}>{action.title}</td>
                     <td style={{ padding: "10px 14px", fontSize: "12px", color: "#6B7280" }}>{action.sector}</td>
                     <td style={{ padding: "10px 14px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                         <div style={{ width: "100px", background: "#EEF2FF", borderRadius: "3px", height: "6px" }}>
-                          <div style={{ background: "#1E3A8A", width: `${action.reduction * 100}%`, height: "6px", borderRadius: "3px" }} />
+                          <div style={{ background: "#001EA7", width: `${action.reduction * 100}%`, height: "6px", borderRadius: "3px" }} />
                         </div>
                       </div>
                     </td>

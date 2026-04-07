@@ -40,9 +40,9 @@ export function EmissionsReview() {
                 style={{
                   padding: "7px 18px",
                   borderRadius: "6px",
-                  border: activeTab === "review" ? "1.5px solid #1E3A8A" : "1px solid #DDDDE1",
+                  border: activeTab === "review" ? "1.5px solid #001EA7" : "1px solid #DDDDE1",
                   background: activeTab === "review" ? "#EFF6FF" : "white",
-                  color: activeTab === "review" ? "#1E3A8A" : "#9CA3AF",
+                  color: activeTab === "review" ? "#001EA7" : "#9CA3AF",
                   fontSize: "13px",
                   fontWeight: "500",
                   cursor: "pointer",
@@ -56,7 +56,7 @@ export function EmissionsReview() {
                   padding: "7px 18px",
                   borderRadius: "6px",
                   border: "none",
-                  background: activeTab === "adjust" ? "#1E3A8A" : "white",
+                  background: activeTab === "adjust" ? "#001EA7" : "white",
                   color: activeTab === "adjust" ? "white" : "#9CA3AF",
                   fontSize: "13px",
                   fontWeight: "500",
@@ -159,7 +159,7 @@ export function EmissionsReview() {
                       )
                     ) : (
                       row.status !== "Not mapped" ? (
-                        <button style={{ fontSize: "12px", color: "#1E3A8A", background: "#EFF6FF", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer" }}>
+                        <button style={{ fontSize: "12px", color: "#001EA7", background: "#EFF6FF", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer" }}>
                           Edit
                         </button>
                       ) : (
@@ -176,7 +176,7 @@ export function EmissionsReview() {
 
           {activeTab === "adjust" && (
             <div style={{ padding: "12px 16px", borderTop: "1px solid #F0F0F0" }}>
-              <button style={{ fontSize: "12px", color: "#1E3A8A", background: "none", border: "none", cursor: "pointer" }}>
+              <button style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", cursor: "pointer" }}>
                 + Add another sector
               </button>
             </div>

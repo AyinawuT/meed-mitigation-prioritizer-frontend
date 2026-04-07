@@ -26,8 +26,8 @@ export function StepBar({ activeStep }: { activeStep: number }) {
             style={{
               padding: "10px 20px",
               fontSize: "12px",
-              borderBottom: isActive ? "2px solid #1E3A8A" : "2px solid transparent",
-              color: isActive ? "#1E3A8A" : isDone ? "#16A34A" : "#9CA3AF",
+              borderBottom: isActive ? "2px solid #001EA7" : "2px solid transparent",
+              color: isActive ? "#001EA7" : isDone ? "#16A34A" : "#9CA3AF",
               fontWeight: isActive ? "500" : "400",
               whiteSpace: "nowrap",
               display: "flex",

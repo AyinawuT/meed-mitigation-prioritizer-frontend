@@ -139,7 +139,7 @@ export function Landing() {
                     height: "28px",
                     borderRadius: "50%",
                     background: "#EFF6FF",
-                    color: "#1E3A8A",
+                    color: "#001EA7",
                     fontSize: "13px",
                     fontWeight: "600",
                     display: "flex",

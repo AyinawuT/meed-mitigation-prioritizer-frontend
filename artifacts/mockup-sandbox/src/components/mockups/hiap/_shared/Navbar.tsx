@@ -2,7 +2,7 @@ export function Navbar({ cityName }: { cityName?: string }) {
   return (
     <nav
       style={{
-        background: "#1E3A8A",
+        background: "#001EA7",
         height: "52px",
         display: "flex",
         alignItems: "center",

@@ -184,7 +184,7 @@ export function CityProfile() {
                 href="#"
                 style={{
                   fontSize: "13px",
-                  color: "#1E3A8A",
+                  color: "#001EA7",
                   textDecoration: "none",
                   fontWeight: "500",
                 }}
