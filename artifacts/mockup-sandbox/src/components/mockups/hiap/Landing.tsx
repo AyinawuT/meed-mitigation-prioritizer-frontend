@@ -27,145 +27,73 @@ export function Landing() {
   const [searchVal, setSearchVal] = useState("");
 
   return (
-    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F9FAFB", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar />
 
-      {/* Hero */}
-      <div style={{ background: "#1E3A8A", padding: "48px 64px 0" }}>
+      {/* Hero - white background, split layout matching MEED+ design */}
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "40px 64px 40px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          {/* Two-column hero */}
-          <div style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
+          <div style={{ display: "flex", gap: "80px", alignItems: "center" }}>
             {/* Left: headline */}
-            <div style={{ flex: "1" }}>
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "rgba(255,255,255,0.1)",
-                  borderRadius: "20px",
-                  padding: "4px 12px",
-                  marginBottom: "20px",
-                  fontSize: "12px",
-                  color: "#93C5FD",
-                }}
-              >
-                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#16A34A", display: "inline-block" }} />
-                Powered by CityCatalyst · Chile pilot
-              </div>
-              <h1 style={{ fontSize: "36px", fontWeight: "600", color: "white", lineHeight: "1.2", margin: "0 0 16px" }}>
-                Take action.<br />
-                <span style={{ fontWeight: "700" }}>Drive impact.</span>
-              </h1>
-              <p style={{ color: "#93C5FD", fontSize: "14px", lineHeight: "1.6", margin: "0 0 24px", maxWidth: "360px" }}>
+            <div style={{ flex: "0 0 340px" }}>
+              <p style={{ fontSize: "22px", fontWeight: "400", color: "#111827", margin: "0 0 2px", lineHeight: "1.3" }}>
+                Take action.
+              </p>
+              <p style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 14px", lineHeight: "1.3" }}>
+                Drive impact.
+              </p>
+              <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: "0" }}>
                 Empower your city to prioritize climate actions that make a difference with data-driven insights.
               </p>
             </div>
 
-            {/* Right: search card */}
+            {/* Right: search */}
             <div style={{ flex: "1" }}>
-              <div
-                style={{
-                  background: "white",
-                  borderRadius: "12px 12px 0 0",
-                  padding: "24px",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                }}
-              >
-                <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "8px", fontWeight: "500" }}>
-                  Select your city to begin
-                </div>
-                <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
-                  <div style={{ position: "relative", flex: "1" }}>
-                    <span
-                      style={{
-                        position: "absolute",
-                        left: "12px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        color: "#9CA3AF",
-                        fontSize: "14px",
-                      }}
-                    >
-                      🔍
-                    </span>
-                    <input
-                      type="text"
-                      value={searchVal}
-                      onChange={(e) => setSearchVal(e.target.value)}
-                      placeholder="Search by city name or LOCODE (e.g. Iquique, CL IQQ)..."
-                      style={{
-                        width: "100%",
-                        border: "1px solid #E5E7EB",
-                        borderRadius: "8px",
-                        padding: "10px 12px 10px 36px",
-                        fontSize: "13px",
-                        outline: "none",
-                        color: "#111827",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                  </div>
+              <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                <span style={{ position: "absolute", left: "14px", color: "#9CA3AF", fontSize: "16px", zIndex: 1 }}>🔍</span>
+                <input
+                  type="text"
+                  value={searchVal}
+                  onChange={(e) => setSearchVal(e.target.value)}
+                  placeholder="Search by city name or LOCODE (e.g. Iquique, CL IQQ)..."
+                  style={{
+                    width: "100%",
+                    border: "1px solid #E5E7EB",
+                    borderRadius: "10px",
+                    padding: "13px 14px 13px 42px",
+                    fontSize: "13px",
+                    outline: "none",
+                    color: "#111827",
+                    boxSizing: "border-box",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                  }}
+                />
+                {searchVal && (
                   <button
-                    style={{
-                      background: "#16A34A",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "8px",
-                      padding: "10px 20px",
-                      fontSize: "13px",
-                      fontWeight: "500",
-                      cursor: "pointer",
-                      whiteSpace: "nowrap",
-                    }}
+                    onClick={() => setSearchVal("")}
+                    style={{ position: "absolute", right: "12px", background: "none", border: "none", cursor: "pointer", color: "#9CA3AF", fontSize: "16px" }}
                   >
-                    Find city
+                    ✕
                   </button>
-                </div>
-                <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                  {QUICK_CITIES.map((c) => (
-                    <button
-                      key={c}
-                      style={{
-                        background: "#F3F4F6",
-                        border: "none",
-                        borderRadius: "12px",
-                        padding: "3px 10px",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </div>
+                )}
               </div>
-
-              {/* Stats bar flush below search */}
-              <div
-                style={{
-                  background: "white",
-                  borderRadius: "0 0 12px 12px",
-                  padding: "12px 24px",
-                  borderTop: "0.5px solid #E5E7EB",
-                  display: "flex",
-                  gap: "0",
-                }}
-              >
-                {STATS.map((s, i) => (
-                  <div
-                    key={i}
+              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "10px" }}>
+                {QUICK_CITIES.map((c) => (
+                  <button
+                    key={c}
                     style={{
-                      flex: "1",
-                      textAlign: "center",
-                      borderRight: i < STATS.length - 1 ? "0.5px solid #E5E7EB" : "none",
-                      padding: "0 12px",
+                      background: "none",
+                      border: "none",
+                      fontSize: "12px",
+                      color: "#6B7280",
+                      cursor: "pointer",
+                      padding: "2px 0",
+                      textDecoration: "underline",
+                      textDecorationColor: "#D1D5DB",
                     }}
                   >
-                    <div style={{ fontSize: "16px", fontWeight: "600", color: "#111827" }}>{s.value}</div>
-                    <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{s.label}</div>
-                  </div>
+                    {c}
+                  </button>
                 ))}
               </div>
             </div>
@@ -173,24 +101,44 @@ export function Landing() {
         </div>
       </div>
 
+      {/* Stats bar */}
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "12px 64px" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex" }}>
+          {STATS.map((s, i) => (
+            <div
+              key={i}
+              style={{
+                flex: "1",
+                textAlign: "center",
+                borderRight: i < STATS.length - 1 ? "1px solid #EBEBEB" : "none",
+                padding: "6px 0",
+              }}
+            >
+              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>{s.value}</div>
+              <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Body */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 64px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 64px" }}>
         {/* Recent cities */}
-        <div style={{ marginBottom: "40px" }}>
-          <div style={{ fontSize: "12px", color: "#9CA3AF", fontWeight: "500", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        <div style={{ marginBottom: "36px" }}>
+          <div style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: "500", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
             Recently onboarded cities
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px" }}>
             {CITIES.map((city) => (
               <div
                 key={city.locode}
                 style={{
                   background: "white",
-                  border: "0.5px solid #E5E7EB",
-                  borderRadius: "10px",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "12px",
                   padding: "16px",
                   cursor: "pointer",
-                  transition: "box-shadow 0.2s",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
@@ -217,7 +165,7 @@ export function Landing() {
                 <div style={{ fontSize: "12px", color: "#6B7280" }}>
                   {city.region} · {city.population} residents
                 </div>
-                <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginTop: "8px" }}>
+                <div style={{ fontSize: "14px", fontWeight: "600", color: "#111827", marginTop: "10px" }}>
                   {city.emissions}
                 </div>
                 <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Total GHG emissions</div>
@@ -227,20 +175,21 @@ export function Landing() {
         </div>
 
         {/* How it works */}
-        <div style={{ marginBottom: "40px" }}>
-          <h2 style={{ fontSize: "18px", fontWeight: "500", color: "#111827", marginBottom: "4px" }}>How it works</h2>
-          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "20px" }}>
+        <div>
+          <h2 style={{ fontSize: "16px", fontWeight: "500", color: "#111827", marginBottom: "4px" }}>How it works</h2>
+          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "16px" }}>
             HIAP guides you through four steps to generate a ranked action plan for your city.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
             {HOW_STEPS.map((step) => (
               <div
                 key={step.n}
                 style={{
                   background: "white",
-                  border: "0.5px solid #E5E7EB",
-                  borderRadius: "10px",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "12px",
                   padding: "16px",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                 }}
               >
                 <div
@@ -266,30 +215,6 @@ export function Landing() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* CTA strip */}
-      <div style={{ background: "#1E3A8A", padding: "40px 64px", textAlign: "center" }}>
-        <div style={{ fontSize: "20px", fontWeight: "500", color: "white", marginBottom: "8px" }}>
-          Ready to generate your city's recommendations?
-        </div>
-        <p style={{ color: "#93C5FD", fontSize: "13px", marginBottom: "20px" }}>
-          Join 12 Chilean cities already using HIAP to prioritise climate actions.
-        </p>
-        <button
-          style={{
-            background: "#16A34A",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            padding: "12px 28px",
-            fontSize: "14px",
-            fontWeight: "500",
-            cursor: "pointer",
-          }}
-        >
-          Get started
-        </button>
       </div>
     </div>
   );

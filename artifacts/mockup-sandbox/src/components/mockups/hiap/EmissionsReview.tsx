@@ -1,5 +1,4 @@
 import { Navbar } from "./_shared/Navbar";
-import { Breadcrumb } from "./_shared/Breadcrumb";
 import { useState } from "react";
 
 const SECTORS = [
@@ -10,54 +9,40 @@ const SECTORS = [
   { sector: "Agriculture, Forestry & Other Land Use (AFOLU)", sub: "", ref: "V.1", emissions: null, share: null, source: null, status: "Not mapped" },
 ];
 
-function StatusBadge({ status }: { status: string }) {
-  const map: Record<string, { bg: string; text: string }> = {
-    Confirmed: { bg: "#DCFCE7", text: "#15803D" },
-    "Needs review": { bg: "#FEF9C3", text: "#854D0E" },
-    "Not mapped": { bg: "#F3F4F6", text: "#6B7280" },
-  };
-  const c = map[status] ?? map["Not mapped"];
-  return (
-    <span style={{ fontSize: "11px", padding: "2px 8px", borderRadius: "4px", background: c.bg, color: c.text }}>
-      {status}
-    </span>
-  );
-}
-
 export function EmissionsReview() {
   const [activeTab, setActiveTab] = useState<"review" | "adjust">("review");
 
   const totalEmissions = SECTORS.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
 
   return (
-    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F9FAFB", minHeight: "100vh" }}>
-      <Navbar cityName="Santiago" />
+    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+      <Navbar />
 
-      {/* Page header */}
-      <div style={{ background: "white", borderBottom: "0.5px solid #E5E7EB", padding: "16px 40px" }}>
+      {/* White page header */}
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 48px 18px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <Breadcrumb items={["Santiago", "City Profile", "Emissions Data"]} />
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
+          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>Santiago / City Profile / Emissions Data</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h1 style={{ fontSize: "20px", fontWeight: "500", color: "#111827", margin: "0 0 2px" }}>
+              <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 2px" }}>
                 Emissions Data
               </h1>
-              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                <span style={{ fontSize: "11px", background: "#FEF9C3", color: "#854D0E", padding: "2px 8px", borderRadius: "4px" }}>
-                  3 / 5 sectors
+              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                <span style={{ fontSize: "11px", background: "#FFF3E0", color: "#C05621", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
+                  4 / 5 sectors
                 </span>
-                <span style={{ fontSize: "12px", color: "#16A34A" }}>MEED+ IMPACT: shapes 55% of ranking</span>
+                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>MEED+ IMPACT: shapes 55% of ranking</span>
               </div>
             </div>
             <div style={{ display: "flex", gap: "8px" }}>
               <button
                 onClick={() => setActiveTab("review")}
                 style={{
-                  padding: "7px 16px",
+                  padding: "7px 18px",
                   borderRadius: "6px",
-                  border: activeTab === "review" ? "1.5px solid #1E3A8A" : "1px solid #E5E7EB",
+                  border: activeTab === "review" ? "1.5px solid #1E3A8A" : "1px solid #DDDDE1",
                   background: activeTab === "review" ? "#EFF6FF" : "white",
-                  color: activeTab === "review" ? "#1E3A8A" : "#6B7280",
+                  color: activeTab === "review" ? "#1E3A8A" : "#9CA3AF",
                   fontSize: "13px",
                   fontWeight: "500",
                   cursor: "pointer",
@@ -68,14 +53,15 @@ export function EmissionsReview() {
               <button
                 onClick={() => setActiveTab("adjust")}
                 style={{
-                  padding: "7px 16px",
+                  padding: "7px 18px",
                   borderRadius: "6px",
-                  border: activeTab === "adjust" ? "1.5px solid #1E3A8A" : "1px solid #E5E7EB",
+                  border: "none",
                   background: activeTab === "adjust" ? "#1E3A8A" : "white",
-                  color: activeTab === "adjust" ? "white" : "#6B7280",
+                  color: activeTab === "adjust" ? "white" : "#9CA3AF",
                   fontSize: "13px",
                   fontWeight: "500",
                   cursor: "pointer",
+                  outline: activeTab === "adjust" ? "none" : "1px solid #DDDDE1",
                 }}
               >
                 Adjust
@@ -85,107 +71,56 @@ export function EmissionsReview() {
         </div>
       </div>
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 40px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 48px" }}>
         {activeTab === "adjust" && (
-          <div
-            style={{
-              background: "#FEF9C3",
-              border: "1px solid #F59E0B",
-              borderRadius: "8px",
-              padding: "10px 16px",
-              marginBottom: "16px",
-              fontSize: "13px",
-              color: "#854D0E",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
+          <div style={{
+            background: "#FFFBEB",
+            border: "1px solid #FDE68A",
+            borderRadius: "8px",
+            padding: "10px 16px",
+            marginBottom: "14px",
+            fontSize: "13px",
+            color: "#92400E",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}>
             <span>⚠️</span>
             <span>You are in edit mode — changes will affect rankings until you save.</span>
           </div>
         )}
 
         {/* Summary bar */}
-        <div
-          style={{
-            background: "white",
-            border: "0.5px solid #E5E7EB",
-            borderRadius: "10px",
-            padding: "16px 20px",
-            marginBottom: "16px",
-            display: "flex",
-            gap: "40px",
-          }}
-        >
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "2px" }}>Total GHG Emissions</div>
-            <div style={{ fontSize: "16px", fontWeight: "600", color: "#111827" }}>
-              {(totalEmissions / 1000000).toFixed(2)}M tCO₂e
+        <div style={{
+          background: "white",
+          border: "1px solid #EBEBEB",
+          borderRadius: "10px",
+          padding: "16px 20px",
+          marginBottom: "14px",
+          display: "flex",
+          gap: "40px",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+        }}>
+          {[
+            { label: "Total GHG Emissions", value: `${(totalEmissions / 1e6).toFixed(2)}M tCO₂e` },
+            { label: "Inventory Year", value: "2023" },
+            { label: "Primary Source", value: "Municipal records" },
+            { label: "Completeness", value: "3 of 5 sectors" },
+          ].map((s) => (
+            <div key={s.label}>
+              <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "16px", fontWeight: "600", color: "#111827" }}>{s.value}</div>
             </div>
-          </div>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "2px" }}>Inventory Year</div>
-            <div style={{ fontSize: "16px", fontWeight: "600", color: "#111827" }}>2023</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "2px" }}>Primary Source</div>
-            <div style={{ fontSize: "16px", fontWeight: "600", color: "#111827" }}>Municipal records</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "2px" }}>Completeness</div>
-            <div style={{ fontSize: "16px", fontWeight: "600", color: "#111827" }}>3 of 5 sectors</div>
-          </div>
-        </div>
-
-        {/* Data source bar */}
-        <div
-          style={{
-            background: "#EFF6FF",
-            border: "0.5px solid #BFDBFE",
-            borderRadius: "8px",
-            padding: "10px 16px",
-            marginBottom: "16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: "12px",
-            color: "#1E3A8A",
-          }}
-        >
-          <span>📊 Data sourced from CityCatalyst GPC inventory · Inventory year 2023 · Municipal records</span>
-          <button
-            style={{
-              background: "white",
-              border: "0.5px solid #BFDBFE",
-              borderRadius: "6px",
-              padding: "4px 12px",
-              fontSize: "12px",
-              color: "#1E3A8A",
-              cursor: "pointer",
-            }}
-          >
-            View source
-          </button>
+          ))}
         </div>
 
         {/* Table */}
-        <div style={{ background: "white", border: "0.5px solid #E5E7EB", borderRadius: "10px", overflow: "hidden", marginBottom: "16px" }}>
+        <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", marginBottom: "16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ borderBottom: "0.5px solid #E5E7EB", background: "#F9FAFB" }}>
+              <tr style={{ borderBottom: "1px solid #F0F0F0", background: "#FAFAFA" }}>
                 {["SECTOR", "SUB-SECTOR", "TOTAL tCO₂e", "% SHARE", "DATA SOURCE", "STATUS", ""].map((h) => (
-                  <th
-                    key={h}
-                    style={{
-                      padding: "10px 16px",
-                      fontSize: "11px",
-                      color: "#9CA3AF",
-                      fontWeight: "500",
-                      textAlign: "left",
-                      letterSpacing: "0.03em",
-                    }}
-                  >
+                  <th key={h} style={{ padding: "10px 16px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>
                     {h}
                   </th>
                 ))}
@@ -193,12 +128,10 @@ export function EmissionsReview() {
             </thead>
             <tbody>
               {SECTORS.map((row, i) => (
-                <tr
-                  key={i}
-                  style={{ borderBottom: "0.5px solid #F3F4F6" }}
-                >
-                  <td style={{ padding: "12px 16px", fontSize: "13px", fontWeight: "500", color: "#111827" }}>
-                    {row.sector}
+                <tr key={i} style={{ borderBottom: "1px solid #F5F5F5" }}>
+                  <td style={{ padding: "12px 16px" }}>
+                    <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{row.sector}</div>
+                    <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{row.sub}</div>
                   </td>
                   <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
                     {row.sub || "—"}
@@ -213,53 +146,27 @@ export function EmissionsReview() {
                     {row.source || "—"}
                   </td>
                   <td style={{ padding: "12px 16px" }}>
-                    <StatusBadge status={row.status} />
+                    {row.status === "Confirmed" ? (
+                      <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>Confirmed</span>
+                    ) : (
+                      <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Not mapped</span>
+                    )}
                   </td>
                   <td style={{ padding: "12px 16px" }}>
                     {activeTab === "review" ? (
-                      <div style={{ display: "flex", gap: "8px" }}>
-                        {row.status !== "Not mapped" ? (
-                          <button style={{ fontSize: "12px", color: "#16A34A", background: "none", border: "none", cursor: "pointer", padding: "0", fontWeight: "500" }}>
-                            Confirmed ✓
-                          </button>
-                        ) : (
-                          <button style={{ fontSize: "12px", color: "#6B7280", background: "none", border: "none", cursor: "pointer", padding: "0" }}>
-                            + Add data
-                          </button>
-                        )}
-                      </div>
+                      row.status !== "Not mapped" && (
+                        <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>✓</span>
+                      )
                     ) : (
-                      <div style={{ display: "flex", gap: "6px" }}>
-                        {row.status !== "Not mapped" ? (
-                          <button
-                            style={{
-                              fontSize: "11px",
-                              color: "#1E3A8A",
-                              background: "#EFF6FF",
-                              border: "0.5px solid #BFDBFE",
-                              borderRadius: "4px",
-                              padding: "3px 10px",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Edit
-                          </button>
-                        ) : (
-                          <button
-                            style={{
-                              fontSize: "11px",
-                              color: "#6B7280",
-                              background: "#F3F4F6",
-                              border: "none",
-                              borderRadius: "4px",
-                              padding: "3px 10px",
-                              cursor: "pointer",
-                            }}
-                          >
-                            + Add data
-                          </button>
-                        )}
-                      </div>
+                      row.status !== "Not mapped" ? (
+                        <button style={{ fontSize: "12px", color: "#1E3A8A", background: "#EFF6FF", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer" }}>
+                          Edit
+                        </button>
+                      ) : (
+                        <button style={{ fontSize: "12px", color: "#6B7280", background: "#F5F5F5", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer" }}>
+                          + Add data
+                        </button>
+                      )
                     )}
                   </td>
                 </tr>
@@ -268,66 +175,26 @@ export function EmissionsReview() {
           </table>
 
           {activeTab === "adjust" && (
-            <div style={{ padding: "12px 16px", borderTop: "0.5px solid #E5E7EB" }}>
-              <button
-                style={{
-                  fontSize: "12px",
-                  color: "#1E3A8A",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "0",
-                }}
-              >
+            <div style={{ padding: "12px 16px", borderTop: "1px solid #F0F0F0" }}>
+              <button style={{ fontSize: "12px", color: "#1E3A8A", background: "none", border: "none", cursor: "pointer" }}>
                 + Add another sector
               </button>
             </div>
           )}
         </div>
 
-        {/* Footer nav */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button
-            style={{
-              background: "white",
-              border: "0.5px solid #D1D5DB",
-              borderRadius: "8px",
-              padding: "10px 20px",
-              fontSize: "13px",
-              color: "#6B7280",
-              cursor: "pointer",
-            }}
-          >
+        {/* Footer */}
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <button style={{ background: "white", border: "1px solid #DDDDE1", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", color: "#6B7280", cursor: "pointer" }}>
             ← City Profile
           </button>
           <div style={{ display: "flex", gap: "8px" }}>
             {activeTab === "adjust" && (
-              <button
-                style={{
-                  background: "white",
-                  border: "0.5px solid #D1D5DB",
-                  borderRadius: "8px",
-                  padding: "10px 20px",
-                  fontSize: "13px",
-                  color: "#DC2626",
-                  cursor: "pointer",
-                }}
-              >
+              <button style={{ background: "white", border: "1px solid #DDDDE1", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", color: "#DC2626", cursor: "pointer" }}>
                 Discard changes
               </button>
             )}
-            <button
-              style={{
-                background: "#16A34A",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                padding: "10px 24px",
-                fontSize: "13px",
-                fontWeight: "500",
-                cursor: "pointer",
-              }}
-            >
+            <button style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "500", cursor: "pointer" }}>
               {activeTab === "adjust" ? "Save & continue →" : "Socioeconomic context →"}
             </button>
           </div>

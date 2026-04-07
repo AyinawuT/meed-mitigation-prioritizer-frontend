@@ -10,7 +10,7 @@ const SECTIONS = [
     sub: "3 / 5 sectors confirmed · Inventory year 2023",
     progress: 60,
     cta: "Continue →",
-    ctaColor: "#1E3A8A",
+    ctaBlue: true,
   },
   {
     id: "socioeconomic",
@@ -21,7 +21,7 @@ const SECTIONS = [
     sub: null,
     progress: null,
     cta: "Start →",
-    ctaColor: "#6B7280",
+    ctaBlue: true,
   },
   {
     id: "regulations",
@@ -32,7 +32,7 @@ const SECTIONS = [
     sub: null,
     progress: null,
     cta: "Start →",
-    ctaColor: "#6B7280",
+    ctaBlue: true,
   },
   {
     id: "preferences",
@@ -43,7 +43,7 @@ const SECTIONS = [
     sub: null,
     progress: null,
     cta: "Start →",
-    ctaColor: "#6B7280",
+    ctaBlue: true,
   },
   {
     id: "policy",
@@ -54,28 +54,19 @@ const SECTIONS = [
     sub: null,
     progress: null,
     cta: "Start →",
-    ctaColor: "#6B7280",
+    ctaBlue: true,
   },
 ];
 
 function PriorityBadge({ priority }: { priority: string }) {
   const colors: Record<string, { bg: string; text: string }> = {
-    HIGH: { bg: "#FEF9C3", text: "#854D0E" },
-    MEDIUM: { bg: "#FEF9C3", text: "#854D0E" },
-    LOW: { bg: "#DCFCE7", text: "#166634" },
+    HIGH: { bg: "#FFF3E0", text: "#C05621" },
+    MEDIUM: { bg: "#FFF3E0", text: "#C05621" },
+    LOW: { bg: "#E8F5E9", text: "#2E7D32" },
   };
   const c = colors[priority] ?? colors.LOW;
   return (
-    <span
-      style={{
-        fontSize: "10px",
-        padding: "2px 7px",
-        borderRadius: "4px",
-        background: c.bg,
-        color: c.text,
-        fontWeight: "500",
-      }}
-    >
+    <span style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", background: c.bg, color: c.text, fontWeight: "600", letterSpacing: "0.03em" }}>
       {priority}
     </span>
   );
@@ -83,22 +74,13 @@ function PriorityBadge({ priority }: { priority: string }) {
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, { bg: string; text: string }> = {
-    "IN-PROGRESS": { bg: "#FEF9C3", text: "#854D0E" },
-    "NOT STARTED": { bg: "#F3F4F6", text: "#6B7280" },
-    COMPLETE: { bg: "#DCFCE7", text: "#15803D" },
+    "IN-PROGRESS": { bg: "#FFF3E0", text: "#C05621" },
+    "NOT STARTED": { bg: "#F5F5F5", text: "#9CA3AF" },
+    COMPLETE: { bg: "#E8F5E9", text: "#2E7D32" },
   };
   const c = colors[status] ?? colors["NOT STARTED"];
   return (
-    <span
-      style={{
-        fontSize: "10px",
-        padding: "2px 7px",
-        borderRadius: "4px",
-        background: c.bg,
-        color: c.text,
-        fontWeight: "500",
-      }}
-    >
+    <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: c.bg, color: c.text, fontWeight: "500" }}>
       {status}
     </span>
   );
@@ -106,21 +88,21 @@ function StatusBadge({ status }: { status: string }) {
 
 export function CityProfile() {
   return (
-    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F9FAFB", minHeight: "100vh" }}>
-      <Navbar cityName="Santiago" />
+    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+      <Navbar />
 
-      {/* Breadcrumb + header */}
-      <div style={{ background: "white", borderBottom: "0.5px solid #E5E7EB", padding: "16px 40px 20px" }}>
+      {/* White header */}
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px" }}>
             Cities / Santiago
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h1 style={{ fontSize: "24px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>
+              <h1 style={{ fontSize: "26px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>
                 Santiago
               </h1>
-              <div style={{ fontSize: "13px", color: "#6B7280" }}>
+              <div style={{ fontSize: "13px", color: "#9CA3AF" }}>
                 Región Metropolitana · 6.7M residents · Joined 2024
               </div>
             </div>
@@ -130,14 +112,14 @@ export function CityProfile() {
                 color: "white",
                 border: "none",
                 borderRadius: "8px",
-                padding: "10px 20px",
+                padding: "11px 20px",
                 fontSize: "13px",
                 fontWeight: "500",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                opacity: 0.6,
+                opacity: 0.55,
               }}
             >
               ⚡ GENERATE RECOMMENDATIONS
@@ -146,51 +128,53 @@ export function CityProfile() {
         </div>
       </div>
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 40px" }}>
-        <h2 style={{ fontSize: "18px", fontWeight: "500", color: "#111827", margin: "0 0 6px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 48px" }}>
+        <h2 style={{ fontSize: "17px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>
           City Profile
         </h2>
-        <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px" }}>
+        <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px", lineHeight: "1.5" }}>
           Complete each section to build the foundation for your action recommendations. Sections marked HIGH have the greatest impact on ranking accuracy.
         </p>
 
         {/* Cards grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "14px", marginBottom: "16px" }}>
           {SECTIONS.map((section) => (
             <div
               key={section.id}
               style={{
                 background: "white",
-                border: "0.5px solid #E5E7EB",
-                borderRadius: "10px",
+                border: "1px solid #EBEBEB",
+                borderRadius: "12px",
                 padding: "16px",
+                boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
                 <PriorityBadge priority={section.priority} />
                 <StatusBadge status={section.status} />
               </div>
-              <div style={{ fontSize: "14px", fontWeight: "500", color: "#111827", marginBottom: "6px" }}>
+              <div style={{ fontSize: "14px", fontWeight: "600", color: "#111827", marginBottom: "4px" }}>
                 {section.title}
               </div>
               {section.sub && (
-                <div style={{ fontSize: "12px", color: "#D97706", marginBottom: "4px" }}>
+                <div style={{ fontSize: "11px", color: "#C05621", marginBottom: "4px" }}>
                   {section.sub}
                 </div>
               )}
-              <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "12px" }}>
+              <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "12px", flex: "1" }}>
                 {section.desc}
               </div>
               {section.progress !== null && (
                 <div style={{ marginBottom: "12px" }}>
-                  <div style={{ background: "#E5E7EB", borderRadius: "4px", height: "4px" }}>
+                  <div style={{ background: "#E5E7EB", borderRadius: "3px", height: "3px" }}>
                     <div
                       style={{
                         background: "#16A34A",
                         width: `${section.progress}%`,
-                        height: "4px",
-                        borderRadius: "4px",
-                        transition: "width 0.3s",
+                        height: "3px",
+                        borderRadius: "3px",
                       }}
                     />
                   </div>
@@ -200,7 +184,7 @@ export function CityProfile() {
                 href="#"
                 style={{
                   fontSize: "13px",
-                  color: section.ctaColor,
+                  color: "#1E3A8A",
                   textDecoration: "none",
                   fontWeight: "500",
                 }}
@@ -215,26 +199,19 @@ export function CityProfile() {
         <div
           style={{
             background: "white",
-            border: "0.5px solid #E5E7EB",
-            borderRadius: "8px",
-            padding: "12px 20px",
+            border: "1px solid #EBEBEB",
+            borderRadius: "10px",
+            padding: "13px 20px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
           }}
         >
           <span style={{ fontSize: "13px", color: "#6B7280" }}>
             1 section in progress · 4 not started · 0 complete
           </span>
-          <a
-            href="#"
-            style={{
-              fontSize: "13px",
-              color: "#D97706",
-              textDecoration: "none",
-              fontWeight: "500",
-            }}
-          >
+          <a href="#" style={{ fontSize: "13px", color: "#C05621", textDecoration: "none", fontWeight: "500" }}>
             Complete Emissions Data + 2 more sections to unlock recommendations →
           </a>
         </div>
