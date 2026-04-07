@@ -2,9 +2,9 @@ import { Navbar } from "./_shared/Navbar";
 import { useState } from "react";
 
 const CITIES = [
-  { locode: "CL IQQ", name: "Iquique", region: "Tarapacá", population: "214,857", emissions: "9.8M tCO₂e", status: "Active" },
-  { locode: "CL ARI", name: "Arica", region: "Arica y Parinacota", population: "239,126", emissions: "7.4M tCO₂e", status: "In progress" },
-  { locode: "CL ANF", name: "Antofagasta", region: "Antofagasta", population: "402,651", emissions: "12.1M tCO₂e", status: "Active" },
+  { name: "Iquique", region: "Tarapacá", population: "214,857", emissions: "9.8M tCO₂e", status: "Active" },
+  { name: "Arica", region: "Arica y Parinacota", population: "239,126", emissions: "7.4M tCO₂e", status: "In progress" },
+  { name: "Antofagasta", region: "Antofagasta", population: "402,651", emissions: "12.1M tCO₂e", status: "Active" },
 ];
 
 const QUICK_CITIES = ["Iquique", "Santiago", "Antofagasta", "Valparaíso", "Concepción"];
@@ -52,7 +52,7 @@ export function Landing() {
                   type="text"
                   value={searchVal}
                   onChange={(e) => setSearchVal(e.target.value)}
-                  placeholder="Search by city name or LOCODE (e.g. Iquique, CL IQQ)..."
+                  placeholder="Search by city name (e.g. Iquique, Santiago, Antofagasta)..."
                   style={{
                     width: "100%",
                     border: "1px solid #E5E7EB",
@@ -141,10 +141,7 @@ export function Landing() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     <span style={{ fontSize: "20px" }}>🇨🇱</span>
-                    <div>
-                      <div style={{ fontSize: "14px", fontWeight: "500", color: "#111827" }}>{city.name}</div>
-                      <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{city.locode}</div>
-                    </div>
+                    <div style={{ fontSize: "14px", fontWeight: "500", color: "#111827" }}>{city.name}</div>
                   </div>
                   <span
                     style={{
