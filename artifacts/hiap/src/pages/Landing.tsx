@@ -205,27 +205,59 @@ export function Landing() {
               </span>
             </div>
 
-            <div style={{ display: "flex", gap: "28px", alignItems: "stretch" }}>
-              {/* Map */}
-              <div style={{
-                flex: "0 0 460px",
-                borderRadius: "12px",
-                overflow: "hidden",
-                border: "1px solid #EBEBEB",
-                height: "220px",
-                boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
-              }}>
-                <iframe
-                  src={selectedCity.mapUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: "none", display: "block" }}
-                  title={`Map of ${selectedCity.name}`}
-                />
+            <div style={{ display: "flex", gap: "28px", alignItems: "flex-start" }}>
+              {/* Left column: map + CTA button */}
+              <div style={{ flex: "0 0 460px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                {/* Map */}
+                <div style={{
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  border: "1px solid #EBEBEB",
+                  height: "220px",
+                  boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
+                }}>
+                  <iframe
+                    src={selectedCity.mapUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: "none", display: "block" }}
+                    title={`Map of ${selectedCity.name}`}
+                  />
+                </div>
+
+                {/* CTA below the map */}
+                <button
+                  style={{
+                    background: "#001EA7",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "10px",
+                    padding: "13px 20px",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    width: "100%",
+                    textAlign: "center",
+                    boxShadow: "0 2px 8px rgba(0,30,167,0.25)",
+                    transition: "opacity 0.15s",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                >
+                  <span>Open {selectedCity.name} City Profile</span>
+                  <span style={{ fontSize: "16px" }}>→</span>
+                </button>
+                <div style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center" }}>
+                  Joined {selectedCity.joinedYear} · {selectedCity.region}
+                </div>
               </div>
 
               {/* Stats */}
-              <div style={{ flex: "1", display: "flex", flexDirection: "column", justifyContent: "center", gap: "18px" }}>
+              <div style={{ flex: "1", display: "flex", flexDirection: "column", justifyContent: "center", gap: "18px", paddingTop: "12px" }}>
                 {[
                   {
                     icon: "↗",
@@ -264,32 +296,6 @@ export function Landing() {
                     </div>
                   </div>
                 ))}
-              </div>
-
-              {/* CTA */}
-              <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <button
-                  style={{
-                    background: "#001EA7",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "10px",
-                    padding: "13px 28px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    boxShadow: "0 2px 8px rgba(0,30,167,0.25)",
-                    transition: "opacity 0.15s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                >
-                  Prioritise this city →
-                </button>
-                <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "8px", textAlign: "right" }}>
-                  Joined {selectedCity.joinedYear} · {selectedCity.region}
-                </div>
               </div>
             </div>
           </div>
