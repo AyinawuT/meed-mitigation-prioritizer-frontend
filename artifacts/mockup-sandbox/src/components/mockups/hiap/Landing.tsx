@@ -129,9 +129,9 @@ export function Landing() {
       <Navbar />
 
       {/* Hero */}
-      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "40px 64px 40px" }}>
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "28px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ display: "flex", gap: "80px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "48px", alignItems: "center" }}>
             {/* Left: headline */}
             <div style={{ flex: "0 0 380px" }}>
               <p style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.3" }}>
@@ -245,7 +245,7 @@ export function Landing() {
 
       {/* City preview panel — shown after selecting a city */}
       {selectedCity && (
-        <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "24px 64px 28px" }}>
+        <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 20px" }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             {/* City label */}
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px" }}>
@@ -259,11 +259,11 @@ export function Landing() {
             <div style={{ display: "flex", gap: "28px", alignItems: "stretch" }}>
               {/* Map */}
               <div style={{
-                flex: "0 0 520px",
+                flex: "0 0 460px",
                 borderRadius: "12px",
                 overflow: "hidden",
                 border: "1px solid #EBEBEB",
-                height: "260px",
+                height: "220px",
                 boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
               }}>
                 <iframe
@@ -320,7 +320,7 @@ export function Landing() {
       )}
 
       {/* Stats bar */}
-      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "12px 64px" }}>
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "10px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex" }}>
           {STATS.map((s, i) => (
             <div
@@ -340,14 +340,14 @@ export function Landing() {
       </div>
 
       {/* Body */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 64px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 28px" }}>
         {/* How it works */}
         <div>
-          <h2 style={{ fontSize: "16px", fontWeight: "500", color: "#111827", marginBottom: "4px" }}>How it works</h2>
-          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "16px" }}>
+          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", marginBottom: "3px" }}>How it works</h2>
+          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "12px" }}>
             HIAP guides you through four steps to generate a ranked action plan for your city.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
             {HOW_STEPS.map((step) => (
               <div
                 key={step.n}
@@ -355,23 +355,23 @@ export function Landing() {
                   background: "white",
                   border: "1px solid #EBEBEB",
                   borderRadius: "12px",
-                  padding: "16px",
+                  padding: "14px",
                   boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                 }}
               >
                 <div
                   style={{
-                    width: "28px",
-                    height: "28px",
+                    width: "26px",
+                    height: "26px",
                     borderRadius: "50%",
                     background: "#EFF6FF",
                     color: "#001EA7",
-                    fontSize: "13px",
+                    fontSize: "12px",
                     fontWeight: "600",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: "12px",
+                    marginBottom: "10px",
                   }}
                 >
                   {step.n}
