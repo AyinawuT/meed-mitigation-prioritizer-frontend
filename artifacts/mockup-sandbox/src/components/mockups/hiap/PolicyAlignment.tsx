@@ -110,6 +110,9 @@ export function PolicyAlignment() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>Policy alignment</h1>
+              <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "4px" }}>
+                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>MEED+ ALIGNMENT: Shapes 22% of ranking — policy alignment shapes 80% of the alignment score</span>
+              </div>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: "0" }}>Review policy signals from national, regional, and municipal plans. These shape the alignment score.</p>
             </div>
             <div style={{ display: "flex", gap: "6px", alignSelf: "center" }}>
