@@ -1,4 +1,5 @@
 import { Navbar } from "./_shared/Navbar";
+import { StepBar } from "./_shared/StepBar";
 
 const SECTIONS = [
   { name: "Emissions Data", status: "COMPLETE", detail: "3/5 sectors confirmed" },
@@ -29,6 +30,7 @@ export function PreflightSummary() {
   return (
     <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar />
+      <StepBar activeStep={5} />
 
       {/* White header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
