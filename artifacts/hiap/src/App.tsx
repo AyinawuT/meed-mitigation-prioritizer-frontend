@@ -2,6 +2,7 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Landing } from "@/pages/Landing";
 import { CityProfile } from "@/pages/CityProfile";
+import { EmissionsReview } from "@/pages/EmissionsReview";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -11,6 +12,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Landing} />
       <Route path="/city/:locode" component={CityProfile} />
+      <Route path="/city/:locode/emissions" component={EmissionsReview} />
       <Route component={NotFound} />
     </Switch>
   );

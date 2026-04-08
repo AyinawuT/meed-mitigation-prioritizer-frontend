@@ -2,6 +2,14 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, type CityData } from "@/data/cities";
 
+const STEP_ROUTES: Record<string, string> = {
+  emissions: "emissions",
+  socioeconomic: "socioeconomic",
+  regulations: "regulations",
+  preferences: "strategic",
+  policy: "policy",
+};
+
 const SECTIONS = [
   {
     id: "emissions",
@@ -100,9 +108,10 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
-function SectionCard({ section }: { section: typeof SECTIONS[number] }) {
+function SectionCard({ section, onClick }: { section: typeof SECTIONS[number]; onClick?: () => void }) {
   return (
     <div
+      onClick={onClick}
       style={{
         background: "white",
         border: "1px solid #EBEBEB",
@@ -112,7 +121,7 @@ function SectionCard({ section }: { section: typeof SECTIONS[number] }) {
         display: "flex",
         flexDirection: "column",
         transition: "box-shadow 0.15s, border-color 0.15s",
-        cursor: "pointer",
+        cursor: onClick ? "pointer" : "default",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
@@ -315,9 +324,16 @@ export function CityProfile({ params }: CityProfileProps) {
 
         {/* Section cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "16px" }}>
-          {SECTIONS.map((section) => (
-            <SectionCard key={section.id} section={section} />
-          ))}
+          {SECTIONS.map((section) => {
+            const route = STEP_ROUTES[section.id];
+            return (
+              <SectionCard
+                key={section.id}
+                section={section}
+                onClick={route ? () => navigate(`/city/${city.locode.replace(" ", "-")}/${route}`) : undefined}
+              />
+            );
+          })}
         </div>
 
         {/* Status bar */}
