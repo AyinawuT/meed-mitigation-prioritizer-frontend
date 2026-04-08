@@ -16,50 +16,51 @@ interface SectorRow {
   status: "Confirmed" | "Not mapped";
 }
 
-const IQQ_SECTORS: Omit<SectorRow, never>[] = [
+// Computed from prioritizer-request.json (inventoryYear: 2022)
+const IQQ_SECTORS: SectorRow[] = [
   {
-    sector: "Transportation",
-    sub: "II.1.1 On-road · II.1.2 Railways · II.1.3 Waterborne",
-    ref: "II.1",
-    emissions: 4112424,
-    share: 45.1,
-    source: "SECCTIVAL 2023",
+    sector: "Stationary Energy",
+    sub: "I.1.1 Residential combustion · I.1.2 Residential electricity",
+    ref: "I.1–I.3",
+    emissions: 8779938,
+    share: 96.7,
+    source: "GPC Inventory 2022",
     status: "Confirmed",
   },
   {
-    sector: "Stationary Energy",
-    sub: "I.1.1 Residential · I.2.1 Commercial & institutional · I.3.1 Manufacturing",
-    ref: "I.1–I.3",
-    emissions: 2871187,
-    share: 31.5,
-    source: "DEC 2023",
+    sector: "Transportation",
+    sub: "II.1.1 On-road transport",
+    ref: "II.1",
+    emissions: 27588,
+    share: 0.3,
+    source: "GPC Inventory 2022",
     status: "Confirmed",
   },
   {
     sector: "Waste",
-    sub: "III.1.1 Solid waste disposal · III.3.1 Wastewater treatment",
-    ref: "III.1–III.3",
-    emissions: 911806,
-    share: 10.0,
-    source: "MRC 2022",
+    sub: "III.4.1 Wastewater treatment & discharge",
+    ref: "III.1–III.4",
+    emissions: 236604,
+    share: 2.6,
+    source: "GPC Inventory 2022",
     status: "Confirmed",
   },
   {
     sector: "Industrial Processes & Product Use (IPPU)",
     sub: "IV.1 Industrial processes · IV.2 Product use",
     ref: "IV.1–IV.2",
-    emissions: 1004986,
-    share: 11.0,
-    source: "INE 2023",
+    emissions: 32167,
+    share: 0.4,
+    source: "GPC Inventory 2022",
     status: "Confirmed",
   },
   {
     sector: "Agriculture, Forestry & Other Land Use (AFOLU)",
-    sub: "V.1 Livestock · V.2 Land · V.3 Aggregate sources",
+    sub: "V.1 Livestock",
     ref: "V.1–V.3",
-    emissions: 217651,
-    share: 2.4,
-    source: "SAG 2022",
+    emissions: 130,
+    share: 0.0,
+    source: "GPC Inventory 2022",
     status: "Confirmed",
   },
 ];
@@ -151,6 +152,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const confirmedCount = sectors.filter((s) => s.status === "Confirmed").length;
   const totalEmissions = sectors.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
   const totalMillions = (totalEmissions / 1e6).toFixed(2);
+  const inventoryYear = city.locode === "CL IQQ" ? "2022" : city.emissionsYear;
 
   function handleDiscard() {
     setDiscarded(true);
@@ -261,7 +263,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
         }}>
           {[
             { label: "Total GHG Emissions", value: `${totalMillions}M tCO₂e` },
-            { label: "Inventory Year", value: city.emissionsYear },
+            { label: "Inventory Year", value: inventoryYear },
             { label: "Primary Source", value: "Municipal records" },
             { label: "Completeness", value: `${confirmedCount} of ${sectors.length} sectors` },
           ].map((s) => (
