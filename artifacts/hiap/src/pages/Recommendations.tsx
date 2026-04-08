@@ -252,7 +252,6 @@ function TopPickCard({
 }) {
   const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
   const sector = gpcSectorName(action.gpcRefs);
-  const cost = action.costInvestmentNeeded || "—";
 
   return (
     <div style={{
@@ -326,10 +325,6 @@ function TopPickCard({
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Sector</span>
           <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{sector}</span>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Estimated cost</span>
-          <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{cost}</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Implementation time</span>
