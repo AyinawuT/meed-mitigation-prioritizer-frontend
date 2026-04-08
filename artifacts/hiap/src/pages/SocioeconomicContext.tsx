@@ -268,6 +268,9 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
                 Socioeconomic Context
               </h1>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
+                MEED+ HIAP uses socioeconomic indicators to assess how feasible each climate action is for {city.name}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.
+              </p>
               <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
                   {indicators.length} indicators loaded
