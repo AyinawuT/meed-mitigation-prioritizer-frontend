@@ -59,7 +59,7 @@ const SECTION_DEFS: SectionDef[] = [
 ];
 
 const PRIORITY_STYLES: Record<string, { bg: string; text: string }> = {
-  HIGH:   { bg: "#FFF3E0", text: "#C05621" },
+  HIGH:   { bg: "#FFEAEE", text: "#F23D33" },
   MEDIUM: { bg: "#FEF8E1", text: "#F9A200" },
   LOW:    { bg: "#EFFDE5", text: "#24BE00" },
 };
@@ -289,7 +289,7 @@ export function CityProfile({ params }: CityProfileProps) {
         </div>
         <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px", lineHeight: "1.5" }}>
           Complete each section to build the foundation for your action recommendations. Sections marked{" "}
-          <strong style={{ color: "#C05621" }}>HIGH</strong> have the greatest impact on ranking accuracy.
+          <strong style={{ color: "#F23D33" }}>HIGH</strong> have the greatest impact on ranking accuracy.
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "16px" }}>
