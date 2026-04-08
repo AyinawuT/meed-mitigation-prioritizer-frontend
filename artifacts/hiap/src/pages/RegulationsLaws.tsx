@@ -9,7 +9,6 @@ import actionNames from "@/data/actionNames.json";
 type Tab = "review" | "adjust";
 type AlignmentStatus = "aligns" | "not_aligned" | "no_evidence";
 type Strength = "mandatory" | "required" | "recommended" | "optional" | "informational";
-type OverallStatus = "all_aligns" | "partially_aligned" | "all_not_aligned" | "all_no_evidence" | "mixed";
 
 interface Requirement {
   signal_code: string;
@@ -39,74 +38,69 @@ interface ActionMeta {
 const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
 
 const SIGNAL_SHORT: Record<string, string> = {
-  MUNI_WASTE_AUTHORITY:       "Waste authority",
+  MUNI_WASTE_AUTHORITY:       "Waste management authority",
   MUNI_TRANSPORT_AUTHORITY:   "Transport authority",
   MUNI_PLANNING_AUTHORITY:    "Planning authority",
-  MUNI_ENV_STANDARDS:         "Env. standards",
+  MUNI_ENV_STANDARDS:         "Environmental standards",
   PLANS_ALIGNMENT:            "Plans alignment",
-  PROCUREMENT_PUBLIC_BIDDING: "Procurement",
+  PROCUREMENT_PUBLIC_BIDDING: "Procurement process",
   SUBSIDY_CAP_7PCT:           "Subsidy cap",
 };
 
-const STRENGTH_META: Record<Strength, { label: string; dot: string; description: string }> = {
-  mandatory:     { label: "Mandatory",     dot: "#DC2626", description: "This requirement must be met for the action to be legally viable." },
-  required:      { label: "Required",      dot: "#F97316", description: "This requirement is needed under national law." },
-  recommended:   { label: "Recommended",   dot: "#CA8A04", description: "Following this requirement is strongly advised." },
-  optional:      { label: "Optional",      dot: "#16A34A", description: "This requirement may optionally apply." },
-  informational: { label: "Informational", dot: "#9CA3AF", description: "Provided for awareness; does not affect the score." },
-};
-
-const SIGNAL_META: Record<string, { description: string; source: string; articleRef: string; sourceUrl: string }> = {
-  MUNI_WASTE_AUTHORITY:       { description: "Exclusive authority over waste collection and management", source: "Ley 18.695", articleRef: "Art. 3° d), 20°", sourceUrl: "https://bcn.cl/3d2sz" },
-  MUNI_TRANSPORT_AUTHORITY:   { description: "Exclusive authority over public transport and traffic within the commune", source: "Ley 18.695", articleRef: "Art. 3° a)", sourceUrl: "https://bcn.cl/3d2sz" },
-  MUNI_PLANNING_AUTHORITY:    { description: "Full authority over urban planning and the communal regulatory plan", source: "Ley 18.695", articleRef: "Art. 3° c)", sourceUrl: "https://bcn.cl/3d2sz" },
-  MUNI_ENV_STANDARDS:         { description: "May apply environmental protection standards (e.g. building efficiency)", source: "Ley 18.695", articleRef: "Art. 4° c), 19° d)", sourceUrl: "https://bcn.cl/3d2sz" },
-  PLANS_ALIGNMENT:            { description: "Municipal actions must comply with national and regional plans", source: "Ley 18.695", articleRef: "Art. 7°", sourceUrl: "https://bcn.cl/3d2sz" },
-  PROCUREMENT_PUBLIC_BIDDING: { description: "Municipalities may contract private entities via public bidding", source: "Ley 18.695", articleRef: "Art. 6°", sourceUrl: "https://bcn.cl/3d2sz" },
-  SUBSIDY_CAP_7PCT:           { description: "Subsidies to non-profits capped at 7% of the municipal budget", source: "Ley 18.695", articleRef: "Art. 5° g)", sourceUrl: "https://bcn.cl/3d2sz" },
-};
-
 const VALUE_DISPLAY: Record<string, string> = {
-  exclusive_authority: "Exclusive authority",
-  apply_standards:     "May apply standards",
-  planning_authority:  "Full planning authority",
-  comply:              "Must comply",
-  public_bidding:      "Via public bidding",
-  direct_award:        "Direct award",
-  restricted:          "Restricted",
-  shared_authority:    "Shared authority",
+  exclusive_authority: "exclusive authority",
+  apply_standards:     "may apply standards",
+  planning_authority:  "full planning authority",
+  comply:              "must comply",
+  public_bidding:      "public bidding",
+  direct_award:        "direct award",
+  restricted:          "restricted",
+  shared_authority:    "shared authority",
   "0.07":              "7% cap",
-  "0.12":              "12% cap",
-  "0.05":              "5%",
+  "0.12":              "12% (exceeds cap)",
+  "0.05":              "5% (within cap)",
 };
 
-const ALIGNMENT_CONFIG: Record<AlignmentStatus, { bg: string; color: string; border: string; label: string; icon: string }> = {
-  aligns:      { bg: "#F0FDF4", color: "#16A34A", border: "#BBF7D0", label: "Aligns",      icon: "✓" },
-  not_aligned: { bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Not aligned", icon: "✗" },
-  no_evidence: { bg: "#F3F4F6", color: "#9CA3AF", border: "#E5E7EB", label: "No evidence", icon: "?" },
+const STRENGTH_LABEL: Record<Strength, string> = {
+  mandatory:     "mandatory",
+  required:      "required",
+  recommended:   "recommended",
+  optional:      "optional",
+  informational: "informational",
 };
 
-function getOverallStatus(reqs: Requirement[]): OverallStatus {
-  const statuses = reqs.map((r) => r.alignment_status);
-  if (statuses.every((s) => s === "aligns"))      return "all_aligns";
-  if (statuses.every((s) => s === "not_aligned")) return "all_not_aligned";
-  if (statuses.every((s) => s === "no_evidence")) return "all_no_evidence";
-  return "partially_aligned";
+function getBlockingReqs(reqs: Requirement[]): Requirement[] {
+  return reqs.filter(
+    (r) =>
+      (r.strength === "mandatory" || r.strength === "required") &&
+      r.alignment_status === "not_aligned"
+  );
 }
 
-const OVERALL_CONFIG: Record<OverallStatus, { bg: string; color: string; border: string; label: string; icon: string }> = {
-  all_aligns:        { bg: "#F0FDF4", color: "#16A34A", border: "#BBF7D0", label: "Legally clear",     icon: "✓" },
-  partially_aligned: { bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Partial alignment", icon: "~" },
-  all_not_aligned:   { bg: "#FEE2E2", color: "#DC2626", border: "#FCA5A5", label: "Not aligned",        icon: "✗" },
-  all_no_evidence:   { bg: "#F3F4F6", color: "#9CA3AF", border: "#E5E7EB", label: "No evidence",        icon: "?" },
-  mixed:             { bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Mixed",               icon: "~" },
-};
+function getUncertainReqs(reqs: Requirement[]): Requirement[] {
+  return reqs.filter(
+    (r) =>
+      (r.strength === "mandatory" || r.strength === "required") &&
+      r.alignment_status === "no_evidence"
+  );
+}
 
-const OPERATOR_DISPLAY: Record<string, string> = {
-  equals:                "=",
-  less_than_or_equal:    "≤",
-  greater_than_or_equal: "≥",
-};
+function blockReason(req: Requirement): string {
+  const signal = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
+  const required = VALUE_DISPLAY[req.required_value] ?? req.required_value;
+  const found = req.legal_signal_value ? (VALUE_DISPLAY[req.legal_signal_value] ?? req.legal_signal_value) : null;
+  const strength = STRENGTH_LABEL[req.strength];
+  if (found) {
+    return `${signal} — ${strength} requirement not met (needs ${required}, found ${found})`;
+  }
+  return `${signal} — ${strength} requirement not met (needs ${required})`;
+}
+
+function uncertainReason(req: Requirement): string {
+  const signal = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
+  const required = VALUE_DISPLAY[req.required_value] ?? req.required_value;
+  return `${signal} — no evidence found that the city has ${required}`;
+}
 
 interface RegulationsLawsProps {
   params: { locode: string };
@@ -115,7 +109,10 @@ interface RegulationsLawsProps {
 export function RegulationsLaws({ params }: RegulationsLawsProps) {
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("review");
-  const [expandedAction, setExpandedAction] = useState<string | null>(null);
+  const [overrides, setOverrides] = useState<Set<string>>(new Set());
+  const [overrideNotes, setOverrideNotes] = useState<Record<string, string>>({});
+  const [editingNote, setEditingNote] = useState<string | null>(null);
+  const [expandedUncertain, setExpandedUncertain] = useState(false);
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -140,21 +137,27 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
   const citySlug = city.locode.replace(" ", "-");
   const actions = actionsLegal.legal_requirements as ActionLegal[];
 
-  const totalReqs        = actions.reduce((s, a) => s + a.requirements.length, 0);
-  const totalAligns      = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "aligns").length, 0);
-  const totalNotAligned  = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "not_aligned").length, 0);
-  const totalNoEvidence  = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "no_evidence").length, 0);
+  const excluded   = actions.filter((a) => getBlockingReqs(a.requirements).length > 0);
+  const uncertain  = actions.filter((a) => getBlockingReqs(a.requirements).length === 0 && getUncertainReqs(a.requirements).length > 0);
+  const included   = actions.filter((a) => getBlockingReqs(a.requirements).length === 0 && getUncertainReqs(a.requirements).length === 0);
 
-  const clearCount   = actions.filter((a) => getOverallStatus(a.requirements) === "all_aligns").length;
-  const blockedCount = actions.filter((a) => getOverallStatus(a.requirements) === "all_not_aligned").length;
-  const partialCount = actions.length - clearCount - blockedCount;
+  const excludedCount  = excluded.filter((a) => !overrides.has(a.action_id)).length;
+  const overriddenCount = overrides.size;
+  const includedCount  = included.length + overriddenCount;
 
-  const GROUPS: { status: OverallStatus; label: string; actions: ActionLegal[] }[] = [
-    { status: "all_aligns",        label: "Legally clear",     actions: actions.filter((a) => getOverallStatus(a.requirements) === "all_aligns") },
-    { status: "partially_aligned", label: "Partial alignment", actions: actions.filter((a) => getOverallStatus(a.requirements) === "partially_aligned" || getOverallStatus(a.requirements) === "mixed") },
-    { status: "all_not_aligned",   label: "Not aligned",       actions: actions.filter((a) => getOverallStatus(a.requirements) === "all_not_aligned") },
-    { status: "all_no_evidence",   label: "No evidence",       actions: actions.filter((a) => getOverallStatus(a.requirements) === "all_no_evidence") },
-  ].filter((g) => g.actions.length > 0);
+  function toggleOverride(id: string) {
+    setOverrides((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+        setEditingNote(null);
+      } else {
+        next.add(id);
+        setEditingNote(id);
+      }
+      return next;
+    });
+  }
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -177,31 +180,23 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
               <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
                 Regulations & Laws
               </h1>
-              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-                  {actions.length} actions assessed
-                </span>
-                <span style={{ fontSize: "11px", background: "#EFF6FF", color: "#1D4ED8", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
-                  {totalReqs} legal checks
-                </span>
-                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                  MEED+ LEGAL: Determines which actions are legally permitted for {city.name}
-                </span>
-              </div>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
+                MEED+ has checked each candidate action against Chilean municipal law. Actions that fail a
+                mandatory or required legal check are excluded from the ranking unless you override them.
+              </p>
             </div>
 
             <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
               {(["review", "adjust"] as Tab[]).map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => { setActiveTab(tab); setExpandedAction(null); }}
+                  onClick={() => setActiveTab(tab)}
                   style={{
                     padding: "7px 18px", borderRadius: "6px", border: "none",
                     background: activeTab === tab ? "#001EA7" : "white",
                     color: activeTab === tab ? "white" : "#9CA3AF",
                     fontSize: "13px", fontWeight: "500", cursor: "pointer",
                     outline: activeTab === tab ? "none" : "1px solid #DDDDE1",
-                    transition: "background 0.15s",
                   }}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -214,262 +209,242 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 40px" }}>
 
-        {/* KPI bar */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "14px" }}>
+        {/* Summary row */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "20px" }}>
           {[
-            { label: "Actions assessed", value: actions.length, bg: "white",   color: "#111827" },
-            { label: "Legally clear",    value: clearCount,     bg: "#F0FDF4", color: "#16A34A" },
-            { label: "Partial / flagged", value: partialCount,  bg: "#FFF3E0", color: "#C05621" },
-            { label: "Blocked",          value: blockedCount,   bg: "#FEF2F2", color: "#DC2626" },
+            {
+              value: includedCount,
+              label: "Included in ranking",
+              sub: `${included.length} passed legal review${overriddenCount > 0 ? ` · ${overriddenCount} manually reinstated` : ""}`,
+              bg: "#F0FDF4", valuecol: "#16A34A", border: "#BBF7D0",
+            },
+            {
+              value: excludedCount,
+              label: "Excluded from ranking",
+              sub: "Failed a mandatory or required legal check",
+              bg: excludedCount === 0 ? "#F0FDF4" : "#FEF2F2",
+              valuecol: excludedCount === 0 ? "#16A34A" : "#DC2626",
+              border: excludedCount === 0 ? "#BBF7D0" : "#FCA5A5",
+            },
+            {
+              value: uncertain.length,
+              label: "Flagged — evidence missing",
+              sub: "No evidence found for a mandatory check",
+              bg: uncertain.length === 0 ? "#F9FAFB" : "#FFFBEB",
+              valuecol: uncertain.length === 0 ? "#9CA3AF" : "#D97706",
+              border: uncertain.length === 0 ? "#E5E7EB" : "#FDE68A",
+            },
           ].map((k) => (
-            <div key={k.label} style={{ background: k.bg, border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              <div style={{ fontSize: "24px", fontWeight: "700", color: k.color, lineHeight: 1 }}>{k.value}</div>
-              <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "4px" }}>{k.label}</div>
+            <div key={k.label} style={{ background: k.bg, border: `1px solid ${k.border}`, borderRadius: "10px", padding: "16px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+              <div style={{ fontSize: "28px", fontWeight: "700", color: k.valuecol, lineHeight: 1, marginBottom: "4px" }}>{k.value}</div>
+              <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "3px" }}>{k.label}</div>
+              <div style={{ fontSize: "11px", color: "#6B7280" }}>{k.sub}</div>
             </div>
           ))}
         </div>
 
-        {/* Check summary bar */}
-        <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 24px", marginBottom: "14px", display: "flex", gap: "32px", alignItems: "center", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Legal checks</div>
-            <div style={{ fontSize: "14px", fontWeight: "600", color: "#111827" }}>{totalReqs} total</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Aligns</div>
-            <div style={{ fontSize: "14px", fontWeight: "600", color: "#16A34A" }}>{totalAligns}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Not aligned</div>
-            <div style={{ fontSize: "14px", fontWeight: "600", color: "#C05621" }}>{totalNotAligned}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px", textTransform: "uppercase", letterSpacing: "0.04em" }}>No evidence</div>
-            <div style={{ fontSize: "14px", fontWeight: "600", color: "#9CA3AF" }}>{totalNoEvidence}</div>
-          </div>
-          <div style={{ marginLeft: "auto", display: "flex", gap: "12px", alignItems: "center" }}>
-            <span style={{ fontSize: "12px", color: "#6B7280" }}>Source:</span>
-            <a href="https://bcn.cl/3d2sz" target="_blank" rel="noreferrer" style={{ fontSize: "12px", color: "#001EA7", fontWeight: "500", textDecoration: "none" }}>
-              Ley 18.695 (LOCM) ↗
-            </a>
-            <span style={{ fontSize: "12px", color: "#9CA3AF" }}>· National · March 2026</span>
-          </div>
-        </div>
-
-        {/* Progress bar */}
-        <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 24px", marginBottom: "14px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-          <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-            Legal check breakdown — {totalReqs} checks across {actions.length} actions
-          </div>
-          <div style={{ display: "flex", borderRadius: "6px", overflow: "hidden", height: "12px", gap: "2px" }}>
-            {totalAligns     > 0 && <div title={`${totalAligns} aligns`}      style={{ flex: totalAligns,     background: "#16A34A" }} />}
-            {totalNotAligned > 0 && <div title={`${totalNotAligned} not aligned`} style={{ flex: totalNotAligned, background: "#F97316" }} />}
-            {totalNoEvidence > 0 && <div title={`${totalNoEvidence} no evidence`} style={{ flex: totalNoEvidence, background: "#E5E7EB" }} />}
-          </div>
-          <div style={{ display: "flex", gap: "16px", marginTop: "6px" }}>
-            {[
-              { label: "Aligns",      count: totalAligns,     color: "#16A34A" },
-              { label: "Not aligned", count: totalNotAligned, color: "#F97316" },
-              { label: "No evidence", count: totalNoEvidence, color: "#9CA3AF" },
-            ].map((l) => (
-              <div key={l.label} style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-                <div style={{ width: "8px", height: "8px", borderRadius: "2px", background: l.color, flexShrink: 0 }} />
-                <span style={{ fontSize: "11px", color: "#6B7280" }}>{l.label}</span>
-                <span style={{ fontSize: "11px", fontWeight: "600", color: "#374151" }}>{l.count}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Strength legend */}
-        <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "10px 24px", marginBottom: "14px", display: "flex", gap: "6px", alignItems: "center", flexWrap: "wrap", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-          <span style={{ fontSize: "11px", color: "#9CA3AF", marginRight: "4px" }}>Requirement level:</span>
-          {(Object.entries(STRENGTH_META) as [Strength, typeof STRENGTH_META[Strength]][]).map(([key, s]) => (
-            <div key={key} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: s.dot, flexShrink: 0 }} />
-              <span style={{ fontSize: "11px", color: "#6B7280" }}>{s.label}</span>
+        {/* ── EXCLUDED ACTIONS ── */}
+        {excluded.length > 0 && (
+          <div style={{ marginBottom: "16px" }}>
+            <div style={{ fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "8px" }}>
+              Excluded actions
+              <span style={{ fontSize: "12px", fontWeight: "400", color: "#9CA3AF", marginLeft: "8px" }}>
+                These actions failed one or more legal checks and will not appear in the ranking
+              </span>
             </div>
-          ))}
-        </div>
 
-        {/* Action groups */}
-        {GROUPS.map((group) => {
-          const cfg = OVERALL_CONFIG[group.status];
-          return (
-            <div key={group.status} style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", marginBottom: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              {/* Group header */}
-              <div style={{ padding: "10px 20px", background: "#FAFAFA", borderBottom: "1px solid #F0F0F0", display: "flex", alignItems: "center", gap: "10px" }}>
-                <span style={{ fontSize: "12px", fontWeight: "700", color: cfg.color, background: cfg.bg, padding: "2px 10px", borderRadius: "4px", border: `1px solid ${cfg.border}` }}>
-                  {cfg.icon} {cfg.label}
-                </span>
-                <span style={{ fontSize: "12px", color: "#9CA3AF" }}>
-                  {group.actions.length} {group.actions.length === 1 ? "action" : "actions"}
-                </span>
-              </div>
-
-              {group.actions.map((action, idx) => {
-                const isExpanded = expandedAction === action.action_id;
-                const isLast = idx === group.actions.length - 1;
-                const overall = getOverallStatus(action.requirements);
-                const overallCfg = OVERALL_CONFIG[overall];
+            <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+              {excluded.map((action, idx) => {
                 const meta = ACTION_NAMES[action.action_id];
-                const mandatoryFails = action.requirements.filter(
-                  (r) => r.alignment_status !== "aligns" && (r.strength === "mandatory" || r.strength === "required")
-                );
+                const blockingReqs = getBlockingReqs(action.requirements);
+                const isOverridden = overrides.has(action.action_id);
+                const isLast = idx === excluded.length - 1;
+                const isEditingThisNote = editingNote === action.action_id;
 
                 return (
-                  <div key={action.action_id}>
-                    {/* Action row */}
-                    <div
-                      style={{
-                        padding: "14px 20px",
-                        borderBottom: (!isLast || isExpanded) ? "1px solid #F5F5F5" : "none",
-                        cursor: "pointer",
-                        transition: "background 0.1s",
-                      }}
-                      onClick={() => setExpandedAction(isExpanded ? null : action.action_id)}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFAFA")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                    >
-                      {/* Top row: name + overall badge + expand */}
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px", marginBottom: "8px" }}>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "2px", lineHeight: "1.3" }}>
+                  <div
+                    key={action.action_id}
+                    style={{
+                      padding: "16px 20px",
+                      borderBottom: isLast ? "none" : "1px solid #F5F5F5",
+                      background: isOverridden ? "#FFFBEB" : "white",
+                      transition: "background 0.2s",
+                    }}
+                  >
+                    <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
+                      {/* Left: action info */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
+                          <span style={{ fontSize: "13px", fontWeight: "600", color: isOverridden ? "#92400E" : "#111827" }}>
                             {meta?.name ?? action.action_id}
-                          </div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "11px", color: "#9CA3AF" }}>{action.action_id}</span>
-                            {meta?.subcategory && (
-                              <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", padding: "1px 6px", borderRadius: "3px" }}>
-                                {meta.subcategory}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
-                          {mandatoryFails.length > 0 && (
-                            <span style={{ fontSize: "11px", background: "#FEE2E2", color: "#DC2626", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-                              {mandatoryFails.length} mandatory {mandatoryFails.length === 1 ? "issue" : "issues"}
+                          </span>
+                          {isOverridden && (
+                            <span style={{ fontSize: "11px", background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A", padding: "1px 7px", borderRadius: "4px", fontWeight: "600" }}>
+                              Manually reinstated
                             </span>
                           )}
-                          <span style={{ fontSize: "11px", background: overallCfg.bg, color: overallCfg.color, border: `1px solid ${overallCfg.border}`, padding: "2px 8px", borderRadius: "4px", fontWeight: "600", whiteSpace: "nowrap" }}>
-                            {overallCfg.icon} {overallCfg.label}
-                          </span>
-                          <span style={{ fontSize: "14px", color: "#9CA3AF", transition: "transform 0.15s", display: "inline-block", transform: isExpanded ? "rotate(90deg)" : "none" }}>
-                            ›
-                          </span>
                         </div>
-                      </div>
+                        {meta?.subcategory && (
+                          <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", padding: "1px 6px", borderRadius: "3px", display: "inline-block", marginBottom: "8px" }}>
+                            {meta.subcategory}
+                          </span>
+                        )}
 
-                      {/* Requirement chips — bottom row */}
-                      <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
-                        {action.requirements.map((req) => {
-                          const ac = ALIGNMENT_CONFIG[req.alignment_status];
-                          const sm = STRENGTH_META[req.strength];
-                          const shortName = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
-                          return (
-                            <div key={req.signal_code} style={{
-                              display: "flex", alignItems: "center", gap: "4px",
-                              background: ac.bg, border: `1px solid ${ac.border}`,
-                              borderRadius: "4px", padding: "3px 8px", fontSize: "11px",
-                            }}>
-                              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: sm.dot, flexShrink: 0 }} title={sm.label} />
-                              <span style={{ color: "#374151", fontWeight: "500" }}>{shortName}</span>
-                              <span style={{ color: ac.color, fontWeight: "700", fontSize: "12px" }}>{ac.icon}</span>
+                        {/* Blocking reasons */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                          {blockingReqs.map((req) => (
+                            <div key={req.signal_code} style={{ display: "flex", gap: "6px", alignItems: "flex-start" }}>
+                              <span style={{ fontSize: "12px", color: "#DC2626", flexShrink: 0, marginTop: "1px" }}>✗</span>
+                              <span style={{ fontSize: "12px", color: "#6B7280" }}>{blockReason(req)}</span>
                             </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Expanded requirement detail */}
-                    {isExpanded && (
-                      <div style={{
-                        background: "#F8FAFF",
-                        borderBottom: isLast ? "none" : "1px solid #E5E7EB",
-                        borderTop: "1px solid #E5E7EB",
-                        padding: "16px 20px 16px 36px",
-                      }}>
-                        <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "12px" }}>
-                          Legal requirements checked
+                          ))}
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                          {action.requirements.map((req) => {
-                            const ac = ALIGNMENT_CONFIG[req.alignment_status];
-                            const sm = STRENGTH_META[req.strength];
-                            const sigMeta = SIGNAL_META[req.signal_code];
-                            const shortName = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
-                            return (
-                              <div key={req.signal_code} style={{
-                                display: "grid",
-                                gridTemplateColumns: "220px 1fr 130px",
-                                gap: "12px", alignItems: "start",
-                                padding: "10px 14px",
-                                background: "white", borderRadius: "8px",
-                                border: `1px solid ${ac.border}`,
-                              }}>
-                                {/* Signal info */}
-                                <div>
-                                  <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "3px" }}>
-                                    <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: sm.dot, flexShrink: 0 }} />
-                                    <span style={{ fontSize: "12px", fontWeight: "600", color: "#111827" }}>{shortName}</span>
-                                  </div>
-                                  {sigMeta && <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px" }}>{sigMeta.description}</div>}
-                                  {sigMeta && (
-                                    <a href={sigMeta.sourceUrl} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#6B7280", textDecoration: "none" }}>
-                                      {sigMeta.source} · {sigMeta.articleRef} ↗
-                                    </a>
-                                  )}
-                                </div>
 
-                                {/* Check detail */}
-                                <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
-                                  <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Needs</span>
-                                  <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151", background: "#F3F4F6", padding: "2px 6px", borderRadius: "4px" }}>
-                                    {VALUE_DISPLAY[req.required_value] ?? req.required_value}
-                                  </span>
-                                  <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Found</span>
-                                  <span style={{ fontSize: "12px", fontWeight: "600", color: ac.color, background: ac.bg, padding: "2px 6px", borderRadius: "4px", border: `1px solid ${ac.border}` }}>
-                                    {req.legal_signal_value !== null
-                                      ? (VALUE_DISPLAY[req.legal_signal_value] ?? req.legal_signal_value)
-                                      : "—"}
-                                  </span>
-                                  {req.evidence_count > 0 && (
-                                    <span style={{ fontSize: "11px", color: "#6B7280" }}>· {req.evidence_count} {req.evidence_count === 1 ? "reference" : "references"}</span>
-                                  )}
-                                </div>
-
-                                {/* Strength + alignment */}
-                                <div style={{ display: "flex", flexDirection: "column", gap: "4px", alignItems: "flex-end" }}>
-                                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                                    <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: sm.dot }} />
-                                    <span style={{ fontSize: "11px", color: "#6B7280" }}>{sm.label}</span>
-                                  </div>
-                                  <span style={{ fontSize: "11px", fontWeight: "600", color: ac.color }}>
-                                    {ac.icon} {ac.label}
-                                  </span>
-                                </div>
+                        {/* Override note */}
+                        {isOverridden && (
+                          <div style={{ marginTop: "10px" }}>
+                            {isEditingThisNote ? (
+                              <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+                                <textarea
+                                  placeholder="Add a note explaining why this action should be included (optional)…"
+                                  value={overrideNotes[action.action_id] ?? ""}
+                                  onChange={(e) => setOverrideNotes((prev) => ({ ...prev, [action.action_id]: e.target.value }))}
+                                  style={{ flex: 1, fontSize: "12px", padding: "8px 10px", borderRadius: "6px", border: "1px solid #FDE68A", resize: "vertical", minHeight: "56px", fontFamily: "inherit", color: "#374151", outline: "none", background: "#FFFDF5" }}
+                                />
+                                <button
+                                  onClick={() => setEditingNote(null)}
+                                  style={{ fontSize: "12px", background: "#92400E", color: "white", border: "none", borderRadius: "6px", padding: "6px 12px", cursor: "pointer", fontWeight: "500", whiteSpace: "nowrap" }}
+                                >
+                                  Save note
+                                </button>
                               </div>
-                            );
-                          })}
-                        </div>
+                            ) : (
+                              <div
+                                style={{ fontSize: "12px", color: "#92400E", background: "#FEF3C7", border: "1px solid #FDE68A", borderRadius: "6px", padding: "6px 10px", cursor: "pointer" }}
+                                onClick={() => setEditingNote(action.action_id)}
+                              >
+                                {overrideNotes[action.action_id]
+                                  ? <span>"{overrideNotes[action.action_id]}" <span style={{ color: "#D97706", textDecoration: "underline" }}>edit</span></span>
+                                  : <span style={{ color: "#D97706", textDecoration: "underline" }}>+ Add a note explaining the override</span>
+                                }
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
-                    )}
+
+                      {/* Right: override toggle */}
+                      {activeTab === "adjust" && (
+                        <div style={{ flexShrink: 0 }}>
+                          <button
+                            onClick={() => toggleOverride(action.action_id)}
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              padding: "7px 14px",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              border: isOverridden ? "1px solid #FDE68A" : "1px solid #D1D5DB",
+                              background: isOverridden ? "#FEF3C7" : "white",
+                              color: isOverridden ? "#92400E" : "#6B7280",
+                              transition: "all 0.15s",
+                            }}
+                          >
+                            {isOverridden ? "↩ Remove override" : "Include in ranking"}
+                          </button>
+                        </div>
+                      )}
+
+                      {activeTab === "review" && isOverridden && (
+                        <span style={{ fontSize: "11px", color: "#D97706", flexShrink: 0, marginTop: "4px" }}>
+                          Overridden
+                        </span>
+                      )}
+                    </div>
                   </div>
                 );
               })}
             </div>
-          );
-        })}
 
-        {activeTab === "adjust" && (
-          <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 20px", marginBottom: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-            <button style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", cursor: "pointer", fontWeight: "500" }}>
-              + Add local regulation override
-            </button>
+            {activeTab === "review" && (
+              <div style={{ marginTop: "8px", fontSize: "12px", color: "#9CA3AF", textAlign: "right" }}>
+                Switch to <strong>Adjust</strong> mode to override individual exclusions
+              </div>
+            )}
           </div>
         )}
+
+        {/* ── FLAGGED / UNCERTAIN ── */}
+        {uncertain.length > 0 && (
+          <div style={{ marginBottom: "16px" }}>
+            <button
+              onClick={() => setExpandedUncertain((v) => !v)}
+              style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", cursor: "pointer", padding: 0, marginBottom: "8px" }}
+            >
+              <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>
+                Flagged actions ({uncertain.length})
+              </span>
+              <span style={{ fontSize: "12px", color: "#D97706", background: "#FFFBEB", border: "1px solid #FDE68A", padding: "1px 7px", borderRadius: "4px" }}>
+                Evidence missing
+              </span>
+              <span style={{ fontSize: "12px", color: "#9CA3AF" }}>
+                {expandedUncertain ? "▲ hide" : "▼ show"}
+              </span>
+            </button>
+
+            {expandedUncertain && (
+              <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+                {uncertain.map((action, idx) => {
+                  const meta = ACTION_NAMES[action.action_id];
+                  const uncReqs = getUncertainReqs(action.requirements);
+                  const isLast = idx === uncertain.length - 1;
+                  return (
+                    <div
+                      key={action.action_id}
+                      style={{ padding: "14px 20px", borderBottom: isLast ? "none" : "1px solid #F5F5F5" }}
+                    >
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "3px" }}>
+                        {meta?.name ?? action.action_id}
+                      </div>
+                      {meta?.subcategory && (
+                        <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", padding: "1px 6px", borderRadius: "3px", display: "inline-block", marginBottom: "6px" }}>
+                          {meta.subcategory}
+                        </span>
+                      )}
+                      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                        {uncReqs.map((req) => (
+                          <div key={req.signal_code} style={{ display: "flex", gap: "6px", alignItems: "flex-start" }}>
+                            <span style={{ fontSize: "12px", color: "#D97706", flexShrink: 0, marginTop: "1px" }}>?</span>
+                            <span style={{ fontSize: "12px", color: "#6B7280" }}>{uncertainReason(req)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── INCLUDED (summary only) ── */}
+        <div style={{
+          background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px",
+          padding: "14px 20px", marginBottom: "20px",
+          display: "flex", alignItems: "center", gap: "12px",
+        }}>
+          <span style={{ fontSize: "20px", color: "#16A34A" }}>✓</span>
+          <div>
+            <div style={{ fontSize: "13px", fontWeight: "600", color: "#166534" }}>
+              {includedCount} {includedCount === 1 ? "action" : "actions"} will proceed to ranking
+            </div>
+            <div style={{ fontSize: "12px", color: "#4ADE80" }}>
+              {included.length} passed legal review automatically
+              {overriddenCount > 0 && ` · ${overriddenCount} manually reinstated`}
+              {uncertain.length > 0 && ` · ${uncertain.length} flagged actions are included pending further evidence`}
+            </div>
+          </div>
+        </div>
 
         {/* Info note */}
         <div style={{
@@ -479,10 +454,10 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
         }}>
           <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
           <span>
-            <strong>How MEED+ HIAP uses this data:</strong> Each action is checked against the legal signals
-            applicable to {city.name}. Actions with mandatory or required mismatches receive a lower legal
-            feasibility score or are flagged as blocked. Actions with no evidence are marked uncertain.
-            Click any action to see the full requirement breakdown with sources from Ley 18.695.
+            <strong>How MEED+ HIAP uses this data:</strong> Legal checks are based on Ley 18.695 (Ley Orgánica Constitucional de Municipalidades).
+            Actions that fail a <strong>mandatory</strong> or <strong>required</strong> check are excluded from the ranking
+            to avoid proposing legally non-viable actions. You can override any exclusion in{" "}
+            <strong>Adjust</strong> mode if you believe the action is viable for {city.name}.
           </span>
         </div>
 
