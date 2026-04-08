@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
-import policyPlansData from "@/data/policyPlans.json";
+import actionsData from "@/data/actions.json";
+import cityApiData from "@/data/cityData.json";
+import mockRequest from "@/data/prioritizerRequestMock.json";
+import { runPipeline, type PipelineResult, type CityIndicators } from "@/lib/scoringPipeline";
 
-const CANDIDATE_COUNT = new Set(
-  policyPlansData.plans.flatMap(p => p.actions.map((a: { id: string }) => a.id))
-).size;
+const ACTION_COUNT = (actionsData as { actions: unknown[] }).actions.length;
 
 // Stage boundaries in overall progress (0–100)
 const BOUNDARIES = [0, 10, 62, 84, 100];
@@ -20,7 +21,7 @@ const STAGES = [
   {
     id: "impact",
     label: "Impact Analysis",
-    desc: `Scoring ${CANDIDATE_COUNT} actions on emissions reduction potential & implementation timeline`,
+    desc: `Scoring ${ACTION_COUNT} actions on emissions reduction potential & implementation timeline`,
   },
   {
     id: "alignment",
@@ -57,6 +58,59 @@ function currentStageName(overall: number): string {
   return STAGES[0].label;
 }
 
+// Map StrategicPreferences display labels → pipeline sector keys
+const SECTOR_NAME_MAP: Record<string, string[]> = {
+  "Stationary Energy": ["buildings", "energy"],
+  "Transportation": ["transportation"],
+  "Waste": ["waste"],
+  "Industrial Processes & Product Use (IPPU)": ["industry"],
+  "Agriculture, Forestry & Other Land Use (AFOLU)": ["nature", "agriculture"],
+};
+
+// Extract city indicators from city API data
+function extractCityIndicators(): CityIndicators {
+  const city = (cityApiData as { city: Record<string, { attribute_value?: number; attribute_category: string }> }).city;
+  const indicators: CityIndicators = {};
+  for (const [key, val] of Object.entries(city)) {
+    if (val && typeof val === "object" && "attribute_category" in val) {
+      indicators[key] = val;
+    }
+  }
+  return indicators;
+}
+
+// Build prioritizer request from localStorage + mock emissions
+function buildRequest(locode: string) {
+  // Load strategic preferences from localStorage
+  const storageKey = `hiap:${locode}:strategic:form`;
+  let sectors: string[] = [];
+  let excludeText = "";
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (raw) {
+      const saved = JSON.parse(raw) as { sectors: string[]; excludeText?: string };
+      sectors = saved.sectors ?? [];
+      excludeText = saved.excludeText ?? "";
+    }
+  } catch {}
+
+  // Map display names → pipeline keys
+  const pipelineSectors = sectors.flatMap(s => SECTOR_NAME_MAP[s] ?? [s.toLowerCase()]);
+
+  // Use mock GPC emissions data (confirmed by user in EmissionsReview step)
+  const mockCity = (mockRequest as { requestData: { cityDataList: Array<{ cityEmissionsData: unknown }> } })
+    .requestData.cityDataList[0];
+
+  return {
+    locode,
+    cityStrategicPreferenceSectors: pipelineSectors,
+    excludedActionsFreeText: excludeText,
+    weightsOverride: { impact: 0.55, alignment: 0.22, feasibility: 0.23 },
+    cityEmissionsData: mockCity.cityEmissionsData as Parameters<typeof runPipeline>[0]["cityEmissionsData"],
+    topN: 20,
+  };
+}
+
 interface Props { params: { locode: string } }
 
 export function Processing({ params }: Props) {
@@ -77,7 +131,6 @@ export function Processing({ params }: Props) {
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime.current;
       const raw = elapsed / DURATION;
-      // ease-in-out curve, cap at 99 until we explicitly finish
       const eased = Math.min(raw < 0.5 ? 2 * raw * raw : -1 + (4 - 2 * raw) * raw, 0.99);
       setOverall(Math.round(eased * 100));
       if (elapsed >= DURATION) {
@@ -88,6 +141,22 @@ export function Processing({ params }: Props) {
     }, 60);
     return () => clearInterval(interval);
   }, []);
+
+  // Run pipeline when animation starts (non-blocking, runs in background)
+  useEffect(() => {
+    try {
+      const req = buildRequest(locode);
+      const indicators = extractCityIndicators();
+      const result: PipelineResult = runPipeline(req, indicators);
+      // Store results for Recommendations page
+      localStorage.setItem(
+        `hiap:${locode}:results`,
+        JSON.stringify(result)
+      );
+    } catch (err) {
+      console.error("Pipeline error:", err);
+    }
+  }, [locode]);
 
   // Navigate to recommendations once done
   useEffect(() => {
@@ -105,7 +174,6 @@ export function Processing({ params }: Props) {
       <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "48px 24px 64px" }}>
         <div style={{ width: "100%", maxWidth: "620px" }}>
 
-          {/* Main card */}
           <div style={{ background: "white", borderRadius: "14px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", overflow: "hidden" }}>
 
             {/* Header */}
@@ -152,7 +220,6 @@ export function Processing({ params }: Props) {
                     alignItems: "flex-start",
                     gap: "12px",
                   }}>
-                    {/* Status icon */}
                     <div style={{ flexShrink: 0, marginTop: "1px" }}>
                       {status === "complete" && (
                         <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "#DCFCE7", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -165,7 +232,6 @@ export function Processing({ params }: Props) {
                       )}
                     </div>
 
-                    {/* Content */}
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3px" }}>
                         <span style={{

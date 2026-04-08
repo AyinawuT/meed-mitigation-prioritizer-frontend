@@ -1,0 +1,487 @@
+import actionsRaw from "@/data/actions.json";
+import legalRaw from "@/data/actionsLegal.json";
+import policyRaw from "@/data/actionsPolicySignals.json";
+
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+interface SocioeconomicIndicator {
+  indicator_key: string;
+  direction: "supportive" | "constraining";
+  weight: number;
+}
+
+interface ActionRecord {
+  actionId: string;
+  actionName: string;
+  actionCategory: string;
+  actionSubcategory: string;
+  costInvestmentNeeded: string;
+  timelineForImplementation: string;
+  description: string;
+  socioeconomicIndicators: SocioeconomicIndicator[];
+  emissions?: {
+    gpc_reference_number: string[];
+    impact_text: string;
+  };
+}
+
+export interface RankedAction {
+  rank: number;
+  actionId: string;
+  actionName: string;
+  actionCategory: string;
+  actionSubcategory: string;
+  costInvestmentNeeded: string;
+  timelineForImplementation: string;
+  description: string;
+  finalScore: number;
+  impactScore: number;
+  alignmentScore: number;
+  feasibilityScore: number;
+  reductionShare: number;
+  timelineScore: number;
+  policyComponent: number;
+  sectorComponent: number;
+  softLegalComponent: number;
+  socioeconomicComponent: number;
+  legalPassed: boolean;
+  legalFlag: boolean;
+  gpcRefs: string[];
+  matchedEmissions: number;
+  explanation: string;
+  priority: "high" | "medium" | "low";
+}
+
+export interface DiscardedAction {
+  actionId: string;
+  actionName: string;
+  reason: string;
+}
+
+export interface PipelineResult {
+  ranked: RankedAction[];
+  discarded: DiscardedAction[];
+  totalCityEmissions: number;
+  cityEmissionsByGpc: Record<string, number>;
+  locode: string;
+  topN: number;
+}
+
+export interface CityIndicators {
+  [key: string]: {
+    attribute_value?: number;
+    attribute_category: string;
+  };
+}
+
+export interface PrioritizerRequest {
+  locode: string;
+  countryCode?: string;
+  populationSize?: number;
+  weightsOverride?: { impact: number; alignment: number; feasibility: number };
+  cityStrategicPreferenceSectors?: string[];
+  cityStrategicPreferenceOther?: string;
+  excludedActionsFreeText?: string;
+  cityEmissionsData: {
+    inventoryYear?: number;
+    gpcData: Record<
+      string,
+      {
+        notationKey?: string | null;
+        activities: Array<{
+          totalEmissions: number;
+          notationKey?: string | null;
+        }>;
+      }
+    >;
+  };
+  cityIndicators?: CityIndicators;
+  topN?: number;
+}
+
+// ─── Lookup maps built once ───────────────────────────────────────────────────
+
+const actions = (actionsRaw as { actions: ActionRecord[] }).actions;
+
+const legalMap = new Map<string, (typeof legalRaw.legal_requirements)[0]["requirements"]>();
+for (const entry of legalRaw.legal_requirements) {
+  legalMap.set(entry.action_id, entry.requirements);
+}
+
+const policyMap = new Map<string, number>();
+for (const entry of (policyRaw as { policy_signals: Array<{ action_id: string; policy_support_score: number }> }).policy_signals) {
+  policyMap.set(entry.action_id, entry.policy_support_score);
+}
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const IMPACT_MULTIPLIER: Record<string, number> = {
+  very_low: 0.2,
+  low: 0.4,
+  medium: 0.6,
+  high: 0.8,
+  very_high: 1.0,
+};
+
+const TIMELINE_SCORE: Record<string, number> = {
+  "<5_years": 1.0,
+  "5-10_years": 0.5,
+  ">10_years": 0.0,
+};
+
+const BUCKET_SCORE: Record<string, number> = {
+  very_low: -2,
+  low: -1,
+  medium: 0,
+  high: 1,
+  very_high: 2,
+};
+
+// Indicator key mapping: actions use these keys → city data uses mapped keys
+const INDICATOR_KEY_MAP: Record<string, string> = {
+  employment_in_transport_and_logistics: "transport_logistics_employment",
+  electricity_access_rate: "electricity_access",
+};
+
+// GPC sector prefix → strategic preference sectors
+const SECTOR_GPC_PREFIX: Record<string, string[]> = {
+  transportation: ["II"],
+  buildings: ["I"],
+  energy: ["I", "IV"],
+  waste: ["III"],
+  nature: ["V"],
+  agriculture: ["V"],
+  industry: ["IV"],
+  water: ["III.4"],
+};
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function normalizeBucket(raw: string): string {
+  return raw.toLowerCase().replace(/ /g, "_");
+}
+
+function normalizeImpactText(raw: string): string {
+  return raw.toLowerCase().replace(/ /g, "_");
+}
+
+function normalizeTimeline(raw: string): string {
+  // "<5 years" → "<5_years" etc.
+  return raw.replace(/ /g, "_");
+}
+
+function actionMatchesSectors(gpcRefs: string[], sectors: string[]): boolean {
+  return sectors.some((sector) => {
+    const prefixes = SECTOR_GPC_PREFIX[sector.toLowerCase()] ?? [
+      sector.toLowerCase(),
+    ];
+    return prefixes.some((prefix) =>
+      gpcRefs.some((ref) => ref.startsWith(prefix + ".") || ref === prefix)
+    );
+  });
+}
+
+// ─── Step 1: City emissions by GPC ref ───────────────────────────────────────
+
+export function deriveEmissions(
+  gpcData: PrioritizerRequest["cityEmissionsData"]["gpcData"]
+): { byRef: Record<string, number>; total: number } {
+  const byRef: Record<string, number> = {};
+  for (const [ref, entry] of Object.entries(gpcData)) {
+    const topLevel = (entry.notationKey ?? "").toUpperCase();
+    if (topLevel === "IE" || topLevel === "NE") continue;
+    let sum = 0;
+    for (const act of entry.activities) {
+      const actKey = (act.notationKey ?? "").toUpperCase();
+      if (actKey === "IE" || actKey === "NE") continue;
+      sum += act.totalEmissions ?? 0;
+    }
+    if (sum > 0) byRef[ref] = sum;
+  }
+  const total = Object.values(byRef).reduce((a, b) => a + b, 0);
+  return { byRef, total };
+}
+
+// ─── Step 2: Hard filter ──────────────────────────────────────────────────────
+
+function hardFilter(actionList: ActionRecord[]): {
+  valid: ActionRecord[];
+  discarded: DiscardedAction[];
+  flagged: Set<string>;
+} {
+  const valid: ActionRecord[] = [];
+  const discarded: DiscardedAction[] = [];
+  const flagged = new Set<string>();
+
+  for (const action of actionList) {
+    const reqs = legalMap.get(action.actionId) ?? [];
+    let fail = false;
+    let flag = false;
+
+    for (const req of reqs) {
+      const isHard =
+        req.strength === "mandatory" || req.strength === "required";
+      if (!isHard) continue;
+      if (req.alignment_status === "not_aligned") {
+        fail = true;
+        break;
+      }
+      if (req.alignment_status === "no_evidence") {
+        flag = true;
+      }
+    }
+
+    if (fail) {
+      discarded.push({
+        actionId: action.actionId,
+        actionName: action.actionName,
+        reason: "legal_hard_requirement_failed",
+      });
+    } else {
+      valid.push(action);
+      if (flag) flagged.add(action.actionId);
+    }
+  }
+
+  return { valid, discarded, flagged };
+}
+
+// ─── Step 3: Impact scoring ───────────────────────────────────────────────────
+
+function scoreImpact(
+  action: ActionRecord,
+  cityEmissions: Record<string, number>,
+  totalEmissions: number
+): { impactScore: number; reductionShare: number; timelineScore: number; matchedEmissions: number } {
+  const gpcRefs = action.emissions?.gpc_reference_number ?? [];
+  const impactText = normalizeImpactText(action.emissions?.impact_text ?? "very_low");
+  const multiplier = IMPACT_MULTIPLIER[impactText] ?? 0.2;
+
+  const matchedEmissions = gpcRefs.reduce(
+    (sum, ref) => sum + (cityEmissions[ref] ?? 0),
+    0
+  );
+  const reductionShare =
+    totalEmissions > 0
+      ? (matchedEmissions * multiplier) / totalEmissions
+      : 0;
+
+  const timelineRaw = normalizeTimeline(action.timelineForImplementation ?? "");
+  const tlScore = TIMELINE_SCORE[timelineRaw] ?? 0.0;
+
+  const impactScore = 0.8 * reductionShare + 0.2 * tlScore;
+
+  return { impactScore, reductionShare, timelineScore: tlScore, matchedEmissions };
+}
+
+// ─── Step 4: Alignment scoring ────────────────────────────────────────────────
+
+function scoreAlignment(
+  action: ActionRecord,
+  sectors: string[]
+): { alignmentScore: number; policyComponent: number; sectorComponent: number } {
+  const policyComponent = policyMap.get(action.actionId) ?? 0.0;
+  const gpcRefs = action.emissions?.gpc_reference_number ?? [];
+  const sectorComponent =
+    sectors.length > 0 && actionMatchesSectors(gpcRefs, sectors) ? 1.0 : 0.0;
+  const otherComponent = 0.0;
+
+  const alignmentScore =
+    0.8 * policyComponent + 0.15 * sectorComponent + 0.05 * otherComponent;
+
+  return { alignmentScore, policyComponent, sectorComponent };
+}
+
+// ─── Step 5: Feasibility scoring ──────────────────────────────────────────────
+
+function scoreFeasibility(
+  action: ActionRecord,
+  cityIndicators: CityIndicators
+): { feasibilityScore: number; softLegalComponent: number; socioeconomicComponent: number } {
+  // Soft legal
+  const reqs = legalMap.get(action.actionId) ?? [];
+  const softReqs = reqs.filter(
+    (r) => r.strength === "recommended" || r.strength === "optional"
+  );
+
+  let softLegalComponent = 0.0;
+  if (softReqs.length > 0) {
+    const scores = softReqs.map((r) => {
+      if (r.alignment_status === "aligns") return 1.0;
+      if (r.alignment_status === "not_aligned") return 0.0;
+      return 0.5; // no_evidence
+    });
+    softLegalComponent = scores.reduce((a, b) => a + b, 0) / scores.length;
+  }
+
+  // Socioeconomic
+  const indicators = action.socioeconomicIndicators ?? [];
+  let socioeconomicComponent = 0.5; // default neutral
+
+  if (indicators.length > 0) {
+    let weightedSum = 0;
+    let totalWeight = 0;
+
+    for (const rule of indicators) {
+      // Remap action key → city key
+      const cityKey = INDICATOR_KEY_MAP[rule.indicator_key] ?? rule.indicator_key;
+      const cityAttr = cityIndicators[cityKey];
+      if (!cityAttr) continue;
+
+      const bucket = normalizeBucket(cityAttr.attribute_category);
+      let bucketScore = BUCKET_SCORE[bucket] ?? 0;
+
+      if (rule.direction === "constraining") {
+        bucketScore = -bucketScore;
+      }
+
+      weightedSum += bucketScore * rule.weight;
+      totalWeight += rule.weight;
+    }
+
+    if (totalWeight > 0) {
+      const average = weightedSum / totalWeight;
+      socioeconomicComponent = (average + 2) / 4; // normalize -2..2 → 0..1
+    }
+  }
+
+  const feasibilityScore =
+    0.5 * softLegalComponent + 0.5 * socioeconomicComponent;
+
+  return { feasibilityScore, softLegalComponent, socioeconomicComponent };
+}
+
+// ─── Step 6: Final score & rank ───────────────────────────────────────────────
+
+function priorityLabel(
+  rank: number,
+  total: number
+): "high" | "medium" | "low" {
+  const pct = rank / total;
+  if (pct <= 0.35) return "high";
+  if (pct <= 0.7) return "medium";
+  return "low";
+}
+
+// ─── Main pipeline entry point ────────────────────────────────────────────────
+
+export function runPipeline(
+  req: PrioritizerRequest,
+  cityIndicators: CityIndicators
+): PipelineResult {
+  const weights = req.weightsOverride ?? {
+    impact: 0.55,
+    alignment: 0.22,
+    feasibility: 0.23,
+  };
+
+  // Validate weights sum to ~1
+  const wSum = weights.impact + weights.alignment + weights.feasibility;
+  const normWeights = {
+    impact: weights.impact / wSum,
+    alignment: weights.alignment / wSum,
+    feasibility: weights.feasibility / wSum,
+  };
+
+  const { byRef, total } = deriveEmissions(req.cityEmissionsData.gpcData);
+
+  const { valid, discarded, flagged } = hardFilter(actions);
+
+  const sectors = req.cityStrategicPreferenceSectors ?? [];
+  const topN = req.topN ?? 20;
+
+  const scored = valid.map((action) => {
+    const { impactScore, reductionShare, timelineScore, matchedEmissions } =
+      scoreImpact(action, byRef, total);
+    const { alignmentScore, policyComponent, sectorComponent } = scoreAlignment(action, sectors);
+    const { feasibilityScore, softLegalComponent, socioeconomicComponent } =
+      scoreFeasibility(action, cityIndicators);
+
+    const finalScore =
+      impactScore * normWeights.impact +
+      alignmentScore * normWeights.alignment +
+      feasibilityScore * normWeights.feasibility;
+
+    return {
+      action,
+      finalScore,
+      impactScore,
+      alignmentScore,
+      feasibilityScore,
+      reductionShare,
+      timelineScore,
+      policyComponent,
+      sectorComponent,
+      softLegalComponent,
+      socioeconomicComponent,
+      matchedEmissions,
+      legalFlag: flagged.has(action.actionId),
+    };
+  });
+
+  scored.sort((a, b) => b.finalScore - a.finalScore);
+
+  const top = scored.slice(0, topN);
+  const total_n = top.length;
+
+  const ranked: RankedAction[] = top.map((item, i) => {
+    const rank = i + 1;
+    const {
+      action,
+      finalScore,
+      impactScore,
+      alignmentScore,
+      feasibilityScore,
+      reductionShare,
+      timelineScore,
+      policyComponent,
+      sectorComponent,
+      softLegalComponent,
+      socioeconomicComponent,
+      matchedEmissions,
+      legalFlag,
+    } = item;
+
+    const explanation =
+      `Ranked #${rank} with a final score of ${finalScore.toFixed(2)}. ` +
+      `Impact: ${impactScore.toFixed(2)} (reduction share: ${(reductionShare * 100).toFixed(1)}%). ` +
+      `Alignment: ${alignmentScore.toFixed(2)} (policy support: ${policyComponent.toFixed(2)}, sector match: ${sectorComponent === 1 ? "yes" : "no"}). ` +
+      `Feasibility: ${feasibilityScore.toFixed(2)}.`;
+
+    return {
+      rank,
+      actionId: action.actionId,
+      actionName: action.actionName,
+      actionCategory: action.actionCategory,
+      actionSubcategory: action.actionSubcategory,
+      costInvestmentNeeded: action.costInvestmentNeeded,
+      timelineForImplementation: action.timelineForImplementation,
+      description: action.description,
+      finalScore,
+      impactScore,
+      alignmentScore,
+      feasibilityScore,
+      reductionShare,
+      timelineScore,
+      policyComponent,
+      sectorComponent,
+      softLegalComponent,
+      socioeconomicComponent,
+      legalPassed: true,
+      legalFlag,
+      gpcRefs: action.emissions?.gpc_reference_number ?? [],
+      matchedEmissions,
+      explanation,
+      priority: priorityLabel(rank, total_n),
+    };
+  });
+
+  return {
+    ranked,
+    discarded,
+    totalCityEmissions: total,
+    cityEmissionsByGpc: byRef,
+    locode: req.locode,
+    topN,
+  };
+}
