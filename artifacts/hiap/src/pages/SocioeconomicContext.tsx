@@ -164,6 +164,13 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
+  const original = city ? buildIndicators(city) : [];
+  const [indicators, setIndicators] = useState<Indicator[]>(original);
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+  const [draftValue, setDraftValue] = useState("");
+  const [draftSource, setDraftSource] = useState("");
+  const [hasEdits, setHasEdits] = useState(false);
+
   if (!city) {
     return (
       <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -179,14 +186,62 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   }
 
   const citySlug = city.locode.replace(" ", "-");
-  const indicators = buildIndicators(city);
+
+  function startEdit(key: string) {
+    const ind = indicators.find((i) => i.key === key)!;
+    setEditingKey(key);
+    setDraftValue(ind.units === "CLP" ? String(ind.value / 1_000_000) : String(ind.value));
+    setDraftSource(ind.source);
+  }
+
+  function commitEdit(key: string): boolean {
+    const ind = indicators.find((i) => i.key === key)!;
+    const parsed = parseFloat(draftValue.replace(/,/g, ""));
+    if (isNaN(parsed) || parsed < 0) return false;
+    const actualValue = ind.units === "CLP" ? parsed * 1_000_000 : parsed;
+    setIndicators(indicators.map((i) =>
+      i.key === key
+        ? { ...i, value: actualValue, source: draftSource.trim() || i.source }
+        : i
+    ));
+    setEditingKey(null);
+    setHasEdits(true);
+    return true;
+  }
+
+  function cancelEdit() {
+    setEditingKey(null);
+  }
+
+  function handleDiscard() {
+    setIndicators(buildIndicators(city));
+    setEditingKey(null);
+    setHasEdits(false);
+    setActiveTab("review");
+  }
+
+  function handleTabChange(tab: Tab) {
+    setActiveTab(tab);
+    if (tab === "review") setEditingKey(null);
+  }
 
   const keyIndicators = [
     indicators.find((i) => i.key === "poverty_rate")!,
     indicators.find((i) => i.key === "unemployment_rate")!,
     indicators.find((i) => i.key === "home_ownership")!,
     indicators.find((i) => i.key === "public_transport_share")!,
-  ];
+  ].filter(Boolean);
+
+  const inputStyle: React.CSSProperties = {
+    border: "1px solid #CBD5E1",
+    borderRadius: "6px",
+    padding: "5px 10px",
+    fontSize: "13px",
+    outline: "none",
+    width: "100%",
+    boxSizing: "border-box",
+    color: "#111827",
+  };
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -227,7 +282,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               {(["review", "adjust"] as Tab[]).map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => handleTabChange(tab)}
                   style={{
                     padding: "7px 18px",
                     borderRadius: "6px",
@@ -325,24 +380,75 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                   const isFirstInGroup = rowIdx === 0;
                   const isLastInGroup = rowIdx === rows.length - 1;
                   const isLastTheme = theme === THEMES[THEMES.length - 1];
+                  const isEditing = editingKey === ind.key && activeTab === "adjust";
+                  const rowBorder = isLastInGroup && !isLastTheme ? "2px solid #F0F0F0" : "1px solid #F5F5F5";
+
+                  if (isEditing) {
+                    return (
+                      <tr key={ind.key} style={{ borderBottom: rowBorder, background: "#F8FAFF" }}>
+                        <td style={{ padding: "12px 16px", minWidth: "200px" }}>
+                          {isFirstInGroup && (
+                            <div style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>
+                              {theme}
+                            </div>
+                          )}
+                          <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827", marginBottom: "4px" }}>
+                            {ind.label}
+                          </div>
+                          <input
+                            type="text"
+                            value={draftSource}
+                            onChange={(e) => setDraftSource(e.target.value)}
+                            placeholder="Data source"
+                            style={{ ...inputStyle, fontSize: "11px", padding: "3px 8px" }}
+                          />
+                        </td>
+                        <td style={{ padding: "12px 16px", minWidth: "130px" }}>
+                          <input
+                            type="text"
+                            value={draftValue}
+                            onChange={(e) => setDraftValue(e.target.value)}
+                            placeholder={ind.units === "CLP" ? "e.g. 1.2 (millions)" : "e.g. 26.77"}
+                            style={inputStyle}
+                            autoFocus
+                          />
+                          <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "3px" }}>
+                            {ind.units === "CLP" ? "CLP millions" : "%"}
+                          </div>
+                        </td>
+                        <td style={{ padding: "12px 16px" }}>
+                          <span style={{ fontSize: "11px", background: style.bg, color: style.color, padding: "3px 10px", borderRadius: "4px", fontWeight: "600" }}>
+                            {style.label}
+                          </span>
+                        </td>
+                        <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
+                          {ind.relevance}
+                        </td>
+                        <td style={{ padding: "12px 16px" }}>
+                          <div style={{ display: "flex", gap: "6px" }}>
+                            <button
+                              onClick={() => commitEdit(ind.key)}
+                              style={{ fontSize: "12px", color: "white", background: "#16A34A", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer", fontWeight: "500" }}
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={cancelEdit}
+                              style={{ fontSize: "12px", color: "#6B7280", background: "#F5F5F5", border: "none", borderRadius: "5px", padding: "4px 10px", cursor: "pointer" }}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  }
 
                   return (
-                    <tr
-                      key={ind.key}
-                      style={{
-                        borderBottom: isLastInGroup && !isLastTheme ? "2px solid #F0F0F0" : "1px solid #F5F5F5",
-                      }}
-                    >
+                    <tr key={ind.key} style={{ borderBottom: rowBorder }}>
                       <td style={{ padding: "12px 16px", minWidth: "200px" }}>
                         {isFirstInGroup && (
-                          <div style={{
-                            fontSize: "10px",
-                            fontWeight: "600",
-                            color: "#9CA3AF",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.06em",
-                            marginBottom: "4px",
-                          }}>
+                          <div style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>
                             {theme}
                           </div>
                         )}
@@ -357,40 +463,33 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                         {formatValue(ind)}
                       </td>
                       <td style={{ padding: "12px 16px" }}>
-                        <span style={{
-                          fontSize: "11px",
-                          background: style.bg,
-                          color: style.color,
-                          padding: "3px 10px",
-                          borderRadius: "4px",
-                          fontWeight: "600",
-                          whiteSpace: "nowrap",
-                        }}>
+                        <span style={{ fontSize: "11px", background: style.bg, color: style.color, padding: "3px 10px", borderRadius: "4px", fontWeight: "600", whiteSpace: "nowrap" }}>
                           {style.label}
                         </span>
                       </td>
                       <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280", maxWidth: "280px" }}>
-                        <span style={{
-                          marginRight: "6px",
-                          color: ind.concern === "risk" ? "#B91C1C" : ind.concern === "opportunity" ? "#16A34A" : "#9CA3AF",
-                          fontWeight: "600",
-                        }}>
+                        <span style={{ marginRight: "6px", color: ind.concern === "risk" ? "#B91C1C" : ind.concern === "opportunity" ? "#16A34A" : "#9CA3AF", fontWeight: "600" }}>
                           {icon}
                         </span>
                         {ind.relevance}
                       </td>
                       {activeTab === "adjust" && (
                         <td style={{ padding: "12px 16px" }}>
-                          <button style={{
-                            fontSize: "12px",
-                            color: "#001EA7",
-                            background: "#EFF6FF",
-                            border: "none",
-                            borderRadius: "5px",
-                            padding: "4px 12px",
-                            cursor: "pointer",
-                            fontWeight: "500",
-                          }}>
+                          <button
+                            onClick={() => startEdit(ind.key)}
+                            disabled={editingKey !== null}
+                            style={{
+                              fontSize: "12px",
+                              color: "#001EA7",
+                              background: "#EFF6FF",
+                              border: "none",
+                              borderRadius: "5px",
+                              padding: "4px 12px",
+                              cursor: editingKey !== null ? "not-allowed" : "pointer",
+                              fontWeight: "500",
+                              opacity: editingKey !== null && editingKey !== ind.key ? 0.5 : 1,
+                            }}
+                          >
                             Edit
                           </button>
                         </td>
@@ -444,22 +543,53 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
             ← Emissions Data
           </button>
 
-          <button
-            onClick={() => navigate(`/city/${citySlug}/regulations`)}
-            style={{
-              background: "#16A34A",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              padding: "10px 24px",
-              fontSize: "13px",
-              fontWeight: "600",
-              cursor: "pointer",
-              boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
-            }}
-          >
-            Regulations & laws →
-          </button>
+          <div style={{ display: "flex", gap: "8px" }}>
+            {activeTab === "adjust" && (
+              <button
+                onClick={handleDiscard}
+                style={{
+                  background: "white",
+                  border: "1px solid #DDDDE1",
+                  borderRadius: "8px",
+                  padding: "10px 20px",
+                  fontSize: "13px",
+                  color: "#DC2626",
+                  cursor: "pointer",
+                  fontWeight: "500",
+                }}
+              >
+                Discard changes
+              </button>
+            )}
+            <button
+              onClick={() => {
+                if (activeTab === "adjust") {
+                  if (editingKey !== null) {
+                    const saved = commitEdit(editingKey);
+                    if (!saved) cancelEdit();
+                  }
+                  setHasEdits(false);
+                  setEditingKey(null);
+                  setActiveTab("review");
+                } else {
+                  navigate(`/city/${citySlug}/regulations`);
+                }
+              }}
+              style={{
+                background: "#16A34A",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                padding: "10px 24px",
+                fontSize: "13px",
+                fontWeight: "600",
+                cursor: "pointer",
+                boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
+              }}
+            >
+              {activeTab === "adjust" ? "Save & continue →" : "Regulations & laws →"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
