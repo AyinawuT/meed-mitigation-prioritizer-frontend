@@ -215,13 +215,17 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   }
 
   function handleSaveAndContinue() {
-    if (editingIdx !== null) {
-      const saved = commitEdit(editingIdx);
-      if (!saved) setEditingIdx(null);
+    if (activeTab === "adjust") {
+      if (editingIdx !== null) {
+        const saved = commitEdit(editingIdx);
+        if (!saved) setEditingIdx(null);
+      }
+      setHasEdits(false);
+      setEditingIdx(null);
+      setActiveTab("review");
+    } else {
+      navigate(`/city/${citySlug}/socioeconomic`);
     }
-    setHasEdits(false);
-    setEditingIdx(null);
-    setActiveTab("review");
   }
 
   const inputStyle: React.CSSProperties = {
