@@ -194,7 +194,7 @@ export const HOW_STEPS = [
   {
     n: "1",
     title: "Select your city",
-    desc: "Search by city name to find your city's existing emissions inventory.",
+    desc: "Search by city name to find your city's profile.",
   },
   {
     n: "2",
