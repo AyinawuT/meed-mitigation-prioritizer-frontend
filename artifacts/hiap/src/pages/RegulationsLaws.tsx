@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import actionsLegal from "@/data/actionsLegal.json";
+import actionNames from "@/data/actionNames.json";
 
 type Tab = "review" | "adjust";
 type AlignmentStatus = "aligns" | "not_aligned" | "no_evidence";
@@ -29,6 +30,32 @@ interface ActionLegal {
   requirements: Requirement[];
 }
 
+interface ActionMeta {
+  name: string;
+  category: string;
+  subcategory: string;
+}
+
+const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
+
+const SIGNAL_SHORT: Record<string, string> = {
+  MUNI_WASTE_AUTHORITY:       "Waste authority",
+  MUNI_TRANSPORT_AUTHORITY:   "Transport authority",
+  MUNI_PLANNING_AUTHORITY:    "Planning authority",
+  MUNI_ENV_STANDARDS:         "Env. standards",
+  PLANS_ALIGNMENT:            "Plans alignment",
+  PROCUREMENT_PUBLIC_BIDDING: "Procurement",
+  SUBSIDY_CAP_7PCT:           "Subsidy cap",
+};
+
+const STRENGTH_META: Record<Strength, { label: string; dot: string; description: string }> = {
+  mandatory:     { label: "Mandatory",     dot: "#DC2626", description: "This requirement must be met for the action to be legally viable." },
+  required:      { label: "Required",      dot: "#F97316", description: "This requirement is needed under national law." },
+  recommended:   { label: "Recommended",   dot: "#CA8A04", description: "Following this requirement is strongly advised." },
+  optional:      { label: "Optional",      dot: "#16A34A", description: "This requirement may optionally apply." },
+  informational: { label: "Informational", dot: "#9CA3AF", description: "Provided for awareness; does not affect the score." },
+};
+
 const SIGNAL_META: Record<string, { description: string; source: string; articleRef: string; sourceUrl: string }> = {
   MUNI_WASTE_AUTHORITY:       { description: "Exclusive authority over waste collection and management", source: "Ley 18.695", articleRef: "Art. 3° d), 20°", sourceUrl: "https://bcn.cl/3d2sz" },
   MUNI_TRANSPORT_AUTHORITY:   { description: "Exclusive authority over public transport and traffic within the commune", source: "Ley 18.695", articleRef: "Art. 3° a)", sourceUrl: "https://bcn.cl/3d2sz" },
@@ -49,16 +76,8 @@ const VALUE_DISPLAY: Record<string, string> = {
   restricted:          "Restricted",
   shared_authority:    "Shared authority",
   "0.07":              "7% cap",
-  "0.12":              "12% cap (exceeds)",
-  "0.05":              "5% (within cap)",
-};
-
-const STRENGTH_STYLES: Record<Strength, { bg: string; color: string }> = {
-  mandatory:     { bg: "#FEE2E2", color: "#DC2626" },
-  required:      { bg: "#FFF3E0", color: "#C05621" },
-  recommended:   { bg: "#FEF9C3", color: "#A16207" },
-  optional:      { bg: "#F0FDF4", color: "#16A34A" },
-  informational: { bg: "#F3F4F6", color: "#6B7280" },
+  "0.12":              "12% cap",
+  "0.05":              "5%",
 };
 
 const ALIGNMENT_CONFIG: Record<AlignmentStatus, { bg: string; color: string; border: string; label: string; icon: string }> = {
@@ -69,21 +88,18 @@ const ALIGNMENT_CONFIG: Record<AlignmentStatus, { bg: string; color: string; bor
 
 function getOverallStatus(reqs: Requirement[]): OverallStatus {
   const statuses = reqs.map((r) => r.alignment_status);
-  const allAlign = statuses.every((s) => s === "aligns");
-  const allNotAligned = statuses.every((s) => s === "not_aligned");
-  const allNoEvidence = statuses.every((s) => s === "no_evidence");
-  if (allAlign) return "all_aligns";
-  if (allNotAligned) return "all_not_aligned";
-  if (allNoEvidence) return "all_no_evidence";
+  if (statuses.every((s) => s === "aligns"))      return "all_aligns";
+  if (statuses.every((s) => s === "not_aligned")) return "all_not_aligned";
+  if (statuses.every((s) => s === "no_evidence")) return "all_no_evidence";
   return "partially_aligned";
 }
 
 const OVERALL_CONFIG: Record<OverallStatus, { bg: string; color: string; border: string; label: string; icon: string }> = {
-  all_aligns:       { bg: "#F0FDF4", color: "#16A34A", border: "#BBF7D0", label: "Legally clear",    icon: "✓" },
-  partially_aligned:{ bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Partial alignment", icon: "~" },
-  all_not_aligned:  { bg: "#FEE2E2", color: "#DC2626", border: "#FCA5A5", label: "Not aligned",       icon: "✗" },
-  all_no_evidence:  { bg: "#F3F4F6", color: "#9CA3AF", border: "#E5E7EB", label: "No evidence",       icon: "?" },
-  mixed:            { bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Mixed",              icon: "~" },
+  all_aligns:        { bg: "#F0FDF4", color: "#16A34A", border: "#BBF7D0", label: "Legally clear",     icon: "✓" },
+  partially_aligned: { bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Partial alignment", icon: "~" },
+  all_not_aligned:   { bg: "#FEE2E2", color: "#DC2626", border: "#FCA5A5", label: "Not aligned",        icon: "✗" },
+  all_no_evidence:   { bg: "#F3F4F6", color: "#9CA3AF", border: "#E5E7EB", label: "No evidence",        icon: "?" },
+  mixed:             { bg: "#FFF3E0", color: "#C05621", border: "#FED7AA", label: "Mixed",               icon: "~" },
 };
 
 const OPERATOR_DISPLAY: Record<string, string> = {
@@ -124,12 +140,12 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
   const citySlug = city.locode.replace(" ", "-");
   const actions = actionsLegal.legal_requirements as ActionLegal[];
 
-  const totalReqs = actions.reduce((s, a) => s + a.requirements.length, 0);
-  const totalAligns = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "aligns").length, 0);
-  const totalNotAligned = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "not_aligned").length, 0);
-  const totalNoEvidence = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "no_evidence").length, 0);
+  const totalReqs        = actions.reduce((s, a) => s + a.requirements.length, 0);
+  const totalAligns      = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "aligns").length, 0);
+  const totalNotAligned  = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "not_aligned").length, 0);
+  const totalNoEvidence  = actions.reduce((s, a) => s + a.requirements.filter((r) => r.alignment_status === "no_evidence").length, 0);
 
-  const clearCount = actions.filter((a) => getOverallStatus(a.requirements) === "all_aligns").length;
+  const clearCount   = actions.filter((a) => getOverallStatus(a.requirements) === "all_aligns").length;
   const blockedCount = actions.filter((a) => getOverallStatus(a.requirements) === "all_not_aligned").length;
   const partialCount = actions.length - clearCount - blockedCount;
 
@@ -180,14 +196,10 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                   key={tab}
                   onClick={() => { setActiveTab(tab); setExpandedAction(null); }}
                   style={{
-                    padding: "7px 18px",
-                    borderRadius: "6px",
-                    border: "none",
+                    padding: "7px 18px", borderRadius: "6px", border: "none",
                     background: activeTab === tab ? "#001EA7" : "white",
                     color: activeTab === tab ? "white" : "#9CA3AF",
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    cursor: "pointer",
+                    fontSize: "13px", fontWeight: "500", cursor: "pointer",
                     outline: activeTab === tab ? "none" : "1px solid #DDDDE1",
                     transition: "background 0.15s",
                   }}
@@ -203,25 +215,14 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 40px" }}>
 
         {/* KPI bar */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "12px",
-          marginBottom: "14px",
-        }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "14px" }}>
           {[
-            { label: "Actions assessed",   value: actions.length,   bg: "white",   color: "#111827" },
-            { label: "Legally clear",       value: clearCount,       bg: "#F0FDF4", color: "#16A34A" },
-            { label: "Partial / flagged",   value: partialCount,     bg: "#FFF3E0", color: "#C05621" },
-            { label: "Blocked",             value: blockedCount,     bg: "#FEF2F2", color: "#DC2626" },
+            { label: "Actions assessed", value: actions.length, bg: "white",   color: "#111827" },
+            { label: "Legally clear",    value: clearCount,     bg: "#F0FDF4", color: "#16A34A" },
+            { label: "Partial / flagged", value: partialCount,  bg: "#FFF3E0", color: "#C05621" },
+            { label: "Blocked",          value: blockedCount,   bg: "#FEF2F2", color: "#DC2626" },
           ].map((k) => (
-            <div key={k.label} style={{
-              background: k.bg,
-              border: "1px solid #EBEBEB",
-              borderRadius: "10px",
-              padding: "14px 20px",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-            }}>
+            <div key={k.label} style={{ background: k.bg, border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
               <div style={{ fontSize: "24px", fontWeight: "700", color: k.color, lineHeight: 1 }}>{k.value}</div>
               <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "4px" }}>{k.label}</div>
             </div>
@@ -229,17 +230,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
         </div>
 
         {/* Check summary bar */}
-        <div style={{
-          background: "white",
-          border: "1px solid #EBEBEB",
-          borderRadius: "10px",
-          padding: "14px 24px",
-          marginBottom: "14px",
-          display: "flex",
-          gap: "32px",
-          alignItems: "center",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-        }}>
+        <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 24px", marginBottom: "14px", display: "flex", gap: "32px", alignItems: "center", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
           <div>
             <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Legal checks</div>
             <div style={{ fontSize: "14px", fontWeight: "600", color: "#111827" }}>{totalReqs} total</div>
@@ -257,7 +248,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
             <div style={{ fontSize: "14px", fontWeight: "600", color: "#9CA3AF" }}>{totalNoEvidence}</div>
           </div>
           <div style={{ marginLeft: "auto", display: "flex", gap: "12px", alignItems: "center" }}>
-            <div style={{ fontSize: "12px", color: "#6B7280" }}>Source:</div>
+            <span style={{ fontSize: "12px", color: "#6B7280" }}>Source:</span>
             <a href="https://bcn.cl/3d2sz" target="_blank" rel="noreferrer" style={{ fontSize: "12px", color: "#001EA7", fontWeight: "500", textDecoration: "none" }}>
               Ley 18.695 (LOCM) ↗
             </a>
@@ -271,15 +262,9 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
             Legal check breakdown — {totalReqs} checks across {actions.length} actions
           </div>
           <div style={{ display: "flex", borderRadius: "6px", overflow: "hidden", height: "12px", gap: "2px" }}>
-            {totalAligns > 0 && (
-              <div title={`${totalAligns} aligns`} style={{ flex: totalAligns, background: "#16A34A", transition: "flex 0.3s" }} />
-            )}
-            {totalNotAligned > 0 && (
-              <div title={`${totalNotAligned} not aligned`} style={{ flex: totalNotAligned, background: "#F97316", transition: "flex 0.3s" }} />
-            )}
-            {totalNoEvidence > 0 && (
-              <div title={`${totalNoEvidence} no evidence`} style={{ flex: totalNoEvidence, background: "#E5E7EB", transition: "flex 0.3s" }} />
-            )}
+            {totalAligns     > 0 && <div title={`${totalAligns} aligns`}      style={{ flex: totalAligns,     background: "#16A34A" }} />}
+            {totalNotAligned > 0 && <div title={`${totalNotAligned} not aligned`} style={{ flex: totalNotAligned, background: "#F97316" }} />}
+            {totalNoEvidence > 0 && <div title={`${totalNoEvidence} no evidence`} style={{ flex: totalNoEvidence, background: "#E5E7EB" }} />}
           </div>
           <div style={{ display: "flex", gap: "16px", marginTop: "6px" }}>
             {[
@@ -296,27 +281,24 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
           </div>
         </div>
 
+        {/* Strength legend */}
+        <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "10px 24px", marginBottom: "14px", display: "flex", gap: "6px", alignItems: "center", flexWrap: "wrap", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+          <span style={{ fontSize: "11px", color: "#9CA3AF", marginRight: "4px" }}>Requirement level:</span>
+          {(Object.entries(STRENGTH_META) as [Strength, typeof STRENGTH_META[Strength]][]).map(([key, s]) => (
+            <div key={key} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: s.dot, flexShrink: 0 }} />
+              <span style={{ fontSize: "11px", color: "#6B7280" }}>{s.label}</span>
+            </div>
+          ))}
+        </div>
+
         {/* Action groups */}
         {GROUPS.map((group) => {
           const cfg = OVERALL_CONFIG[group.status];
           return (
-            <div key={group.status} style={{
-              background: "white",
-              border: "1px solid #EBEBEB",
-              borderRadius: "10px",
-              overflow: "hidden",
-              marginBottom: "12px",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-            }}>
+            <div key={group.status} style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", marginBottom: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
               {/* Group header */}
-              <div style={{
-                padding: "10px 20px",
-                background: "#FAFAFA",
-                borderBottom: "1px solid #F0F0F0",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}>
+              <div style={{ padding: "10px 20px", background: "#FAFAFA", borderBottom: "1px solid #F0F0F0", display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ fontSize: "12px", fontWeight: "700", color: cfg.color, background: cfg.bg, padding: "2px 10px", borderRadius: "4px", border: `1px solid ${cfg.border}` }}>
                   {cfg.icon} {cfg.label}
                 </span>
@@ -330,6 +312,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                 const isLast = idx === group.actions.length - 1;
                 const overall = getOverallStatus(action.requirements);
                 const overallCfg = OVERALL_CONFIG[overall];
+                const meta = ACTION_NAMES[action.action_id];
                 const mandatoryFails = action.requirements.filter(
                   (r) => r.alignment_status !== "aligns" && (r.strength === "mandatory" || r.strength === "required")
                 );
@@ -340,10 +323,6 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                     <div
                       style={{
                         padding: "14px 20px",
-                        display: "grid",
-                        gridTemplateColumns: "180px 1fr auto auto",
-                        gap: "16px",
-                        alignItems: "center",
                         borderBottom: (!isLast || isExpanded) ? "1px solid #F5F5F5" : "none",
                         cursor: "pointer",
                         transition: "background 0.1s",
@@ -352,54 +331,55 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                       onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFAFA")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                     >
-                      {/* Action ID */}
-                      <div style={{ fontFamily: "ui-monospace, monospace", fontSize: "13px", fontWeight: "600", color: "#001EA7" }}>
-                        {action.action_id}
+                      {/* Top row: name + overall badge + expand */}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px", marginBottom: "8px" }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "2px", lineHeight: "1.3" }}>
+                            {meta?.name ?? action.action_id}
+                          </div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "11px", color: "#9CA3AF" }}>{action.action_id}</span>
+                            {meta?.subcategory && (
+                              <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", padding: "1px 6px", borderRadius: "3px" }}>
+                                {meta.subcategory}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+                          {mandatoryFails.length > 0 && (
+                            <span style={{ fontSize: "11px", background: "#FEE2E2", color: "#DC2626", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
+                              {mandatoryFails.length} mandatory {mandatoryFails.length === 1 ? "issue" : "issues"}
+                            </span>
+                          )}
+                          <span style={{ fontSize: "11px", background: overallCfg.bg, color: overallCfg.color, border: `1px solid ${overallCfg.border}`, padding: "2px 8px", borderRadius: "4px", fontWeight: "600", whiteSpace: "nowrap" }}>
+                            {overallCfg.icon} {overallCfg.label}
+                          </span>
+                          <span style={{ fontSize: "14px", color: "#9CA3AF", transition: "transform 0.15s", display: "inline-block", transform: isExpanded ? "rotate(90deg)" : "none" }}>
+                            ›
+                          </span>
+                        </div>
                       </div>
 
-                      {/* Requirement chips */}
-                      <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+                      {/* Requirement chips — bottom row */}
+                      <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
                         {action.requirements.map((req) => {
                           const ac = ALIGNMENT_CONFIG[req.alignment_status];
-                          const sc = STRENGTH_STYLES[req.strength];
+                          const sm = STRENGTH_META[req.strength];
+                          const shortName = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
                           return (
                             <div key={req.signal_code} style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "3px",
-                              background: ac.bg,
-                              border: `1px solid ${ac.border}`,
-                              borderRadius: "4px",
-                              padding: "2px 6px",
-                              fontSize: "10px",
+                              display: "flex", alignItems: "center", gap: "4px",
+                              background: ac.bg, border: `1px solid ${ac.border}`,
+                              borderRadius: "4px", padding: "3px 8px", fontSize: "11px",
                             }}>
-                              <span style={{ color: sc.color, fontWeight: "700", fontSize: "8px", background: sc.bg, padding: "0 3px", borderRadius: "2px", textTransform: "uppercase" }}>
-                                {req.strength.slice(0, 3)}
-                              </span>
-                              <span style={{ color: "#374151", fontWeight: "500" }}>{req.signal_name.split(" ").slice(-1)[0]}</span>
-                              <span style={{ color: ac.color, fontWeight: "700" }}>{ac.icon}</span>
+                              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: sm.dot, flexShrink: 0 }} title={sm.label} />
+                              <span style={{ color: "#374151", fontWeight: "500" }}>{shortName}</span>
+                              <span style={{ color: ac.color, fontWeight: "700", fontSize: "12px" }}>{ac.icon}</span>
                             </div>
                           );
                         })}
-                      </div>
-
-                      {/* Mandatory fail warning */}
-                      <div style={{ minWidth: "120px", textAlign: "right" }}>
-                        {mandatoryFails.length > 0 && (
-                          <span style={{ fontSize: "11px", background: "#FEE2E2", color: "#DC2626", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-                            {mandatoryFails.length} mandatory {mandatoryFails.length === 1 ? "issue" : "issues"}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Overall badge + expand */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontSize: "11px", background: overallCfg.bg, color: overallCfg.color, border: `1px solid ${overallCfg.border}`, padding: "2px 8px", borderRadius: "4px", fontWeight: "600", whiteSpace: "nowrap" }}>
-                          {overallCfg.icon} {overallCfg.label}
-                        </span>
-                        <span style={{ fontSize: "14px", color: "#9CA3AF", transition: "transform 0.15s", display: "inline-block", transform: isExpanded ? "rotate(90deg)" : "none" }}>
-                          ›
-                        </span>
                       </div>
                     </div>
 
@@ -417,52 +397,55 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                           {action.requirements.map((req) => {
                             const ac = ALIGNMENT_CONFIG[req.alignment_status];
-                            const sc = STRENGTH_STYLES[req.strength];
-                            const meta = SIGNAL_META[req.signal_code];
+                            const sm = STRENGTH_META[req.strength];
+                            const sigMeta = SIGNAL_META[req.signal_code];
+                            const shortName = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
                             return (
                               <div key={req.signal_code} style={{
                                 display: "grid",
-                                gridTemplateColumns: "220px 1fr 110px",
-                                gap: "12px",
-                                alignItems: "start",
+                                gridTemplateColumns: "220px 1fr 130px",
+                                gap: "12px", alignItems: "start",
                                 padding: "10px 14px",
-                                background: "white",
-                                borderRadius: "8px",
+                                background: "white", borderRadius: "8px",
                                 border: `1px solid ${ac.border}`,
                               }}>
                                 {/* Signal info */}
                                 <div>
-                                  <div style={{ fontSize: "12px", fontWeight: "600", color: "#111827" }}>{req.signal_name}</div>
-                                  {meta && <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{meta.description}</div>}
-                                  {meta && (
-                                    <a href={meta.sourceUrl} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#6B7280", textDecoration: "none" }}>
-                                      {meta.source} · {meta.articleRef} ↗
+                                  <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "3px" }}>
+                                    <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: sm.dot, flexShrink: 0 }} />
+                                    <span style={{ fontSize: "12px", fontWeight: "600", color: "#111827" }}>{shortName}</span>
+                                  </div>
+                                  {sigMeta && <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "3px" }}>{sigMeta.description}</div>}
+                                  {sigMeta && (
+                                    <a href={sigMeta.sourceUrl} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#6B7280", textDecoration: "none" }}>
+                                      {sigMeta.source} · {sigMeta.articleRef} ↗
                                     </a>
                                   )}
                                 </div>
 
                                 {/* Check detail */}
                                 <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
-                                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Requires</div>
-                                  <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", background: "#F3F4F6", padding: "2px 6px", borderRadius: "4px" }}>
+                                  <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Needs</span>
+                                  <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151", background: "#F3F4F6", padding: "2px 6px", borderRadius: "4px" }}>
                                     {OPERATOR_DISPLAY[req.operator] ?? req.operator} {VALUE_DISPLAY[req.required_value] ?? req.required_value}
-                                  </div>
-                                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Found</div>
-                                  <div style={{ fontSize: "12px", fontWeight: "600", color: ac.color, background: ac.bg, padding: "2px 6px", borderRadius: "4px", border: `1px solid ${ac.border}` }}>
+                                  </span>
+                                  <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Found</span>
+                                  <span style={{ fontSize: "12px", fontWeight: "600", color: ac.color, background: ac.bg, padding: "2px 6px", borderRadius: "4px", border: `1px solid ${ac.border}` }}>
                                     {req.legal_signal_value !== null
                                       ? (VALUE_DISPLAY[req.legal_signal_value] ?? req.legal_signal_value)
                                       : "—"}
-                                  </div>
+                                  </span>
                                   {req.evidence_count > 0 && (
-                                    <span style={{ fontSize: "11px", color: "#6B7280" }}>· {req.evidence_count} {req.evidence_count === 1 ? "ref" : "refs"}</span>
+                                    <span style={{ fontSize: "11px", color: "#6B7280" }}>· {req.evidence_count} {req.evidence_count === 1 ? "reference" : "references"}</span>
                                   )}
                                 </div>
 
-                                {/* Strength + status */}
+                                {/* Strength + alignment */}
                                 <div style={{ display: "flex", flexDirection: "column", gap: "4px", alignItems: "flex-end" }}>
-                                  <span style={{ fontSize: "10px", fontWeight: "700", color: sc.color, background: sc.bg, padding: "2px 6px", borderRadius: "3px", textTransform: "uppercase" }}>
-                                    {req.strength}
-                                  </span>
+                                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                                    <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: sm.dot }} />
+                                    <span style={{ fontSize: "11px", color: "#6B7280" }}>{sm.label}</span>
+                                  </div>
                                   <span style={{ fontSize: "11px", fontWeight: "600", color: ac.color }}>
                                     {ac.icon} {ac.label}
                                   </span>
@@ -490,16 +473,9 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
 
         {/* Info note */}
         <div style={{
-          background: "#F0F9FF",
-          border: "1px solid #BAE6FD",
-          borderRadius: "8px",
-          padding: "12px 16px",
-          marginBottom: "20px",
-          fontSize: "12px",
-          color: "#0369A1",
-          display: "flex",
-          gap: "10px",
-          alignItems: "flex-start",
+          background: "#F0F9FF", border: "1px solid #BAE6FD", borderRadius: "8px",
+          padding: "12px 16px", marginBottom: "20px", fontSize: "12px", color: "#0369A1",
+          display: "flex", gap: "10px", alignItems: "flex-start",
         }}>
           <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
           <span>
@@ -518,7 +494,6 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
           >
             ← Socioeconomic Context
           </button>
-
           <button
             onClick={() => navigate(`/city/${citySlug}/strategic`)}
             style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}
