@@ -1,0 +1,514 @@
+{
+  "plans": [
+    {
+      "name": "Estrategia Climática de Largo Plazo",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://cambioclimatico.mma.gob.cl/wp-content/uploads/2021/11/ECLP-LIVIANO.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "funding",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Mitigación Sector Agricultura",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://bibliotecadigital.odepa.gob.cl/bitstream/handle/20.500.12650/74030/PlanSectorialdeMitigacionalCambioClimatico-ago24.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "funding",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Mitigación Sector Ciudades",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://www.minvu.gob.cl/wp-content/uploads/2025/11/3694-3970-Proyecto-definitivo-APROBADO-por-el-CMSyCC-actualmente-en-Toma-de-Razon.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "funding",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Mitigación Sector Energía",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://energia.gob.cl/sites/default/files/documentos/proyecto_definitivo_plan_sectorial_energia_13_dic.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "funding",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Mitigación Sector Infraestructura",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://cambioclimatico.mop.gob.cl/archivos/sites/2/2025/05/Plan-de-Cambio-Climatico-Sector-Infraestructura-2025_web.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "governance",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "governance",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "governance",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "governance",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "governance",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "governance",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "governance",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Mitigación Sector Salud",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://degreyd.minsal.cl/wp-content/uploads/2024/11/51_Ord_3102_15_NOV_24_Env%C3%ADa_ProyectoDefinitivo_PSM-MINSAL.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "funding",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Mitigación Sector Transporte",
+      "scope": "National",
+      "locationName": "Chile",
+      "link": "https://movilidadactiva.sectra.gob.cl/wp-content/uploads/2025/02/Plan-SMACC_FINAL-2025_BP.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0013",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "funding",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "ipcc_0074",
+          "signalType": "funding",
+          "strength": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Plan de Acción Regional de Cambio Climático Antofagasta",
+      "scope": "Regional",
+      "locationName": "Antofagasta",
+      "link": "https://www.fomentoantofagasta.gob.cl/wp-content/uploads/2025/04/20241216_Proyecto-Final_PARCC_Antofagasta-imagen-borrosa.pdf",
+      "actions": [
+        {
+          "id": "c40_0010",
+          "signalType": "target",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0012",
+          "signalType": "target",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0023",
+          "signalType": "target",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0025",
+          "signalType": "target",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0029",
+          "signalType": "target",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0034",
+          "signalType": "action",
+          "strength": "high"
+        },
+        {
+          "id": "c40_0037",
+          "signalType": "target",
+          "strength": "medium"
+        },
+        {
+          "id": "c40_0040",
+          "signalType": "target",
+          "strength": "medium"
+        }
+      ]
+    }
+  ],
+  "perActionScores": {
+    "c40_0010": {
+      "policyScore": 0.936,
+      "natScore": 0.44,
+      "regScore": 0.28
+    },
+    "c40_0012": {
+      "policyScore": 0.936,
+      "natScore": 0.44,
+      "regScore": 0.28
+    },
+    "c40_0013": {
+      "policyScore": 0.576,
+      "natScore": 0.44,
+      "regScore": null
+    },
+    "c40_0023": {
+      "policyScore": 1,
+      "natScore": 0.6,
+      "regScore": 0.28
+    },
+    "c40_0025": {
+      "policyScore": 1,
+      "natScore": 0.6,
+      "regScore": 0.28
+    },
+    "c40_0029": {
+      "policyScore": 0.936,
+      "natScore": 0.44,
+      "regScore": 0.28
+    },
+    "c40_0034": {
+      "policyScore": 1,
+      "natScore": 0.44,
+      "regScore": 0.44
+    },
+    "c40_0037": {
+      "policyScore": 0.936,
+      "natScore": 0.44,
+      "regScore": 0.28
+    },
+    "c40_0040": {
+      "policyScore": 1,
+      "natScore": 0.6,
+      "regScore": 0.28
+    },
+    "ipcc_0074": {
+      "policyScore": 0.576,
+      "natScore": 0.44,
+      "regScore": null
+    }
+  },
+  "aggregateScores": {
+    "national": 0.488,
+    "regional": 0.3
+  }
+}
