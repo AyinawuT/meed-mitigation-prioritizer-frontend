@@ -253,10 +253,6 @@ export function CityProfile({ params }: CityProfileProps) {
                 <span>{city.region}</span>
                 <span style={{ color: "#D1D5DB" }}>·</span>
                 <span>{city.population} residents</span>
-                <span style={{ color: "#D1D5DB" }}>·</span>
-                <span style={{ fontFamily: "monospace", fontSize: "12px", background: "#F3F4F6", padding: "1px 7px", borderRadius: "4px", color: "#374151" }}>
-                  {city.locode}
-                </span>
               </div>
             </div>
 
