@@ -59,6 +59,8 @@ interface Props { params: { locode: string } }
 
 export function PolicyAlignment({ params }: Props) {
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const fromPreflight = search.includes("from=preflight");
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city: CityData | undefined = CITIES.find(
@@ -240,10 +242,10 @@ export function PolicyAlignment({ params }: Props) {
         {/* Footer actions */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "24px" }}>
           <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
-            ← Skip this step
+            {fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
           </button>
           <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
-            Save & continue →
+            {fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
           </button>
         </div>
       </div>
