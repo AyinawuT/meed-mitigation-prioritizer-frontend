@@ -14,73 +14,46 @@ type Strength = "high" | "medium" | "low";
 type SignalType = "action" | "funding" | "governance" | "sector" | "target";
 
 interface PlanAction { id: string; signalType: SignalType; strength: Strength }
-interface Plan { name: string; scope: string; locationName: string; link: string; actions: PlanAction[] }
+interface Plan { name: string; scope: string; locationName: string; link: string; horizon: string; actions: PlanAction[] }
 interface ActionScore { policyScore: number; natScore: number; regScore: number | null }
 
-const { plans, perActionScores } = policyPlansData as {
+const {
+  plans,
+  perActionScores,
+  aggregateScores,
+  dataSource,
+} = policyPlansData as {
   plans: Plan[];
   perActionScores: Record<string, ActionScore>;
   aggregateScores: { national: number; regional: number };
+  dataSource: { locode: string };
 };
 
 const NATIONAL_PLANS = plans.filter(p => p.scope === "National");
-const REGIONAL_PLANS_RAW = plans.filter(p => p.scope === "Regional");
-
-// Pre-computed national aggregate from policy_support_score average
-const NAT_SCORE = Math.round(
-  Object.values(perActionScores).reduce((s, a) => s + a.policyScore, 0) /
-  Object.keys(perActionScores).length * 100
-) / 100;
-
-// Regional: from actual regional signal data (scaled proportionally)
-const REG_SCORE_RAW = Object.values(perActionScores).filter(a => a.regScore !== null);
-const REG_SCORE = Math.round(
-  (REG_SCORE_RAW.reduce((s, a) => s + (a.regScore ?? 0), 0) / REG_SCORE_RAW.length) *
-  (NAT_SCORE / (Object.values(perActionScores).reduce((s, a) => s + a.natScore, 0) / Object.keys(perActionScores).length)) * 100
-) / 100;
+const REGIONAL_PLANS = plans.filter(p => p.scope === "Regional");
 
 const TYPE_LABEL: Record<string, string> = {
   action: "Policy action", funding: "Funding",
   governance: "Governance", sector: "Sector plan", target: "Emissions target",
 };
 
+const STRENGTH_COLOR: Record<Strength, string> = {
+  high: "#16A34A", medium: "#F9A200", low: "#9CA3AF",
+};
+
 function scoreColor(s: number | null): string {
   if (s === null) return "#9CA3AF";
   if (s >= 0.75) return "#16A34A";
-  if (s >= 0.45) return "#F9A200";
+  if (s >= 0.40) return "#F9A200";
   return "#9CA3AF";
 }
 
 function scoreLabel(s: number | null): string {
   if (s === null) return "No plan uploaded";
   if (s >= 0.75) return "Strong alignment";
-  if (s >= 0.45) return "Moderate alignment";
+  if (s >= 0.40) return "Moderate alignment";
   return "Limited alignment";
 }
-
-const STRENGTH_COLOR: Record<Strength, string> = {
-  high: "#16A34A", medium: "#F9A200", low: "#9CA3AF",
-};
-
-const PLAN_SHORT: Record<string, string> = {
-  "Estrategia Climática de Largo Plazo": "ECLP",
-  "Plan de Mitigación Sector Agricultura": "Sector Agricultura",
-  "Plan de Mitigación Sector Ciudades": "Sector Ciudades",
-  "Plan de Mitigación Sector Energía": "Sector Energía",
-  "Plan de Mitigación Sector Infraestructura": "Sector Infraestructura",
-  "Plan de Mitigación Sector Salud": "Sector Salud",
-  "Plan de Mitigación Sector Transporte": "Sector Transporte",
-};
-
-const PLAN_YEAR: Record<string, string> = {
-  "Estrategia Climática de Largo Plazo": "2021",
-  "Plan de Mitigación Sector Agricultura": "2022",
-  "Plan de Mitigación Sector Ciudades": "2022",
-  "Plan de Mitigación Sector Energía": "2022",
-  "Plan de Mitigación Sector Infraestructura": "2022",
-  "Plan de Mitigación Sector Salud": "2022",
-  "Plan de Mitigación Sector Transporte": "2022",
-};
 
 interface Props { params: { locode: string } }
 
@@ -111,31 +84,18 @@ export function PolicyAlignment({ params }: Props) {
   }
 
   const citySlug = city.locode.replace(" ", "-");
-
-  // Substitute region name for Iquique display (mock data is for Antofagasta)
-  const REGIONAL_PLANS: Plan[] = REGIONAL_PLANS_RAW.map(p => ({
-    ...p,
-    name: p.name.replace("Antofagasta", "Tarapacá"),
-    locationName: p.locationName === "Antofagasta" ? "Tarapacá" : p.locationName,
-  }));
+  const regLocation = REGIONAL_PLANS[0]?.locationName ?? "Region";
 
   useEffect(() => {
     setStepProgress(locode, "policy", {
       visited: true,
       progress: 100,
-      sub: `National ${NAT_SCORE} · Regional ${REG_SCORE} alignment scores`,
+      sub: `National ${aggregateScores.national} · Regional ${aggregateScores.regional} alignment scores`,
     });
   }, [locode]);
 
   function toggle(name: string) {
     setExpanded(prev => ({ ...prev, [name]: !prev[name] }));
-  }
-
-  function handleDrop(e: React.DragEvent) {
-    e.preventDefault();
-    setMunDragOver(false);
-    const f = e.dataTransfer.files[0];
-    if (f) setMunFile(f);
   }
 
   return (
@@ -156,7 +116,7 @@ export function PolicyAlignment({ params }: Props) {
             <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", borderRadius: "4px", padding: "2px 8px", fontWeight: "500" }}>Optional</span>
           </div>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-            MEED+ HIAP has assessed each candidate action against national, regional, and municipal climate policy for {city.name}. Policy alignment shapes how actions are ranked — better-backed actions score higher.
+            MEED+ HIAP has assessed each candidate action against national, regional, and municipal climate policy. Policy alignment shapes how actions are ranked — better-backed actions score higher.
           </p>
           <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
             MEED+ ALIGNMENT: Policy alignment contributes 80% to the city's alignment score · Alignment shapes 22% of ranking
@@ -166,30 +126,37 @@ export function PolicyAlignment({ params }: Props) {
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 64px 60px" }}>
 
+        {/* Data source note */}
+        <div style={{ marginBottom: "16px", padding: "10px 14px", background: "#F5F7FF", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "11px", color: "#4338CA" }}>
+          Policy signals sourced from {NATIONAL_PLANS.length} national and {REGIONAL_PLANS.length} regional plans for <strong>{dataSource.locode}</strong> · Scores reflect signal strength across {Object.keys(perActionScores).length} candidate actions
+        </div>
+
         {/* Score cards */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", marginBottom: "32px" }}>
           <ScoreCard
             scope="National plan"
-            score={NAT_SCORE}
-            color={scoreColor(NAT_SCORE)}
-            label={scoreLabel(NAT_SCORE)}
-            description={`Strong alignment with Chile's ECLP and ${NATIONAL_PLANS.length} sectoral mitigation plans`}
+            score={aggregateScores.national}
+            color={scoreColor(aggregateScores.national)}
+            label={scoreLabel(aggregateScores.national)}
+            description={`Average policy support score across ${NATIONAL_PLANS.length} national mitigation plans · ${Object.keys(perActionScores).length} actions assessed`}
           />
           <ScoreCard
             scope="Regional plan"
-            score={REG_SCORE}
-            color={scoreColor(REG_SCORE)}
-            label={scoreLabel(REG_SCORE)}
-            description={`Moderate alignment with PARCC Tarapacá · some sectors not covered`}
+            score={aggregateScores.regional}
+            color={scoreColor(aggregateScores.regional)}
+            label={scoreLabel(aggregateScores.regional)}
+            description={`Average signal strength across ${REGIONAL_PLANS.length} regional plan · ${Object.values(perActionScores).filter(a => a.regScore !== null).length} of ${Object.keys(perActionScores).length} actions with regional coverage`}
           />
           <ScoreCard
             scope="Municipal plan"
-            score={munFile ? 0.28 : null}
-            color={munFile ? scoreColor(0.28) : "#9CA3AF"}
-            label={munFile ? "Limited coverage detected" : "No plan uploaded"}
+            score={null}
+            color="#9CA3AF"
+            label={munFile ? "Uploaded — awaiting processing" : "No plan uploaded"}
             description={munFile
-              ? `PACCC scanned · partial action coverage found`
+              ? `${munFile.name} received · municipal alignment score will be added when processed`
               : `Upload your PACCC or local climate plan to add a municipal alignment score`}
+            munFile={munFile}
+            onRemoveMunFile={() => setMunFile(null)}
           />
         </div>
 
@@ -203,8 +170,6 @@ export function PolicyAlignment({ params }: Props) {
             <PlanCard
               key={plan.name}
               plan={plan}
-              shortName={PLAN_SHORT[plan.name] ?? plan.name}
-              year={PLAN_YEAR[plan.name] ?? ""}
               open={!!expanded[plan.name]}
               onToggle={() => toggle(plan.name)}
               perActionScores={perActionScores}
@@ -215,15 +180,13 @@ export function PolicyAlignment({ params }: Props) {
         {/* Regional Plans */}
         <ScopeSection
           title="Regional Plans"
-          subtitle="Tarapacá Region"
+          subtitle={regLocation}
           badge={{ label: `${REGIONAL_PLANS.length} plan${REGIONAL_PLANS.length !== 1 ? "s" : ""}`, bg: "#FFFBEB", text: "#B45309", border: "#FDE68A" }}
         >
           {REGIONAL_PLANS.map(plan => (
             <PlanCard
               key={plan.name}
               plan={plan}
-              shortName="PARCC Tarapacá"
-              year="2021"
               open={!!expanded[plan.name]}
               onToggle={() => toggle(plan.name)}
               perActionScores={perActionScores}
@@ -244,7 +207,7 @@ export function PolicyAlignment({ params }: Props) {
             <div
               onDragOver={e => { e.preventDefault(); setMunDragOver(true); }}
               onDragLeave={() => setMunDragOver(false)}
-              onDrop={handleDrop}
+              onDrop={e => { e.preventDefault(); setMunDragOver(false); const f = e.dataTransfer.files[0]; if (f) setMunFile(f); }}
               onClick={() => fileRef.current?.click()}
               style={{
                 border: `2px dashed ${munDragOver ? "#16A34A" : "#D1D5DB"}`,
@@ -261,11 +224,11 @@ export function PolicyAlignment({ params }: Props) {
               </div>
             </div>
           ) : (
-            <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px", padding: "14px 18px", display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "10px", padding: "14px 18px", display: "flex", alignItems: "center", gap: "12px" }}>
               <span style={{ fontSize: "24px" }}>📄</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{munFile.name}</div>
-                <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "2px" }}>Uploaded · {(munFile.size / 1024).toFixed(0)} KB</div>
+                <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "2px" }}>Uploaded · {(munFile.size / 1024).toFixed(0)} KB · Awaiting processing</div>
               </div>
               <button onClick={() => setMunFile(null)} style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "4px 10px", fontSize: "11px", color: "#6B7280", cursor: "pointer" }}>
                 Remove
@@ -306,8 +269,9 @@ function Breadcrumb({ items }: { items: { label: string; onClick?: () => void }[
   );
 }
 
-function ScoreCard({ scope, score, color, label, description }: {
+function ScoreCard({ scope, score, color, label, description, munFile, onRemoveMunFile }: {
   scope: string; score: number | null; color: string; label: string; description: string;
+  munFile?: File | null; onRemoveMunFile?: () => void;
 }) {
   const pct = score !== null ? Math.round(score * 100) : 0;
   return (
@@ -341,12 +305,12 @@ function ScopeSection({ title, subtitle, badge, children }: {
   );
 }
 
-function PlanCard({ plan, shortName, year, open, onToggle, perActionScores }: {
-  plan: Plan; shortName: string; year: string; open: boolean; onToggle: () => void;
+function PlanCard({ plan, open, onToggle, perActionScores }: {
+  plan: Plan; open: boolean; onToggle: () => void;
   perActionScores: Record<string, ActionScore>;
 }) {
-  const highCount   = plan.actions.filter(a => a.strength === "high").length;
-  const medCount    = plan.actions.filter(a => a.strength === "medium").length;
+  const highCount = plan.actions.filter(a => a.strength === "high").length;
+  const medCount  = plan.actions.filter(a => a.strength === "medium").length;
 
   return (
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
@@ -355,9 +319,20 @@ function PlanCard({ plan, shortName, year, open, onToggle, perActionScores }: {
         style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
       >
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{plan.name}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{plan.name}</span>
+            {plan.link && (
+              <a
+                href={plan.link} target="_blank" rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                style={{ fontSize: "10px", color: "#001EA7", textDecoration: "none", flexShrink: 0, border: "1px solid #C7D2FE", borderRadius: "3px", padding: "1px 5px", background: "#F5F7FF" }}
+              >
+                ↗ source
+              </a>
+            )}
+          </div>
           <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>
-            {year && `${year} · `}{plan.actions.length} action{plan.actions.length !== 1 ? "s" : ""} matched
+            {plan.horizon ? `Horizon: ${plan.horizon} · ` : ""}{plan.actions.length} action{plan.actions.length !== 1 ? "s" : ""} matched
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "16px", flexShrink: 0 }}>
@@ -377,7 +352,7 @@ function PlanCard({ plan, shortName, year, open, onToggle, perActionScores }: {
             const meta = ACTION_NAMES[a.id];
             if (!meta) return null;
             const col = STRENGTH_COLOR[a.strength];
-            const ps = perActionScores[a.id];
+            const ps  = perActionScores[a.id];
             return (
               <div key={a.id} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: col, flexShrink: 0 }} />

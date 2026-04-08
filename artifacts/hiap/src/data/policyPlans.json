@@ -5,6 +5,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://cambioclimatico.mma.gob.cl/wp-content/uploads/2021/11/ECLP-LIVIANO.pdf",
+      "horizon": "2020-2030",
       "actions": [
         {
           "id": "c40_0010",
@@ -63,6 +64,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://bibliotecadigital.odepa.gob.cl/bitstream/handle/20.500.12650/74030/PlanSectorialdeMitigacionalCambioClimatico-ago24.pdf",
+      "horizon": "2020-2030",
       "actions": [
         {
           "id": "c40_0010",
@@ -121,6 +123,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://www.minvu.gob.cl/wp-content/uploads/2025/11/3694-3970-Proyecto-definitivo-APROBADO-por-el-CMSyCC-actualmente-en-Toma-de-Razon.pdf",
+      "horizon": "2020-2030",
       "actions": [
         {
           "id": "c40_0010",
@@ -179,6 +182,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://energia.gob.cl/sites/default/files/documentos/proyecto_definitivo_plan_sectorial_energia_13_dic.pdf",
+      "horizon": "2020-2050",
       "actions": [
         {
           "id": "c40_0010",
@@ -237,6 +241,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://cambioclimatico.mop.gob.cl/archivos/sites/2/2025/05/Plan-de-Cambio-Climatico-Sector-Infraestructura-2025_web.pdf",
+      "horizon": "",
       "actions": [
         {
           "id": "c40_0010",
@@ -295,6 +300,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://degreyd.minsal.cl/wp-content/uploads/2024/11/51_Ord_3102_15_NOV_24_Env%C3%ADa_ProyectoDefinitivo_PSM-MINSAL.pdf",
+      "horizon": "2020-2030",
       "actions": [
         {
           "id": "c40_0010",
@@ -353,6 +359,7 @@
       "scope": "National",
       "locationName": "Chile",
       "link": "https://movilidadactiva.sectra.gob.cl/wp-content/uploads/2025/02/Plan-SMACC_FINAL-2025_BP.pdf",
+      "horizon": "2020-2030",
       "actions": [
         {
           "id": "c40_0010",
@@ -411,6 +418,7 @@
       "scope": "Regional",
       "locationName": "Antofagasta",
       "link": "https://www.fomentoantofagasta.gob.cl/wp-content/uploads/2025/04/20241216_Proyecto-Final_PARCC_Antofagasta-imagen-borrosa.pdf",
+      "horizon": "2040-2050",
       "actions": [
         {
           "id": "c40_0010",
@@ -508,7 +516,10 @@
     }
   },
   "aggregateScores": {
-    "national": 0.488,
+    "national": 0.89,
     "regional": 0.3
+  },
+  "dataSource": {
+    "locode": "CL ANF"
   }
 }
