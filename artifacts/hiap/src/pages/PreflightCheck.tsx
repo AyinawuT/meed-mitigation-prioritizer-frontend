@@ -4,42 +4,48 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, type StepProgress } from "@/lib/stepProgress";
-import policySignalsData from "@/data/actionsPolicySignals.json";
 import policyPlansData from "@/data/policyPlans.json";
 
-// ── Derive pilot data availability from actual signal data ──────────────────
-const STRENGTH_SCORE: Record<string, number> = { low: 1, medium: 2, high: 3 };
-
-const candidateActionIds = new Set<string>(
+// ── Candidate action count from plans data ──────────────────────────────────
+const CANDIDATE_ACTION_COUNT = new Set<string>(
   policyPlansData.plans.flatMap(p => p.actions.map((a: { id: string }) => a.id))
-);
+).size;
 
-const candidateSignals = policySignalsData.policy_signals.filter(
-  s => candidateActionIds.has(s.action_id)
-);
+// ── Compute pilot data availability from user-entered step progress ──────────
+//  Impact      = emissions data + implementation timeline (strategic)
+//  Alignment   = policy alignment + sector preferences & city priorities (strategic)
+//  Feasibility = regulations & laws + socioeconomic context
+//
+//  stepScore: not visited → 0 | partial → 0.5 | complete → 1.0
+//  dim score = average of its step scores
+//  dots: ≥0.9 → 3 (Excellent) | ≥0.4 → 2 (Good) | >0 → 1 (Fair) | 0 → 0 (No data)
 
-function dimAvgScore(signalType: string): number {
-  const scores = candidateSignals.map(a => {
-    const matches = a.policy_signals.filter(ps => ps.signal_type === signalType);
-    if (!matches.length) return 0;
-    return Math.max(...matches.map(ps => STRENGTH_SCORE[ps.signal_strength] ?? 0));
-  });
-  return scores.reduce((a, b) => a + b, 0) / (scores.length || 1);
+function stepScore(prog: StepProgress | undefined): number {
+  if (!prog?.visited || (prog.progress ?? 0) === 0) return 0;
+  return (prog.progress ?? 0) >= 100 ? 1.0 : 0.5;
 }
 
-function scoreToDots(avg: number): { dots: number; label: string; color: string } {
-  if (avg >= 2.5) return { dots: 3, label: "Excellent", color: "#16A34A" };
-  if (avg >= 1.5) return { dots: 2, label: "Good",      color: "#16A34A" };
-  if (avg >= 0.5) return { dots: 1, label: "Fair",      color: "#F9A200" };
-  return           { dots: 0, label: "No data",          color: "#9CA3AF" };
+function dimDots(avg: number): { dots: number; label: string; color: string } {
+  if (avg >= 0.9) return { dots: 3, label: "Excellent", color: "#16A34A" };
+  if (avg >= 0.4) return { dots: 2, label: "Good",      color: "#16A34A" };
+  if (avg >  0  ) return { dots: 1, label: "Fair",      color: "#F9A200" };
+  return                  { dots: 0, label: "No data",   color: "#9CA3AF" };
 }
 
-const PILOT_AVAILABILITY = {
-  impact:      scoreToDots(dimAvgScore("target")),
-  alignment:   scoreToDots(dimAvgScore("action")),
-  feasibility: scoreToDots(dimAvgScore("funding")),
-  actionCount: candidateSignals.length,
-};
+function computePilotAvailability(progMap: Record<string, StepProgress>) {
+  const em  = stepScore(progMap["emissions"]);
+  const so  = stepScore(progMap["socioeconomic"]);
+  const re  = stepScore(progMap["regulations"]);
+  const st  = stepScore(progMap["strategic"]);
+  const po  = stepScore(progMap["policy"]);
+
+  return {
+    impact:      dimDots((em + st) / 2),      // emissions + strategic (timeline)
+    alignment:   dimDots((po + st) / 2),      // policy alignment + strategic (sectors/priorities)
+    feasibility: dimDots((re + so) / 2),      // regulations + socioeconomic
+    actionCount: CANDIDATE_ACTION_COUNT,
+  };
+}
 
 interface StepDef {
   key: string;
@@ -136,6 +142,7 @@ export function PreflightCheck({ params }: Props) {
   const citySlug = city.locode.replace(" ", "-");
   const confidence = computeConfidence(progMap);
   const { label: confLabel, color: confColor, hint: confHint } = confidenceLabel(confidence);
+  const pilot = computePilotAvailability(progMap);
 
   const completeCount = STEPS.filter(s => !s.optional && getStatus(s, progMap[s.key] ?? { visited: false }) === "COMPLETE").length;
   const canGenerate = completeCount >= 1; // need at least emissions complete
@@ -266,11 +273,11 @@ export function PreflightCheck({ params }: Props) {
             {/* Pilot data availability */}
             <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>Pilot data availability</h2>
-              <DataRow label="Impact"      dots={PILOT_AVAILABILITY.impact.dots}      total={3} ratingLabel={PILOT_AVAILABILITY.impact.label}      color={PILOT_AVAILABILITY.impact.color} />
-              <DataRow label="Alignment"   dots={PILOT_AVAILABILITY.alignment.dots}   total={3} ratingLabel={PILOT_AVAILABILITY.alignment.label}   color={PILOT_AVAILABILITY.alignment.color} />
-              <DataRow label="Feasibility" dots={PILOT_AVAILABILITY.feasibility.dots} total={3} ratingLabel={PILOT_AVAILABILITY.feasibility.label} color={PILOT_AVAILABILITY.feasibility.color} />
+              <DataRow label="Impact"      dots={pilot.impact.dots}      total={3} ratingLabel={pilot.impact.label}      color={pilot.impact.color} />
+              <DataRow label="Alignment"   dots={pilot.alignment.dots}   total={3} ratingLabel={pilot.alignment.label}   color={pilot.alignment.color} />
+              <DataRow label="Feasibility" dots={pilot.feasibility.dots} total={3} ratingLabel={pilot.feasibility.label} color={pilot.feasibility.color} />
               <div style={{ marginTop: "12px", fontSize: "11px", color: "#9CA3AF" }}>
-                {PILOT_AVAILABILITY.actionCount} candidate actions · ~1–2 min · 1 scenario
+                {pilot.actionCount} candidate actions · ~1–2 min · 1 scenario
               </div>
             </div>
           </div>
