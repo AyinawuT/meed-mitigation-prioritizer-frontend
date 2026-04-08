@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { setStepProgress } from "@/lib/stepProgress";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
@@ -157,6 +157,8 @@ interface SocioeconomicContextProps {
 
 export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const fromPreflight = search.includes("from=preflight");
   const [activeTab, setActiveTab] = useState<Tab>("review");
 
   const urlLocode = params.locode ?? "";
@@ -584,7 +586,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                   setEditingKey(null);
                   setActiveTab("review");
                 } else {
-                  navigate(`/city/${citySlug}/regulations`);
+                  navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/regulations`);
                 }
               }}
               style={{
@@ -599,7 +601,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
               }}
             >
-              {activeTab === "adjust" ? "Save & continue →" : "Regulations & laws →"}
+              {activeTab === "adjust" ? "Save & continue →" : fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
             </button>
           </div>
         </div>

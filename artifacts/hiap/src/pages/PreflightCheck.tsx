@@ -223,7 +223,7 @@ export function PreflightCheck({ params }: Props) {
                       </div>
                     </div>
                     <button
-                      onClick={() => navigate(`/city/${citySlug}/${step.route}`)}
+                      onClick={() => navigate(`/city/${citySlug}/${step.route}?from=preflight`)}
                       style={{ fontSize: "11px", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0, flexShrink: 0, marginTop: "2px", textDecoration: "underline", textDecorationColor: "#C7D2FE" }}
                     >
                       {status === "COMPLETE" ? "Edit" : "Enter data"}

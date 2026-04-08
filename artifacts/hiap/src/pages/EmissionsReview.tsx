@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { setStepProgress } from "@/lib/stepProgress";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
@@ -135,6 +135,8 @@ interface EmissionsReviewProps {
 
 export function EmissionsReview({ params }: EmissionsReviewProps) {
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const fromPreflight = search.includes("from=preflight");
   const [activeTab, setActiveTab] = useState<Tab>("review");
 
   const urlLocode = params.locode ?? "";
@@ -233,7 +235,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
       setEditingIdx(null);
       setActiveTab("review");
     } else {
-      navigate(`/city/${citySlug}/socioeconomic`);
+      navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/socioeconomic`);
     }
   }
 
@@ -585,7 +587,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                 boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
               }}
             >
-              {activeTab === "adjust" ? "Save & continue →" : "Socioeconomic context →"}
+              {activeTab === "adjust" ? "Save & continue →" : fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
             </button>
           </div>
         </div>

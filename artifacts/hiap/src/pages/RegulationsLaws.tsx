@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { setStepProgress } from "@/lib/stepProgress";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
@@ -109,6 +109,8 @@ interface RegulationsLawsProps {
 
 export function RegulationsLaws({ params }: RegulationsLawsProps) {
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const fromPreflight = search.includes("from=preflight");
   const [activeTab, setActiveTab] = useState<Tab>("review");
   const [overrides, setOverrides] = useState<Set<string>>(new Set());
   const [overrideNotes, setOverrideNotes] = useState<Record<string, string>>({});
@@ -482,10 +484,10 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
             ← Socioeconomic Context
           </button>
           <button
-            onClick={() => navigate(`/city/${citySlug}/strategic`)}
+            onClick={() => navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`)}
             style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}
           >
-            Strategic preferences →
+            {fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
           </button>
         </div>
       </div>

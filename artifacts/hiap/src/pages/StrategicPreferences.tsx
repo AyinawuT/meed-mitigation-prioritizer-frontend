@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
@@ -24,6 +24,8 @@ interface Props { params: { locode: string } }
 
 export function StrategicPreferences({ params }: Props) {
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const fromPreflight = search.includes("from=preflight");
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city: CityData | undefined = CITIES.find(
@@ -277,7 +279,7 @@ export function StrategicPreferences({ params }: Props) {
         <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: "8px" }}>
           <button
             disabled={!canSave}
-            onClick={() => navigate(`/city/${citySlug}/policy`)}
+            onClick={() => navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/policy`)}
             style={{
               background: canSave ? "#16A34A" : "#E5E7EB",
               color: canSave ? "white" : "#9CA3AF",
@@ -289,7 +291,7 @@ export function StrategicPreferences({ params }: Props) {
               cursor: canSave ? "pointer" : "not-allowed",
             }}
           >
-            Save & continue →
+            {fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
           </button>
         </div>
       </div>
