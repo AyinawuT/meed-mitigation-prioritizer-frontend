@@ -92,7 +92,7 @@ export function PolicyAlignment({ params }: Props) {
     setStepProgress(locode, "policy", {
       visited: true,
       progress: 100,
-      sub: `National ${aggregateScores.national} · Regional ${aggregateScores.regional} alignment scores`,
+      sub: `National ${Math.round(aggregateScores.national * 100)}% · Regional ${Math.round(aggregateScores.regional * 100)}% alignment`,
     });
   }, [locode]);
 
