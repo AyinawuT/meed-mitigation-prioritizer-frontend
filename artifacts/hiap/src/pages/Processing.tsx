@@ -84,12 +84,14 @@ function buildRequest(locode: string) {
   // Load strategic preferences from localStorage
   const storageKey = `hiap:${locode}:strategic:form`;
   let sectors: string[] = [];
+  let strategicPriorities = "";
   let excludeText = "";
   try {
     const raw = localStorage.getItem(storageKey);
     if (raw) {
-      const saved = JSON.parse(raw) as { sectors: string[]; excludeText?: string };
+      const saved = JSON.parse(raw) as { sectors: string[]; strategicPriorities?: string; excludeText?: string };
       sectors = saved.sectors ?? [];
+      strategicPriorities = saved.strategicPriorities ?? "";
       excludeText = saved.excludeText ?? "";
     }
   } catch {}
@@ -104,6 +106,7 @@ function buildRequest(locode: string) {
   return {
     locode,
     cityStrategicPreferenceSectors: pipelineSectors,
+    cityStrategicPreferenceOther: strategicPriorities,
     excludedActionsFreeText: excludeText,
     weightsOverride: { impact: 0.55, alignment: 0.22, feasibility: 0.23 },
     cityEmissionsData: mockCity.cityEmissionsData as Parameters<typeof runPipeline>[0]["cityEmissionsData"],

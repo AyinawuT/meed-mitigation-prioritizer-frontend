@@ -10,6 +10,11 @@ interface SocioeconomicIndicator {
   weight: number;
 }
 
+interface CoBenefit {
+  impact_relationship: string;
+  impact_text: string;
+}
+
 interface ActionRecord {
   actionId: string;
   actionName: string;
@@ -23,6 +28,7 @@ interface ActionRecord {
     gpc_reference_number: string[];
     impact_text: string;
   };
+  coBenefits?: Record<string, CoBenefit>;
 }
 
 export interface RankedAction {
@@ -42,6 +48,7 @@ export interface RankedAction {
   timelineScore: number;
   policyComponent: number;
   sectorComponent: number;
+  otherComponent: number;
   softLegalComponent: number;
   socioeconomicComponent: number;
   legalPassed: boolean;
@@ -143,6 +150,26 @@ const INDICATOR_KEY_MAP: Record<string, string> = {
   electricity_access_rate: "electricity_access",
 };
 
+// Free-text strategic priority keywords → co-benefit dimension
+const PRIORITY_KEYWORD_MAP: Record<string, string[]> = {
+  air_quality:           ["air quality", "air pollution", "clean air", "pollution", "respiratory", "smog", "particulate", "health", "public health"],
+  cost_of_living:        ["cost of living", "affordable", "economic", "jobs", "employment", "income", "job creation", "poverty", "livelihoods", "inequality", "social equity", "equity"],
+  habitat:               ["nature", "biodiversity", "ecosystem", "habitat", "green space", "parks", "wildlife", "forest", "environment"],
+  housing:               ["housing", "homes", "residential", "shelter", "affordable housing", "tenants", "renters"],
+  mobility:              ["mobility", "transport", "commute", "access", "walking", "cycling", "public transit", "active travel", "active transport"],
+  stakeholder_engagement:["community", "stakeholder", "engagement", "participation", "inclusion", "social inclusion", "justice", "social justice"],
+  water_quality:         ["water", "flood", "drought", "water quality", "aquifer", "sanitation", "water access"],
+};
+
+// Co-benefit impact text → 0–1 score
+const COBENEFIT_SCORE: Record<string, number> = {
+  very_low: 0.2,
+  low:      0.4,
+  medium:   0.6,
+  high:     0.8,
+  very_high: 1.0,
+};
+
 // GPC sector prefix → strategic preference sectors
 const SECTOR_GPC_PREFIX: Record<string, string[]> = {
   transportation: ["II"],
@@ -168,6 +195,35 @@ function normalizeImpactText(raw: string): string {
 function normalizeTimeline(raw: string): string {
   // "<5 years" → "<5_years" etc.
   return raw.replace(/ /g, "_");
+}
+
+/** Parse free-text strategic priorities → list of matched co-benefit dimension keys */
+function matchedCoBenefitDimensions(freeText: string): string[] {
+  if (!freeText.trim()) return [];
+  const lower = freeText.toLowerCase();
+  const matched: string[] = [];
+  for (const [dim, keywords] of Object.entries(PRIORITY_KEYWORD_MAP)) {
+    if (keywords.some((kw) => lower.includes(kw))) {
+      matched.push(dim);
+    }
+  }
+  return matched;
+}
+
+/** Score an action against the city's free-text strategic priorities via co-benefits */
+function scoreCobenefitMatch(action: ActionRecord, dimensions: string[]): number {
+  if (dimensions.length === 0) return 0.0;
+  const coBenefits = action.coBenefits ?? {};
+  let total = 0;
+  for (const dim of dimensions) {
+    const benefit = coBenefits[dim];
+    if (benefit && benefit.impact_relationship === "positive") {
+      const text = normalizeImpactText(benefit.impact_text ?? "low");
+      total += COBENEFIT_SCORE[text] ?? 0.2;
+    }
+    // Negative or absent co-benefit → contributes 0 for this dimension
+  }
+  return total / dimensions.length;
 }
 
 function actionMatchesSectors(gpcRefs: string[], sectors: string[]): boolean {
@@ -278,18 +334,19 @@ function scoreImpact(
 
 function scoreAlignment(
   action: ActionRecord,
-  sectors: string[]
-): { alignmentScore: number; policyComponent: number; sectorComponent: number } {
+  sectors: string[],
+  coBenefitDimensions: string[]
+): { alignmentScore: number; policyComponent: number; sectorComponent: number; otherComponent: number } {
   const policyComponent = policyMap.get(action.actionId) ?? 0.0;
   const gpcRefs = action.emissions?.gpc_reference_number ?? [];
   const sectorComponent =
     sectors.length > 0 && actionMatchesSectors(gpcRefs, sectors) ? 1.0 : 0.0;
-  const otherComponent = 0.0;
+  const otherComponent = scoreCobenefitMatch(action, coBenefitDimensions);
 
   const alignmentScore =
     0.8 * policyComponent + 0.15 * sectorComponent + 0.05 * otherComponent;
 
-  return { alignmentScore, policyComponent, sectorComponent };
+  return { alignmentScore, policyComponent, sectorComponent, otherComponent };
 }
 
 // ─── Step 5: Feasibility scoring ──────────────────────────────────────────────
@@ -391,12 +448,15 @@ export function runPipeline(
   const { valid, discarded, flagged } = hardFilter(actions);
 
   const sectors = req.cityStrategicPreferenceSectors ?? [];
+  const freeText = req.cityStrategicPreferenceOther ?? "";
+  const coBenefitDimensions = matchedCoBenefitDimensions(freeText);
   const topN = req.topN ?? 20;
 
   const scored = valid.map((action) => {
     const { impactScore, reductionShare, timelineScore, matchedEmissions } =
       scoreImpact(action, byRef, total);
-    const { alignmentScore, policyComponent, sectorComponent } = scoreAlignment(action, sectors);
+    const { alignmentScore, policyComponent, sectorComponent, otherComponent } =
+      scoreAlignment(action, sectors, coBenefitDimensions);
     const { feasibilityScore, softLegalComponent, socioeconomicComponent } =
       scoreFeasibility(action, cityIndicators);
 
@@ -415,6 +475,7 @@ export function runPipeline(
       timelineScore,
       policyComponent,
       sectorComponent,
+      otherComponent,
       softLegalComponent,
       socioeconomicComponent,
       matchedEmissions,
@@ -439,6 +500,7 @@ export function runPipeline(
       timelineScore,
       policyComponent,
       sectorComponent,
+      otherComponent,
       softLegalComponent,
       socioeconomicComponent,
       matchedEmissions,
@@ -448,7 +510,7 @@ export function runPipeline(
     const explanation =
       `Ranked #${rank} with a final score of ${finalScore.toFixed(2)}. ` +
       `Impact: ${impactScore.toFixed(2)} (reduction share: ${(reductionShare * 100).toFixed(1)}%). ` +
-      `Alignment: ${alignmentScore.toFixed(2)} (policy support: ${policyComponent.toFixed(2)}, sector match: ${sectorComponent === 1 ? "yes" : "no"}). ` +
+      `Alignment: ${alignmentScore.toFixed(2)} (policy support: ${policyComponent.toFixed(2)}, sector match: ${sectorComponent === 1 ? "yes" : "no"}, strategic priorities match: ${otherComponent.toFixed(2)}). ` +
       `Feasibility: ${feasibilityScore.toFixed(2)}.`;
 
     return {
@@ -468,6 +530,7 @@ export function runPipeline(
       timelineScore,
       policyComponent,
       sectorComponent,
+      otherComponent,
       softLegalComponent,
       socioeconomicComponent,
       legalPassed: true,
