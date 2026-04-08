@@ -276,9 +276,6 @@ export function PreflightCheck({ params }: Props) {
               <DataRow label="Impact"      dots={pilot.impact.dots}      total={3} ratingLabel={pilot.impact.label}      color={pilot.impact.color} />
               <DataRow label="Alignment"   dots={pilot.alignment.dots}   total={3} ratingLabel={pilot.alignment.label}   color={pilot.alignment.color} />
               <DataRow label="Feasibility" dots={pilot.feasibility.dots} total={3} ratingLabel={pilot.feasibility.label} color={pilot.feasibility.color} />
-              <div style={{ marginTop: "12px", fontSize: "11px", color: "#9CA3AF" }}>
-                {pilot.actionCount} candidate actions · ~1–2 min · 1 scenario
-              </div>
             </div>
           </div>
         </div>
