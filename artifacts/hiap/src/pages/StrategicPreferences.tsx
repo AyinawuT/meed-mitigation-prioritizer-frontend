@@ -30,12 +30,11 @@ const SECTOR_CHIP: Record<string, { bg: string; text: string }> = {
 };
 
 const ALL_SECTORS = [
-  "Transport",
-  "Buildings",
-  "Energy",
+  "Stationary Energy",
+  "Transportation",
   "Waste",
-  "Industry",
-  "Land Use / AFOLU",
+  "Industrial Processes & Product Use (IPPU)",
+  "Agriculture, Forestry & Other Land Use (AFOLU)",
 ];
 
 const ALL_COBENEFITS = [
