@@ -3,229 +3,354 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
+import actionsRaw from "@/data/actions.json";
 
-// ─── Badge helpers ─────────────────────────────────────────────────────────────
+// ─── Co-benefits lookup ────────────────────────────────────────────────────────
 
-const PRIORITY_CONFIG = {
-  high:   { bg: "#FFEAEE", color: "#F23D33", label: "HIGH" },
-  medium: { bg: "#FEF8E1", color: "#F9A200", label: "MEDIUM" },
-  low:    { bg: "#EFFDE5", color: "#24BE00", label: "LOW" },
+type CoBenefitEntry = {
+  impact_relationship: "positive" | "negative";
+  impact_text: string;
 };
+
+const actionCoBenefitsMap: Record<string, string[]> = {};
+const actionBarriersMap: Record<string, string[]> = {};
+
+const rawActions = (actionsRaw as { actions: Record<string, { actionId: string; coBenefits?: Record<string, CoBenefitEntry> }> }).actions;
+Object.values(rawActions).forEach((a) => {
+  if (!a.coBenefits) return;
+  const pos: string[] = [];
+  const neg: string[] = [];
+  Object.entries(a.coBenefits).forEach(([key, val]) => {
+    const label = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    if (val.impact_relationship === "positive") pos.push(label);
+    else neg.push(label);
+  });
+  if (pos.length) actionCoBenefitsMap[a.actionId] = pos;
+  if (neg.length) actionBarriersMap[a.actionId] = neg;
+});
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
 
 const TIMELINE_LABEL: Record<string, string> = {
-  "<5 years":    "< 5 yrs",
-  "5-10 years":  "5–10 yrs",
-  ">10 years":   "> 10 yrs",
+  "<5 years": "< 5 years",
+  "5-10 years": "5–10 years",
+  ">10 years": "> 10 years",
 };
 
-const COST_LABEL: Record<string, string> = {
-  low:    "Low cost",
-  medium: "Med cost",
-  high:   "High cost",
-};
-
-function Badge({ priority }: { priority: "high" | "medium" | "low" }) {
-  const c = PRIORITY_CONFIG[priority];
-  return (
-    <span style={{
-      background: c.bg, color: c.color,
-      fontSize: "10px", fontWeight: "800", letterSpacing: "0.06em",
-      padding: "3px 8px", borderRadius: "5px",
-      border: `1px solid ${c.color}22`,
-    }}>
-      {c.label}
-    </span>
-  );
+function reductionLabel(priority: string) {
+  if (priority === "high") return "High";
+  if (priority === "medium") return "Medium";
+  return "Low";
 }
 
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span style={{
-      fontSize: "11px", color: "#6B7280", background: "#F3F4F6",
-      padding: "2px 8px", borderRadius: "4px", border: "1px solid #E5E7EB",
-      whiteSpace: "nowrap",
-    }}>
-      {children}
-    </span>
-  );
+function reductionColor(priority: string) {
+  if (priority === "high") return "#16A34A";
+  if (priority === "medium") return "#F59E0B";
+  return "#6B7280";
 }
 
-// ─── Score bar ─────────────────────────────────────────────────────────────────
+// ─── Score bar (panel) ─────────────────────────────────────────────────────────
 
-function ScoreBar({ action }: { action: RankedAction }) {
-  const total = action.finalScore;
-  const impW = 0.55, alnW = 0.22, feaW = 0.23;
-
-  const impPx = (action.impactScore * impW) / (total || 1);
-  const alnPx = (action.alignmentScore * alnW) / (total || 1);
-  const feaPx = (action.feasibilityScore * feaW) / (total || 1);
-
-  const segments = [
-    { pct: impPx * 100, color: "#3B82F6", label: "Impact" },
-    { pct: alnPx * 100, color: "#8B5CF6", label: "Alignment" },
-    { pct: feaPx * 100, color: "#10B981", label: "Feasibility" },
-  ];
-
+function ScoreBar({ label, value }: { label: string; value: number }) {
+  const pct = Math.round(Math.min(value, 1) * 100);
+  const color = pct >= 75 ? "#16A34A" : pct >= 55 ? "#F59E0B" : "#6B7280";
   return (
-    <div style={{ marginTop: "10px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-        <div style={{ flex: 1, height: "8px", background: "#F3F4F6", borderRadius: "6px", overflow: "hidden", display: "flex" }}>
-          {segments.map(seg => (
-            <div key={seg.label} style={{ width: `${seg.pct}%`, background: seg.color }} />
-          ))}
-        </div>
-        <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", width: "36px", textAlign: "right" }}>
-          {(total * 100).toFixed(0)}
-        </span>
+    <div style={{ marginBottom: "10px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+        <span style={{ fontSize: "12px", color: "#6B7280" }}>{label}</span>
+        <span style={{ fontSize: "12px", fontWeight: "600", color }}>{pct}</span>
       </div>
-      <div style={{ display: "flex", gap: "12px" }}>
-        {segments.map(seg => (
-          <div key={seg.label} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <div style={{ width: "8px", height: "8px", borderRadius: "2px", background: seg.color }} />
-            <span style={{ fontSize: "10px", color: "#6B7280" }}>{seg.label}</span>
-          </div>
-        ))}
+      <div style={{ background: "#F0F0F4", borderRadius: "3px", height: "6px" }}>
+        <div style={{ background: color, width: `${pct}%`, height: "6px", borderRadius: "3px" }} />
       </div>
     </div>
   );
 }
 
-// ─── Expanded detail ───────────────────────────────────────────────────────────
+// ─── Detail panel ─────────────────────────────────────────────────────────────
 
-function SubScore({ label, value, max = 1 }: { label: string; value: number; max?: number }) {
-  return (
-    <div style={{ marginBottom: "6px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", marginBottom: "3px" }}>
-        <span style={{ color: "#6B7280" }}>{label}</span>
-        <span style={{ fontWeight: "600", color: "#374151" }}>{(value * 100).toFixed(0)}%</span>
-      </div>
-      <div style={{ height: "4px", background: "#F3F4F6", borderRadius: "3px", overflow: "hidden" }}>
-        <div style={{ height: "100%", width: `${(value / max) * 100}%`, background: "#6366F1", borderRadius: "3px" }} />
-      </div>
-    </div>
-  );
-}
-
-function ActionDetail({ action }: { action: RankedAction }) {
-  return (
-    <div style={{ padding: "14px 16px 16px", background: "#F9FAFB", borderTop: "1px solid #E5E7EB" }}>
-      <p style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.6", marginBottom: "16px" }}>
-        {action.description}
-      </p>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
-        {/* Impact */}
-        <div>
-          <div style={{ fontSize: "11px", fontWeight: "700", color: "#3B82F6", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Impact</div>
-          <SubScore label="Reduction share" value={Math.min(action.reductionShare, 1)} />
-          <SubScore label="Timeline score" value={action.timelineScore} />
-          <SubScore label="Impact score" value={Math.min(action.impactScore, 1)} />
-        </div>
-
-        {/* Alignment */}
-        <div>
-          <div style={{ fontSize: "11px", fontWeight: "700", color: "#8B5CF6", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Alignment</div>
-          <SubScore label="Policy support" value={action.policyComponent} />
-          <SubScore label="Sector match" value={action.sectorComponent} />
-          <SubScore label="Alignment score" value={action.alignmentScore} />
-        </div>
-
-        {/* Feasibility */}
-        <div>
-          <div style={{ fontSize: "11px", fontWeight: "700", color: "#10B981", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>Feasibility</div>
-          <SubScore label="Soft legal fit" value={action.softLegalComponent} />
-          <SubScore label="Socioeconomic fit" value={action.socioeconomicComponent} />
-          <SubScore label="Feasibility score" value={action.feasibilityScore} />
-        </div>
-      </div>
-
-      {action.legalFlag && (
-        <div style={{ marginTop: "12px", fontSize: "11px", color: "#B45309", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "6px", padding: "6px 10px" }}>
-          ⚠ One or more mandatory legal requirements have no evidence — flagged for review
-        </div>
-      )}
-
-      <div style={{ marginTop: "12px", fontSize: "11px", color: "#9CA3AF", lineHeight: "1.5", fontStyle: "italic" }}>
-        {action.explanation}
-      </div>
-
-      {action.gpcRefs.length > 0 && (
-        <div style={{ marginTop: "8px", display: "flex", gap: "4px", flexWrap: "wrap" }}>
-          {action.gpcRefs.map(ref => (
-            <span key={ref} style={{ fontSize: "10px", color: "#6366F1", background: "#EEF2FF", border: "1px solid #C7D2FE", padding: "1px 6px", borderRadius: "4px" }}>
-              GPC {ref}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── Action card ───────────────────────────────────────────────────────────────
-
-function ActionCard({ action, expanded, onToggle }: {
-  action: RankedAction;
-  expanded: boolean;
-  onToggle: () => void;
-}) {
+function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () => void }) {
+  const cobenefits = actionCoBenefitsMap[action.actionId] ?? [];
+  const barriers = actionBarriersMap[action.actionId] ?? [];
   const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
-  const cost = COST_LABEL[action.costInvestmentNeeded] ?? action.costInvestmentNeeded;
 
+  return (
+    <>
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.25)", zIndex: 40,
+          animation: "fadeIn 0.2s ease",
+        }}
+      />
+      <div style={{
+        position: "fixed", top: 0, right: 0, bottom: 0, width: "440px",
+        background: "white", zIndex: 50, overflowY: "auto",
+        boxShadow: "-4px 0 24px rgba(0,0,0,0.12)",
+        display: "flex", flexDirection: "column",
+        animation: "slideIn 0.22s ease",
+      }}>
+        <div style={{ padding: "24px 28px", borderBottom: "1px solid #EBEBEB", flexShrink: 0 }}>
+          <button
+            onClick={onClose}
+            style={{
+              background: "none", border: "none", cursor: "pointer",
+              color: "#001EA7", fontSize: "13px", fontWeight: "600",
+              padding: 0, display: "flex", alignItems: "center", gap: "6px", marginBottom: "18px",
+            }}
+          >
+            ← GO BACK
+          </button>
+          <div style={{ fontSize: "11px", fontWeight: "700", color: "#9CA3AF", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+            {action.actionCategory}
+          </div>
+          <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.35" }}>
+            {action.actionName}
+          </h2>
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            {action.rank === 1 && (
+              <span style={{ fontSize: "10px", background: "#FFF3E0", color: "#C05621", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
+                Expert's Choice
+              </span>
+            )}
+            {action.gpcRefs.map((ref) => (
+              <span key={ref} style={{ fontSize: "10px", background: "#EFF6FF", color: "#2563EB", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
+                GPC {ref}
+              </span>
+            ))}
+            <span style={{ fontSize: "10px", background: "#F5F5F7", color: "#6B7280", padding: "2px 8px", borderRadius: "4px" }}>
+              ⏱ {tl}
+            </span>
+          </div>
+        </div>
+
+        <div style={{ padding: "24px 28px", flexGrow: 1, overflowY: "auto" }}>
+          <div style={{ marginBottom: "22px" }}>
+            <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>Action description</div>
+            <p style={{ fontSize: "13px", color: "#4B5563", lineHeight: "1.65", margin: 0 }}>{action.description}</p>
+          </div>
+
+          {action.explanation && (
+            <div style={{ marginBottom: "22px" }}>
+              <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>Why this ranking</div>
+              <p style={{ fontSize: "13px", color: "#4B5563", lineHeight: "1.65", margin: 0, fontStyle: "italic" }}>{action.explanation}</p>
+            </div>
+          )}
+
+          <div style={{ marginBottom: "22px" }}>
+            <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "12px" }}>Score breakdown</div>
+            <ScoreBar label="Impact" value={action.impactScore} />
+            <ScoreBar label="Alignment" value={action.alignmentScore} />
+            <ScoreBar label="Feasibility" value={action.feasibilityScore} />
+          </div>
+
+          {cobenefits.length > 0 && (
+            <div style={{ marginBottom: "22px" }}>
+              <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>Co-benefits</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                {cobenefits.map((b) => (
+                  <div key={b} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#4B5563" }}>
+                    <span style={{ color: "#16A34A", fontWeight: "700" }}>✓</span> {b}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {barriers.length > 0 && (
+            <div style={{ marginBottom: "24px" }}>
+              <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>Trade-offs</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                {barriers.map((b) => (
+                  <div key={b} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#4B5563" }}>
+                    <span style={{ color: "#F59E0B", fontWeight: "700" }}>⚠</span> {b}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {action.legalFlag && (
+            <div style={{ fontSize: "12px", color: "#B45309", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "6px", padding: "8px 12px", marginBottom: "16px" }}>
+              ⚠ One or more mandatory legal requirements have no evidence — flagged for review.
+            </div>
+          )}
+        </div>
+
+        <div style={{ padding: "16px 28px", borderTop: "1px solid #EBEBEB", flexShrink: 0 }}>
+          <button style={{
+            width: "100%", background: "#001EA7", color: "white", border: "none",
+            borderRadius: "8px", padding: "12px", fontSize: "13px", fontWeight: "600", cursor: "pointer",
+          }}>
+            Add to action plan →
+          </button>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes slideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
+      `}</style>
+    </>
+  );
+}
+
+// ─── Top-3 card ───────────────────────────────────────────────────────────────
+
+function TopCard({ action, onSelect }: { action: RankedAction; onSelect: (a: RankedAction) => void }) {
   return (
     <div style={{
-      background: "white", borderRadius: "10px", border: "1px solid #E5E7EB",
-      boxShadow: expanded ? "0 4px 16px rgba(0,0,0,0.08)" : "0 1px 4px rgba(0,0,0,0.04)",
-      overflow: "hidden", transition: "box-shadow 0.2s",
+      background: "white", border: "1px solid #EBEBEB", borderRadius: "12px",
+      padding: "16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+      display: "flex", flexDirection: "column",
     }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+        <div style={{
+          width: "30px", height: "30px", borderRadius: "50%",
+          background: "#001EA7", color: "white",
+          fontSize: "13px", fontWeight: "700",
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        }}>
+          #{action.rank}
+        </div>
+        {action.rank === 1 && (
+          <span style={{ fontSize: "10px", background: "#FFF3E0", color: "#C05621", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
+            Expert's Choice
+          </span>
+        )}
+      </div>
+
+      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "8px", lineHeight: "1.4", flex: 1 }}>
+        {action.actionName}
+      </div>
+
+      <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "12px", lineHeight: "1.45" }}>
+        {action.description.length > 90 ? action.description.slice(0, 90) + "…" : action.description}
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "5px", marginBottom: "12px", fontSize: "12px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ color: "#9CA3AF" }}>Reduction potential</span>
+          <span style={{ color: reductionColor(action.priority), fontWeight: "600" }}>
+            {reductionLabel(action.priority)}
+          </span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ color: "#9CA3AF" }}>Sector</span>
+          <span style={{ color: "#6B7280" }}>{action.actionCategory}</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ color: "#9CA3AF" }}>Timeline</span>
+          <span style={{ color: "#6B7280" }}>{TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation}</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ color: "#9CA3AF" }}>Score</span>
+          <span style={{ color: "#001EA7", fontWeight: "700" }}>{(action.finalScore * 100).toFixed(0)}</span>
+        </div>
+      </div>
+
       <button
-        onClick={onToggle}
+        onClick={() => onSelect(action)}
         style={{
-          width: "100%", textAlign: "left", background: "none", border: "none",
-          padding: "14px 16px", cursor: "pointer",
-          display: "flex", alignItems: "flex-start", gap: "12px",
+          width: "100%", background: "none", border: "1px solid #EBEBEB",
+          borderRadius: "6px", padding: "7px", fontSize: "12px",
+          color: "#001EA7", cursor: "pointer", fontWeight: "500",
         }}
       >
-        {/* Rank */}
-        <div style={{
-          flexShrink: 0, width: "28px", height: "28px", borderRadius: "50%",
-          background: action.priority === "high" ? "#FFF1F2" : action.priority === "medium" ? "#FFFBEB" : "#F0FDF4",
-          border: `1.5px solid ${action.priority === "high" ? "#F23D33" : action.priority === "medium" ? "#F9A200" : "#24BE00"}`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "11px", fontWeight: "800",
-          color: action.priority === "high" ? "#F23D33" : action.priority === "medium" ? "#F9A200" : "#24BE00",
-        }}>
-          {action.rank}
-        </div>
-
-        {/* Content */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "4px" }}>
-            <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.3" }}>
-              {action.actionName}
-            </span>
-            <Badge priority={action.priority} />
-          </div>
-          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "2px" }}>
-            <Pill>{action.actionSubcategory}</Pill>
-            <Pill>{tl}</Pill>
-            <Pill>{cost}</Pill>
-          </div>
-          <ScoreBar action={action} />
-        </div>
-
-        {/* Chevron */}
-        <div style={{ flexShrink: 0, color: "#9CA3AF", fontSize: "14px", marginTop: "6px", transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-          ▾
-        </div>
+        See more details
       </button>
-
-      {expanded && <ActionDetail action={action} />}
     </div>
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Ranking table ─────────────────────────────────────────────────────────────
+
+function RankingTable({ actions, onSelect }: { actions: RankedAction[]; onSelect: (a: RankedAction) => void }) {
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+        <div>
+          <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Mitigation actions ranking</div>
+          <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
+            All ranked actions — click ↗ to view details.
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <button style={{
+            background: "white", border: "1px solid #DDDDE1", borderRadius: "8px",
+            padding: "7px 14px", fontSize: "12px", color: "#6B7280", cursor: "pointer",
+          }}>
+            ↓ Download
+          </button>
+        </div>
+      </div>
+
+      <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "#FAFAFA", borderBottom: "1px solid #F0F0F0" }}>
+              {["RANK", "ACTION", "SECTOR", "REDUCTION POTENTIAL", ""].map((h) => (
+                <th key={h} style={{
+                  padding: "10px 14px", fontSize: "11px", color: "#9CA3AF",
+                  fontWeight: "500", textAlign: "left", letterSpacing: "0.03em",
+                }}>
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {actions.map((action) => (
+              <tr
+                key={action.actionId}
+                style={{ borderBottom: "1px solid #F5F5F5" }}
+              >
+                <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#001EA7", whiteSpace: "nowrap" }}>
+                  #{action.rank}
+                </td>
+                <td style={{ padding: "10px 14px", fontSize: "12px", color: "#111827", maxWidth: "280px" }}>
+                  {action.actionName}
+                </td>
+                <td style={{ padding: "10px 14px", fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
+                  {action.actionCategory}
+                </td>
+                <td style={{ padding: "10px 14px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{ width: "100px", background: "#EEF2FF", borderRadius: "3px", height: "6px" }}>
+                      <div style={{
+                        background: "#001EA7",
+                        width: `${action.finalScore * 100}%`,
+                        height: "6px", borderRadius: "3px",
+                      }} />
+                    </div>
+                    <span style={{ fontSize: "11px", color: reductionColor(action.priority), fontWeight: "600" }}>
+                      {reductionLabel(action.priority)}
+                    </span>
+                  </div>
+                </td>
+                <td style={{ padding: "10px 14px" }}>
+                  <button
+                    onClick={() => onSelect(action)}
+                    style={{
+                      background: "none", border: "none", cursor: "pointer",
+                      color: "#001EA7", fontSize: "16px", fontWeight: "500",
+                      padding: "0 4px",
+                    }}
+                    title="View details"
+                  >
+                    ↗
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// ─── Page ──────────────────────────────────────────────────────────────────────
 
 interface Props { params: { locode: string } }
 
@@ -233,15 +358,13 @@ export function Recommendations({ params }: Props) {
   const [, navigate] = useLocation();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
-  const city = CITIES.find(c => c.locode.toLowerCase() === locode.toLowerCase());
+  const city = CITIES.find((c) => c.locode.toLowerCase() === locode.toLowerCase());
   const citySlug = city ? city.locode.replace(" ", "-") : urlLocode;
   const cityName = city?.name ?? locode;
 
   const [result, setResult] = useState<PipelineResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [filterPriority, setFilterPriority] = useState<string>("all");
-  const [filterSubcat, setFilterSubcat] = useState<string>("all");
+  const [selectedAction, setSelectedAction] = useState<RankedAction | null>(null);
 
   useEffect(() => {
     try {
@@ -258,11 +381,14 @@ export function Recommendations({ params }: Props) {
 
   if (error) {
     return (
-      <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+      <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar cityName={cityName} />
         <div style={{ maxWidth: "760px", margin: "80px auto", padding: "0 24px", textAlign: "center" }}>
           <p style={{ color: "#6B7280", marginBottom: "16px" }}>{error}</p>
-          <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ padding: "10px 24px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}>
+          <button
+            onClick={() => navigate(`/city/${citySlug}/preflight`)}
+            style={{ padding: "10px 24px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
+          >
             ← Back to pre-flight
           </button>
         </div>
@@ -272,7 +398,7 @@ export function Recommendations({ params }: Props) {
 
   if (!result) {
     return (
-      <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+      <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar cityName={cityName} />
         <div style={{ maxWidth: "760px", margin: "80px auto", padding: "0 24px", textAlign: "center" }}>
           <p style={{ color: "#6B7280" }}>Loading results…</p>
@@ -282,108 +408,70 @@ export function Recommendations({ params }: Props) {
   }
 
   const { ranked, discarded, totalCityEmissions } = result;
-
-  // Filters
-  const subcats = [...new Set(ranked.map(a => a.actionSubcategory).filter(Boolean))].sort();
-  const filtered = ranked.filter(a => {
-    if (filterPriority !== "all" && a.priority !== filterPriority) return false;
-    if (filterSubcat !== "all" && a.actionSubcategory !== filterSubcat) return false;
-    return true;
-  });
-
-  const highCount = ranked.filter(a => a.priority === "high").length;
-  const medCount = ranked.filter(a => a.priority === "medium").length;
-  const lowCount = ranked.filter(a => a.priority === "low").length;
+  const top3 = ranked.slice(0, 3);
 
   return (
-    <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar cityName={cityName} />
 
-      <div style={{ maxWidth: "860px", margin: "0 auto", padding: "32px 24px 64px" }}>
+      {selectedAction && (
+        <DetailPanel action={selectedAction} onClose={() => setSelectedAction(null)} />
+      )}
 
-        {/* Header */}
-        <div style={{ marginBottom: "24px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/preflight`)}
-            style={{ background: "none", border: "none", color: "#6B7280", fontSize: "12px", cursor: "pointer", padding: "0", marginBottom: "12px", display: "flex", alignItems: "center", gap: "4px" }}
-          >
-            ← Pre-flight check
-          </button>
-          <h1 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 4px" }}>
-            Action Recommendations — {cityName}
-          </h1>
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-            {ranked.length} actions ranked · {discarded.length} excluded (legal) · Total city emissions {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
-          </p>
-        </div>
-
-        {/* Summary pills */}
-        <div style={{ display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap" }}>
-          {[
-            { label: `${highCount} High priority`, color: "#F23D33", bg: "#FFEAEE", key: "high" },
-            { label: `${medCount} Medium priority`, color: "#F9A200", bg: "#FEF8E1", key: "medium" },
-            { label: `${lowCount} Low priority`, color: "#24BE00", bg: "#EFFDE5", key: "low" },
-          ].map(p => (
+      {/* White page header */}
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>
             <button
-              key={p.key}
-              onClick={() => setFilterPriority(filterPriority === p.key ? "all" : p.key)}
-              style={{
-                padding: "6px 14px", borderRadius: "20px", border: `1.5px solid ${p.color}44`,
-                background: filterPriority === p.key ? p.bg : "white",
-                color: p.color, fontSize: "12px", fontWeight: "700", cursor: "pointer",
-              }}
+              onClick={() => navigate(`/city/${citySlug}/preflight`)}
+              style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}
             >
-              {p.label}
+              Cities
             </button>
-          ))}
-
-          {/* Subcategory filter */}
-          <select
-            value={filterSubcat}
-            onChange={e => setFilterSubcat(e.target.value)}
-            style={{
-              padding: "6px 12px", borderRadius: "8px", border: "1px solid #E5E7EB",
-              background: "white", fontSize: "12px", color: "#374151", cursor: "pointer",
-              marginLeft: "auto",
-            }}
-          >
-            <option value="all">All types</option>
-            {subcats.map(s => <option key={s} value={s}>{s}</option>)}
-          </select>
-        </div>
-
-        {/* Score legend */}
-        <div style={{ background: "white", borderRadius: "8px", border: "1px solid #E5E7EB", padding: "10px 16px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
-          <span style={{ fontSize: "11px", fontWeight: "700", color: "#374151" }}>Score breakdown key:</span>
-          {[
-            { color: "#3B82F6", label: "Impact (55%)" },
-            { color: "#8B5CF6", label: "Alignment (22%)" },
-            { color: "#10B981", label: "Feasibility (23%)" },
-          ].map(s => (
-            <div key={s.label} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: s.color }} />
-              <span style={{ fontSize: "11px", color: "#6B7280" }}>{s.label}</span>
+            {" › "}{cityName}{" › "}Mitigation actions
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div>
+              <h1 style={{ fontSize: "22px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>
+                Top mitigation actions for {cityName}
+              </h1>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
+                {ranked.length} actions ranked · {discarded.length} excluded (legal filter) · Total city emissions {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
+              </p>
             </div>
-          ))}
-          <span style={{ fontSize: "11px", color: "#9CA3AF", marginLeft: "auto" }}>Score out of 100</span>
+            <button style={{
+              background: "#001EA7", color: "white", border: "none", borderRadius: "8px",
+              padding: "9px 18px", fontSize: "12px", fontWeight: "500", cursor: "pointer",
+              whiteSpace: "nowrap", marginLeft: "24px",
+            }}>
+              ⚡ Generate Plan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 48px 64px" }}>
+
+        {/* Top 3 section */}
+        <div style={{ marginBottom: "32px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+            <div>
+              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Top 3 mitigation actions</div>
+              <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
+                Highest-ranked actions based on {cityName}'s data and priorities.
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "14px" }}>
+            {top3.map((action) => (
+              <TopCard key={action.actionId} action={action} onSelect={setSelectedAction} />
+            ))}
+          </div>
         </div>
 
-        {/* Action cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          {filtered.length === 0 && (
-            <div style={{ textAlign: "center", padding: "40px", color: "#9CA3AF", fontSize: "13px" }}>
-              No actions match the selected filters.
-            </div>
-          )}
-          {filtered.map(action => (
-            <ActionCard
-              key={action.actionId}
-              action={action}
-              expanded={expandedId === action.actionId}
-              onToggle={() => setExpandedId(expandedId === action.actionId ? null : action.actionId)}
-            />
-          ))}
-        </div>
+        {/* Full ranking table */}
+        <RankingTable actions={ranked} onSelect={setSelectedAction} />
 
         {/* Discarded section */}
         {discarded.length > 0 && (
@@ -392,8 +480,11 @@ export function Recommendations({ params }: Props) {
               {discarded.length} actions excluded (failed mandatory legal requirements)
             </summary>
             <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
-              {discarded.map(d => (
-                <div key={d.actionId} style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              {discarded.map((d) => (
+                <div key={d.actionId} style={{
+                  background: "white", border: "1px solid #E5E7EB", borderRadius: "6px",
+                  padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center",
+                }}>
                   <span style={{ fontSize: "12px", color: "#374151" }}>{d.actionName}</span>
                   <span style={{ fontSize: "11px", color: "#DC2626", background: "#FEF2F2", padding: "2px 8px", borderRadius: "4px" }}>
                     {d.reason.replace(/_/g, " ")}
