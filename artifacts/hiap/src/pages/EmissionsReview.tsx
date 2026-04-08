@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { setStepProgress } from "@/lib/stepProgress";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -172,6 +173,14 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const totalEmissions = sectors.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
   const totalMillions = (totalEmissions / 1e6).toFixed(2);
   const inventoryYear = city.locode === "CL IQQ" ? "2022" : city.emissionsYear;
+
+  useEffect(() => {
+    setStepProgress(locode, "emissions", {
+      visited: true,
+      progress: Math.round((confirmedCount / sectors.length) * 100),
+      sub: `${confirmedCount} / ${sectors.length} sectors confirmed · Inventory year ${inventoryYear}`,
+    });
+  }, [locode, confirmedCount, sectors.length, inventoryYear]);
 
   function startEdit(i: number) {
     const row = sectors[i];

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { setStepProgress } from "@/lib/stepProgress";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -186,6 +187,14 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   }
 
   const citySlug = city.locode.replace(" ", "-");
+
+  useEffect(() => {
+    setStepProgress(locode, "socioeconomic", {
+      visited: true,
+      progress: 100,
+      sub: `${indicators.length} indicators reviewed`,
+    });
+  }, [locode, indicators.length]);
 
   function startEdit(key: string) {
     const ind = indicators.find((i) => i.key === key)!;

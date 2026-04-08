@@ -1,114 +1,106 @@
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, type CityData } from "@/data/cities";
+import { getStepProgress } from "@/lib/stepProgress";
 
 const STEP_ROUTES: Record<string, string> = {
-  emissions: "emissions",
+  emissions:     "emissions",
   socioeconomic: "socioeconomic",
-  regulations: "regulations",
-  preferences: "strategic",
-  policy: "policy",
+  regulations:   "regulations",
+  preferences:   "strategic",
+  policy:        "policy",
 };
 
-const SECTIONS = [
+interface SectionDef {
+  id: string;
+  priority: "HIGH" | "MEDIUM" | "LOW";
+  title: string;
+  desc: string;
+  progressKey: string;
+}
+
+const SECTION_DEFS: SectionDef[] = [
   {
     id: "emissions",
     priority: "HIGH",
-    status: "NOT STARTED",
     title: "Emissions Data",
     desc: "Your city's GHG inventory by sector. The primary input for action prioritisation.",
-    sub: null as string | null,
-    progress: null as number | null,
-    cta: "Start →",
+    progressKey: "emissions",
   },
   {
     id: "socioeconomic",
     priority: "HIGH",
-    status: "NOT STARTED",
     title: "Socioeconomic Context",
     desc: "Population, GDP, and key socioeconomic indicators to improve ranking accuracy.",
-    sub: null,
-    progress: null,
-    cta: "Start →",
+    progressKey: "socioeconomic",
   },
   {
     id: "regulations",
     priority: "MEDIUM",
-    status: "NOT STARTED",
     title: "Regulations & Laws",
     desc: "Local legislation and policies that determine which actions are feasible.",
-    sub: null,
-    progress: null,
-    cta: "Start →",
+    progressKey: "regulations",
   },
   {
     id: "preferences",
     priority: "LOW",
-    status: "NOT STARTED",
     title: "Strategic Preferences",
     desc: "Sector priorities, co-benefits, budget range, and implementation timeline.",
-    sub: null,
-    progress: null,
-    cta: "Start →",
+    progressKey: "strategic",
   },
   {
     id: "policy",
     priority: "LOW",
-    status: "NOT STARTED",
     title: "Policy Alignment",
     desc: "Optional: align recommendations with national and local climate frameworks.",
-    sub: null,
-    progress: null,
-    cta: "Start →",
+    progressKey: "policy",
   },
 ];
 
-const PRIORITY_COLORS: Record<string, { bg: string; text: string }> = {
-  HIGH: { bg: "#FFF3E0", text: "#C05621" },
-  MEDIUM: { bg: "#FEF9C3", text: "#92400E" },
-  LOW: { bg: "#E8F5E9", text: "#2E7D32" },
+const PRIORITY_STYLES: Record<string, { bg: string; text: string }> = {
+  HIGH:   { bg: "#FFF3E0", text: "#C05621" },
+  MEDIUM: { bg: "#FEF9C3", text: "#A16207" },
+  LOW:    { bg: "#F0FDF4", text: "#16A34A" },
 };
 
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  "IN-PROGRESS": { bg: "#FFF3E0", text: "#C05621" },
+const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
+  "IN PROGRESS": { bg: "#FFF3E0", text: "#C05621" },
   "NOT STARTED": { bg: "#F5F5F5", text: "#9CA3AF" },
-  COMPLETE: { bg: "#E8F5E9", text: "#2E7D32" },
+  "COMPLETE":    { bg: "#F0FDF4", text: "#16A34A" },
 };
 
-function PriorityBadge({ priority }: { priority: string }) {
-  const c = PRIORITY_COLORS[priority] ?? PRIORITY_COLORS.LOW;
-  return (
-    <span style={{
-      fontSize: "10px",
-      padding: "2px 7px",
-      borderRadius: "4px",
-      background: c.bg,
-      color: c.text,
-      fontWeight: "600",
-      letterSpacing: "0.03em",
-    }}>
-      {priority}
-    </span>
-  );
+interface SectionState {
+  status: "NOT STARTED" | "IN PROGRESS" | "COMPLETE";
+  progress: number | null;
+  sub: string | null;
+  cta: string;
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const c = STATUS_COLORS[status] ?? STATUS_COLORS["NOT STARTED"];
-  return (
-    <span style={{
-      fontSize: "10px",
-      padding: "2px 8px",
-      borderRadius: "4px",
-      background: c.bg,
-      color: c.text,
-      fontWeight: "500",
-    }}>
-      {status}
-    </span>
-  );
+function computeSections(locode: string): SectionState[] {
+  return SECTION_DEFS.map((def) => {
+    const p = getStepProgress(locode, def.progressKey);
+    if (!p.visited) {
+      return { status: "NOT STARTED", progress: null, sub: null, cta: "Start →" };
+    }
+    const pct = p.progress ?? 0;
+    if (pct >= 100) {
+      return { status: "COMPLETE", progress: pct, sub: p.sub ?? null, cta: "Continue →" };
+    }
+    return { status: "IN PROGRESS", progress: pct, sub: p.sub ?? null, cta: "Continue →" };
+  });
 }
 
-function SectionCard({ section, onClick }: { section: typeof SECTIONS[number]; onClick?: () => void }) {
+interface SectionCardProps {
+  def: SectionDef;
+  state: SectionState;
+  onClick?: () => void;
+}
+
+function SectionCard({ def, state, onClick }: SectionCardProps) {
+  const ps = PRIORITY_STYLES[def.priority];
+  const ss = STATUS_STYLES[state.status];
+
   return (
     <div
       onClick={onClick}
@@ -122,8 +114,10 @@ function SectionCard({ section, onClick }: { section: typeof SECTIONS[number]; o
         flexDirection: "column",
         transition: "box-shadow 0.15s, border-color 0.15s",
         cursor: onClick ? "pointer" : "default",
+        minHeight: "160px",
       }}
       onMouseEnter={(e) => {
+        if (!onClick) return;
         (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
         (e.currentTarget as HTMLDivElement).style.borderColor = "#CBD5E1";
       }}
@@ -132,30 +126,49 @@ function SectionCard({ section, onClick }: { section: typeof SECTIONS[number]; o
         (e.currentTarget as HTMLDivElement).style.borderColor = "#EBEBEB";
       }}
     >
+      {/* Priority + status row */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-        <PriorityBadge priority={section.priority} />
-        <StatusBadge status={section.status} />
+        <span style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", background: ps.bg, color: ps.text, fontWeight: "700", letterSpacing: "0.04em" }}>
+          {def.priority}
+        </span>
+        <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: ss.bg, color: ss.text, fontWeight: "500" }}>
+          {state.status}
+        </span>
       </div>
-      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "4px" }}>
-        {section.title}
+
+      {/* Title */}
+      <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
+        {def.title}
       </div>
-      {section.sub && (
-        <div style={{ fontSize: "11px", color: "#C05621", marginBottom: "4px" }}>
-          {section.sub}
+
+      {/* Sub (progress detail) */}
+      {state.sub && (
+        <div style={{ fontSize: "11px", color: "#C05621", marginBottom: "4px", fontWeight: "500" }}>
+          {state.sub}
         </div>
       )}
-      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.55", marginBottom: "14px", flex: "1" }}>
-        {section.desc}
+
+      {/* Description */}
+      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.55", marginBottom: "14px", flex: 1 }}>
+        {def.desc}
       </div>
-      {section.progress !== null && (
-        <div style={{ marginBottom: "12px" }}>
+
+      {/* CTA + progress bar */}
+      <div>
+        <div style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", marginBottom: state.progress !== null ? "6px" : "0" }}>
+          {state.cta}
+        </div>
+        {state.progress !== null && (
           <div style={{ background: "#E5E7EB", borderRadius: "3px", height: "3px" }}>
-            <div style={{ background: "#16A34A", width: `${section.progress}%`, height: "3px", borderRadius: "3px" }} />
+            <div style={{
+              background: state.progress >= 100 ? "#16A34A" : "#C05621",
+              width: `${state.progress}%`,
+              height: "3px",
+              borderRadius: "3px",
+              transition: "width 0.4s ease",
+            }} />
           </div>
-        </div>
-      )}
-      <div style={{ fontSize: "12px", color: "#001EA7", fontWeight: "500" }}>
-        {section.cta}
+        )}
       </div>
     </div>
   );
@@ -163,24 +176,10 @@ function SectionCard({ section, onClick }: { section: typeof SECTIONS[number]; o
 
 function KeyStat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div style={{
-      background: "white",
-      border: "1px solid #EBEBEB",
-      borderRadius: "10px",
-      padding: "14px 18px",
-      boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-    }}>
-      <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "4px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-        {label}
-      </div>
-      <div style={{ fontSize: "18px", fontWeight: "700", color: "#111827", lineHeight: "1.2" }}>
-        {value}
-      </div>
-      {sub && (
-        <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "3px" }}>
-          {sub}
-        </div>
-      )}
+    <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 18px", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+      <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "4px", textTransform: "uppercase", letterSpacing: "0.04em" }}>{label}</div>
+      <div style={{ fontSize: "18px", fontWeight: "700", color: "#111827", lineHeight: "1.2" }}>{value}</div>
+      {sub && <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "3px" }}>{sub}</div>}
     </div>
   );
 }
@@ -191,6 +190,7 @@ interface CityProfileProps {
 
 export function CityProfile({ params }: CityProfileProps) {
   const [, navigate] = useLocation();
+  const [tick, setTick] = useState(0);
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -198,29 +198,18 @@ export function CityProfile({ params }: CityProfileProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
+  useEffect(() => {
+    setTick((t) => t + 1);
+  }, [locode]);
+
   if (!city) {
     return (
       <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>🏙️</div>
           <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 8px" }}>City not found</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>
-            We couldn't find a city with the locode "{urlLocode}".
-          </p>
-          <button
-            onClick={() => navigate("/")}
-            style={{
-              background: "#001EA7",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              padding: "10px 20px",
-              fontSize: "13px",
-              fontWeight: "500",
-              cursor: "pointer",
-            }}
-          >
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>We couldn't find a city with the locode "{urlLocode}".</p>
+          <button onClick={() => navigate("/")} style={{ background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "500", cursor: "pointer" }}>
             ← Back to cities
           </button>
         </div>
@@ -228,10 +217,12 @@ export function CityProfile({ params }: CityProfileProps) {
     );
   }
 
-  const notStarted = SECTIONS.length;
-  const inProgress = 0;
-  const complete = 0;
-  const canGenerate = complete >= 3;
+  const citySlug = city.locode.replace(" ", "-");
+  const sectionStates = computeSections(locode);
+  const completeCount  = sectionStates.filter((s) => s.status === "COMPLETE").length;
+  const progressCount  = sectionStates.filter((s) => s.status === "IN PROGRESS").length;
+  const notStarted     = sectionStates.filter((s) => s.status === "NOT STARTED").length;
+  const canGenerate    = completeCount >= 3;
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -240,24 +231,17 @@ export function CityProfile({ params }: CityProfileProps) {
       {/* White header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 64px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          {/* Breadcrumb */}
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "10px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <button
-              onClick={() => navigate("/")}
-              style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}
-            >
+            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
               Cities
             </button>
             <span>›</span>
             <span style={{ color: "#374151" }}>{city.name}</span>
           </div>
 
-          {/* Title row */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
-              <h1 style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-                {city.name}
-              </h1>
+              <h1 style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>{city.name}</h1>
               <div style={{ fontSize: "13px", color: "#6B7280", display: "flex", alignItems: "center", gap: "8px" }}>
                 <span>{city.region}</span>
                 <span style={{ color: "#D1D5DB" }}>·</span>
@@ -279,7 +263,6 @@ export function CityProfile({ params }: CityProfileProps) {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                transition: "opacity 0.15s",
               }}
               title={canGenerate ? "Generate recommendations" : "Complete at least 3 sections to unlock recommendations"}
             >
@@ -290,47 +273,34 @@ export function CityProfile({ params }: CityProfileProps) {
         </div>
       </div>
 
-      {/* Key stats row */}
+      {/* Key stats */}
       <div style={{ background: "#FAFAFA", borderBottom: "1px solid #EBEBEB", padding: "14px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-          <KeyStat
-            label="Total emissions"
-            value={city.emissions}
-            sub={`Inventory year ${city.emissionsYear}`}
-          />
-          <KeyStat
-            label="Population"
-            value={city.population}
-            sub={city.region}
-          />
-          <KeyStat
-            label="Land area"
-            value={city.area}
-            sub={city.biome}
-          />
+          <KeyStat label="Total emissions" value={city.emissions} sub={`Inventory year ${city.emissionsYear}`} />
+          <KeyStat label="Population" value={city.population} sub={city.region} />
+          <KeyStat label="Land area" value={city.area} sub={city.biome} />
         </div>
       </div>
 
-      {/* Main content */}
+      {/* Section cards */}
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 64px 60px" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "4px" }}>
-          <h2 style={{ fontSize: "16px", fontWeight: "600", color: "#111827", margin: 0 }}>
-            City Profile
-          </h2>
+          <h2 style={{ fontSize: "16px", fontWeight: "600", color: "#111827", margin: 0 }}>City Profile</h2>
         </div>
         <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px", lineHeight: "1.5" }}>
-          Complete each section to build the foundation for your action recommendations. Sections marked <strong style={{ color: "#C05621" }}>HIGH</strong> have the greatest impact on ranking accuracy.
+          Complete each section to build the foundation for your action recommendations. Sections marked{" "}
+          <strong style={{ color: "#C05621" }}>HIGH</strong> have the greatest impact on ranking accuracy.
         </p>
 
-        {/* Section cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "16px" }}>
-          {SECTIONS.map((section) => {
-            const route = STEP_ROUTES[section.id];
+          {SECTION_DEFS.map((def, i) => {
+            const route = STEP_ROUTES[def.id];
             return (
               <SectionCard
-                key={section.id}
-                section={section}
-                onClick={route ? () => navigate(`/city/${city.locode.replace(" ", "-")}/${route}`) : undefined}
+                key={def.id}
+                def={def}
+                state={sectionStates[i]}
+                onClick={route ? () => navigate(`/city/${citySlug}/${route}`) : undefined}
               />
             );
           })}
@@ -338,24 +308,26 @@ export function CityProfile({ params }: CityProfileProps) {
 
         {/* Status bar */}
         <div style={{
-          background: "white",
-          border: "1px solid #EBEBEB",
-          borderRadius: "10px",
-          padding: "13px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          background: "white", border: "1px solid #EBEBEB", borderRadius: "10px",
+          padding: "13px 20px", display: "flex", justifyContent: "space-between", alignItems: "center",
           boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
         }}>
           <span style={{ fontSize: "13px", color: "#6B7280" }}>
-            {inProgress > 0 && `${inProgress} section${inProgress > 1 ? "s" : ""} in progress · `}
-            {notStarted > 0 && `${notStarted} not started · `}
-            {complete > 0 && `${complete} complete`}
-            {inProgress === 0 && notStarted === SECTIONS.length && complete === 0 && "No sections started yet"}
+            {completeCount > 0 && `${completeCount} complete · `}
+            {progressCount > 0 && `${progressCount} in progress · `}
+            {notStarted > 0 && `${notStarted} not started`}
+            {completeCount === 0 && progressCount === 0 && notStarted === 0 && "No sections started yet"}
           </span>
-          <span style={{ fontSize: "13px", color: "#C05621", fontWeight: "500" }}>
-            Complete Emissions Data + 2 more sections to unlock recommendations →
-          </span>
+          {!canGenerate && (
+            <span style={{ fontSize: "13px", color: "#C05621", fontWeight: "500" }}>
+              {3 - completeCount} more section{3 - completeCount !== 1 ? "s" : ""} needed to unlock recommendations →
+            </span>
+          )}
+          {canGenerate && (
+            <span style={{ fontSize: "13px", color: "#16A34A", fontWeight: "600" }}>
+              ✓ Ready to generate recommendations
+            </span>
+          )}
         </div>
       </div>
 
@@ -363,14 +335,10 @@ export function CityProfile({ params }: CityProfileProps) {
       <div style={{ background: "#001EA7", padding: "20px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <div style={{ background: "#16A34A", borderRadius: "5px", width: "24px", height: "24px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "700", color: "white" }}>
-              M+
-            </div>
+            <div style={{ background: "#16A34A", borderRadius: "5px", width: "24px", height: "24px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "700", color: "white" }}>M+</div>
             <span style={{ color: "#93C5FD", fontSize: "13px" }}>MEED+ · HIAP</span>
           </div>
-          <span style={{ color: "#3B5FA0", fontSize: "12px" }}>
-            High Impact Action Prioritizer — Climate Solutions for Chilean Cities
-          </span>
+          <span style={{ color: "#3B5FA0", fontSize: "12px" }}>High Impact Action Prioritizer — Climate Solutions for Chilean Cities</span>
         </div>
       </div>
     </div>

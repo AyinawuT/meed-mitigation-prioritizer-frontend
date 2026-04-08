@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { setStepProgress } from "@/lib/stepProgress";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -144,6 +145,14 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
   const excludedCount  = excluded.filter((a) => !overrides.has(a.action_id)).length;
   const overriddenCount = overrides.size;
   const includedCount  = included.length + overriddenCount;
+
+  useEffect(() => {
+    setStepProgress(locode, "regulations", {
+      visited: true,
+      progress: 100,
+      sub: `${actions.length} actions assessed · ${includedCount} included in ranking`,
+    });
+  }, [locode, actions.length, includedCount]);
 
   function toggleOverride(id: string) {
     setOverrides((prev) => {
