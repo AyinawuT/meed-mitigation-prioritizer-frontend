@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
+import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 
 const QUICK_CITIES = ["Iquique", "Antofagasta", "Arica", "Alto Hospicio", "Taltal"];
 
 export function Landing() {
+  const [, navigate] = useLocation();
   const [searchVal, setSearchVal] = useState("");
   const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -227,6 +229,10 @@ export function Landing() {
 
                 {/* CTA below the map */}
                 <button
+                  onClick={() => {
+                    const slug = selectedCity.locode.replace(" ", "-");
+                    navigate(`/city/${slug}`);
+                  }}
                   style={{
                     background: "#001EA7",
                     color: "white",
@@ -368,7 +374,7 @@ export function Landing() {
             {CITIES.map((city) => (
               <button
                 key={city.locode}
-                onClick={() => selectCity(city)}
+                onClick={() => { const slug = city.locode.replace(" ", "-"); navigate(`/city/${slug}`); }}
                 style={{
                   background: "white",
                   border: "1px solid #EBEBEB",
