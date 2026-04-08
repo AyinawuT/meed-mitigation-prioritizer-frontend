@@ -140,7 +140,7 @@ export function PolicyAlignment({ params }: Props) {
             score={aggregateScores.national}
             color={scoreColor(aggregateScores.national)}
             label={scoreLabel(aggregateScores.national)}
-            description={`Average policy support score across ${NATIONAL_PLANS.length} national and ${REGIONAL_PLANS.length} regional mitigation plans · ${Object.keys(perActionScores).length} actions assessed`}
+            description={`Average policy support score across ${NATIONAL_PLANS.length} national mitigation plans · ${Object.keys(perActionScores).length} actions assessed`}
           />
           <ScoreCard
             scope="Regional plan"
