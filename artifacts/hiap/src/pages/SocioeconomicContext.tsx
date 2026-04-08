@@ -181,9 +181,6 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   const citySlug = city.locode.replace(" ", "-");
   const indicators = buildIndicators(city);
 
-  const riskCount = indicators.filter((i) => i.concern === "risk").length;
-  const oppCount = indicators.filter((i) => i.concern === "opportunity").length;
-
   const keyIndicators = [
     indicators.find((i) => i.key === "poverty_rate")!,
     indicators.find((i) => i.key === "unemployment_rate")!,
@@ -219,12 +216,6 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
                   {indicators.length} indicators loaded
-                </span>
-                <span style={{ fontSize: "11px", background: "#FEF2F2", color: "#B91C1C", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
-                  {riskCount} risk factors
-                </span>
-                <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
-                  {oppCount} opportunities
                 </span>
                 <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
                   MEED+ FEASIBILITY: Socioeconomic context shapes 50% of feasibility score · Feasibility shapes 23% of ranking
