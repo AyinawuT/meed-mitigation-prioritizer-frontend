@@ -301,7 +301,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #F0F0F0", background: "#FAFAFA" }}>
-                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "MEED+ CLIMATE RELEVANCE", "SOURCE", activeTab === "adjust" ? "" : ""].map((h, i) => (
+                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "MEED+ CLIMATE RELEVANCE", activeTab === "adjust" ? "" : ""].map((h, i) => (
                   <th key={i} style={{
                     padding: "10px 16px",
                     fontSize: "11px",
@@ -349,6 +349,9 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                         <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>
                           {ind.label}
                         </div>
+                        <div style={{ fontSize: "11px", color: "#C4C4C4", marginTop: "2px" }}>
+                          {ind.source}
+                        </div>
                       </td>
                       <td style={{ padding: "12px 16px", fontSize: "14px", fontWeight: "600", color: "#111827", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
                         {formatValue(ind)}
@@ -375,9 +378,6 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                           {icon}
                         </span>
                         {ind.relevance}
-                      </td>
-                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#9CA3AF", whiteSpace: "nowrap" }}>
-                        {ind.source}
                       </td>
                       {activeTab === "adjust" && (
                         <td style={{ padding: "12px 16px" }}>
