@@ -246,7 +246,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar cityName={city.name} />
-      <StepBar activeStep={1} />
+      <StepBar activeStep={1} citySlug={citySlug} />
 
       {/* White page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>

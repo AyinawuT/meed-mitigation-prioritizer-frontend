@@ -1,3 +1,5 @@
+import { useLocation } from "wouter";
+
 const STEPS = [
   "Emissions data",
   "Socioeconomic context",
@@ -7,11 +9,23 @@ const STEPS = [
   "Pre-flight check",
 ];
 
+const STEP_PATHS = [
+  (slug: string) => `/city/${slug}/emissions`,
+  (slug: string) => `/city/${slug}/socioeconomic`,
+  (slug: string) => `/city/${slug}/regulations`,
+  (slug: string) => `/city/${slug}/strategic`,
+  (slug: string) => `/city/${slug}/policy`,
+  (slug: string) => `/city/${slug}/preflight`,
+];
+
 interface StepBarProps {
   activeStep: number;
+  citySlug?: string;
 }
 
-export function StepBar({ activeStep }: StepBarProps) {
+export function StepBar({ activeStep, citySlug }: StepBarProps) {
+  const [, navigate] = useLocation();
+
   return (
     <div style={{
       background: "white",
@@ -23,9 +37,16 @@ export function StepBar({ activeStep }: StepBarProps) {
       {STEPS.map((step, i) => {
         const isActive = i === activeStep;
         const isDone = i < activeStep;
+        const isClickable = (isDone || isActive) && !!citySlug;
+
         return (
           <div
             key={i}
+            onClick={() => {
+              if (isClickable && !isActive) {
+                navigate(STEP_PATHS[i](citySlug!));
+              }
+            }}
             style={{
               padding: "10px 20px",
               fontSize: "12px",
@@ -37,9 +58,17 @@ export function StepBar({ activeStep }: StepBarProps) {
               alignItems: "center",
               gap: "5px",
               flexShrink: 0,
+              cursor: isClickable && !isActive ? "pointer" : "default",
+              transition: "color 0.1s",
+            }}
+            onMouseEnter={(e) => {
+              if (isClickable && !isActive) e.currentTarget.style.color = "#059669";
+            }}
+            onMouseLeave={(e) => {
+              if (isClickable && !isActive) e.currentTarget.style.color = "#16A34A";
             }}
           >
-            {isDone && <span style={{ color: "#16A34A", fontSize: "11px" }}>✓</span>}
+            {isDone && <span style={{ color: "inherit", fontSize: "11px" }}>✓</span>}
             <span>{i + 1}. {step}</span>
             {i === 4 && (
               <span style={{
