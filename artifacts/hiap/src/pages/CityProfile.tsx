@@ -59,9 +59,9 @@ const SECTION_DEFS: SectionDef[] = [
 ];
 
 const PRIORITY_STYLES: Record<string, { bg: string; text: string }> = {
-  HIGH:   { bg: "#FFF3E0", text: "#C05621" },
-  MEDIUM: { bg: "#FEF9C3", text: "#A16207" },
-  LOW:    { bg: "#F0FDF4", text: "#16A34A" },
+  HIGH:   { bg: "#FFEAEE", text: "#F23D33" },
+  MEDIUM: { bg: "#FEF8E1", text: "#F9A200" },
+  LOW:    { bg: "#EFFDE5", text: "#24BE00" },
 };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
@@ -143,7 +143,7 @@ function SectionCard({ def, state, onClick }: SectionCardProps) {
 
       {/* Sub (progress detail) */}
       {state.sub && (
-        <div style={{ fontSize: "11px", color: "#C05621", marginBottom: "4px", fontWeight: "500" }}>
+        <div style={{ fontSize: "11px", color: "#F9A200", marginBottom: "4px", fontWeight: "500" }}>
           {state.sub}
         </div>
       )}
