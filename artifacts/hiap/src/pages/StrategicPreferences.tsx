@@ -4,30 +4,6 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress } from "@/lib/stepProgress";
-import actionNames from "@/data/actionNames.json";
-
-interface ActionMeta { name: string; category: string; subcategory: string; }
-const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
-
-const ACTION_SECTOR: Record<string, string> = {
-  c40_0010: "Buildings",
-  c40_0012: "Buildings",
-  c40_0013: "Buildings",
-  c40_0023: "Transport",
-  c40_0034: "Waste",
-  c40_0040: "Waste",
-  c40_0037: "Waste",
-  ipcc_0074: "Urban Planning",
-  c40_0025: "Transport",
-  c40_0029: "Transport",
-};
-
-const SECTOR_CHIP: Record<string, { bg: string; text: string }> = {
-  Buildings:     { bg: "#FFF3E0", text: "#C05621" },
-  Transport:     { bg: "#EFF6FF", text: "#1D4ED8" },
-  Waste:         { bg: "#F0FDF4", text: "#16A34A" },
-  "Urban Planning": { bg: "#FAF5FF", text: "#7C3AED" },
-};
 
 const ALL_SECTORS = [
   "Stationary Energy",
@@ -37,23 +13,12 @@ const ALL_SECTORS = [
   "Agriculture, Forestry & Other Land Use (AFOLU)",
 ];
 
-const ALL_COBENEFITS = [
-  "Job creation",
-  "Public health",
-  "Social equity",
-  "Air quality",
-  "Climate resilience",
-  "Energy security",
-];
-
 const TIMELINE_OPTIONS = [
-  { value: "short",  label: "Short-term",  sub: "Actions implementable within 1–3 years" },
-  { value: "medium", label: "Medium-term", sub: "Actions implementable within 3–7 years" },
-  { value: "long",   label: "Long-term",   sub: "Actions implementable within 7+ years" },
+  { value: "short",  label: "Short-term",    sub: "Actions implementable in less than 5 years" },
+  { value: "medium", label: "Medium-term",   sub: "Actions implementable within 5–10 years" },
+  { value: "long",   label: "Long-term",     sub: "Actions requiring more than 10 years" },
   { value: "none",   label: "No preference", sub: "Include actions across all timeframes" },
 ];
-
-const ALL_ACTION_IDS = Object.keys(ACTION_NAMES);
 
 interface Props { params: { locode: string } }
 
@@ -65,11 +30,10 @@ export function StrategicPreferences({ params }: Props) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
-  const [sectors,    setSectors]    = useState<Set<string>>(new Set());
-  const [cobenefits, setCobenefits] = useState<Set<string>>(new Set());
-  const [timeline,   setTimeline]   = useState<string | null>(null);
-  const [excluded,   setExcluded]   = useState<Set<string>>(new Set());
-  const [excludeOpen, setExcludeOpen] = useState(false);
+  const [sectors,             setSectors]             = useState<Set<string>>(new Set());
+  const [strategicPriorities, setStrategicPriorities] = useState("");
+  const [timeline,            setTimeline]            = useState<string | null>(null);
+  const [excludeText,         setExcludeText]         = useState("");
 
   if (!city) {
     return (
@@ -88,24 +52,26 @@ export function StrategicPreferences({ params }: Props) {
   useEffect(() => {
     const parts: string[] = [];
     if (sectors.size > 0) parts.push(`${sectors.size} priority sector${sectors.size !== 1 ? "s" : ""}`);
-    if (cobenefits.size > 0) parts.push(`${cobenefits.size} co-benefit${cobenefits.size !== 1 ? "s" : ""}`);
+    if (strategicPriorities.trim()) parts.push("strategic priorities set");
     if (timeline) parts.push(`${TIMELINE_OPTIONS.find(t => t.value === timeline)?.label.toLowerCase()} timeline`);
-    if (excluded.size > 0) parts.push(`${excluded.size} action${excluded.size !== 1 ? "s" : ""} excluded`);
+    if (excludeText.trim()) parts.push("exclusion criteria set");
 
     setStepProgress(locode, "strategic", {
       visited: true,
       progress: timeline !== null ? 100 : sectors.size > 0 ? 50 : 10,
       sub: parts.length > 0 ? parts.join(" · ") : undefined,
     });
-  }, [locode, sectors.size, cobenefits.size, timeline, excluded.size]);
+  }, [locode, sectors.size, strategicPriorities, timeline, excludeText]);
 
-  function toggleSet(set: Set<string>, setFn: (s: Set<string>) => void, key: string) {
-    const next = new Set(set);
-    if (next.has(key)) next.delete(key); else next.add(key);
-    setFn(next);
+  function toggleSector(s: string) {
+    setSectors((prev) => {
+      const next = new Set(prev);
+      if (next.has(s)) next.delete(s); else next.add(s);
+      return next;
+    });
   }
 
-  const canSave = sectors.size > 0 || cobenefits.size > 0 || timeline !== null;
+  const canSave = sectors.size > 0 || strategicPriorities.trim() !== "" || timeline !== null;
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -126,7 +92,7 @@ export function StrategicPreferences({ params }: Props) {
             Strategic Preferences
           </h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-            Tell MEED+ HIAP which sectors and goals matter most to your city, how quickly actions must be implementable, and whether any specific actions should be excluded from the ranking.
+            Tell MEED+ HIAP which sectors and goals matter most to your city, how quickly actions must be implementable, and whether any types of actions should be excluded from the ranking.
           </p>
           <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
             MEED+ ALIGNMENT & IMPACT: Alignment shapes 22% of ranking — priority sectors 15% of alignment score, strategic priorities 5% · Implementation timeline shapes 20% of impact score · Impact shapes 55% of ranking
@@ -147,7 +113,7 @@ export function StrategicPreferences({ params }: Props) {
               return (
                 <button
                   key={s}
-                  onClick={() => toggleSet(sectors, setSectors, s)}
+                  onClick={() => toggleSector(s)}
                   style={{
                     padding: "7px 14px",
                     borderRadius: "20px",
@@ -172,38 +138,36 @@ export function StrategicPreferences({ params }: Props) {
           )}
         </Section>
 
-        {/* Strategic Priorities / Co-benefits */}
+        {/* Strategic Priorities */}
         <Section title="Strategic Priorities" required badge="ALIGNMENT · 5%">
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            Select the co-benefits your city values. Actions delivering these outcomes will score higher on strategic alignment.
+            Describe what your city strategically prioritises — for example, job creation, social equity, public health improvements, or energy security. Actions that align with these priorities will score higher.
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-            {ALL_COBENEFITS.map((cb) => {
-              const on = cobenefits.has(cb);
-              return (
-                <button
-                  key={cb}
-                  onClick={() => toggleSet(cobenefits, setCobenefits, cb)}
-                  style={{
-                    padding: "7px 14px",
-                    borderRadius: "20px",
-                    border: on ? "1.5px solid #001EA7" : "1.5px solid #E5E7EB",
-                    background: on ? "#001EA7" : "white",
-                    color: on ? "white" : "#374151",
-                    fontSize: "13px",
-                    fontWeight: on ? "600" : "400",
-                    cursor: "pointer",
-                    transition: "all 0.12s",
-                  }}
-                >
-                  {cb}
-                </button>
-              );
-            })}
-          </div>
-          {cobenefits.size > 0 && (
-            <p style={{ fontSize: "12px", color: "#16A34A", margin: "10px 0 0", fontWeight: "500" }}>
-              ✓ {cobenefits.size} co-benefit{cobenefits.size !== 1 ? "s" : ""} selected
+          <textarea
+            value={strategicPriorities}
+            onChange={(e) => setStrategicPriorities(e.target.value)}
+            placeholder="e.g. job creation in low-income areas, reducing air pollution near schools, energy independence from fossil fuels…"
+            rows={4}
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "12px 14px",
+              fontSize: "13px",
+              color: "#111827",
+              border: "1.5px solid #E5E7EB",
+              borderRadius: "8px",
+              resize: "vertical",
+              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+              lineHeight: "1.6",
+              outline: "none",
+              background: "white",
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#001EA7")}
+            onBlur={(e) => (e.target.style.borderColor = "#E5E7EB")}
+          />
+          {strategicPriorities.trim() && (
+            <p style={{ fontSize: "12px", color: "#16A34A", margin: "8px 0 0", fontWeight: "500" }}>
+              ✓ Strategic priorities recorded
             </p>
           )}
         </Section>
@@ -237,7 +201,7 @@ export function StrategicPreferences({ params }: Props) {
                     width: "16px", height: "16px", borderRadius: "50%",
                     border: on ? "5px solid #001EA7" : "1.5px solid #D1D5DB",
                     flexShrink: 0,
-                    background: on ? "white" : "white",
+                    background: "white",
                     boxSizing: "border-box",
                   }} />
                   <div>
@@ -253,63 +217,34 @@ export function StrategicPreferences({ params }: Props) {
         {/* Actions to Exclude (optional) */}
         <Section title="Actions to Exclude" badge="OPTIONAL">
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            Exclude specific actions from the ranking regardless of their score — for example, actions already under way or politically infeasible. Excluded actions will not appear in your recommendations.
+            Describe the types of actions your city wishes to exclude from the ranking — for example, actions that are already under way, politically infeasible, or outside your mandate. Actions matching this description will be removed from recommendations.
           </p>
-          <button
-            onClick={() => setExcludeOpen(!excludeOpen)}
+          <textarea
+            value={excludeText}
+            onChange={(e) => setExcludeText(e.target.value)}
+            placeholder="e.g. actions requiring national government approval, large capital infrastructure projects, actions targeting industrial facilities…"
+            rows={4}
             style={{
-              background: "none", border: "none", padding: 0, cursor: "pointer",
-              fontSize: "13px", color: "#001EA7", fontWeight: "500",
-              display: "flex", alignItems: "center", gap: "6px", marginBottom: excludeOpen ? "14px" : "0",
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "12px 14px",
+              fontSize: "13px",
+              color: "#111827",
+              border: "1.5px solid #E5E7EB",
+              borderRadius: "8px",
+              resize: "vertical",
+              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+              lineHeight: "1.6",
+              outline: "none",
+              background: "white",
             }}
-          >
-            <span style={{ fontSize: "11px", display: "inline-block", transform: excludeOpen ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>▶</span>
-            {excludeOpen ? "Hide" : "Show"} action list
-            {excluded.size > 0 && (
-              <span style={{ background: "#FFEAEE", color: "#F23D33", fontSize: "11px", padding: "1px 7px", borderRadius: "10px", fontWeight: "600" }}>
-                {excluded.size} excluded
-              </span>
-            )}
-          </button>
-
-          {excludeOpen && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-              {ALL_ACTION_IDS.map((id) => {
-                const meta = ACTION_NAMES[id];
-                const sector = ACTION_SECTOR[id] ?? "Other";
-                const chipStyle = SECTOR_CHIP[sector] ?? { bg: "#F3F4F6", text: "#374151" };
-                const isExcluded = excluded.has(id);
-                return (
-                  <label
-                    key={id}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      padding: "10px 14px",
-                      borderRadius: "8px",
-                      border: isExcluded ? "1.5px solid #FCA5A5" : "1px solid #E5E7EB",
-                      background: isExcluded ? "#FFF5F5" : "white",
-                      cursor: "pointer",
-                      transition: "background 0.12s, border-color 0.12s",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isExcluded}
-                      onChange={() => toggleSet(excluded, setExcluded, id)}
-                      style={{ accentColor: "#F23D33", width: "15px", height: "15px", flexShrink: 0, cursor: "pointer" }}
-                    />
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: "13px", color: "#111827", lineHeight: "1.4" }}>{meta.name}</div>
-                    </div>
-                    <span style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", background: chipStyle.bg, color: chipStyle.text, fontWeight: "600", flexShrink: 0, whiteSpace: "nowrap" }}>
-                      {sector}
-                    </span>
-                  </label>
-                );
-              })}
-            </div>
+            onFocus={(e) => (e.target.style.borderColor = "#001EA7")}
+            onBlur={(e) => (e.target.style.borderColor = "#E5E7EB")}
+          />
+          {excludeText.trim() && (
+            <p style={{ fontSize: "12px", color: "#F23D33", margin: "8px 0 0", fontWeight: "500" }}>
+              ✓ Exclusion criteria recorded — matching actions will be removed from the ranking
+            </p>
           )}
         </Section>
 
