@@ -400,16 +400,16 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                             value={draftSource}
                             onChange={(e) => setDraftSource(e.target.value)}
                             placeholder="Data source"
-                            style={{ ...inputStyle, fontSize: "11px", padding: "3px 8px" }}
+                            style={{ ...inputStyle, fontSize: "11px", padding: "3px 8px", width: "150px" }}
                           />
                         </td>
-                        <td style={{ padding: "12px 16px", minWidth: "130px" }}>
+                        <td style={{ padding: "12px 16px", width: "120px" }}>
                           <input
                             type="text"
                             value={draftValue}
                             onChange={(e) => setDraftValue(e.target.value)}
-                            placeholder={ind.units === "CLP" ? "e.g. 1.2 (millions)" : "e.g. 26.77"}
-                            style={inputStyle}
+                            placeholder={ind.units === "CLP" ? "e.g. 1.2" : "e.g. 26.77"}
+                            style={{ ...inputStyle, width: "100px" }}
                             autoFocus
                           />
                           <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "3px" }}>
@@ -424,7 +424,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                         <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
                           {ind.relevance}
                         </td>
-                        <td style={{ padding: "12px 16px" }}>
+                        <td style={{ padding: "12px 16px", whiteSpace: "nowrap", width: "1%" }}>
                           <div style={{ display: "flex", gap: "6px" }}>
                             <button
                               onClick={() => commitEdit(ind.key)}
