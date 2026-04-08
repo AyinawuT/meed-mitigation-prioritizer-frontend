@@ -208,7 +208,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
             <span style={{ color: "#374151" }}>Socioeconomic Context</span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "40px" }}>
             <div>
               <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
                 Socioeconomic Context
@@ -223,7 +223,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: "6px" }}>
+            <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
               {(["review", "adjust"] as Tab[]).map((tab) => (
                 <button
                   key={tab}
