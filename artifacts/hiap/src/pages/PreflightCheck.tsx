@@ -289,7 +289,7 @@ export function PreflightCheck({ params }: Props) {
             </div>
           )}
           <button
-            onClick={() => canGenerate && navigate(`/city/${citySlug}/recommendations`)}
+            onClick={() => canGenerate && navigate(`/city/${citySlug}/processing`)}
             disabled={!canGenerate}
             style={{
               width: "100%", padding: "16px", borderRadius: "10px", border: "none",

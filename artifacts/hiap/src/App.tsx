@@ -8,6 +8,7 @@ import { RegulationsLaws } from "@/pages/RegulationsLaws";
 import { StrategicPreferences } from "@/pages/StrategicPreferences";
 import { PolicyAlignment } from "@/pages/PolicyAlignment";
 import { PreflightCheck } from "@/pages/PreflightCheck";
+import { Processing } from "@/pages/Processing";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/city/:locode/strategic" component={StrategicPreferences} />
       <Route path="/city/:locode/policy" component={PolicyAlignment} />
       <Route path="/city/:locode/preflight" component={PreflightCheck} />
+      <Route path="/city/:locode/processing" component={Processing} />
       <Route component={NotFound} />
     </Switch>
   );
