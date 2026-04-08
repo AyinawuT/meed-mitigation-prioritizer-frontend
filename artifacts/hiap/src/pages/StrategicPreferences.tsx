@@ -277,7 +277,7 @@ export function StrategicPreferences({ params }: Props) {
         <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: "8px" }}>
           <button
             disabled={!canSave}
-            onClick={() => navigate(`/city/${citySlug}`)}
+            onClick={() => navigate(`/city/${citySlug}/policy`)}
             style={{
               background: canSave ? "#16A34A" : "#E5E7EB",
               color: canSave ? "white" : "#9CA3AF",
