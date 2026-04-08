@@ -53,7 +53,7 @@ const SECTION_DEFS: SectionDef[] = [
     id: "policy",
     priority: "LOW",
     title: "Policy Alignment",
-    desc: "Optional: align recommendations with national and local climate frameworks.",
+    desc: "Optional: align recommendations with national, regional and local climate frameworks.",
     progressKey: "policy",
   },
 ];
