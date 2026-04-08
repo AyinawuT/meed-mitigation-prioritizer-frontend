@@ -59,7 +59,7 @@ const SECTION_DEFS: SectionDef[] = [
 ];
 
 const PRIORITY_STYLES: Record<string, { bg: string; text: string }> = {
-  HIGH:   { bg: "#FFEAEE", text: "#F23D33" },
+  HIGH:   { bg: "#FFF3E0", text: "#C05621" },
   MEDIUM: { bg: "#FEF8E1", text: "#F9A200" },
   LOW:    { bg: "#EFFDE5", text: "#24BE00" },
 };
