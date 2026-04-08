@@ -421,23 +421,23 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                             {style.label}
                           </span>
                         </td>
-                        <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
-                          {ind.relevance}
-                        </td>
-                        <td style={{ padding: "12px 16px", whiteSpace: "nowrap", width: "1%" }}>
-                          <div style={{ display: "flex", gap: "6px" }}>
-                            <button
-                              onClick={() => commitEdit(ind.key)}
-                              style={{ fontSize: "12px", color: "white", background: "#16A34A", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer", fontWeight: "500" }}
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={cancelEdit}
-                              style={{ fontSize: "12px", color: "#6B7280", background: "#F5F5F5", border: "none", borderRadius: "5px", padding: "4px 10px", cursor: "pointer" }}
-                            >
-                              ✕
-                            </button>
+                        <td colSpan={2} style={{ padding: "12px 16px" }}>
+                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                            <span style={{ fontSize: "12px", color: "#6B7280" }}>{ind.relevance}</span>
+                            <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
+                              <button
+                                onClick={() => commitEdit(ind.key)}
+                                style={{ fontSize: "12px", color: "white", background: "#16A34A", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer", fontWeight: "500" }}
+                              >
+                                Save
+                              </button>
+                              <button
+                                onClick={cancelEdit}
+                                style={{ fontSize: "12px", color: "#6B7280", background: "#F5F5F5", border: "none", borderRadius: "5px", padding: "4px 10px", cursor: "pointer" }}
+                              >
+                                ✕
+                              </button>
+                            </div>
                           </div>
                         </td>
                       </tr>
