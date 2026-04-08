@@ -16,7 +16,57 @@ interface SectorRow {
   status: "Confirmed" | "Not mapped";
 }
 
+const IQQ_SECTORS: Omit<SectorRow, never>[] = [
+  {
+    sector: "Transportation",
+    sub: "II.1.1 On-road · II.1.2 Railways · II.1.3 Waterborne",
+    ref: "II.1",
+    emissions: 4112424,
+    share: 45.1,
+    source: "SECCTIVAL 2023",
+    status: "Confirmed",
+  },
+  {
+    sector: "Stationary Energy",
+    sub: "I.1.1 Residential · I.2.1 Commercial & institutional · I.3.1 Manufacturing",
+    ref: "I.1–I.3",
+    emissions: 2871187,
+    share: 31.5,
+    source: "DEC 2023",
+    status: "Confirmed",
+  },
+  {
+    sector: "Waste",
+    sub: "III.1.1 Solid waste disposal · III.3.1 Wastewater treatment",
+    ref: "III.1–III.3",
+    emissions: 911806,
+    share: 10.0,
+    source: "MRC 2022",
+    status: "Confirmed",
+  },
+  {
+    sector: "Industrial Processes & Product Use (IPPU)",
+    sub: "IV.1 Industrial processes · IV.2 Product use",
+    ref: "IV.1–IV.2",
+    emissions: 1004986,
+    share: 11.0,
+    source: "INE 2023",
+    status: "Confirmed",
+  },
+  {
+    sector: "Agriculture, Forestry & Other Land Use (AFOLU)",
+    sub: "V.1 Livestock · V.2 Land · V.3 Aggregate sources",
+    ref: "V.1–V.3",
+    emissions: 217651,
+    share: 2.4,
+    source: "SAG 2022",
+    status: "Confirmed",
+  },
+];
+
 function buildSectors(city: CityData): SectorRow[] {
+  if (city.locode === "CL IQQ") return IQQ_SECTORS;
+
   const mapped = parseFloat(city.emissions.replace(/,/g, "").replace(/[^0-9.]/g, ""));
   return [
     {
