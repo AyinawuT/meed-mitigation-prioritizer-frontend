@@ -137,7 +137,7 @@ export function PolicyAlignment({ params }: Props) {
             MEED+ HIAP has checked each candidate action against national and regional policy signals for {city.name}. Actions with stronger policy backing receive a higher alignment score in the ranking.
           </p>
           <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-            MEED+ ALIGNMENT: Policy alignment contributes to the city's alignment score · Alignment shapes 22% of ranking
+            MEED+ ALIGNMENT: Policy alignment contributes 80% to the city's alignment score · Alignment shapes 22% of ranking
           </p>
         </div>
       </div>
