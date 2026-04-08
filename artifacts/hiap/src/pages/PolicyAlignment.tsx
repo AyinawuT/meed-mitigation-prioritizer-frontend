@@ -1,75 +1,67 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress } from "@/lib/stepProgress";
+import policyData from "@/data/actionsPolicySignals.json";
+import actionNames from "@/data/actionNames.json";
 
-const NATIONAL_FRAMEWORKS = [
-  {
-    id: "eclp",
-    name: "Estrategia Climática de Largo Plazo (ECLP)",
-    sub: "Chile's long-term climate strategy — net zero by 2050, carbon neutral by 2050",
-  },
-  {
-    id: "ndc",
-    name: "Nationally Determined Contribution (NDC)",
-    sub: "Chile's updated NDC commits to a GHG emissions peak by 2025 and net zero by 2050",
-  },
-  {
-    id: "ley21455",
-    name: "Ley Marco de Cambio Climático (Law 21.455)",
-    sub: "2022 framework law — mandates municipal PCGCCs and sectoral mitigation plans",
-  },
-  {
-    id: "pcgcc",
-    name: "Plan Comunal de Gestión del Cambio Climático (PCGCC)",
-    sub: "Municipal climate management plan required by Law 21.455",
-  },
-  {
-    id: "pancc",
-    name: "Plan de Acción Nacional de Cambio Climático (PANCC)",
-    sub: "National climate action plan covering mitigation and adaptation priorities",
-  },
-  {
-    id: "pna",
-    name: "Plan Nacional de Adaptación al Cambio Climático (PNA)",
-    sub: "National adaptation plan with sectoral and cross-cutting adaptation measures",
-  },
-];
+interface PolicySignal {
+  location_scope: "National" | "Regional";
+  location_name: string;
+  signal_type: "action" | "funding" | "governance" | "sector" | "target";
+  signal_relation: string;
+  signal_strength: "low" | "medium" | "high";
+  evidence_count: number;
+}
 
-const INTERNATIONAL_COMMITMENTS = [
-  {
-    id: "c40",
-    name: "C40 Cities Network",
-    sub: "Global network of climate-leading cities committed to delivering the Paris Agreement",
-  },
-  {
-    id: "r2z",
-    name: "Race to Zero",
-    sub: "UN campaign for net zero commitments with credible near-term action plans",
-  },
-  {
-    id: "gcm",
-    name: "Global Covenant of Mayors for Climate & Energy",
-    sub: "Voluntary commitment to reduce GHG emissions and build climate resilience",
-  },
-  {
-    id: "cdp",
-    name: "CDP Cities (Carbon Disclosure Project)",
-    sub: "Annual disclosure of city-level climate data, targets, and actions",
-  },
-  {
-    id: "under2",
-    name: "Under2 Coalition",
-    sub: "Subnational governments committed to keeping warming below 2 °C",
-  },
-  {
-    id: "m410",
-    name: "Mission 4.1.0 / Net Zero Cities",
-    sub: "European mission for 100 climate-neutral smart cities by 2030",
-  },
-];
+interface ActionPolicyRecord {
+  action_id: string;
+  policy_signals: PolicySignal[];
+}
+
+interface ActionMeta { name: string; category: string; subcategory: string; }
+const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
+const ALL_POLICY = (policyData as { policy_signals: ActionPolicyRecord[] }).policy_signals;
+
+const OUR_ACTION_IDS = Object.keys(ACTION_NAMES);
+
+const TYPE_LABEL: Record<string, string> = {
+  action:     "Policy action",
+  funding:    "Funding",
+  governance: "Governance",
+  sector:     "Sector plan",
+  target:     "Emissions target",
+};
+
+const RELATION_LABEL: Record<string, string> = {
+  supports:    "supports",
+  provides:    "provides",
+  assigns:     "assigns",
+  identifies:  "identifies",
+  commits:     "commits",
+  ceiling:     "caps funding",
+  establishes: "establishes",
+};
+
+const STRENGTH_STYLE: Record<string, { dot: string; bg: string; text: string; border: string }> = {
+  high:   { dot: "#16A34A", bg: "#F0FDF4", text: "#16A34A",  border: "#BBF7D0" },
+  medium: { dot: "#F9A200", bg: "#FFFBEB", text: "#B45309",  border: "#FDE68A" },
+  low:    { dot: "#9CA3AF", bg: "#F9FAFB", text: "#6B7280",  border: "#E5E7EB" },
+};
+
+function overallStrength(signals: PolicySignal[]): "high" | "medium" | "low" {
+  if (signals.some(s => s.signal_strength === "high"))   return "high";
+  if (signals.some(s => s.signal_strength === "medium")) return "medium";
+  return "low";
+}
+
+const OVERALL_LABEL: Record<string, string> = {
+  high:   "Strong support",
+  medium: "Moderate support",
+  low:    "Weak support",
+};
 
 interface Props { params: { locode: string } }
 
@@ -80,27 +72,6 @@ export function PolicyAlignment({ params }: Props) {
   const city: CityData | undefined = CITIES.find(
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
-
-  const storageKey = `hiap:${locode}:policy:form`;
-
-  function loadSaved() {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (!raw) return null;
-      return JSON.parse(raw) as {
-        national: string[];
-        international: string[];
-        localPlans: string;
-        keyCommitments: string;
-      };
-    } catch { return null; }
-  }
-
-  const saved = loadSaved();
-  const [national,       setNational]       = useState<Set<string>>(new Set(saved?.national ?? []));
-  const [international,  setInternational]  = useState<Set<string>>(new Set(saved?.international ?? []));
-  const [localPlans,     setLocalPlans]     = useState(saved?.localPlans ?? "");
-  const [keyCommitments, setKeyCommitments] = useState(saved?.keyCommitments ?? "");
 
   if (!city) {
     return (
@@ -115,47 +86,40 @@ export function PolicyAlignment({ params }: Props) {
   }
 
   const citySlug = city.locode.replace(" ", "-");
-  const totalSelected = national.size + international.size;
+
+  const actions = OUR_ACTION_IDS
+    .map(id => ({
+      id,
+      meta: ACTION_NAMES[id],
+      record: ALL_POLICY.find(r => r.action_id === id),
+    }))
+    .filter(a => a.record);
+
+  const nationalStrengths = actions.map(a => {
+    const nat = a.record!.policy_signals.filter(s => s.location_scope === "National");
+    return overallStrength(nat);
+  });
+
+  const strongCount    = nationalStrengths.filter(s => s === "high").length;
+  const moderateCount  = nationalStrengths.filter(s => s === "medium").length;
+  const weakCount      = nationalStrengths.filter(s => s === "low").length;
+  const totalEvidence  = actions.reduce((sum, a) =>
+    sum + a.record!.policy_signals.reduce((s2, sig) => s2 + sig.evidence_count, 0), 0);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(storageKey, JSON.stringify({
-        national: Array.from(national),
-        international: Array.from(international),
-        localPlans,
-        keyCommitments,
-      }));
-    } catch {}
-
-    const parts: string[] = [];
-    if (national.size > 0) parts.push(`${national.size} national framework${national.size !== 1 ? "s" : ""}`);
-    if (international.size > 0) parts.push(`${international.size} international commitment${international.size !== 1 ? "s" : ""}`);
-    if (localPlans.trim()) parts.push("local plans noted");
-    if (keyCommitments.trim()) parts.push("key commitments noted");
-
     setStepProgress(locode, "policy", {
       visited: true,
-      progress: totalSelected > 0 ? 100 : localPlans.trim() || keyCommitments.trim() ? 50 : 10,
-      sub: parts.length > 0 ? parts.join(" · ") : undefined,
+      progress: 100,
+      sub: `${actions.length} actions assessed · ${strongCount} strong, ${moderateCount} moderate policy support`,
     });
-  }, [locode, national, international, localPlans, keyCommitments]);
-
-  function toggleSet(set: Set<string>, setFn: (s: Set<string>) => void, key: string) {
-    setFn((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      return next;
-    });
-  }
-
-  const canSave = totalSelected > 0 || localPlans.trim() !== "" || keyCommitments.trim() !== "";
+  }, [locode]);
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar cityName={city.name} />
       <StepBar activeStep={4} citySlug={citySlug} />
 
-      {/* Page header */}
+      {/* Header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
@@ -165,181 +129,86 @@ export function PolicyAlignment({ params }: Props) {
             <span>›</span>
             <span style={{ color: "#374151" }}>Policy Alignment</span>
           </div>
-
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "40px" }}>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
-                <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: 0 }}>
-                  Policy Alignment
-                </h1>
-                <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", borderRadius: "4px", padding: "2px 8px", fontWeight: "500" }}>
-                  Optional
-                </span>
-              </div>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-                Indicate which national frameworks and international commitments your city is signed up to. Actions that help deliver these commitments will receive a higher alignment score.
-              </p>
-              <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-                MEED+ ALIGNMENT: Policy alignment with national frameworks and international commitments contributes to the city's alignment score · Alignment shapes 22% of ranking
-              </p>
-            </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+            <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: 0 }}>Policy Alignment</h1>
+            <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", borderRadius: "4px", padding: "2px 8px", fontWeight: "500" }}>Optional</span>
           </div>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
+            MEED+ HIAP has checked each candidate action against national and regional policy signals for {city.name}. Actions with stronger policy backing receive a higher alignment score in the ranking.
+          </p>
+          <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
+            MEED+ ALIGNMENT: Policy alignment contributes to the city's alignment score · Alignment shapes 22% of ranking
+          </p>
         </div>
       </div>
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 64px 60px", display: "flex", flexDirection: "column", gap: "16px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 60px" }}>
 
-        {/* National Frameworks */}
-        <Section title="National Climate Frameworks" badge="CHILE">
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            Select the national frameworks your city is required to or has committed to align with. These shape which actions are strategically relevant for Chile.
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {NATIONAL_FRAMEWORKS.map((fw) => {
-              const on = national.has(fw.id);
-              return (
-                <FrameworkRow
-                  key={fw.id}
-                  name={fw.name}
-                  sub={fw.sub}
-                  checked={on}
-                  onChange={() => toggleSet(national, setNational, fw.id)}
-                  color="#001EA7"
-                />
-              );
-            })}
-          </div>
-          {national.size > 0 && (
-            <p style={{ fontSize: "12px", color: "#16A34A", margin: "12px 0 0", fontWeight: "500" }}>
-              ✓ {national.size} national framework{national.size !== 1 ? "s" : ""} selected
-            </p>
-          )}
-        </Section>
+        {/* KPI cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "20px" }}>
+          <KpiCard value={actions.length} label="Actions assessed" sub="Against national & regional policy" bg="white" valuecol="#111827" border="#E5E7EB" />
+          <KpiCard value={strongCount}   label="Strong policy support" sub="At least one high-strength signal" bg="#F0FDF4" valuecol="#16A34A" border="#BBF7D0" />
+          <KpiCard value={moderateCount} label="Moderate support" sub="Highest signal strength is medium" bg="#FFFBEB" valuecol="#B45309" border="#FDE68A" />
+          <KpiCard value={weakCount}     label="Weak support" sub="All signals are low strength" bg="#F9FAFB" valuecol="#6B7280" border="#E5E7EB" />
+        </div>
 
-        {/* International Commitments */}
-        <Section title="International Commitments" badge="OPTIONAL">
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            Select any international networks or campaigns your city has joined. Actions supporting these commitments will receive alignment credit.
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {INTERNATIONAL_COMMITMENTS.map((ic) => {
-              const on = international.has(ic.id);
-              return (
-                <FrameworkRow
-                  key={ic.id}
-                  name={ic.name}
-                  sub={ic.sub}
-                  checked={on}
-                  onChange={() => toggleSet(international, setInternational, ic.id)}
-                  color="#0369A1"
-                />
-              );
-            })}
-          </div>
-          {international.size > 0 && (
-            <p style={{ fontSize: "12px", color: "#16A34A", margin: "12px 0 0", fontWeight: "500" }}>
-              ✓ {international.size} international commitment{international.size !== 1 ? "s" : ""} selected
-            </p>
-          )}
-        </Section>
+        {/* Action cards */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {actions.map((a) => {
+            const natSignals = a.record!.policy_signals.filter(s => s.location_scope === "National");
+            const regSignals = a.record!.policy_signals.filter(s => s.location_scope === "Regional");
+            const regName    = regSignals[0]?.location_name ?? "Regional";
+            const natStr     = overallStrength(natSignals);
+            const ss         = STRENGTH_STYLE[natStr];
 
-        {/* Local Plans */}
-        <Section title="Local Climate Plans" badge="OPTIONAL">
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            List any local or regional climate plans, strategies, or commitments your city has in place — for example, a PLADECO climate chapter, a local emissions reduction target, or a city-level adaptation plan.
-          </p>
-          <textarea
-            value={localPlans}
-            onChange={(e) => setLocalPlans(e.target.value)}
-            placeholder="e.g. PLADECO 2022–2026 with a clean transport chapter, Municipal Climate Strategy targeting 30% emissions reduction by 2030…"
-            rows={4}
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "12px 14px",
-              fontSize: "13px",
-              color: "#111827",
-              border: "1.5px solid #E5E7EB",
-              borderRadius: "8px",
-              resize: "vertical",
-              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
-              lineHeight: "1.6",
-              outline: "none",
-              background: "white",
-            }}
-            onFocus={(e) => (e.target.style.borderColor = "#001EA7")}
-            onBlur={(e) => (e.target.style.borderColor = "#E5E7EB")}
-          />
-          {localPlans.trim() && (
-            <p style={{ fontSize: "12px", color: "#16A34A", margin: "8px 0 0", fontWeight: "500" }}>
-              ✓ Local plans recorded
-            </p>
-          )}
-        </Section>
+            return (
+              <div key={a.id} style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "12px", padding: "16px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+                {/* Action header */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", lineHeight: "1.4", marginBottom: "3px" }}>{a.meta.name}</div>
+                    <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{a.meta.subcategory}</div>
+                  </div>
+                  <span style={{ marginLeft: "16px", flexShrink: 0, fontSize: "11px", padding: "3px 8px", borderRadius: "5px", background: ss.bg, color: ss.text, border: `1px solid ${ss.border}`, fontWeight: "600" }}>
+                    {OVERALL_LABEL[natStr]}
+                  </span>
+                </div>
 
-        {/* Key Policy Commitments */}
-        <Section title="Key Policy Commitments or Targets" badge="OPTIONAL">
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            Describe any specific quantitative targets or policy commitments your city has made — for example, a net zero target year, a renewable energy share goal, or a modal shift target for transport.
-          </p>
-          <textarea
-            value={keyCommitments}
-            onChange={(e) => setKeyCommitments(e.target.value)}
-            placeholder="e.g. Net zero by 2050, 40% renewable electricity by 2030, 25% reduction in transport emissions by 2035…"
-            rows={4}
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "12px 14px",
-              fontSize: "13px",
-              color: "#111827",
-              border: "1.5px solid #E5E7EB",
-              borderRadius: "8px",
-              resize: "vertical",
-              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
-              lineHeight: "1.6",
-              outline: "none",
-              background: "white",
-            }}
-            onFocus={(e) => (e.target.style.borderColor = "#001EA7")}
-            onBlur={(e) => (e.target.style.borderColor = "#E5E7EB")}
-          />
-          {keyCommitments.trim() && (
-            <p style={{ fontSize: "12px", color: "#16A34A", margin: "8px 0 0", fontWeight: "500" }}>
-              ✓ Key commitments recorded
-            </p>
-          )}
-        </Section>
+                {/* Signals grid */}
+                <div style={{ display: "grid", gridTemplateColumns: regSignals.length > 0 ? "1fr 1fr" : "1fr", gap: "12px" }}>
+                  {/* National */}
+                  <div>
+                    <div style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF", letterSpacing: "0.05em", marginBottom: "7px", textTransform: "uppercase" }}>National · Chile</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                      {natSignals.map((sig, i) => <SignalChip key={i} signal={sig} />)}
+                    </div>
+                  </div>
+                  {/* Regional */}
+                  {regSignals.length > 0 && (
+                    <div>
+                      <div style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF", letterSpacing: "0.05em", marginBottom: "7px", textTransform: "uppercase" }}>Regional · {regName}</div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                        {regSignals.map((sig, i) => <SignalChip key={i} signal={sig} />)}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Evidence note */}
+        <div style={{ marginTop: "16px", padding: "12px 16px", background: "#F5F7FF", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "12px", color: "#4338CA" }}>
+          Policy signals drawn from <strong>{totalEvidence.toLocaleString()}</strong> pieces of national and regional policy evidence. Signals cover policy actions, funding mechanisms, governance assignments, sector plans, and emissions targets.
+        </div>
 
         {/* Actions */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "8px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}`)}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#6B7280",
-              fontSize: "13px",
-              cursor: "pointer",
-              padding: 0,
-            }}
-          >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "24px" }}>
+          <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
             ← Skip this step
           </button>
-          <button
-            disabled={!canSave}
-            onClick={() => navigate(`/city/${citySlug}`)}
-            style={{
-              background: canSave ? "#16A34A" : "#E5E7EB",
-              color: canSave ? "white" : "#9CA3AF",
-              border: "none",
-              borderRadius: "8px",
-              padding: "12px 28px",
-              fontSize: "14px",
-              fontWeight: "600",
-              cursor: canSave ? "pointer" : "not-allowed",
-            }}
-          >
+          <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
             Save & continue →
           </button>
         </div>
@@ -348,67 +217,30 @@ export function PolicyAlignment({ params }: Props) {
   );
 }
 
-interface FrameworkRowProps {
-  name: string;
-  sub: string;
-  checked: boolean;
-  onChange: () => void;
-  color: string;
-}
-
-function FrameworkRow({ name, sub, checked, onChange, color }: FrameworkRowProps) {
+function SignalChip({ signal }: { signal: PolicySignal }) {
+  const ss = STRENGTH_STYLE[signal.signal_strength];
+  const relation = RELATION_LABEL[signal.signal_relation] ?? signal.signal_relation;
   return (
-    <label
-      style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "12px",
-        padding: "12px 14px",
-        borderRadius: "8px",
-        border: checked ? `1.5px solid ${color}` : "1px solid #E5E7EB",
-        background: checked ? "#F5F7FF" : "white",
-        cursor: "pointer",
-        transition: "background 0.12s, border-color 0.12s",
-      }}
-    >
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        style={{ accentColor: color, width: "15px", height: "15px", flexShrink: 0, marginTop: "2px", cursor: "pointer" }}
-      />
-      <div>
-        <div style={{ fontSize: "13px", color: checked ? color : "#111827", fontWeight: checked ? "600" : "400", lineHeight: "1.4" }}>{name}</div>
-        <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px", lineHeight: "1.4" }}>{sub}</div>
-      </div>
-    </label>
+    <div style={{
+      display: "flex", alignItems: "center", gap: "5px",
+      padding: "4px 8px", borderRadius: "5px",
+      background: ss.bg, border: `1px solid ${ss.border}`,
+      fontSize: "11px", color: ss.text,
+    }}>
+      <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: ss.dot, flexShrink: 0, display: "inline-block" }} />
+      <span style={{ fontWeight: "500" }}>{TYPE_LABEL[signal.signal_type]}</span>
+      <span style={{ color: "#9CA3AF", fontWeight: "400" }}>· {relation}</span>
+      <span style={{ color: "#9CA3AF", fontSize: "10px" }}>({signal.evidence_count})</span>
+    </div>
   );
 }
 
-interface SectionProps {
-  title: string;
-  badge?: string;
-  children: React.ReactNode;
-}
-
-function Section({ title, badge, children }: SectionProps) {
+function KpiCard({ value, label, sub, bg, valuecol, border }: { value: number; label: string; sub: string; bg: string; valuecol: string; border: string }) {
   return (
-    <div style={{
-      background: "white",
-      border: "1px solid #EBEBEB",
-      borderRadius: "12px",
-      padding: "20px 24px",
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-        <h2 style={{ fontSize: "14px", fontWeight: "700", color: "#111827", margin: 0 }}>{title}</h2>
-        {badge && (
-          <span style={{ marginLeft: "auto", fontSize: "10px", background: "#F0F9FF", color: "#0369A1", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em" }}>
-            {badge}
-          </span>
-        )}
-      </div>
-      {children}
+    <div style={{ background: bg, border: `1px solid ${border}`, borderRadius: "10px", padding: "14px 16px", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+      <div style={{ fontSize: "24px", fontWeight: "700", color: valuecol, lineHeight: "1.2" }}>{value}</div>
+      <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginTop: "2px" }}>{label}</div>
+      <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{sub}</div>
     </div>
   );
 }
