@@ -227,7 +227,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                   {oppCount} opportunities
                 </span>
                 <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                  MEED+ IMPACT: 50% of feasibility score · feasibility shapes 23% of ranking
+                  MEED+ FEASIBILITY: Socioeconomic context shapes 50% of feasibility score · Feasibility shapes 23% of ranking
                 </span>
               </div>
             </div>
