@@ -32,52 +32,79 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 
 ### Project Goal
 Climate mitigation action ranking tool for Chilean cities, built as a fully functional React/Vite app.
-Design system: **MEED+** — white backgrounds, deep navy nav `#001EA7`, green CTA `#16A34A`, amber/orange priority badges.
+Design system: **MEED+** — white backgrounds, deep navy nav `#001EA7`, green CTA `#16A34A`, amber accent `#F59E0B`.
+Outer background: `#F5F5F7`.
 
 ### Artifacts
 | Artifact | Kind | Path | Notes |
 |---|---|---|---|
 | `artifacts/hiap` | react-vite | `/` | Main HIAP web app |
-| `artifacts/api-server` | api | — | Shared Express backend |
+| `artifacts/api-server` | api | — | Shared Express backend (data files live here) |
 | `artifacts/mockup-sandbox` | design | — | UI mockups (canvas reference) |
 
-### Data Layer (`/data/`)
-All 16 mock API files are organized under `/data/`:
-- **`/data/json/`** — 8 mock JSON responses: `actions.json` (155 actions), `actions-legal.json`, `actions-policy-signals.json`, `cities.json` (11 cities), `city.json` (CL IQQ detail), `projects.json`, `prioritizer-request.json`, `prioritizer-bulk-request.json`
-- **`/data/csv/`** — 8 raw datasets: `policy-signals.csv`, `policy-evidence.csv`, `legal-signals.csv`, `legal-evidence.csv`, `legal-signal-codes.csv`, `action-legal-requirements.csv`, `city-context.csv`, `cities-list.csv`
-- **`/data/dataLoader.ts`** — CSV parsing utilities: `getPolicySignals()`, `getLegalSignals()`, `getCityContext(locode?)`, etc.
-- **`/data/apiService.ts`** — JSON service: `getActions()`, `getCityData()`, `getProjects()`, etc.
+### Routes
+`/` → `/city/:locode` → `/city/:locode/emissions` → `/city/:locode/socioeconomic` → `/city/:locode/regulations` → `/city/:locode/strategic` → `/city/:locode/policy` → `/city/:locode/preflight` → `/city/:locode/processing` → `/city/:locode/recommendations`
 
-### HIAP App Pages (`artifacts/hiap/src/`)
-| File | Status | Notes |
-|---|---|---|
-| `pages/Landing.tsx` | ✅ Done | City search, autocomplete, map preview, "How it works", city grid |
-| `pages/CityProfile.tsx` | 🔜 Next | City Profile Hub — see below |
-| `components/Navbar.tsx` | ✅ Done | Sticky MEED+ navy navbar |
-| `data/cities.ts` | ✅ Done | 11 real cities with locode, region, emissions, population, area, mapUrl |
+### Key Data Files (`artifacts/api-server/data/`)
+- `actions.json` — 155 actions (indexed 0–154), each with `actionId`, `actionName`, `actionCategory`, `emissions` (with `sector_number` I–V and `gpc_reference_number`), `socioeconomicIndicators`, `coBenefits`
+- `cityData.json` — single city object at `d.city` with locode `CL IQQ`; indicators are direct keys (e.g. `d.city.electricity_access`, `d.city.transport_logistics_employment`)
+- `actionsPolicySignals.json` — pre-calculated `policy_support_score` (0–1) per action
+- `policyPlans.json` — 7 national + 1 regional plan
+- `actions-legal.json` / `legalRequirements.json` — hard/soft legal requirements per action
 
-### Canvas Mockup Reference (mockup-sandbox)
-All HIAP UI mockup shapes on the canvas — use as visual reference when building:
-- `hiap-landing` — Landing page (✅ implemented)
-- `hiap-city-profile` — City Profile
-- `hiap-emissions` / `hiap-emissions-adjust` — Emissions Review/Adjust
-- `hiap-socioeconomic` — Socioeconomic Context
-- `hiap-regulations` — Regulations & Laws
-- `hiap-strategic` — Strategic Preferences
-- `hiap-policy` — Policy Alignment
-- `hiap-preflight` — Pre-flight Summary
-- `hiap-processing` — Processing screen
-- `hiap-results` / `hiap-results-panel` — Results & Detail Panel
+### Scoring Pipeline (`artifacts/hiap/src/lib/scoringPipeline.ts`)
+**Weights**: Impact 55% · Alignment 22% · Feasibility 23% (overridable)
 
-### Step Bar (6 steps, 0-indexed)
-`0=Emissions data · 1=Socioeconomic context · 2=Regulations & laws · 3=Strategic preferences · 4=Policy alignment · 5=Pre-flight check`
+**Impact** = 0.8 × reductionShare + 0.2 × timelineScore
+**Alignment** = 0.15 × sectorComponent + 0.05 × otherComponent (co-benefit match) + 0.80 × policyComponent
+**Feasibility** = 0.5 × softLegalComponent + 0.5 × socioeconomicComponent
 
-### Next Session: City Profile Hub
-The City Profile Hub is the page reached after clicking "Open {City} City Profile" on the Landing page.
-It should show:
-- City name, region, locode, key stats (population, area, emissions year)
-- Entry point to start the HIAP prioritization wizard (6-step flow)
-- Socioeconomic indicators overview (from `city-context.csv` / `city.json`)
+**Key indicator key remapping** (`INDICATOR_KEY_MAP`):
+- `employment_in_transport_and_logistics` → `transport_logistics_employment`
+- `electricity_access_rate` → `electricity_access`
 
-Route: `/city/:locode` (e.g. `/city/CL-IQQ`)
-Mockup reference: canvas shape `hiap-city-profile`
+**Known data fix**: `electricity_access` was corrected from `"very low"` → `"very high"` (Iquique has 100% electricity access). This raises feasibility by ~+0.10 for actions where electricity_access is a supportive indicator. The engineer's reference pipeline used the old incorrect value, explaining the feasibility divergence.
+
+**Missing indicator treatment**: always count the weight in the denominator (matching reference spec), contributing 0 to the numerator.
+
+### Co-benefit → strategic priorities matching
+`PRIORITY_KEYWORD_MAP` maps free text to 7 co-benefit dimensions: `air_quality`, `cost_of_living`, `habitat`, `housing`, `mobility`, `stakeholder_engagement`, `water_quality`. The `otherComponent` (strategic priorities match) is live and wired through the alignment score.
+
+### Storage Schema (localStorage)
+- `hiap:{locode}:strategic:form` — `{ sectors, strategicPriorities, timeline, excludeText, weights? }` where `weights = { impact, alignment, feasibility }` as integers (%)
+- `hiap:{locode}:results` — full `PipelineResult` JSON
+- `hiap:{locode}:step:{key}` — `StepProgress` per form step
+
+### Scoring Weights
+- Sliders live on the **Pre-flight Check page** (`PreflightCheck.tsx`) — NOT on Strategic Preferences
+- Defaults: Impact 55, Alignment 22, Feasibility 23
+- Range: 5–90%, proportional redistribution on change, "Total: 100%" badge, "Reset to defaults" button
+- `Processing.tsx` reads weights from localStorage and converts integer % → decimals for `weightsOverride`
+
+### GPC Sector Mapping (Recommendations page)
+Derived from `action.gpcRefs[0]` prefix:
+- `I` → Stationary Energy · `II` → Transportation · `III` → Waste · `IV` → IPPU · `V` → AFOLU
+- No refs → "Cross-sector"
+
+### Recommendations Page Features
+- **TOP PICK cards**: 3-column, segmented reduction bar, sector/timeline metadata, "See more details" drawer, "GENERATE PLAN" bordered button
+- **Pick top actions**: checkbox selection mode on ranking table, selected actions replace the top 3 section with reorder (↑↓) and remove (✕) controls
+- **Download dropdown**: Export as CSV (functional) · Export as PDF (placeholder)
+- **Detail panel**: right-side drawer with score breakdown bars, co-benefits, trade-offs, legal flag
+
+### Session Summary (last session — 8 Apr 2026)
+Completed:
+1. Weight sliders moved from StrategicPreferences → PreflightCheck (full-width card, 3-column grid layout)
+2. Processing.tsx reads weights from localStorage and applies as `weightsOverride`
+3. StrategicPreferences preserves existing weights on save (not clobbered)
+4. "MEED+ HIAP methodology" wording in scoring weights subtitle
+5. GPC sectors now shown in TOP PICK cards and ranking table (was showing action category)
+6. Recommendations card redesign: TOP PICK badge, segmented reduction bar, Generate Plan button, removed Estimated Cost row
+7. Pick top actions: checkbox selection, reorder with arrows, replaces top 3 section
+8. Download dropdown with CSV export
+9. Confirmed electricity_access "very high" fix is the root cause of feasibility divergence vs. engineer reference (+0.10 to feasibility for actions with electricity_access as supportive indicator)
+
+### Next Session — Areas to Continue
+- Recommendations page: "Generate Plan" button functionality (plan generation flow)
+- Any remaining scoring pipeline alignment issues with reference engineer
+- City Profile Hub improvements or other pages as needed
