@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
@@ -29,12 +29,27 @@ Object.values(rawActions).forEach((a) => {
   if (neg.length) actionBarriersMap[a.actionId] = neg;
 });
 
+// ─── GPC sector mapping ─────────────────────────────────────────────────────
+
+function gpcSectorName(gpcRefs: string[]): string {
+  if (!gpcRefs.length) return "Cross-sector";
+  const prefix = gpcRefs[0].split(".")[0];
+  switch (prefix) {
+    case "I":   return "Stationary Energy";
+    case "II":  return "Transportation";
+    case "III": return "Waste";
+    case "IV":  return "IPPU";
+    case "V":   return "AFOLU";
+    default:    return "Cross-sector";
+  }
+}
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 const TIMELINE_LABEL: Record<string, string> = {
-  "<5 years": "< 5 years",
+  "<5 years":   "Less than 5 years",
   "5-10 years": "5–10 years",
-  ">10 years": "> 10 years",
+  ">10 years":  "More than 10 years",
 };
 
 function reductionLabel(priority: string) {
@@ -46,10 +61,38 @@ function reductionLabel(priority: string) {
 function reductionColor(priority: string) {
   if (priority === "high") return "#16A34A";
   if (priority === "medium") return "#F59E0B";
-  return "#6B7280";
+  return "#9CA3AF";
 }
 
-// ─── Score bar (panel) ─────────────────────────────────────────────────────────
+function reductionSegments(priority: string) {
+  if (priority === "high") return 3;
+  if (priority === "medium") return 2;
+  return 1;
+}
+
+// ─── Reduction potential bar (segmented) ────────────────────────────────────
+
+function ReductionBar({ priority }: { priority: string }) {
+  const filled = reductionSegments(priority);
+  const color = reductionColor(priority);
+  return (
+    <div style={{ display: "flex", gap: "4px" }}>
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          style={{
+            height: "5px",
+            flex: 1,
+            borderRadius: "3px",
+            background: i < filled ? color : "#E5E7EB",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Score bar (detail panel) ─────────────────────────────────────────────────
 
 function ScoreBar({ label, value }: { label: string; value: number }) {
   const pct = Math.round(Math.min(value, 1) * 100);
@@ -67,7 +110,7 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
   );
 }
 
-// ─── Detail panel ─────────────────────────────────────────────────────────────
+// ─── Detail panel (right drawer) ──────────────────────────────────────────────
 
 function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () => void }) {
   const cobenefits = actionCoBenefitsMap[action.actionId] ?? [];
@@ -78,10 +121,7 @@ function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () =>
     <>
       <div
         onClick={onClose}
-        style={{
-          position: "fixed", inset: 0, background: "rgba(0,0,0,0.25)", zIndex: 40,
-          animation: "fadeIn 0.2s ease",
-        }}
+        style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.25)", zIndex: 40, animation: "fadeIn 0.2s ease" }}
       />
       <div style={{
         position: "fixed", top: 0, right: 0, bottom: 0, width: "440px",
@@ -93,26 +133,20 @@ function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () =>
         <div style={{ padding: "24px 28px", borderBottom: "1px solid #EBEBEB", flexShrink: 0 }}>
           <button
             onClick={onClose}
-            style={{
-              background: "none", border: "none", cursor: "pointer",
-              color: "#001EA7", fontSize: "13px", fontWeight: "600",
-              padding: 0, display: "flex", alignItems: "center", gap: "6px", marginBottom: "18px",
-            }}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#001EA7", fontSize: "13px", fontWeight: "600", padding: 0, display: "flex", alignItems: "center", gap: "6px", marginBottom: "18px" }}
           >
             ← GO BACK
           </button>
-          <div style={{ fontSize: "11px", fontWeight: "700", color: "#9CA3AF", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+          <div style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "4px" }}>
+            {gpcSectorName(action.gpcRefs)}
+          </div>
+          <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
             {action.actionCategory}
           </div>
           <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.35" }}>
             {action.actionName}
           </h2>
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            {action.rank === 1 && (
-              <span style={{ fontSize: "10px", background: "#FFF3E0", color: "#C05621", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-                Expert's Choice
-              </span>
-            )}
             {action.gpcRefs.map((ref) => (
               <span key={ref} style={{ fontSize: "10px", background: "#EFF6FF", color: "#2563EB", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
                 GPC {ref}
@@ -182,7 +216,7 @@ function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () =>
             width: "100%", background: "#001EA7", color: "white", border: "none",
             borderRadius: "8px", padding: "12px", fontSize: "13px", fontWeight: "600", cursor: "pointer",
           }}>
-            Add to action plan →
+            ✦ Generate Plan
           </button>
         </div>
       </div>
@@ -195,69 +229,134 @@ function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () =>
   );
 }
 
-// ─── Top-3 card ───────────────────────────────────────────────────────────────
+// ─── Top Pick card ────────────────────────────────────────────────────────────
 
-function TopCard({ action, onSelect }: { action: RankedAction; onSelect: (a: RankedAction) => void }) {
+function TopPickCard({
+  action,
+  index,
+  total,
+  onDetail,
+  onMoveUp,
+  onMoveDown,
+  onRemove,
+  isUserPick,
+}: {
+  action: RankedAction;
+  index: number;
+  total: number;
+  onDetail: (a: RankedAction) => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
+  onRemove?: () => void;
+  isUserPick: boolean;
+}) {
+  const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
+  const sector = gpcSectorName(action.gpcRefs);
+  const cost = action.costInvestmentNeeded || "—";
+
   return (
     <div style={{
-      background: "white", border: "1px solid #EBEBEB", borderRadius: "12px",
-      padding: "16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-      display: "flex", flexDirection: "column",
+      background: "white", border: "1px solid #E5E7EB", borderRadius: "14px",
+      padding: "20px", boxShadow: "0 1px 6px rgba(0,0,0,0.05)",
+      display: "flex", flexDirection: "column", position: "relative",
     }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
-        <div style={{
-          width: "30px", height: "30px", borderRadius: "50%",
-          background: "#001EA7", color: "white",
-          fontSize: "13px", fontWeight: "700",
-          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-        }}>
-          #{action.rank}
-        </div>
-        {action.rank === 1 && (
-          <span style={{ fontSize: "10px", background: "#FFF3E0", color: "#C05621", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-            Expert's Choice
+      {/* Top row: TOP PICK badge + reorder controls */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ fontSize: "13px", color: "#001EA7" }}>🔖</span>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.06em" }}>
+            TOP PICK
           </span>
+        </div>
+        {isUserPick && (
+          <div style={{ display: "flex", gap: "4px" }}>
+            <button
+              onClick={onMoveUp}
+              disabled={index === 0}
+              style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "5px", width: "24px", height: "24px", cursor: index === 0 ? "default" : "pointer", color: index === 0 ? "#D1D5DB" : "#6B7280", fontSize: "12px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              title="Move up"
+            >
+              ↑
+            </button>
+            <button
+              onClick={onMoveDown}
+              disabled={index === total - 1}
+              style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "5px", width: "24px", height: "24px", cursor: index === total - 1 ? "default" : "pointer", color: index === total - 1 ? "#D1D5DB" : "#6B7280", fontSize: "12px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              title="Move down"
+            >
+              ↓
+            </button>
+            <button
+              onClick={onRemove}
+              style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "5px", width: "24px", height: "24px", cursor: "pointer", color: "#9CA3AF", fontSize: "11px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              title="Remove from picks"
+            >
+              ✕
+            </button>
+          </div>
         )}
       </div>
 
-      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "8px", lineHeight: "1.4", flex: 1 }}>
-        {action.actionName}
+      {/* Title */}
+      <div style={{ fontSize: "16px", fontWeight: "700", color: "#111827", lineHeight: "1.35", marginBottom: "8px" }}>
+        {action.actionName.length > 65 ? action.actionName.slice(0, 65) + "…" : action.actionName}
       </div>
 
-      <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "12px", lineHeight: "1.45" }}>
-        {action.description.length > 90 ? action.description.slice(0, 90) + "…" : action.description}
+      {/* Description */}
+      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "14px", flex: 1 }}>
+        {action.description.length > 100 ? action.description.slice(0, 100) + "…" : action.description}
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "5px", marginBottom: "12px", fontSize: "12px" }}>
+      {/* Reduction bar */}
+      <div style={{ marginBottom: "6px" }}>
+        <ReductionBar priority={action.priority} />
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+        <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Reduction potential</span>
+        <span style={{ fontSize: "13px", fontWeight: "700", color: reductionColor(action.priority) }}>
+          {reductionLabel(action.priority)}
+        </span>
+      </div>
+
+      {/* Divider */}
+      <div style={{ borderTop: "1px solid #F0F0F4", marginBottom: "14px" }} />
+
+      {/* Metadata rows */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "14px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9CA3AF" }}>Reduction potential</span>
-          <span style={{ color: reductionColor(action.priority), fontWeight: "600" }}>
-            {reductionLabel(action.priority)}
-          </span>
+          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Sector</span>
+          <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{sector}</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9CA3AF" }}>Sector</span>
-          <span style={{ color: "#6B7280" }}>{action.actionCategory}</span>
+          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Estimated cost</span>
+          <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{cost}</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9CA3AF" }}>Timeline</span>
-          <span style={{ color: "#6B7280" }}>{TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation}</span>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9CA3AF" }}>Score</span>
-          <span style={{ color: "#001EA7", fontWeight: "700" }}>{(action.finalScore * 100).toFixed(0)}</span>
+          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Implementation time</span>
+          <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{tl}</span>
         </div>
       </div>
 
+      {/* See more details */}
       <button
-        onClick={() => onSelect(action)}
-        style={{
-          width: "100%", background: "none", border: "1px solid #EBEBEB",
-          borderRadius: "6px", padding: "7px", fontSize: "12px",
-          color: "#001EA7", cursor: "pointer", fontWeight: "500",
-        }}
+        onClick={() => onDetail(action)}
+        style={{ background: "none", border: "none", padding: 0, textAlign: "left", cursor: "pointer", fontSize: "13px", color: "#001EA7", fontWeight: "600", textDecoration: "underline", textDecorationColor: "#BFDBFE", marginBottom: "12px" }}
       >
         See more details
+      </button>
+
+      {/* Generate Plan button */}
+      <button style={{
+        width: "100%", background: "white", border: "1.5px solid #E5E7EB",
+        borderRadius: "8px", padding: "10px", fontSize: "12px", fontWeight: "700",
+        color: "#001EA7", cursor: "pointer", display: "flex", alignItems: "center",
+        justifyContent: "center", gap: "6px", letterSpacing: "0.04em",
+        textTransform: "uppercase", transition: "all 0.12s",
+      }}
+        onMouseOver={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#001EA7"; (e.currentTarget as HTMLElement).style.background = "#F5F7FF"; }}
+        onMouseOut={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#E5E7EB"; (e.currentTarget as HTMLElement).style.background = "white"; }}
+      >
+        <span>✦</span> Generate Plan
       </button>
     </div>
   );
@@ -265,23 +364,121 @@ function TopCard({ action, onSelect }: { action: RankedAction; onSelect: (a: Ran
 
 // ─── Ranking table ─────────────────────────────────────────────────────────────
 
-function RankingTable({ actions, onSelect }: { actions: RankedAction[]; onSelect: (a: RankedAction) => void }) {
+function RankingTable({
+  actions,
+  onSelect,
+  pickedIds,
+  onTogglePick,
+  pickMode,
+  onTogglePickMode,
+}: {
+  actions: RankedAction[];
+  onSelect: (a: RankedAction) => void;
+  pickedIds: string[];
+  onTogglePick: (id: string) => void;
+  pickMode: boolean;
+  onTogglePickMode: () => void;
+}) {
+  const [showDownload, setShowDownload] = useState(false);
+  const dlRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (dlRef.current && !dlRef.current.contains(e.target as Node)) {
+        setShowDownload(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  function exportCsv() {
+    const header = ["Rank", "Action", "GPC Sector", "Reduction Potential", "Impact Score", "Alignment Score", "Feasibility Score", "Final Score"];
+    const rows = actions.map(a => [
+      a.rank,
+      `"${a.actionName.replace(/"/g, '""')}"`,
+      gpcSectorName(a.gpcRefs),
+      reductionLabel(a.priority),
+      (a.impactScore * 100).toFixed(0),
+      (a.alignmentScore * 100).toFixed(0),
+      (a.feasibilityScore * 100).toFixed(0),
+      (a.finalScore * 100).toFixed(0),
+    ]);
+    const csv = [header, ...rows].map(r => r.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "hiap-ranked-actions.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+    setShowDownload(false);
+  }
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
         <div>
-          <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Mitigation actions ranking</div>
+          <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827" }}>Ranked actions</div>
           <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
-            All ranked actions — click ↗ to view details.
+            Here are the climate initiatives that our model has ranked by impact for your city.{" "}
+            {pickMode ? "Select actions to add to your top picks." : "Click ↗ to view details."}
           </div>
         </div>
-        <div style={{ display: "flex", gap: "8px" }}>
-          <button style={{
-            background: "white", border: "1px solid #DDDDE1", borderRadius: "8px",
-            padding: "7px 14px", fontSize: "12px", color: "#6B7280", cursor: "pointer",
-          }}>
-            ↓ Download
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {/* Pick top actions */}
+          <button
+            onClick={onTogglePickMode}
+            style={{
+              background: pickMode ? "#EEF2FF" : "white",
+              border: `1px solid ${pickMode ? "#6366F1" : "#DDDDE1"}`,
+              borderRadius: "8px", padding: "7px 14px",
+              fontSize: "12px", color: pickMode ? "#4338CA" : "#6B7280",
+              cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
+              fontWeight: pickMode ? "600" : "400",
+            }}
+          >
+            <span>☑</span> Pick top actions
           </button>
+
+          {/* Download dropdown */}
+          <div ref={dlRef} style={{ position: "relative" }}>
+            <button
+              onClick={() => setShowDownload(v => !v)}
+              style={{
+                background: showDownload ? "#F5F5F7" : "white",
+                border: "1px solid #DDDDE1", borderRadius: "8px",
+                padding: "7px 14px", fontSize: "12px", color: "#6B7280",
+                cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
+              }}
+            >
+              ↓ Download <span style={{ fontSize: "10px" }}>▾</span>
+            </button>
+            {showDownload && (
+              <div style={{
+                position: "absolute", right: 0, top: "calc(100% + 4px)", zIndex: 20,
+                background: "white", border: "1px solid #E5E7EB", borderRadius: "8px",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.12)", overflow: "hidden", minWidth: "150px",
+              }}>
+                <button
+                  onClick={() => { alert("PDF export coming soon."); setShowDownload(false); }}
+                  style={{ display: "block", width: "100%", textAlign: "left", background: "none", border: "none", padding: "10px 16px", fontSize: "12px", color: "#374151", cursor: "pointer", fontWeight: "500" }}
+                  onMouseOver={(e) => (e.currentTarget.style.background = "#F5F5F7")}
+                  onMouseOut={(e) => (e.currentTarget.style.background = "none")}
+                >
+                  Export as PDF
+                </button>
+                <button
+                  onClick={exportCsv}
+                  style={{ display: "block", width: "100%", textAlign: "left", background: "none", border: "none", padding: "10px 16px", fontSize: "12px", color: "#374151", cursor: "pointer", fontWeight: "500", borderTop: "1px solid #F0F0F4" }}
+                  onMouseOver={(e) => (e.currentTarget.style.background = "#F5F5F7")}
+                  onMouseOut={(e) => (e.currentTarget.style.background = "none")}
+                >
+                  Export as CSV
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -289,60 +486,75 @@ function RankingTable({ actions, onSelect }: { actions: RankedAction[]; onSelect
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ background: "#FAFAFA", borderBottom: "1px solid #F0F0F0" }}>
-              {["RANK", "ACTION", "SECTOR", "REDUCTION POTENTIAL", ""].map((h) => (
-                <th key={h} style={{
-                  padding: "10px 14px", fontSize: "11px", color: "#9CA3AF",
-                  fontWeight: "500", textAlign: "left", letterSpacing: "0.03em",
-                }}>
-                  {h}
-                </th>
-              ))}
+              {pickMode && <th style={{ padding: "10px 14px", width: "40px" }} />}
+              <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>RANK</th>
+              <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>ACTION</th>
+              <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>SECTOR</th>
+              <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>REDUCTION POTENTIAL</th>
+              <th style={{ padding: "10px 14px", width: "40px" }} />
             </tr>
           </thead>
           <tbody>
-            {actions.map((action) => (
-              <tr
-                key={action.actionId}
-                style={{ borderBottom: "1px solid #F5F5F5" }}
-              >
-                <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#001EA7", whiteSpace: "nowrap" }}>
-                  #{action.rank}
-                </td>
-                <td style={{ padding: "10px 14px", fontSize: "12px", color: "#111827", maxWidth: "280px" }}>
-                  {action.actionName}
-                </td>
-                <td style={{ padding: "10px 14px", fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
-                  {action.actionCategory}
-                </td>
-                <td style={{ padding: "10px 14px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "100px", background: "#EEF2FF", borderRadius: "3px", height: "6px" }}>
-                      <div style={{
-                        background: "#001EA7",
-                        width: `${action.finalScore * 100}%`,
-                        height: "6px", borderRadius: "3px",
-                      }} />
+            {actions.map((action) => {
+              const isPicked = pickedIds.includes(action.actionId);
+              return (
+                <tr
+                  key={action.actionId}
+                  style={{
+                    borderBottom: "1px solid #F5F5F5",
+                    background: isPicked ? "#F0F9FF" : "white",
+                    transition: "background 0.1s",
+                  }}
+                >
+                  {pickMode && (
+                    <td style={{ padding: "10px 14px" }}>
+                      <button
+                        onClick={() => onTogglePick(action.actionId)}
+                        style={{
+                          width: "18px", height: "18px", borderRadius: "4px",
+                          border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
+                          background: isPicked ? "#001EA7" : "white",
+                          cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                          padding: 0, flexShrink: 0,
+                        }}
+                      >
+                        {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
+                      </button>
+                    </td>
+                  )}
+                  <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#001EA7", whiteSpace: "nowrap" }}>
+                    #{action.rank}
+                  </td>
+                  <td style={{ padding: "10px 14px", fontSize: "12px", color: "#111827", maxWidth: "280px" }}>
+                    {action.actionName}
+                  </td>
+                  <td style={{ padding: "10px 14px", fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
+                    {gpcSectorName(action.gpcRefs)}
+                  </td>
+                  <td style={{ padding: "10px 14px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ display: "flex", gap: "3px", width: "80px" }}>
+                        {[0, 1, 2].map((i) => (
+                          <div key={i} style={{ flex: 1, height: "6px", borderRadius: "3px", background: i < reductionSegments(action.priority) ? "#001EA7" : "#EEF2FF" }} />
+                        ))}
+                      </div>
+                      <span style={{ fontSize: "11px", color: reductionColor(action.priority), fontWeight: "600" }}>
+                        {reductionLabel(action.priority)}
+                      </span>
                     </div>
-                    <span style={{ fontSize: "11px", color: reductionColor(action.priority), fontWeight: "600" }}>
-                      {reductionLabel(action.priority)}
-                    </span>
-                  </div>
-                </td>
-                <td style={{ padding: "10px 14px" }}>
-                  <button
-                    onClick={() => onSelect(action)}
-                    style={{
-                      background: "none", border: "none", cursor: "pointer",
-                      color: "#001EA7", fontSize: "16px", fontWeight: "500",
-                      padding: "0 4px",
-                    }}
-                    title="View details"
-                  >
-                    ↗
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td style={{ padding: "10px 14px" }}>
+                    <button
+                      onClick={() => onSelect(action)}
+                      style={{ background: "none", border: "none", cursor: "pointer", color: "#001EA7", fontSize: "16px", padding: "0 4px" }}
+                      title="View details"
+                    >
+                      ↗
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -366,6 +578,10 @@ export function Recommendations({ params }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [selectedAction, setSelectedAction] = useState<RankedAction | null>(null);
 
+  // Pick top actions state
+  const [pickedIds, setPickedIds] = useState<string[]>([]);
+  const [pickMode, setPickMode] = useState(false);
+
   useEffect(() => {
     try {
       const raw = localStorage.getItem(`hiap:${locode}:results`);
@@ -385,10 +601,7 @@ export function Recommendations({ params }: Props) {
         <Navbar cityName={cityName} />
         <div style={{ maxWidth: "760px", margin: "80px auto", padding: "0 24px", textAlign: "center" }}>
           <p style={{ color: "#6B7280", marginBottom: "16px" }}>{error}</p>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/preflight`)}
-            style={{ padding: "10px 24px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
-          >
+          <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ padding: "10px 24px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}>
             ← Back to pre-flight
           </button>
         </div>
@@ -408,7 +621,42 @@ export function Recommendations({ params }: Props) {
   }
 
   const { ranked, discarded, totalCityEmissions } = result;
-  const top3 = ranked.slice(0, 3);
+
+  // Determine top picks: user-selected (in order) or pipeline top 3
+  const pickedActions = pickedIds
+    .map(id => ranked.find(a => a.actionId === id))
+    .filter(Boolean) as RankedAction[];
+  const displayTop = pickedActions.length > 0 ? pickedActions : ranked.slice(0, 3);
+  const isUserPick = pickedActions.length > 0;
+
+  function togglePick(id: string) {
+    setPickedIds(prev => {
+      if (prev.includes(id)) return prev.filter(x => x !== id);
+      return [...prev, id];
+    });
+  }
+
+  function moveUp(index: number) {
+    if (index === 0) return;
+    setPickedIds(prev => {
+      const next = [...prev];
+      [next[index - 1], next[index]] = [next[index], next[index - 1]];
+      return next;
+    });
+  }
+
+  function moveDown(index: number) {
+    setPickedIds(prev => {
+      if (index === prev.length - 1) return prev;
+      const next = [...prev];
+      [next[index], next[index + 1]] = [next[index + 1], next[index]];
+      return next;
+    });
+  }
+
+  function removeFromPicks(id: string) {
+    setPickedIds(prev => prev.filter(x => x !== id));
+  }
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -418,62 +666,81 @@ export function Recommendations({ params }: Props) {
         <DetailPanel action={selectedAction} onClose={() => setSelectedAction(null)} />
       )}
 
-      {/* White page header */}
+      {/* Page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>
-            <button
-              onClick={() => navigate(`/city/${citySlug}/preflight`)}
-              style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}
-            >
+            <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>
               Cities
             </button>
             {" › "}{cityName}{" › "}Mitigation actions
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
-              <h1 style={{ fontSize: "22px", fontWeight: "600", color: "#111827", margin: "0 0 4px" }}>
+              <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
                 Top mitigation actions for {cityName}
               </h1>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
                 {ranked.length} actions ranked · {discarded.length} excluded (legal filter) · Total city emissions {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
-            <button style={{
-              background: "#001EA7", color: "white", border: "none", borderRadius: "8px",
-              padding: "9px 18px", fontSize: "12px", fontWeight: "500", cursor: "pointer",
-              whiteSpace: "nowrap", marginLeft: "24px",
-            }}>
-              ⚡ Generate Plan
-            </button>
           </div>
         </div>
       </div>
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 48px 64px" }}>
 
-        {/* Top 3 section */}
+        {/* Top picks section */}
         <div style={{ marginBottom: "32px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
             <div>
-              <div style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>Top 3 mitigation actions</div>
+              <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827" }}>
+                {isUserPick ? "My top picks" : "Top 3 mitigation actions"}
+              </div>
               <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
-                Highest-ranked actions based on {cityName}'s data and priorities.
+                {isUserPick
+                  ? `${pickedActions.length} action${pickedActions.length !== 1 ? "s" : ""} selected — use arrows to reorder.`
+                  : `Highest-ranked actions based on ${cityName}'s data and priorities.`}
               </div>
             </div>
+            {isUserPick && (
+              <button
+                onClick={() => setPickedIds([])}
+                style={{ fontSize: "12px", color: "#6B7280", background: "none", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "5px 12px", cursor: "pointer" }}
+              >
+                Clear picks
+              </button>
+            )}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "14px" }}>
-            {top3.map((action) => (
-              <TopCard key={action.actionId} action={action} onSelect={setSelectedAction} />
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(displayTop.length, 3)}, 1fr)`, gap: "14px" }}>
+            {displayTop.map((action, i) => (
+              <TopPickCard
+                key={action.actionId}
+                action={action}
+                index={i}
+                total={displayTop.length}
+                onDetail={setSelectedAction}
+                onMoveUp={isUserPick ? () => moveUp(i) : undefined}
+                onMoveDown={isUserPick ? () => moveDown(i) : undefined}
+                onRemove={isUserPick ? () => removeFromPicks(action.actionId) : undefined}
+                isUserPick={isUserPick}
+              />
             ))}
           </div>
         </div>
 
         {/* Full ranking table */}
-        <RankingTable actions={ranked} onSelect={setSelectedAction} />
+        <RankingTable
+          actions={ranked}
+          onSelect={setSelectedAction}
+          pickedIds={pickedIds}
+          onTogglePick={togglePick}
+          pickMode={pickMode}
+          onTogglePickMode={() => setPickMode(v => !v)}
+        />
 
-        {/* Discarded section */}
+        {/* Discarded */}
         {discarded.length > 0 && (
           <details style={{ marginTop: "32px" }}>
             <summary style={{ fontSize: "13px", fontWeight: "600", color: "#6B7280", cursor: "pointer", padding: "8px 0" }}>
@@ -481,10 +748,7 @@ export function Recommendations({ params }: Props) {
             </summary>
             <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
               {discarded.map((d) => (
-                <div key={d.actionId} style={{
-                  background: "white", border: "1px solid #E5E7EB", borderRadius: "6px",
-                  padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center",
-                }}>
+                <div key={d.actionId} style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "12px", color: "#374151" }}>{d.actionName}</span>
                   <span style={{ fontSize: "11px", color: "#DC2626", background: "#FEF2F2", padding: "2px 8px", borderRadius: "4px" }}>
                     {d.reason.replace(/_/g, " ")}
