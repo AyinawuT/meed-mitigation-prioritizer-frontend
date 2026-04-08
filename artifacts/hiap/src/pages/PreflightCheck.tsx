@@ -4,6 +4,42 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, type StepProgress } from "@/lib/stepProgress";
+import policySignalsData from "@/data/actionsPolicySignals.json";
+import policyPlansData from "@/data/policyPlans.json";
+
+// ── Derive pilot data availability from actual signal data ──────────────────
+const STRENGTH_SCORE: Record<string, number> = { low: 1, medium: 2, high: 3 };
+
+const candidateActionIds = new Set<string>(
+  policyPlansData.plans.flatMap(p => p.actions.map((a: { id: string }) => a.id))
+);
+
+const candidateSignals = policySignalsData.policy_signals.filter(
+  s => candidateActionIds.has(s.action_id)
+);
+
+function dimAvgScore(signalType: string): number {
+  const scores = candidateSignals.map(a => {
+    const matches = a.policy_signals.filter(ps => ps.signal_type === signalType);
+    if (!matches.length) return 0;
+    return Math.max(...matches.map(ps => STRENGTH_SCORE[ps.signal_strength] ?? 0));
+  });
+  return scores.reduce((a, b) => a + b, 0) / (scores.length || 1);
+}
+
+function scoreToDots(avg: number): { dots: number; label: string; color: string } {
+  if (avg >= 2.5) return { dots: 3, label: "Excellent", color: "#16A34A" };
+  if (avg >= 1.5) return { dots: 2, label: "Good",      color: "#16A34A" };
+  if (avg >= 0.5) return { dots: 1, label: "Fair",      color: "#F9A200" };
+  return           { dots: 0, label: "No data",          color: "#9CA3AF" };
+}
+
+const PILOT_AVAILABILITY = {
+  impact:      scoreToDots(dimAvgScore("target")),
+  alignment:   scoreToDots(dimAvgScore("action")),
+  feasibility: scoreToDots(dimAvgScore("funding")),
+  actionCount: candidateSignals.length,
+};
 
 interface StepDef {
   key: string;
@@ -230,11 +266,11 @@ export function PreflightCheck({ params }: Props) {
             {/* Pilot data availability */}
             <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>Pilot data availability</h2>
-              <DataRow label="Impact"    dots={2} total={3} ratingLabel="Good"   color="#16A34A" />
-              <DataRow label="Alignment" dots={2} total={3} ratingLabel="Good"   color="#16A34A" />
-              <DataRow label="Feasibility" dots={1} total={3} ratingLabel="Fair" color="#F9A200" />
+              <DataRow label="Impact"      dots={PILOT_AVAILABILITY.impact.dots}      total={3} ratingLabel={PILOT_AVAILABILITY.impact.label}      color={PILOT_AVAILABILITY.impact.color} />
+              <DataRow label="Alignment"   dots={PILOT_AVAILABILITY.alignment.dots}   total={3} ratingLabel={PILOT_AVAILABILITY.alignment.label}   color={PILOT_AVAILABILITY.alignment.color} />
+              <DataRow label="Feasibility" dots={PILOT_AVAILABILITY.feasibility.dots} total={3} ratingLabel={PILOT_AVAILABILITY.feasibility.label} color={PILOT_AVAILABILITY.feasibility.color} />
               <div style={{ marginTop: "12px", fontSize: "11px", color: "#9CA3AF" }}>
-                10 candidate actions · ~1–2 min · 1 scenario
+                {PILOT_AVAILABILITY.actionCount} candidate actions · ~1–2 min · 1 scenario
               </div>
             </div>
           </div>
