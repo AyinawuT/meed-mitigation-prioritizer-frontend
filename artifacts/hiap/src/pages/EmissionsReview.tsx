@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -118,6 +118,16 @@ function buildSectors(city: CityData): SectorRow[] {
   ];
 }
 
+function recalcShares(rows: SectorRow[]): SectorRow[] {
+  const total = rows.reduce((s, r) => s + (r.emissions ?? 0), 0);
+  return rows.map((r) => ({
+    ...r,
+    share: r.emissions !== null && total > 0
+      ? Math.round((r.emissions / total) * 1000) / 10
+      : null,
+  }));
+}
+
 interface EmissionsReviewProps {
   params: { locode: string };
 }
@@ -125,13 +135,23 @@ interface EmissionsReviewProps {
 export function EmissionsReview({ params }: EmissionsReviewProps) {
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("review");
-  const [discarded, setDiscarded] = useState(false);
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city: CityData | undefined = CITIES.find(
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
+
+  const original = city ? buildSectors(city) : [];
+  const [sectors, setSectors] = useState<SectorRow[]>(original);
+  const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [draftEmissions, setDraftEmissions] = useState("");
+  const [draftSource, setDraftSource] = useState("");
+  const [hasEdits, setHasEdits] = useState(false);
+
+  useEffect(() => {
+    if (city) setSectors(buildSectors(city));
+  }, [urlLocode]);
 
   if (!city) {
     return (
@@ -148,16 +168,57 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   }
 
   const citySlug = city.locode.replace(" ", "-");
-  const sectors = buildSectors(city);
   const confirmedCount = sectors.filter((s) => s.status === "Confirmed").length;
   const totalEmissions = sectors.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
   const totalMillions = (totalEmissions / 1e6).toFixed(2);
   const inventoryYear = city.locode === "CL IQQ" ? "2022" : city.emissionsYear;
 
+  function startEdit(i: number) {
+    const row = sectors[i];
+    setEditingIdx(i);
+    setDraftEmissions(row.emissions !== null ? String(row.emissions) : "");
+    setDraftSource(row.source ?? "");
+  }
+
+  function cancelEdit() {
+    setEditingIdx(null);
+  }
+
+  function saveEdit(i: number) {
+    const parsed = parseFloat(draftEmissions.replace(/,/g, ""));
+    if (isNaN(parsed) || parsed < 0) return;
+    const updated = sectors.map((row, idx) =>
+      idx === i
+        ? { ...row, emissions: Math.round(parsed), source: draftSource.trim() || row.source, status: "Confirmed" as const }
+        : row
+    );
+    setSectors(recalcShares(updated));
+    setEditingIdx(null);
+    setHasEdits(true);
+  }
+
   function handleDiscard() {
-    setDiscarded(true);
+    setSectors(buildSectors(city));
+    setEditingIdx(null);
+    setHasEdits(false);
     setActiveTab("review");
   }
+
+  function handleTabChange(tab: Tab) {
+    setActiveTab(tab);
+    if (tab === "review") setEditingIdx(null);
+  }
+
+  const inputStyle: React.CSSProperties = {
+    border: "1px solid #CBD5E1",
+    borderRadius: "6px",
+    padding: "5px 10px",
+    fontSize: "13px",
+    outline: "none",
+    width: "100%",
+    boxSizing: "border-box",
+    color: "#111827",
+  };
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -167,7 +228,6 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
       {/* White page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          {/* Breadcrumb */}
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
               Cities
@@ -199,15 +259,19 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                 <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
                   MEED+ IMPACT: shapes 55% of ranking
                 </span>
+                {hasEdits && (
+                  <span style={{ fontSize: "11px", background: "#FEF9C3", color: "#92400E", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
+                    Unsaved changes
+                  </span>
+                )}
               </div>
             </div>
 
-            {/* Review / Adjust toggle */}
             <div style={{ display: "flex", gap: "6px" }}>
               {(["review", "adjust"] as Tab[]).map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => { setActiveTab(tab); setDiscarded(false); }}
+                  onClick={() => handleTabChange(tab)}
                   style={{
                     padding: "7px 18px",
                     borderRadius: "6px",
@@ -231,7 +295,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 40px" }}>
         {/* Adjust mode warning */}
-        {activeTab === "adjust" && !discarded && (
+        {activeTab === "adjust" && (
           <div style={{
             background: "#FFFBEB",
             border: "1px solid #FDE68A",
@@ -304,6 +368,79 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
             <tbody>
               {sectors.map((row, i) => {
                 const isConfirmed = row.status === "Confirmed";
+                const isEditing = editingIdx === i && activeTab === "adjust";
+
+                if (isEditing) {
+                  return (
+                    <tr key={i} style={{ borderBottom: i < sectors.length - 1 ? "1px solid #E5E7EB" : "none", background: "#F8FAFF" }}>
+                      <td style={{ padding: "12px 16px" }}>
+                        <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{row.sector}</div>
+                        <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px", fontFamily: "monospace" }}>{row.ref}</div>
+                      </td>
+                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>{row.sub}</td>
+                      <td style={{ padding: "12px 16px", minWidth: "140px" }}>
+                        <input
+                          type="text"
+                          value={draftEmissions}
+                          onChange={(e) => setDraftEmissions(e.target.value)}
+                          placeholder="e.g. 8779938"
+                          style={inputStyle}
+                          autoFocus
+                        />
+                        <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "3px" }}>tCO₂e</div>
+                      </td>
+                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#9CA3AF" }}>
+                        auto
+                      </td>
+                      <td style={{ padding: "12px 16px", minWidth: "160px" }}>
+                        <input
+                          type="text"
+                          value={draftSource}
+                          onChange={(e) => setDraftSource(e.target.value)}
+                          placeholder="e.g. GPC Inventory 2022"
+                          style={inputStyle}
+                        />
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Pending</span>
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <div style={{ display: "flex", gap: "6px" }}>
+                          <button
+                            onClick={() => saveEdit(i)}
+                            style={{
+                              fontSize: "12px",
+                              color: "white",
+                              background: "#16A34A",
+                              border: "none",
+                              borderRadius: "5px",
+                              padding: "4px 12px",
+                              cursor: "pointer",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={cancelEdit}
+                            style={{
+                              fontSize: "12px",
+                              color: "#6B7280",
+                              background: "#F5F5F5",
+                              border: "none",
+                              borderRadius: "5px",
+                              padding: "4px 10px",
+                              cursor: "pointer",
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+
                 return (
                   <tr key={i} style={{ borderBottom: i < sectors.length - 1 ? "1px solid #F5F5F5" : "none" }}>
                     <td style={{ padding: "13px 16px" }}>
@@ -314,10 +451,10 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                       {row.sub}
                     </td>
                     <td style={{ padding: "13px 16px", fontSize: "13px", color: isConfirmed ? "#111827" : "#D1D5DB", fontVariantNumeric: "tabular-nums" }}>
-                      {row.emissions ? row.emissions.toLocaleString() : "—"}
+                      {row.emissions !== null ? row.emissions.toLocaleString() : "—"}
                     </td>
                     <td style={{ padding: "13px 16px", fontSize: "13px", color: isConfirmed ? "#111827" : "#D1D5DB" }}>
-                      {row.share ? `${row.share}%` : "—"}
+                      {row.share !== null ? `${row.share}%` : "—"}
                     </td>
                     <td style={{ padding: "13px 16px", fontSize: "12px", color: "#6B7280" }}>
                       {row.source ?? "—"}
@@ -331,36 +468,25 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                     </td>
                     <td style={{ padding: "13px 16px" }}>
                       {activeTab === "review" ? (
-                        isConfirmed ? (
-                          <span style={{ fontSize: "13px", color: "#16A34A" }}>✓</span>
-                        ) : null
+                        isConfirmed ? <span style={{ fontSize: "13px", color: "#16A34A" }}>✓</span> : null
                       ) : (
-                        isConfirmed ? (
-                          <button style={{
+                        <button
+                          onClick={() => startEdit(i)}
+                          disabled={editingIdx !== null}
+                          style={{
                             fontSize: "12px",
-                            color: "#001EA7",
-                            background: "#EFF6FF",
+                            color: isConfirmed ? "#001EA7" : "#6B7280",
+                            background: isConfirmed ? "#EFF6FF" : "#F5F5F5",
                             border: "none",
                             borderRadius: "5px",
                             padding: "4px 12px",
-                            cursor: "pointer",
-                            fontWeight: "500",
-                          }}>
-                            Edit
-                          </button>
-                        ) : (
-                          <button style={{
-                            fontSize: "12px",
-                            color: "#6B7280",
-                            background: "#F5F5F5",
-                            border: "none",
-                            borderRadius: "5px",
-                            padding: "4px 12px",
-                            cursor: "pointer",
-                          }}>
-                            + Add data
-                          </button>
-                        )
+                            cursor: editingIdx !== null ? "not-allowed" : "pointer",
+                            fontWeight: isConfirmed ? "500" : "400",
+                            opacity: editingIdx !== null && editingIdx !== i ? 0.5 : 1,
+                          }}
+                        >
+                          {isConfirmed ? "Edit" : "+ Add data"}
+                        </button>
                       )}
                     </td>
                   </tr>
@@ -371,14 +497,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
 
           {activeTab === "adjust" && (
             <div style={{ padding: "12px 16px", borderTop: "1px solid #F0F0F0" }}>
-              <button style={{
-                fontSize: "12px",
-                color: "#001EA7",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontWeight: "500",
-              }}>
+              <button style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", cursor: "pointer", fontWeight: "500" }}>
                 + Add another sector
               </button>
             </div>
@@ -422,6 +541,12 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
               </button>
             )}
             <button
+              onClick={() => {
+                if (activeTab === "adjust") {
+                  setHasEdits(false);
+                  setActiveTab("review");
+                }
+              }}
               style={{
                 background: "#16A34A",
                 color: "white",
