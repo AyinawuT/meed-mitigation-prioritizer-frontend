@@ -30,10 +30,26 @@ export function StrategicPreferences({ params }: Props) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
-  const [sectors,             setSectors]             = useState<Set<string>>(new Set());
-  const [strategicPriorities, setStrategicPriorities] = useState("");
-  const [timeline,            setTimeline]            = useState<string | null>(null);
-  const [excludeText,         setExcludeText]         = useState("");
+  const storageKey = `hiap:${locode}:strategic:form`;
+
+  function loadSaved() {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return null;
+      return JSON.parse(raw) as {
+        sectors: string[];
+        strategicPriorities: string;
+        timeline: string | null;
+        excludeText: string;
+      };
+    } catch { return null; }
+  }
+
+  const saved = loadSaved();
+  const [sectors,             setSectors]             = useState<Set<string>>(new Set(saved?.sectors ?? []));
+  const [strategicPriorities, setStrategicPriorities] = useState(saved?.strategicPriorities ?? "");
+  const [timeline,            setTimeline]            = useState<string | null>(saved?.timeline ?? null);
+  const [excludeText,         setExcludeText]         = useState(saved?.excludeText ?? "");
 
   if (!city) {
     return (
@@ -50,6 +66,15 @@ export function StrategicPreferences({ params }: Props) {
   const citySlug = city.locode.replace(" ", "-");
 
   useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({
+        sectors: Array.from(sectors),
+        strategicPriorities,
+        timeline,
+        excludeText,
+      }));
+    } catch {}
+
     const parts: string[] = [];
     if (sectors.size > 0) parts.push(`${sectors.size} priority sector${sectors.size !== 1 ? "s" : ""}`);
     if (strategicPriorities.trim()) parts.push("strategic priorities set");
@@ -61,7 +86,7 @@ export function StrategicPreferences({ params }: Props) {
       progress: timeline !== null ? 100 : sectors.size > 0 ? 50 : 10,
       sub: parts.length > 0 ? parts.join(" · ") : undefined,
     });
-  }, [locode, sectors.size, strategicPriorities, timeline, excludeText]);
+  }, [locode, sectors, strategicPriorities, timeline, excludeText]);
 
   function toggleSector(s: string) {
     setSectors((prev) => {
