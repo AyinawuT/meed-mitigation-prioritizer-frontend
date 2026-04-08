@@ -427,7 +427,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                                 <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
                                   <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Needs</span>
                                   <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151", background: "#F3F4F6", padding: "2px 6px", borderRadius: "4px" }}>
-                                    {OPERATOR_DISPLAY[req.operator] ?? req.operator} {VALUE_DISPLAY[req.required_value] ?? req.required_value}
+                                    {VALUE_DISPLAY[req.required_value] ?? req.required_value}
                                   </span>
                                   <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Found</span>
                                   <span style={{ fontSize: "12px", fontWeight: "600", color: ac.color, background: ac.bg, padding: "2px 6px", borderRadius: "4px", border: `1px solid ${ac.border}` }}>
