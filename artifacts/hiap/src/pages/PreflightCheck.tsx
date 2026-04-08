@@ -145,7 +145,7 @@ export function PreflightCheck({ params }: Props) {
   const pilot = computePilotAvailability(progMap);
 
   const completeCount = STEPS.filter(s => !s.optional && getStatus(s, progMap[s.key] ?? { visited: false }) === "COMPLETE").length;
-  const canGenerate = completeCount >= 1; // need at least emissions complete
+  const canGenerate = true; // always enabled for pilot — mock data covers all steps
 
   // Strategic sectors from form storage
   let strategicDetail = progMap["strategic"]?.sub ?? "";
@@ -282,23 +282,22 @@ export function PreflightCheck({ params }: Props) {
 
         {/* ── Generate CTA ── */}
         <div style={{ marginTop: "24px" }}>
-          {!canGenerate && (
-            <div style={{ background: "#FEF8E1", border: "1px solid #FDE68A", borderRadius: "8px", padding: "10px 16px", fontSize: "12px", color: "#B45309", marginBottom: "12px", display: "flex", gap: "6px" }}>
-              <span>⚠</span>
-              <span>Complete at least the Emissions Data step to generate recommendations.</span>
+          {completeCount === 0 && (
+            <div style={{ background: "#EEF2FF", border: "1px solid #C7D2FE", borderRadius: "8px", padding: "10px 16px", fontSize: "12px", color: "#4338CA", marginBottom: "12px", display: "flex", gap: "6px" }}>
+              <span>ℹ</span>
+              <span>No steps completed — recommendations will use pre-loaded pilot data for Iquique.</span>
             </div>
           )}
           <button
-            onClick={() => canGenerate && navigate(`/city/${citySlug}/processing`)}
-            disabled={!canGenerate}
+            onClick={() => navigate(`/city/${citySlug}/processing`)}
             style={{
               width: "100%", padding: "16px", borderRadius: "10px", border: "none",
-              background: canGenerate ? "#16A34A" : "#D1D5DB",
+              background: "#16A34A",
               color: "white", fontSize: "14px", fontWeight: "700",
-              cursor: canGenerate ? "pointer" : "not-allowed",
+              cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
               letterSpacing: "0.05em", textTransform: "uppercase",
-              boxShadow: canGenerate ? "0 2px 12px rgba(22,163,74,0.30)" : "none",
+              boxShadow: "0 2px 12px rgba(22,163,74,0.30)",
               transition: "all 0.15s",
             }}
           >

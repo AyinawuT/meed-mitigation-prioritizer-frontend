@@ -123,6 +123,7 @@ export function Processing({ params }: Props) {
 
   const [overall, setOverall] = useState(0);
   const [done, setDone] = useState(false);
+  const [pipelineError, setPipelineError] = useState<string | null>(null);
   const startTime = useRef(Date.now());
 
   // Animate overall progress 0 → 100 over ~8 seconds with easing
@@ -142,30 +143,56 @@ export function Processing({ params }: Props) {
     return () => clearInterval(interval);
   }, []);
 
-  // Run pipeline when animation starts (non-blocking, runs in background)
+  // Run pipeline synchronously on mount
   useEffect(() => {
     try {
       const req = buildRequest(locode);
       const indicators = extractCityIndicators();
       const result: PipelineResult = runPipeline(req, indicators);
-      // Store results for Recommendations page
-      localStorage.setItem(
-        `hiap:${locode}:results`,
-        JSON.stringify(result)
-      );
+      localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
     } catch (err) {
-      console.error("Pipeline error:", err);
+      const msg = err instanceof Error ? err.message : String(err);
+      const stack = err instanceof Error ? (err.stack ?? "") : "";
+      console.error("Pipeline error:", msg, stack);
+      setPipelineError(msg || "Unknown pipeline error");
     }
   }, [locode]);
 
-  // Navigate to recommendations once done
+  // Only navigate to recommendations if pipeline succeeded
   useEffect(() => {
-    if (!done) return;
+    if (!done || pipelineError) return;
     const t = setTimeout(() => navigate(`/city/${citySlug}/recommendations`), 900);
     return () => clearTimeout(t);
-  }, [done]);
+  }, [done, pipelineError]);
 
   const displayPct = done ? 100 : overall;
+
+  // Error state — show before the main card
+  if (pipelineError) {
+    return (
+      <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+        <Navbar cityName={cityName} />
+        <div style={{ display: "flex", justifyContent: "center", padding: "80px 24px" }}>
+          <div style={{ width: "100%", maxWidth: "560px", background: "white", borderRadius: "14px", border: "1px solid #FECACA", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", padding: "32px 28px", textAlign: "center" }}>
+            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#FEF2F2", border: "2px solid #FECACA", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: "22px" }}>⚠</div>
+            <div style={{ fontSize: "16px", fontWeight: "700", color: "#991B1B", marginBottom: "8px" }}>Prioritization failed</div>
+            <div style={{ fontSize: "13px", color: "#6B7280", marginBottom: "8px", lineHeight: "1.6" }}>
+              The scoring pipeline encountered an error. This is usually caused by missing or malformed input data.
+            </div>
+            <div style={{ fontSize: "11px", color: "#9CA3AF", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "8px 12px", marginBottom: "24px", fontFamily: "monospace", textAlign: "left", wordBreak: "break-word" }}>
+              {pipelineError}
+            </div>
+            <button
+              onClick={() => navigate(`/city/${citySlug}/preflight`)}
+              style={{ padding: "10px 24px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
+            >
+              ← Back to pre-flight check
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
