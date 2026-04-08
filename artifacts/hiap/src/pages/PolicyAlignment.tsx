@@ -278,7 +278,9 @@ function ScoreCard({ scope, score, color, label, description, munFile, onRemoveM
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "18px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
         <span style={{ fontSize: "12px", color: "#6B7280", fontWeight: "500", lineHeight: "1.4" }}>{scope}<br />alignment</span>
-        <span style={{ fontSize: "26px", fontWeight: "700", color, lineHeight: "1" }}>{score !== null ? score.toFixed(2) : "—"}</span>
+        <span style={{ fontSize: "26px", fontWeight: "700", color, lineHeight: "1" }}>
+          {score !== null ? `${Math.round(score * 100)}%` : "—"}
+        </span>
       </div>
       <div style={{ height: "6px", background: "#F3F4F6", borderRadius: "4px", marginBottom: "10px", overflow: "hidden" }}>
         <div style={{ height: "100%", width: `${pct}%`, background: color, borderRadius: "4px", transition: "width 0.5s ease" }} />
@@ -348,20 +350,34 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
 
       {open && (
         <div style={{ borderTop: "1px solid #F3F4F6", padding: "12px 16px", display: "flex", flexDirection: "column", gap: "8px" }}>
+          {/* Column legend */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingBottom: "6px", borderBottom: "1px solid #F3F4F6" }}>
+            <span style={{ width: "8px", flexShrink: 0 }} />
+            <span style={{ fontSize: "10px", color: "#9CA3AF", flex: 1, fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Action</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Signal type</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "110px", textAlign: "right", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Policy support</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "56px", textAlign: "right", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Strength</span>
+          </div>
           {plan.actions.map(a => {
             const meta = ACTION_NAMES[a.id];
             if (!meta) return null;
             const col = STRENGTH_COLOR[a.strength];
             const ps  = perActionScores[a.id];
+            const pct = ps ? Math.round(ps.policyScore * 100) : 0;
             return (
               <div key={a.id} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: col, flexShrink: 0 }} />
                 <span style={{ fontSize: "12px", color: "#374151", flex: 1, lineHeight: "1.4" }}>{meta.name}</span>
-                <span style={{ fontSize: "11px", color: "#9CA3AF", flexShrink: 0 }}>{TYPE_LABEL[a.signalType]}</span>
-                {ps && (
-                  <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", flexShrink: 0, minWidth: "38px", textAlign: "right" }}>
-                    {ps.policyScore.toFixed(2)}
-                  </span>
+                <span style={{ fontSize: "11px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px" }}>{TYPE_LABEL[a.signalType]}</span>
+                {ps ? (
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0, minWidth: "110px", justifyContent: "flex-end" }}>
+                    <div style={{ width: "48px", height: "5px", background: "#F3F4F6", borderRadius: "3px", overflow: "hidden" }}>
+                      <div style={{ width: `${pct}%`, height: "100%", background: col, borderRadius: "3px" }} />
+                    </div>
+                    <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", minWidth: "30px", textAlign: "right" }}>{pct}%</span>
+                  </div>
+                ) : (
+                  <span style={{ flexShrink: 0, minWidth: "110px" }} />
                 )}
                 <span style={{ fontSize: "11px", fontWeight: "600", color: col, flexShrink: 0, minWidth: "56px", textAlign: "right" }}>
                   {a.strength === "high" ? "Strong" : a.strength === "medium" ? "Moderate" : "Weak"}
@@ -369,6 +385,9 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
               </div>
             );
           })}
+          <div style={{ marginTop: "4px", fontSize: "10px", color: "#C0C0C0", paddingTop: "6px", borderTop: "1px solid #F9F9F9" }}>
+            Policy support score: how well this plan's provisions explicitly cover the action (0% = no coverage · 100% = full explicit coverage)
+          </div>
         </div>
       )}
     </div>
