@@ -227,7 +227,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                   {oppCount} opportunities
                 </span>
                 <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                  MEED+ IMPACT: shapes 20% of ranking
+                  MEED+ IMPACT: 50% of feasibility score · feasibility shapes 23% of ranking
                 </span>
               </div>
             </div>
@@ -427,10 +427,11 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
         }}>
           <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
           <span>
-            <strong>How MEED+ uses this data:</strong> Socioeconomic indicators adjust action scores to
-            account for feasibility constraints (e.g. low income limits capital-intensive actions) and
-            amplify co-benefits (e.g. green jobs matter more where unemployment is high).
-            These factors shape approximately 20% of the final ranking.
+            <strong>How MEED+ uses this data:</strong> Socioeconomic indicators make up 50% of the
+            feasibility score, which in turn shapes 23% of the final action ranking by default.
+            They adjust scores to account for feasibility constraints (e.g. low income limits
+            capital-intensive actions) and amplify co-benefits (e.g. green jobs matter more
+            where unemployment is high).
           </span>
         </div>
 
