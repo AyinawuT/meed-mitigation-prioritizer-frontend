@@ -86,18 +86,34 @@ function buildRequest(locode: string) {
   let sectors: string[] = [];
   let strategicPriorities = "";
   let excludeText = "";
+  let savedWeights: { impact: number; alignment: number; feasibility: number } | undefined;
   try {
     const raw = localStorage.getItem(storageKey);
     if (raw) {
-      const saved = JSON.parse(raw) as { sectors: string[]; strategicPriorities?: string; excludeText?: string };
+      const saved = JSON.parse(raw) as {
+        sectors: string[];
+        strategicPriorities?: string;
+        excludeText?: string;
+        weights?: { impact: number; alignment: number; feasibility: number };
+      };
       sectors = saved.sectors ?? [];
       strategicPriorities = saved.strategicPriorities ?? "";
       excludeText = saved.excludeText ?? "";
+      savedWeights = saved.weights;
     }
   } catch {}
 
   // Map display names → pipeline keys
   const pipelineSectors = sectors.flatMap(s => SECTOR_NAME_MAP[s] ?? [s.toLowerCase()]);
+
+  // Convert integer % weights → decimal fractions; fall back to spec defaults
+  const weightsOverride = savedWeights
+    ? {
+        impact:      savedWeights.impact      / 100,
+        alignment:   savedWeights.alignment   / 100,
+        feasibility: savedWeights.feasibility / 100,
+      }
+    : { impact: 0.55, alignment: 0.22, feasibility: 0.23 };
 
   // Use mock GPC emissions data (confirmed by user in EmissionsReview step)
   const mockCity = (mockRequest as { requestData: { cityDataList: Array<{ cityEmissionsData: unknown }> } })
@@ -108,7 +124,7 @@ function buildRequest(locode: string) {
     cityStrategicPreferenceSectors: pipelineSectors,
     cityStrategicPreferenceOther: strategicPriorities,
     excludedActionsFreeText: excludeText,
-    weightsOverride: { impact: 0.55, alignment: 0.22, feasibility: 0.23 },
+    weightsOverride,
     cityEmissionsData: mockCity.cityEmissionsData as Parameters<typeof runPipeline>[0]["cityEmissionsData"],
     topN: 20,
   };
