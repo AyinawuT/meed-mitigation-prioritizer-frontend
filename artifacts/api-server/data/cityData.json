@@ -37,7 +37,7 @@
     "electricity_access": {
       "attribute_value": 100.0,
       "attribute_units": "percent",
-      "attribute_category": "very low"
+      "attribute_category": "very high"
     },
     "industry_construction_employment": {
       "attribute_value": 22.79,

@@ -323,10 +323,14 @@ function scoreFeasibility(
     let totalWeight = 0;
 
     for (const rule of indicators) {
+      // Always count the weight in the denominator, even if city data is missing
+      // (matches reference pipeline: missing indicator contributes 0 but dilutes the average)
+      totalWeight += rule.weight;
+
       // Remap action key → city key
       const cityKey = INDICATOR_KEY_MAP[rule.indicator_key] ?? rule.indicator_key;
       const cityAttr = cityIndicators[cityKey];
-      if (!cityAttr) continue;
+      if (!cityAttr) continue; // 0 contribution to numerator, weight already counted above
 
       const bucket = normalizeBucket(cityAttr.attribute_category);
       let bucketScore = BUCKET_SCORE[bucket] ?? 0;
@@ -336,7 +340,6 @@ function scoreFeasibility(
       }
 
       weightedSum += bucketScore * rule.weight;
-      totalWeight += rule.weight;
     }
 
     if (totalWeight > 0) {
