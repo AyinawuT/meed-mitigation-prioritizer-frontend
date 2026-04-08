@@ -4,6 +4,7 @@ import { Landing } from "@/pages/Landing";
 import { CityProfile } from "@/pages/CityProfile";
 import { EmissionsReview } from "@/pages/EmissionsReview";
 import { SocioeconomicContext } from "@/pages/SocioeconomicContext";
+import { RegulationsLaws } from "@/pages/RegulationsLaws";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/city/:locode" component={CityProfile} />
       <Route path="/city/:locode/emissions" component={EmissionsReview} />
       <Route path="/city/:locode/socioeconomic" component={SocioeconomicContext} />
+      <Route path="/city/:locode/regulations" component={RegulationsLaws} />
       <Route component={NotFound} />
     </Switch>
   );
