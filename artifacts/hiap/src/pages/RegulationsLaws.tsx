@@ -180,9 +180,12 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
               <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
                 Regulations & Laws
               </h1>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
                 MEED+ has checked each candidate action against Chilean municipal law. Actions that fail a
                 mandatory or required legal check are excluded from the ranking unless you override them.
+              </p>
+              <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
+                MEED+ FEASIBILITY: Regulations and laws shapes 50% of feasibility score · Feasibility shapes 23% of ranking
               </p>
             </div>
 
