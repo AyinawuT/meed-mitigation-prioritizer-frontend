@@ -11,15 +11,11 @@ const CANDIDATE_ACTION_COUNT = new Set<string>(
   policyPlansData.plans.flatMap(p => p.actions.map((a: { id: string }) => a.id))
 ).size;
 
-// ── Compute pilot data availability from user-entered step progress ──────────
-//  Impact      = emissions data + implementation timeline (strategic)
-//  Alignment   = policy alignment + sector preferences & city priorities (strategic)
-//  Feasibility = regulations & laws + socioeconomic context
-//
-//  stepScore: not visited → 0 | partial → 0.5 | complete → 1.0
-//  dim score = average of its step scores
-//  dots: ≥0.9 → 3 (Excellent) | ≥0.4 → 2 (Good) | >0 → 1 (Fair) | 0 → 0 (No data)
+// ── Default scoring weights ──────────────────────────────────────────────────
+const DEFAULT_WEIGHTS = { impact: 55, alignment: 22, feasibility: 23 };
+interface WeightState { impact: number; alignment: number; feasibility: number }
 
+// ── Compute pilot data availability from user-entered step progress ──────────
 function stepScore(prog: StepProgress | undefined): number {
   if (!prog?.visited || (prog.progress ?? 0) === 0) return 0;
   return (prog.progress ?? 0) >= 100 ? 1.0 : 0.5;
@@ -40,9 +36,9 @@ function computePilotAvailability(progMap: Record<string, StepProgress>) {
   const po  = stepScore(progMap["policy"]);
 
   return {
-    impact:      dimDots((em + st) / 2),      // emissions + strategic (timeline)
-    alignment:   dimDots((po + st) / 2),      // policy alignment + strategic (sectors/priorities)
-    feasibility: dimDots((re + so) / 2),      // regulations + socioeconomic
+    impact:      dimDots((em + st) / 2),
+    alignment:   dimDots((po + st) / 2),
+    feasibility: dimDots((re + so) / 2),
     actionCount: CANDIDATE_ACTION_COUNT,
   };
 }
@@ -120,13 +116,63 @@ export function PreflightCheck({ params }: Props) {
     c => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
+  const strategicKey = `hiap:${locode}:strategic:form`;
+
   const [progMap, setProgMap] = useState<Record<string, StepProgress>>({});
+  const [weights, setWeights] = useState<WeightState>(() => {
+    try {
+      const raw = localStorage.getItem(strategicKey);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed.weights) return parsed.weights as WeightState;
+      }
+    } catch {}
+    return { ...DEFAULT_WEIGHTS };
+  });
 
   useEffect(() => {
     const map: Record<string, StepProgress> = {};
     STEPS.forEach(s => { map[s.key] = getStepProgress(locode, s.key); });
     setProgMap(map);
   }, [locode]);
+
+  function saveWeights(w: WeightState) {
+    try {
+      const existing = JSON.parse(localStorage.getItem(strategicKey) ?? "{}");
+      localStorage.setItem(strategicKey, JSON.stringify({ ...existing, weights: w }));
+    } catch {}
+  }
+
+  function handleWeightChange(key: keyof WeightState, rawVal: number) {
+    const newVal = Math.min(90, Math.max(5, Math.round(rawVal)));
+    const others = (["impact", "alignment", "feasibility"] as Array<keyof WeightState>).filter(k => k !== key);
+    const remaining = 100 - newVal;
+    const currentOtherSum = weights[others[0]] + weights[others[1]];
+
+    let r0: number, r1: number;
+    if (currentOtherSum === 0) {
+      r0 = Math.floor(remaining / 2);
+      r1 = remaining - r0;
+    } else {
+      r0 = Math.round(remaining * weights[others[0]] / currentOtherSum);
+      r0 = Math.max(5, Math.min(r0, remaining - 5));
+      r1 = remaining - r0;
+    }
+
+    const next = { ...weights, [key]: newVal, [others[0]]: r0, [others[1]]: r1 };
+    setWeights(next);
+    saveWeights(next);
+  }
+
+  function resetWeights() {
+    const next = { ...DEFAULT_WEIGHTS };
+    setWeights(next);
+    saveWeights(next);
+  }
+
+  const isCustomWeights = weights.impact !== DEFAULT_WEIGHTS.impact ||
+    weights.alignment !== DEFAULT_WEIGHTS.alignment ||
+    weights.feasibility !== DEFAULT_WEIGHTS.feasibility;
 
   if (!city) {
     return (
@@ -145,12 +191,10 @@ export function PreflightCheck({ params }: Props) {
   const pilot = computePilotAvailability(progMap);
 
   const completeCount = STEPS.filter(s => !s.optional && getStatus(s, progMap[s.key] ?? { visited: false }) === "COMPLETE").length;
-  const canGenerate = true; // always enabled for pilot — mock data covers all steps
 
-  // Strategic sectors from form storage
   let strategicDetail = progMap["strategic"]?.sub ?? "";
   try {
-    const raw = localStorage.getItem(`hiap:${locode}:strategic:form`);
+    const raw = localStorage.getItem(strategicKey);
     if (raw) {
       const form = JSON.parse(raw);
       if (form.sectors?.length) strategicDetail = form.sectors.join(", ");
@@ -241,10 +285,8 @@ export function PreflightCheck({ params }: Props) {
             <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>Model confidence</h2>
 
-              {/* Bar */}
               <div style={{ position: "relative", marginBottom: "8px" }}>
                 <div style={{ height: "8px", borderRadius: "5px", background: "linear-gradient(to right, #F23D33 0%, #F9A200 40%, #16A34A 100%)", marginBottom: "4px" }} />
-                {/* Pointer */}
                 <div style={{ position: "absolute", top: "-3px", left: `${confidence}%`, transform: "translateX(-50%)" }}>
                   <div style={{ width: "14px", height: "14px", borderRadius: "50%", background: confColor, border: "2px solid white", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
                 </div>
@@ -255,13 +297,11 @@ export function PreflightCheck({ params }: Props) {
                 </div>
               </div>
 
-              {/* Score + label */}
               <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginTop: "12px" }}>
                 <span style={{ fontSize: "36px", fontWeight: "700", color: confColor, lineHeight: "1", flexShrink: 0 }}>{confidence}%</span>
                 <span style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", paddingTop: "4px" }}>{confLabel}</span>
               </div>
 
-              {/* Hint */}
               {confHint && (
                 <div style={{ marginTop: "12px", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "7px", padding: "10px 12px", fontSize: "12px", color: "#B45309", display: "flex", gap: "6px", alignItems: "flex-start" }}>
                   <span style={{ flexShrink: 0 }}>⚠</span>
@@ -280,8 +320,80 @@ export function PreflightCheck({ params }: Props) {
           </div>
         </div>
 
+        {/* ── Scoring Weights ── */}
+        <div style={{ marginTop: "20px", background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "22px 24px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+            <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: 0 }}>Scoring Weights</h2>
+            {isCustomWeights && (
+              <span style={{ fontSize: "11px", color: "#F59E0B", fontWeight: "600", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "5px", padding: "2px 8px" }}>
+                Custom weights active
+              </span>
+            )}
+            <span style={{ marginLeft: "auto", fontSize: "10px", background: "#F0F9FF", color: "#0369A1", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em" }}>
+              OPTIONAL
+            </span>
+          </div>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 4px" }}>
+            Adjust how much each pillar contributes to the final ranking. Moving one slider redistributes the remainder proportionally across the other two.
+          </p>
+          <p style={{ fontSize: "12px", color: "#9CA3AF", margin: "0 0 20px" }}>
+            Default weights follow the MEED+ methodology: Impact {DEFAULT_WEIGHTS.impact}% · Alignment {DEFAULT_WEIGHTS.alignment}% · Feasibility {DEFAULT_WEIGHTS.feasibility}%
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "24px" }}>
+            <WeightSlider
+              label="Impact"
+              description="Emissions reduction potential & timeline"
+              value={weights.impact}
+              defaultValue={DEFAULT_WEIGHTS.impact}
+              color="#001EA7"
+              onChange={(v) => handleWeightChange("impact", v)}
+            />
+            <WeightSlider
+              label="Alignment"
+              description="Policy support, sectors & co-benefits"
+              value={weights.alignment}
+              defaultValue={DEFAULT_WEIGHTS.alignment}
+              color="#16A34A"
+              onChange={(v) => handleWeightChange("alignment", v)}
+            />
+            <WeightSlider
+              label="Feasibility"
+              description="Legal environment & socioeconomic fit"
+              value={weights.feasibility}
+              defaultValue={DEFAULT_WEIGHTS.feasibility}
+              color="#F59E0B"
+              onChange={(v) => handleWeightChange("feasibility", v)}
+            />
+          </div>
+
+          <div style={{ marginTop: "16px", display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{
+              fontSize: "12px", fontWeight: "700", color: "#16A34A",
+              background: "#F0FDF4", border: "1px solid #BBF7D0",
+              borderRadius: "6px", padding: "4px 12px",
+            }}>
+              Total: {weights.impact + weights.alignment + weights.feasibility}%
+            </div>
+            {isCustomWeights && (
+              <button
+                onClick={resetWeights}
+                style={{
+                  fontSize: "12px", color: "#6B7280", background: "none",
+                  border: "1px solid #E5E7EB", borderRadius: "6px",
+                  padding: "4px 12px", cursor: "pointer",
+                }}
+                onMouseOver={(e) => { (e.target as HTMLElement).style.borderColor = "#9CA3AF"; }}
+                onMouseOut={(e) => { (e.target as HTMLElement).style.borderColor = "#E5E7EB"; }}
+              >
+                Reset to defaults
+              </button>
+            )}
+          </div>
+        </div>
+
         {/* ── Generate CTA ── */}
-        <div style={{ marginTop: "24px" }}>
+        <div style={{ marginTop: "20px" }}>
           {completeCount === 0 && (
             <div style={{ background: "#EEF2FF", border: "1px solid #C7D2FE", borderRadius: "8px", padding: "10px 16px", fontSize: "12px", color: "#4338CA", marginBottom: "12px", display: "flex", gap: "6px" }}>
               <span>ℹ</span>
@@ -309,6 +421,87 @@ export function PreflightCheck({ params }: Props) {
     </div>
   );
 }
+
+// ─── Weight Slider ─────────────────────────────────────────────────────────────
+
+interface WeightSliderProps {
+  label: string;
+  description: string;
+  value: number;
+  defaultValue: number;
+  color: string;
+  onChange: (v: number) => void;
+}
+
+function WeightSlider({ label, description, value, defaultValue, color, onChange }: WeightSliderProps) {
+  const isDefault = value === defaultValue;
+  return (
+    <div>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "6px" }}>
+        <div>
+          <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{label}</span>
+          <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px" }}>{description}</div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0, marginLeft: "8px" }}>
+          {!isDefault && (
+            <span style={{ fontSize: "11px", color: "#9CA3AF", textDecoration: "line-through" }}>{defaultValue}%</span>
+          )}
+          <span style={{ fontSize: "16px", fontWeight: "700", color: isDefault ? "#6B7280" : color }}>
+            {value}%
+          </span>
+        </div>
+      </div>
+
+      <div style={{ position: "relative", height: "28px", display: "flex", alignItems: "center" }}>
+        {/* Default tick */}
+        <div style={{
+          position: "absolute",
+          left: `${defaultValue}%`,
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "2px", height: "14px",
+          background: "#D1D5DB", borderRadius: "1px",
+          pointerEvents: "none", zIndex: 1,
+        }} />
+        <input
+          type="range"
+          min={5}
+          max={90}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          style={{
+            width: "100%", height: "6px", borderRadius: "3px",
+            outline: "none", cursor: "pointer", appearance: "none",
+            background: `linear-gradient(to right, ${color} 0%, ${color} ${value}%, #E5E7EB ${value}%, #E5E7EB 100%)`,
+            position: "relative", zIndex: 2,
+          }}
+        />
+        <style>{`
+          input[type=range]::-webkit-slider-thumb {
+            appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: white; border: 2.5px solid ${color};
+            cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+          }
+          input[type=range]::-moz-range-thumb {
+            width: 18px; height: 18px; border-radius: 50%;
+            background: white; border: 2.5px solid ${color};
+            cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+          }
+        `}</style>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "2px" }}>
+        <span style={{ fontSize: "10px", color: "#D1D5DB" }}>5%</span>
+        <span style={{ fontSize: "10px", color: "#9CA3AF" }}>
+          Default: {defaultValue}%{!isDefault && <span style={{ color, marginLeft: "4px" }}>· adjusted</span>}
+        </span>
+        <span style={{ fontSize: "10px", color: "#D1D5DB" }}>90%</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── DataRow ───────────────────────────────────────────────────────────────────
 
 function DataRow({ label, dots, total, ratingLabel, color }: {
   label: string; dots: number; total: number; ratingLabel: string; color: string;
