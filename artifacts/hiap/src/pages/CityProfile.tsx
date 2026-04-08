@@ -319,7 +319,7 @@ export function CityProfile({ params }: CityProfileProps) {
             {completeCount === 0 && progressCount === 0 && notStarted === 0 && "No sections started yet"}
           </span>
           {!canGenerate && (
-            <span style={{ fontSize: "13px", color: "#C05621", fontWeight: "500" }}>
+            <span style={{ fontSize: "13px", color: "#F9A200", fontWeight: "500" }}>
               {3 - completeCount} more section{3 - completeCount !== 1 ? "s" : ""} needed to unlock recommendations →
             </span>
           )}
