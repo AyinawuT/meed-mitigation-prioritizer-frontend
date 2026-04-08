@@ -184,9 +184,9 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
     setEditingIdx(null);
   }
 
-  function saveEdit(i: number) {
+  function commitEdit(i: number): boolean {
     const parsed = parseFloat(draftEmissions.replace(/,/g, ""));
-    if (isNaN(parsed) || parsed < 0) return;
+    if (isNaN(parsed) || parsed < 0) return false;
     const updated = sectors.map((row, idx) =>
       idx === i
         ? { ...row, emissions: Math.round(parsed), source: draftSource.trim() || row.source, status: "Confirmed" as const }
@@ -195,6 +195,11 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
     setSectors(recalcShares(updated));
     setEditingIdx(null);
     setHasEdits(true);
+    return true;
+  }
+
+  function saveEdit(i: number) {
+    commitEdit(i);
   }
 
   function handleDiscard() {
@@ -207,6 +212,16 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   function handleTabChange(tab: Tab) {
     setActiveTab(tab);
     if (tab === "review") setEditingIdx(null);
+  }
+
+  function handleSaveAndContinue() {
+    if (editingIdx !== null) {
+      const saved = commitEdit(editingIdx);
+      if (!saved) setEditingIdx(null);
+    }
+    setHasEdits(false);
+    setEditingIdx(null);
+    setActiveTab("review");
   }
 
   const inputStyle: React.CSSProperties = {
@@ -541,12 +556,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
               </button>
             )}
             <button
-              onClick={() => {
-                if (activeTab === "adjust") {
-                  setHasEdits(false);
-                  setActiveTab("review");
-                }
-              }}
+              onClick={handleSaveAndContinue}
               style={{
                 background: "#16A34A",
                 color: "white",
