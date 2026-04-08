@@ -181,7 +181,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                 Regulations & Laws
               </h1>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-                MEED+ has checked each candidate action against Chilean municipal law. Actions that fail a
+                MEED+ HIAP has checked each candidate action against Chilean municipal law. Actions that fail a
                 mandatory or required legal check are excluded from the ranking unless you override them.
               </p>
               <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
