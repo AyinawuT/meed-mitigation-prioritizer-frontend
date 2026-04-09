@@ -1,16 +1,25 @@
-import { createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 
 export type Lang = "en" | "es";
 
-interface LangCtx {
-  lang: Lang;
-  setLang: (l: Lang) => void;
+// ─── Module-level store (no React context) ─────────────────────────────────────
+// A single source of truth; every useLanguage() subscriber re-renders when it changes.
+
+function getStored(): Lang {
+  try { return (localStorage.getItem("hiap:lang") as Lang) || "en"; } catch { return "en"; }
 }
 
-export const Ctx = createContext<LangCtx>({
-  lang: "en",
-  setLang: () => {},
-});
+let _lang: Lang = getStored();
+const _listeners = new Set<() => void>();
+
+function _setLang(l: Lang) {
+  if (_lang === l) return;
+  _lang = l;
+  try { localStorage.setItem("hiap:lang", l); } catch {}
+  _listeners.forEach((fn) => fn());
+}
+
+// ─── Translations ──────────────────────────────────────────────────────────────
 
 const ES: Record<string, string> = {
   // ── Navbar ──────────────────────────────────────────────────────────
@@ -65,6 +74,7 @@ const ES: Record<string, string> = {
   "Total land area": "Área total",
   "Population density": "Densidad poblacional",
   "Open {name} City Profile →": "Abrir perfil de {name} →",
+  "Inventory year {year}": "Año de inventario {year}",
 
   // ── Landing — cities grid ─────────────────────────────────────────────
   "Cities": "Ciudades",
@@ -101,7 +111,6 @@ const ES: Record<string, string> = {
   "Land area": "Área",
   "Pop. density": "Densidad pobl.",
   "inhabitants per km²": "habitantes por km²",
-  "Inventory year {year}": "Año de inventario {year}",
 
   // ── CityProfile — section titles & descs ─────────────────────────────
   "Emissions Data": "Datos de Emisiones",
@@ -170,8 +179,18 @@ const ES: Record<string, string> = {
   "HOW MEED+ HIAP WORKS": "CÓMO FUNCIONA MEED+ HIAP",
 };
 
+// ─── Hook ──────────────────────────────────────────────────────────────────────
+
 export function useLanguage() {
-  const { lang, setLang } = useContext(Ctx);
+  const [, forceUpdate] = useState(0);
+
+  useEffect(() => {
+    const notify = () => forceUpdate((n) => n + 1);
+    _listeners.add(notify);
+    return () => { _listeners.delete(notify); };
+  }, []);
+
+  const lang = _lang;
 
   function t(en: string, vars?: Record<string, string>): string {
     let text = lang === "es" ? (ES[en] ?? en) : en;
@@ -183,5 +202,5 @@ export function useLanguage() {
     return text;
   }
 
-  return { lang, setLang, t };
+  return { lang, setLang: _setLang, t };
 }
