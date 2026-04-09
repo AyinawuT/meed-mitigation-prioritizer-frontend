@@ -11,6 +11,7 @@ import { PreflightCheck } from "@/pages/PreflightCheck";
 import { Processing } from "@/pages/Processing";
 import { Recommendations } from "@/pages/Recommendations";
 import { Methodology } from "@/pages/Methodology";
+import { About } from "@/pages/About";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/city/:locode/processing" component={Processing} />
       <Route path="/city/:locode/recommendations" component={Recommendations} />
       <Route path="/methodology" component={Methodology} />
+      <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
   );
