@@ -308,7 +308,7 @@ function scoreImpact(
   action: ActionRecord,
   cityEmissions: Record<string, number>,
   totalEmissions: number
-): { impactScore: number; reductionShare: number; timelineScore: number; matchedEmissions: number } {
+): { impactScore: number; reductionShare: number; timelineScore: number; matchedEmissions: number; impactText: string } {
   const gpcRefs = action.emissions?.gpc_reference_number ?? [];
   const impactText = normalizeImpactText(action.emissions?.impact_text ?? "very_low");
   const multiplier = IMPACT_MULTIPLIER[impactText] ?? 0.2;
@@ -327,7 +327,7 @@ function scoreImpact(
 
   const impactScore = 0.8 * reductionShare + 0.2 * tlScore;
 
-  return { impactScore, reductionShare, timelineScore: tlScore, matchedEmissions };
+  return { impactScore, reductionShare, timelineScore: tlScore, matchedEmissions, impactText };
 }
 
 // ─── Step 4: Alignment scoring ────────────────────────────────────────────────
@@ -411,7 +411,126 @@ function scoreFeasibility(
   return { feasibilityScore, softLegalComponent, socioeconomicComponent };
 }
 
-// ─── Step 6: Final score & rank ───────────────────────────────────────────────
+// ─── Step 6: Narrative explanation ────────────────────────────────────────────
+
+function gpcSectorLabel(gpcRefs: string[]): string {
+  if (!gpcRefs.length) return "cross-sector";
+  const prefixes = [...new Set(gpcRefs.map(r => r.split(".")[0]))];
+  if (prefixes.length > 1) return "multiple emission sectors";
+  switch (prefixes[0]) {
+    case "I":   return "stationary energy";
+    case "II":  return "transportation";
+    case "III": return "waste";
+    case "IV":  return "IPPU (industrial processes)";
+    case "V":   return "AFOLU (land use and forestry)";
+    default:    return "cross-sector";
+  }
+}
+
+function buildExplanation(p: {
+  rank: number;
+  gpcRefs: string[];
+  impactText: string;
+  impactScore: number;
+  reductionShare: number;
+  timelineScore: number;
+  alignmentScore: number;
+  policyComponent: number;
+  sectorComponent: number;
+  feasibilityScore: number;
+  softLegalComponent: number;
+  socioeconomicComponent: number;
+  finalScore: number;
+  normWeights: { impact: number; alignment: number; feasibility: number };
+}): string {
+  const {
+    rank, gpcRefs, impactText, impactScore, reductionShare, timelineScore,
+    alignmentScore, policyComponent, sectorComponent,
+    feasibilityScore, softLegalComponent, socioeconomicComponent,
+    normWeights,
+  } = p;
+
+  const sector = gpcSectorLabel(gpcRefs);
+  const reductionPct = (reductionShare * 100).toFixed(1);
+  const hasEmissions = reductionShare > 0;
+
+  // Impact magnitude words
+  const magnitudeWord = {
+    very_low: "very low", low: "low", medium: "medium", high: "high", very_high: "very high",
+  }[impactText] ?? "moderate";
+
+  // Timeline phrase
+  const timelinePhrase =
+    timelineScore === 1.0 ? "fast delivery timeline (< 5 years)" :
+    timelineScore === 0.5 ? "medium delivery timeline (5–10 years)" :
+    "long delivery timeline (> 10 years)";
+
+  // ── Sentence 1: Impact ────────────────────────────────────────────────────
+  let s1: string;
+  if (hasEmissions) {
+    s1 = `This action ranked #${rank} because it addresses ${reductionPct}% of the city's ${sector} emissions`;
+    if (reductionShare >= 0.15) s1 += " — one of the largest addressable sources in the inventory";
+    s1 += `, with a ${magnitudeWord} impact multiplier and ${timelinePhrase}.`;
+  } else {
+    s1 = `This action ranked #${rank} as a cross-sector measure with a ${magnitudeWord} impact potential and ${timelinePhrase}.`;
+  }
+
+  // ── Sentence 2: Alignment ─────────────────────────────────────────────────
+  const policyWord =
+    policyComponent >= 0.75 ? "strong" :
+    policyComponent >= 0.5  ? "moderate" :
+    policyComponent >= 0.25 ? "limited" : "weak";
+
+  let s2 = `Policy backing is ${policyWord} (${policyComponent.toFixed(2)})`;
+  if (sectorComponent === 1.0) s2 += ", and it aligns with the city's selected priority sectors";
+  else if (sectorComponent === 0.0) s2 += ", though it falls outside the city's selected priority sectors";
+  s2 += ".";
+
+  // ── Sentence 3: Feasibility ───────────────────────────────────────────────
+  const feasWord =
+    feasibilityScore >= 0.65 ? "strong" :
+    feasibilityScore >= 0.45 ? "moderate" :
+    feasibilityScore >= 0.25 ? "low" : "very low";
+
+  const legalPhrase =
+    softLegalComponent === 0      ? "no soft legal requirements on record" :
+    softLegalComponent >= 0.75    ? "strong soft-legal coverage" :
+    softLegalComponent >= 0.5     ? "partial soft-legal coverage" :
+                                    "sparse soft-legal coverage";
+
+  const socioPhrase =
+    socioeconomicComponent >= 0.65 ? "favorable socioeconomic conditions" :
+    socioeconomicComponent >= 0.45 ? "mixed socioeconomic conditions" :
+                                     "challenging socioeconomic conditions for this action type";
+
+  const s3 = `Feasibility is ${feasWord} (${feasibilityScore.toFixed(2)}) due to ${legalPhrase} and ${socioPhrase}.`;
+
+  // ── Sentence 4: Trade-off ─────────────────────────────────────────────────
+  const weighted = [
+    { name: "impact",       val: impactScore,      w: normWeights.impact },
+    { name: "alignment",    val: alignmentScore,   w: normWeights.alignment },
+    { name: "feasibility",  val: feasibilityScore, w: normWeights.feasibility },
+  ];
+  const best  = weighted.reduce((a, b) => a.val * a.w > b.val * b.w ? a : b);
+  const worst = weighted.reduce((a, b) => a.val * a.w < b.val * b.w ? a : b);
+
+  const nameLabel: Record<string, string> = {
+    impact: "impact", alignment: "alignment", feasibility: "feasibility",
+  };
+
+  let s4 = "";
+  if (best.name !== worst.name) {
+    const bestPts  = (best.val  * best.w  * 100).toFixed(0);
+    const worstPts = (worst.val * worst.w * 100).toFixed(0);
+    s4 = `At the current weight settings, the ${nameLabel[best.name]} advantage (${bestPts} pts) is ` +
+         `${parseInt(bestPts) > parseInt(worstPts) * 2 ? "large enough" : "sufficient"} ` +
+         `to overcome the lower ${nameLabel[worst.name]} contribution (${worstPts} pts).`;
+  }
+
+  return [s1, s2, s3, s4].filter(Boolean).join(" ");
+}
+
+// ─── Step 7: Final score & rank ───────────────────────────────────────────────
 
 function priorityLabel(
   rank: number,
@@ -453,7 +572,7 @@ export function runPipeline(
   const topN = req.topN ?? 20;
 
   const scored = valid.map((action) => {
-    const { impactScore, reductionShare, timelineScore, matchedEmissions } =
+    const { impactScore, reductionShare, timelineScore, matchedEmissions, impactText } =
       scoreImpact(action, byRef, total);
     const { alignmentScore, policyComponent, sectorComponent, otherComponent } =
       scoreAlignment(action, sectors, coBenefitDimensions);
@@ -473,6 +592,7 @@ export function runPipeline(
       feasibilityScore,
       reductionShare,
       timelineScore,
+      impactText,
       policyComponent,
       sectorComponent,
       otherComponent,
@@ -498,6 +618,7 @@ export function runPipeline(
       feasibilityScore,
       reductionShare,
       timelineScore,
+      impactText,
       policyComponent,
       sectorComponent,
       otherComponent,
@@ -507,11 +628,22 @@ export function runPipeline(
       legalFlag,
     } = item;
 
-    const explanation =
-      `Ranked #${rank} with a final score of ${finalScore.toFixed(2)}. ` +
-      `Impact: ${impactScore.toFixed(2)} (reduction share: ${(reductionShare * 100).toFixed(1)}%). ` +
-      `Alignment: ${alignmentScore.toFixed(2)} (policy support: ${policyComponent.toFixed(2)}, sector match: ${sectorComponent === 1 ? "yes" : "no"}, strategic priorities match: ${otherComponent.toFixed(2)}). ` +
-      `Feasibility: ${feasibilityScore.toFixed(2)}.`;
+    const explanation = buildExplanation({
+      rank,
+      gpcRefs: action.emissions?.gpc_reference_number ?? [],
+      impactText,
+      impactScore,
+      reductionShare,
+      timelineScore,
+      alignmentScore,
+      policyComponent,
+      sectorComponent,
+      feasibilityScore,
+      softLegalComponent,
+      socioeconomicComponent,
+      finalScore,
+      normWeights,
+    });
 
     return {
       rank,
