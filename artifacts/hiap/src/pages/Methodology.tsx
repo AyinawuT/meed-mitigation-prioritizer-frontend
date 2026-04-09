@@ -166,7 +166,7 @@ export function Methodology() {
             The prioritisation methodology
           </h1>
           <p style={{ fontSize: "16px", color: "#4B5563", margin: 0, lineHeight: "1.7", maxWidth: "680px" }}>
-            HIAP ranks climate mitigation actions for your city using a three-pillar scoring model.
+            MEED+ HIAP ranks climate mitigation actions for your city using a three-pillar scoring model.
             Every score is traceable — you can see exactly which data inputs produced each number
             and why an action ranked where it did.
           </p>
@@ -470,7 +470,7 @@ export function Methodology() {
               B — City preference exclusions
             </div>
             <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
-              Cities can also instruct HIAP to remove specific types of actions based on political, operational, or
+              Cities can also instruct MEED+ HIAP to remove specific types of actions based on political, operational, or
               mandate-based decisions. Unlike the legal hard filter, this is a deliberate choice by the city — an excluded
               action may be perfectly legal and could score very highly if re-included.
             </p>

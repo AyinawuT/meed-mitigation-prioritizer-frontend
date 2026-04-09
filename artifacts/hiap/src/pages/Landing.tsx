@@ -64,7 +64,7 @@ export function Landing() {
                 Prioritise climate actions for your city
               </p>
               <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: "0" }}>
-                HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.
+                MEED+ HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.
               </p>
             </div>
 
@@ -312,7 +312,7 @@ export function Landing() {
         <div style={{ marginBottom: "40px" }}>
           <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>How it works</h2>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            HIAP guides you through four steps to generate a ranked action plan for your city.
+            MEED+ HIAP guides you through four steps to generate a ranked action plan for your city.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
             {HOW_STEPS.map((step) => (

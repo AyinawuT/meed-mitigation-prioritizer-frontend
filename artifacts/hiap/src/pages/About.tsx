@@ -21,7 +21,7 @@ export function About() {
             The MEED+ Chile project
           </h1>
           <p style={{ fontSize: "16px", color: "#4B5563", margin: 0, lineHeight: "1.7", maxWidth: "680px" }}>
-            HIAP is built through a partnership between the Open Earth Foundation and the Sustainability
+            MEED+ HIAP is built through a partnership between the Open Earth Foundation and the Sustainability
             Solutions Group, working together to equip Chilean cities with a rigorous, data-driven tool
             for climate mitigation action prioritisation.
           </p>
@@ -45,7 +45,7 @@ export function About() {
           <p style={{ fontSize: "15px", color: "#4B5563", margin: 0, lineHeight: "1.7" }}>
             The MEED+ Chile project brings together two organisations whose complementary expertise makes this
             possible. The Open Earth Foundation contributes the technical infrastructure and scoring methodology
-            behind HIAP. The Sustainability Solutions Group contributes deep knowledge of Chilean cities —
+            behind MEED+ HIAP. The Sustainability Solutions Group contributes deep knowledge of Chilean cities —
             their greenhouse gas inventories, legal frameworks, and policy landscape.
           </p>
         </div>
@@ -85,7 +85,7 @@ export function About() {
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
                 The Open Earth Foundation is a non-profit technology organisation focused on building open digital
                 infrastructure for climate action. Within the MEED+ Chile project, the Open Earth Foundation is
-                responsible for the design and development of HIAP — the High Impact Action Prioritiser.
+                responsible for the design and development of MEED+ HIAP — the High Impact Action Prioritiser.
               </p>
               <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.7" }}>
                 This includes the three-pillar scoring methodology (impact, alignment, feasibility), the pipeline
@@ -151,12 +151,12 @@ export function About() {
               {
                 step: "2",
                 title: "Open Earth runs the pipeline",
-                desc: "The Open Earth Foundation's HIAP pipeline processes the city data, scores each action across the three pillars, applies pre-scoring filters, and produces a ranked list of mitigation actions.",
+                desc: "The Open Earth Foundation's MEED+ HIAP pipeline processes the city data, scores each action across the three pillars, applies pre-scoring filters, and produces a ranked list of mitigation actions.",
               },
               {
                 step: "3",
                 title: "Cities act on results",
-                desc: "City planners use HIAP to review ranked actions, explore score breakdowns, adjust strategic weights, and identify the highest-impact actions to carry forward into planning and implementation.",
+                desc: "City planners use MEED+ HIAP to review ranked actions, explore score breakdowns, adjust strategic weights, and identify the highest-impact actions to carry forward into planning and implementation.",
               },
             ].map(({ step, title, desc }) => (
               <div key={step} style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "20px" }}>
@@ -188,7 +188,7 @@ export function About() {
           padding: "20px 24px",
         }}>
           <div style={{ fontSize: "14px", color: "#14532D", lineHeight: "1.7" }}>
-            HIAP is part of the MEED+ platform — a broader initiative by the Open Earth Foundation to support
+            MEED+ HIAP is part of a broader initiative by the Open Earth Foundation to support
             evidence-based climate action planning in cities. The MEED+ Chile project is a pilot that applies
             this approach specifically to the Chilean context, with the goal of expanding to further countries
             and municipalities.

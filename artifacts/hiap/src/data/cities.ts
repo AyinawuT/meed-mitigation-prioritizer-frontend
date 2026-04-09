@@ -204,7 +204,7 @@ export const HOW_STEPS = [
   {
     n: "3",
     title: "Generate recommendations",
-    desc: "Run HIAP's scoring pipeline across 155 mitigation actions ranked for your city.",
+    desc: "Run MEED+ HIAP's scoring pipeline across 155 mitigation actions ranked for your city.",
   },
   {
     n: "4",
