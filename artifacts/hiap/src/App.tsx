@@ -1,6 +1,6 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { LanguageProvider } from "@/lib/i18n";
+import { LanguageProvider } from "@/lib/LanguageProvider";
 import { Landing } from "@/pages/Landing";
 import { CityProfile } from "@/pages/CityProfile";
 import { EmissionsReview } from "@/pages/EmissionsReview";

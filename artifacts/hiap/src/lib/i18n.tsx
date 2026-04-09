@@ -1,17 +1,15 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext } from "react";
 
 export type Lang = "en" | "es";
 
 interface LangCtx {
   lang: Lang;
   setLang: (l: Lang) => void;
-  t: (en: string, vars?: Record<string, string>) => string;
 }
 
-const Ctx = createContext<LangCtx>({
+export const Ctx = createContext<LangCtx>({
   lang: "en",
   setLang: () => {},
-  t: (k) => k,
 });
 
 const ES: Record<string, string> = {
@@ -172,14 +170,8 @@ const ES: Record<string, string> = {
   "HOW MEED+ HIAP WORKS": "CÓMO FUNCIONA MEED+ HIAP",
 };
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const stored = typeof localStorage !== "undefined" ? localStorage.getItem("hiap:lang") : null;
-  const [lang, setLangState] = useState<Lang>((stored as Lang) ?? "en");
-
-  function setLang(l: Lang) {
-    setLangState(l);
-    try { localStorage.setItem("hiap:lang", l); } catch {}
-  }
+export function useLanguage() {
+  const { lang, setLang } = useContext(Ctx);
 
   function t(en: string, vars?: Record<string, string>): string {
     let text = lang === "es" ? (ES[en] ?? en) : en;
@@ -191,9 +183,5 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return text;
   }
 
-  return <Ctx.Provider value={{ lang, setLang, t }}>{children}</Ctx.Provider>;
-}
-
-export function useLanguage() {
-  return useContext(Ctx);
+  return { lang, setLang, t };
 }
