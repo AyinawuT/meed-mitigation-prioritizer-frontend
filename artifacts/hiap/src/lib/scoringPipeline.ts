@@ -520,11 +520,10 @@ function buildExplanation(p: {
 
   let s4 = "";
   if (best.name !== worst.name) {
-    const bestPts  = (best.val  * best.w  * 100).toFixed(0);
-    const worstPts = (worst.val * worst.w * 100).toFixed(0);
-    s4 = `At the current weight settings, the ${nameLabel[best.name]} advantage (${bestPts} pts) is ` +
-         `${parseInt(bestPts) > parseInt(worstPts) * 2 ? "large enough" : "sufficient"} ` +
-         `to overcome the lower ${nameLabel[worst.name]} contribution (${worstPts} pts).`;
+    const bestContrib  = best.val  * best.w;
+    const worstContrib = worst.val * worst.w;
+    const qualifier = bestContrib > worstContrib * 2 ? "large enough" : "sufficient";
+    s4 = `At the current weight settings, the ${nameLabel[best.name]} advantage is ${qualifier} to overcome the lower ${nameLabel[worst.name]} score.`;
   }
 
   return [s1, s2, s3, s4].filter(Boolean).join(" ");
