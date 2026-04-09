@@ -2,6 +2,17 @@ import { useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
+import { getStepProgress } from "@/lib/stepProgress";
+
+const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic", "policy"];
+
+function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED" {
+  const progresses = PROFILE_STEPS.map((s) => getStepProgress(locode, s));
+  const anyVisited = progresses.some((p) => p.visited);
+  if (!anyVisited) return "AVAILABLE";
+  const allComplete = progresses.every((p) => p.visited && (p.progress ?? 0) >= 100);
+  return allComplete ? "ONBOARDED" : "IN PROGRESS";
+}
 
 const QUICK_CITIES = ["Iquique", "Antofagasta", "Arica", "Alto Hospicio", "Taltal"];
 
@@ -193,18 +204,29 @@ export function Landing() {
               <span style={{ fontSize: "15px", fontWeight: "600", color: "#111827" }}>
                 {selectedCity.name}, {selectedCity.country}
               </span>
-              <span style={{
-                background: "#F0FDF4",
-                color: "#16A34A",
-                fontSize: "10px",
-                fontWeight: "600",
-                padding: "2px 8px",
-                borderRadius: "999px",
-                border: "1px solid #BBF7D0",
-                marginLeft: "4px",
-              }}>
-                ONBOARDED
-              </span>
+              {(() => {
+                const status = getCityStatus(selectedCity.locode);
+                const styles: Record<string, { bg: string; color: string; border: string }> = {
+                  "AVAILABLE":   { bg: "#EFF6FF", color: "#1D4ED8", border: "#BFDBFE" },
+                  "IN PROGRESS": { bg: "#FFF7ED", color: "#C05621", border: "#FED7AA" },
+                  "ONBOARDED":   { bg: "#F0FDF4", color: "#16A34A", border: "#BBF7D0" },
+                };
+                const s = styles[status];
+                return (
+                  <span style={{
+                    background: s.bg,
+                    color: s.color,
+                    fontSize: "10px",
+                    fontWeight: "600",
+                    padding: "2px 8px",
+                    borderRadius: "999px",
+                    border: `1px solid ${s.border}`,
+                    marginLeft: "4px",
+                  }}>
+                    {status}
+                  </span>
+                );
+              })()}
             </div>
 
             <div style={{ display: "flex", gap: "28px", alignItems: "flex-start" }}>
