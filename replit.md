@@ -44,6 +44,7 @@ Outer background: `#F5F5F7`.
 
 ### Routes
 `/` → `/city/:locode` → `/city/:locode/emissions` → `/city/:locode/socioeconomic` → `/city/:locode/regulations` → `/city/:locode/strategic` → `/city/:locode/policy` → `/city/:locode/preflight` → `/city/:locode/processing` → `/city/:locode/recommendations`
+- `/methodology` — full methodology page (accessible from Navbar "Methodology" link)
 
 ### Key Data Files (`artifacts/api-server/data/`)
 - `actions.json` — 155 actions (indexed 0–154), each with `actionId`, `actionName`, `actionCategory`, `emissions` (with `sector_number` I–V and `gpc_reference_number`), `socioeconomicIndicators`, `coBenefits`

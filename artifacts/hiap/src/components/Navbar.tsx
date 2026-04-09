@@ -1,8 +1,11 @@
+import { useLocation } from "wouter";
+
 interface NavbarProps {
   cityName?: string;
 }
 
 export function Navbar({ cityName }: NavbarProps) {
+  const [, navigate] = useLocation();
   return (
     <nav
       style={{
@@ -46,9 +49,12 @@ export function Navbar({ cityName }: NavbarProps) {
         <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
           Explore
         </a>
-        <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
-          Compare
-        </a>
+        <button
+          onClick={() => navigate("/methodology")}
+          style={{ background: "none", border: "none", padding: 0, color: "#93C5FD", fontSize: "13px", textDecoration: "none", cursor: "pointer" }}
+        >
+          Methodology
+        </button>
         <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
           Resources
         </a>
