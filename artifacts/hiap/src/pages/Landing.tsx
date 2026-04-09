@@ -394,14 +394,22 @@ export function Landing() {
           </div>
         </div>
 
-        {/* All onboarded cities */}
+        {/* All cities */}
         <div>
-          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>Onboarded cities</h2>
+          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>Cities</h2>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            {CITIES.length} cities across northern Chile with emissions inventories ready to prioritise.
+            {CITIES.length} cities across northern Chile. Open a city profile to begin.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
-            {CITIES.map((city) => (
+            {CITIES.map((city) => {
+              const status = getCityStatus(city.locode);
+              const badgeStyles: Record<string, { bg: string; color: string; border: string }> = {
+                "AVAILABLE":   { bg: "#EFF6FF", color: "#1D4ED8", border: "#BFDBFE" },
+                "IN PROGRESS": { bg: "#FFF7ED", color: "#C05621", border: "#FED7AA" },
+                "ONBOARDED":   { bg: "#F0FDF4", color: "#16A34A", border: "#BBF7D0" },
+              };
+              const bs = badgeStyles[status];
+              return (
               <button
                 key={city.locode}
                 onClick={() => { const slug = city.locode.replace(" ", "-"); navigate(`/city/${slug}`); }}
@@ -446,9 +454,22 @@ export function Landing() {
                   <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{city.name}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px" }}>{city.region}</div>
                 </div>
-                <div style={{ fontSize: "11px", color: "#9CA3AF", fontFamily: "monospace" }}>{city.locode}</div>
+                <span style={{
+                  background: bs.bg,
+                  color: bs.color,
+                  fontSize: "9px",
+                  fontWeight: "700",
+                  padding: "2px 6px",
+                  borderRadius: "999px",
+                  border: `1px solid ${bs.border}`,
+                  flexShrink: 0,
+                  letterSpacing: "0.02em",
+                }}>
+                  {status}
+                </span>
               </button>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
