@@ -49,9 +49,12 @@ export function Navbar({ cityName }: NavbarProps) {
         </span>
       </button>
       <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-        <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
-          Explore
-        </a>
+        <button
+          onClick={() => navigate("/")}
+          style={{ background: "none", border: "none", padding: 0, color: "#93C5FD", fontSize: "13px", textDecoration: "none", cursor: "pointer" }}
+        >
+          Dashboard
+        </button>
         <button
           onClick={() => navigate("/methodology")}
           style={{ background: "none", border: "none", padding: 0, color: "#93C5FD", fontSize: "13px", textDecoration: "none", cursor: "pointer" }}
