@@ -21,7 +21,10 @@ export function Navbar({ cityName }: NavbarProps) {
         zIndex: 50,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <button
+        onClick={() => navigate("/")}
+        style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", padding: 0, cursor: "pointer" }}
+      >
         <div
           style={{
             background: "#16A34A",
@@ -44,7 +47,7 @@ export function Navbar({ cityName }: NavbarProps) {
         <span style={{ color: "#93C5FD", fontSize: "12px", marginLeft: "4px" }}>
           · HIAP
         </span>
-      </div>
+      </button>
       <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
         <a href="#" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>
           Explore
