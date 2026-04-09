@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { useLanguage } from "@/lib/i18n";
 
 const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic", "policy"];
 
@@ -18,6 +19,7 @@ const QUICK_CITIES = ["Iquique", "Antofagasta", "Arica", "Alto Hospicio", "Talta
 
 export function Landing() {
   const [, navigate] = useLocation();
+  const { t } = useLanguage();
   const [searchVal, setSearchVal] = useState("");
   const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -72,10 +74,10 @@ export function Landing() {
             {/* Left: headline */}
             <div style={{ flex: "0 0 380px" }}>
               <p style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.3" }}>
-                Prioritise climate actions for your city
+                {t("Prioritise climate actions for your city")}
               </p>
               <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: "0" }}>
-                MEED+ HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.
+                {t("MEED+ HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.")}
               </p>
             </div>
 
@@ -93,7 +95,7 @@ export function Landing() {
                   onFocus={() => setShowDropdown(true)}
                   onBlur={handleBlur}
                   onKeyDown={handleKeyDown}
-                  placeholder="Search by city name (e.g. Iquique, Antofagasta, Arica)..."
+                  placeholder={t("Search by city name (e.g. Iquique, Antofagasta, Arica)...")}
                   style={{
                     width: "100%",
                     border: selectedCity ? "1.5px solid #001EA7" : "1px solid #E5E7EB",
@@ -223,7 +225,7 @@ export function Landing() {
                     border: `1px solid ${s.border}`,
                     marginLeft: "4px",
                   }}>
-                    {status}
+                    {t(status)}
                   </span>
                 );
               })()}
@@ -276,8 +278,7 @@ export function Landing() {
                   onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
                   onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
-                  <span>Open {selectedCity.name} City Profile</span>
-                  <span style={{ fontSize: "16px" }}>→</span>
+                  <span>{t("Open {name} City Profile →", { name: selectedCity.name })}</span>
                 </button>
               </div>
 
@@ -286,7 +287,7 @@ export function Landing() {
                 {[
                   {
                     icon: "↗",
-                    label: `Total emissions in ${selectedCity.emissionsYear}`,
+                    label: t("Inventory year {year}", { year: selectedCity.emissionsYear }),
                     value: selectedCity.emissions,
                     valueSize: "22px",
                     valueWeight: "700",
@@ -294,7 +295,7 @@ export function Landing() {
                   },
                   {
                     icon: "👥",
-                    label: "Total population",
+                    label: t("Total population"),
                     value: selectedCity.population,
                     valueSize: "16px",
                     valueWeight: "600",
@@ -302,7 +303,7 @@ export function Landing() {
                   },
                   {
                     icon: "⬜",
-                    label: "Total land area",
+                    label: t("Total land area"),
                     value: selectedCity.area,
                     valueSize: "16px",
                     valueWeight: "600",
@@ -310,7 +311,7 @@ export function Landing() {
                   },
                   {
                     icon: "📍",
-                    label: "Population density",
+                    label: t("Population density"),
                     value: selectedCity.populationDensity,
                     valueSize: "16px",
                     valueWeight: "600",
@@ -340,9 +341,9 @@ export function Landing() {
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 64px 60px" }}>
         {/* How it works */}
         <div style={{ marginBottom: "40px" }}>
-          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>How it works</h2>
+          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>{t("How it works")}</h2>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            MEED+ HIAP guides you through four steps to generate a ranked action plan for your city.
+            {t("MEED+ HIAP guides you through four steps to generate a ranked action plan for your city.")}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
             {HOW_STEPS.map((step) => (
@@ -386,9 +387,9 @@ export function Landing() {
                   {step.n}
                 </div>
                 <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827", marginBottom: "6px" }}>
-                  {step.title}
+                  {t(step.title)}
                 </div>
-                <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5" }}>{step.desc}</div>
+                <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5" }}>{t(step.desc)}</div>
               </div>
             ))}
           </div>
@@ -396,9 +397,9 @@ export function Landing() {
 
         {/* All cities */}
         <div>
-          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>Cities</h2>
+          <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>{t("Cities")}</h2>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            {CITIES.length} cities across northern Chile. Open a city profile to begin.
+            {t("{count} cities across northern Chile. Open a city profile to begin.", { count: String(CITIES.length) })}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
             {CITIES.map((city) => {
@@ -465,7 +466,7 @@ export function Landing() {
                   flexShrink: 0,
                   letterSpacing: "0.02em",
                 }}>
-                  {status}
+                  {t(status)}
                 </span>
               </button>
               );

@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
 import actionsRaw from "@/data/actions.json";
+import { useLanguage } from "@/lib/i18n";
 
 // ─── Co-benefits lookup ────────────────────────────────────────────────────────
 
@@ -782,6 +783,7 @@ interface Props { params: { locode: string } }
 
 export function Recommendations({ params }: Props) {
   const [, navigate] = useLocation();
+  const { t } = useLanguage();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city = CITIES.find((c) => c.locode.toLowerCase() === locode.toLowerCase());
@@ -901,17 +903,17 @@ export function Recommendations({ params }: Props) {
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>
             <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>
-              Cities
+              {t("Cities")}
             </button>
-            {" › "}{cityName}{" › "}Mitigation actions
+            {" › "}{cityName}{" › "}{t("Mitigation actions")}
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
-                Top mitigation actions for {cityName}
+                {t("Top mitigation actions for {name}", { name: cityName })}
               </h1>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-                {ranked.length} actions ranked · {discarded.length} excluded (legal filter) · Total city emissions {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
+                {ranked.length} {t("actions ranked")} · {discarded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
           </div>
@@ -925,12 +927,12 @@ export function Recommendations({ params }: Props) {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
             <div>
               <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827" }}>
-                {isUserPick ? "My top picks" : "Top 3 mitigation actions"}
+                {isUserPick ? t("My top picks") : t("Top 3 mitigation actions")}
               </div>
               <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
                 {isUserPick
-                  ? `${pickedActions.length} action${pickedActions.length !== 1 ? "s" : ""} selected — use arrows to reorder.`
-                  : `Highest-ranked actions based on ${cityName}'s data and priorities.`}
+                  ? t("{n} action{s} selected — use arrows to reorder.", { n: String(pickedActions.length), s: pickedActions.length !== 1 ? "s" : "" })
+                  : t("Highest-ranked actions based on {name}'s data and priorities.", { name: cityName })}
               </div>
             </div>
             {isUserPick && (
@@ -938,7 +940,7 @@ export function Recommendations({ params }: Props) {
                 onClick={() => setPickedIds([])}
                 style={{ fontSize: "12px", color: "#6B7280", background: "none", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "5px 12px", cursor: "pointer" }}
               >
-                Clear picks
+                {t("Clear picks")}
               </button>
             )}
           </div>
@@ -974,7 +976,7 @@ export function Recommendations({ params }: Props) {
         {discarded.length > 0 && (
           <details style={{ marginTop: "32px" }}>
             <summary style={{ fontSize: "13px", fontWeight: "600", color: "#6B7280", cursor: "pointer", padding: "8px 0" }}>
-              {discarded.length} actions excluded (failed mandatory legal requirements)
+              {discarded.length} {t("actions excluded (failed mandatory legal requirements)")}
             </summary>
             <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
               {discarded.map((d) => (

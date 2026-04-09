@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { useLanguage } from "@/lib/i18n";
 
 const STEP_ROUTES: Record<string, string> = {
   emissions:     "emissions",
@@ -98,6 +99,7 @@ interface SectionCardProps {
 }
 
 function SectionCard({ def, state, onClick }: SectionCardProps) {
+  const { t } = useLanguage();
   const ps = PRIORITY_STYLES[def.priority];
   const ss = STATUS_STYLES[state.status];
 
@@ -129,16 +131,16 @@ function SectionCard({ def, state, onClick }: SectionCardProps) {
       {/* Priority + status row */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
         <span style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", background: ps.bg, color: ps.text, fontWeight: "700", letterSpacing: "0.04em" }}>
-          {def.priority}
+          {t(def.priority)}
         </span>
         <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: ss.bg, color: ss.text, fontWeight: "500" }}>
-          {state.status}
+          {t(state.status)}
         </span>
       </div>
 
       {/* Title */}
       <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
-        {def.title}
+        {t(def.title)}
       </div>
 
       {/* Sub (progress detail) */}
@@ -150,13 +152,13 @@ function SectionCard({ def, state, onClick }: SectionCardProps) {
 
       {/* Description */}
       <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.55", marginBottom: "14px", flex: 1 }}>
-        {def.desc}
+        {t(def.desc)}
       </div>
 
       {/* CTA + progress bar */}
       <div>
         <div style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", marginBottom: state.progress !== null ? "6px" : "0" }}>
-          {state.cta}
+          {t(state.cta)}
         </div>
         {state.progress !== null && (
           <div style={{ background: "#E5E7EB", borderRadius: "3px", height: "3px" }}>
@@ -190,6 +192,7 @@ interface CityProfileProps {
 
 export function CityProfile({ params }: CityProfileProps) {
   const [, navigate] = useLocation();
+  const { t } = useLanguage();
   const [tick, setTick] = useState(0);
 
   const urlLocode = params.locode ?? "";
@@ -233,7 +236,7 @@ export function CityProfile({ params }: CityProfileProps) {
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "10px", display: "flex", alignItems: "center", gap: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
-              Cities
+              {t("Cities")}
             </button>
             <span>›</span>
             <span style={{ color: "#374151" }}>{city.name}</span>
@@ -245,7 +248,7 @@ export function CityProfile({ params }: CityProfileProps) {
               <div style={{ fontSize: "13px", color: "#6B7280", display: "flex", alignItems: "center", gap: "8px" }}>
                 <span>{city.region}</span>
                 <span style={{ color: "#D1D5DB" }}>·</span>
-                <span>{city.population} residents</span>
+                <span>{city.population} {t("residents")}</span>
               </div>
             </div>
 
@@ -264,10 +267,10 @@ export function CityProfile({ params }: CityProfileProps) {
                 alignItems: "center",
                 gap: "6px",
               }}
-              title={canGenerate ? "Generate recommendations" : "Complete at least 3 sections to unlock recommendations"}
+              title={canGenerate ? t("Generate recommendations") : t("Complete at least 3 sections to unlock recommendations")}
             >
               <span>⚡</span>
-              <span>Generate recommendations</span>
+              <span>{t("Generate recommendations")}</span>
             </button>
           </div>
         </div>
@@ -276,21 +279,21 @@ export function CityProfile({ params }: CityProfileProps) {
       {/* Key stats */}
       <div style={{ background: "#FAFAFA", borderBottom: "1px solid #EBEBEB", padding: "14px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
-          <KeyStat label="Total emissions" value={city.emissions} sub={`Inventory year ${city.emissionsYear}`} />
-          <KeyStat label="Population" value={city.population} sub={city.region} />
-          <KeyStat label="Land area" value={city.area} sub={city.biome} />
-          <KeyStat label="Pop. density" value={city.populationDensity} sub="inhabitants per km²" />
+          <KeyStat label={t("Total emissions")} value={city.emissions} sub={t("Inventory year {year}", { year: city.emissionsYear })} />
+          <KeyStat label={t("Population")} value={city.population} sub={city.region} />
+          <KeyStat label={t("Land area")} value={city.area} sub={city.biome} />
+          <KeyStat label={t("Pop. density")} value={city.populationDensity} sub={t("inhabitants per km²")} />
         </div>
       </div>
 
       {/* Section cards */}
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 64px 60px" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "4px" }}>
-          <h2 style={{ fontSize: "16px", fontWeight: "600", color: "#111827", margin: 0 }}>City Profile</h2>
+          <h2 style={{ fontSize: "16px", fontWeight: "600", color: "#111827", margin: 0 }}>{t("City Profile")}</h2>
         </div>
         <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px", lineHeight: "1.5" }}>
-          Complete each section to build the foundation for your action recommendations. Sections marked{" "}
-          <strong style={{ color: "#F23D33" }}>HIGH</strong> have the greatest impact on ranking accuracy.
+          {t("Complete each section to build the foundation for your action recommendations. Sections marked")}{" "}
+          <strong style={{ color: "#F23D33" }}>{t("HIGH")}</strong> {t("have the greatest impact on ranking accuracy.")}
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "16px" }}>
@@ -314,19 +317,22 @@ export function CityProfile({ params }: CityProfileProps) {
           boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
         }}>
           <span style={{ fontSize: "13px", color: "#6B7280" }}>
-            {completeCount > 0 && `${completeCount} complete · `}
-            {progressCount > 0 && `${progressCount} in progress · `}
-            {notStarted > 0 && `${notStarted} not started`}
-            {completeCount === 0 && progressCount === 0 && notStarted === 0 && "No sections started yet"}
+            {completeCount > 0 && `${completeCount} ${t("complete")} · `}
+            {progressCount > 0 && `${progressCount} ${t("in progress")} · `}
+            {notStarted > 0 && `${notStarted} ${t("not started")}`}
+            {completeCount === 0 && progressCount === 0 && notStarted === 0 && t("No sections started yet")}
           </span>
           {!canGenerate && (
             <span style={{ fontSize: "13px", color: "#F9A200", fontWeight: "500" }}>
-              {3 - completeCount} more section{3 - completeCount !== 1 ? "s" : ""} needed to unlock recommendations →
+              {t("{n} more section{s} needed to unlock recommendations →", {
+                n: String(3 - completeCount),
+                s: 3 - completeCount !== 1 ? "s" : "",
+              })}
             </span>
           )}
           {canGenerate && (
             <span style={{ fontSize: "13px", color: "#16A34A", fontWeight: "600" }}>
-              ✓ Ready to generate recommendations
+              ✓ {t("Ready to generate recommendations")}
             </span>
           )}
         </div>
