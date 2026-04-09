@@ -94,136 +94,74 @@ function ReductionBar({ priority }: { priority: string }) {
 
 // ─── Score bar (detail panel) ─────────────────────────────────────────────────
 
-type BreakdownItem = {
-  label: string;
-  rawValue: number;   // 0–1
-  weight: number;     // 0–1
-  note?: string;
-  displayAs?: "percent" | "label";
-  labelValue?: string;
-};
-
-function fmt(v: number, decimals = 1) {
-  return (v * 100).toFixed(decimals) + "%";
-}
-
 function ScoreBar({
   label,
   value,
-  breakdown,
+  weight,
+  barColor,
+  description,
 }: {
   label: string;
   value: number;
-  breakdown?: BreakdownItem[];
+  weight: number;
+  barColor: string;
+  description: string;
 }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
   const pct = Math.min(value, 1) * 100;
-  const pctDisplay = pct.toFixed(1) + "%";
-  const color = pct >= 75 ? "#16A34A" : pct >= 55 ? "#F59E0B" : "#6B7280";
-
-  useEffect(() => {
-    if (!open) return;
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [open]);
-
-  const total = breakdown
-    ? breakdown.reduce((sum, item) => sum + item.rawValue * item.weight, 0)
-    : value;
-
   return (
-    <div ref={ref} style={{ marginBottom: "14px", position: "relative" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "5px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          <span style={{ fontSize: "12px", color: "#6B7280" }}>{label}</span>
-          {breakdown && (
-            <button
-              onClick={() => setOpen((v) => !v)}
-              title="How this score is calculated"
-              style={{
-                background: open ? "#EEF2FF" : "none",
-                border: open ? "1px solid #C7D2FE" : "1px solid #E5E7EB",
-                borderRadius: "50%",
-                width: "16px", height: "16px",
-                cursor: "pointer", padding: 0,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: open ? "#4338CA" : "#9CA3AF",
-                fontSize: "9px", fontWeight: "700", lineHeight: 1,
-                flexShrink: 0, transition: "all 0.12s",
-              }}
-            >
-              i
-            </button>
-          )}
+    <div style={{ marginBottom: "14px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <span style={{ fontSize: "13px", fontWeight: "600", color: "#111827", width: "108px", flexShrink: 0 }}>{label}</span>
+        <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "7px" }}>
+          <div style={{ background: barColor, width: `${pct}%`, height: "7px", borderRadius: "4px" }} />
         </div>
-        <span style={{ fontSize: "12px", fontWeight: "700", color, fontVariantNumeric: "tabular-nums" }}>{pctDisplay}</span>
+        <span style={{ fontSize: "14px", fontWeight: "700", color: "#111827", minWidth: "34px", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+          {value.toFixed(2)}
+        </span>
+        <span style={{ fontSize: "12px", color: "#9CA3AF", minWidth: "44px", fontVariantNumeric: "tabular-nums" }}>
+          × {weight.toFixed(2)}
+        </span>
       </div>
-      <div style={{ background: "#F0F0F4", borderRadius: "3px", height: "6px" }}>
-        <div style={{ background: color, width: `${pct}%`, height: "6px", borderRadius: "3px", transition: "width 0.3s ease" }} />
+      <div style={{ paddingLeft: "118px", marginTop: "4px", fontSize: "11px", color: "#6B7280", lineHeight: "1.55" }}>
+        {description}
       </div>
-
-      {open && breakdown && (
-        <div style={{
-          position: "absolute", left: 0, top: "calc(100% + 6px)", zIndex: 100,
-          background: "white", border: "1px solid #E5E7EB", borderRadius: "12px",
-          boxShadow: "0 8px 28px rgba(0,0,0,0.14)", padding: "16px 18px",
-          width: "320px",
-        }}>
-          <div style={{ fontSize: "11px", fontWeight: "700", color: "#111827", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-            How {label} is calculated
-          </div>
-
-          {/* Column headers */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: "0 8px", marginBottom: "6px" }}>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textTransform: "uppercase" }}>Factor</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textAlign: "right", textTransform: "uppercase" }}>Score</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textAlign: "right", textTransform: "uppercase" }}>Weight</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textAlign: "right", textTransform: "uppercase" }}>Contributes</span>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            {breakdown.map((item) => {
-              const contribution = item.rawValue * item.weight;
-              const rawDisplay = item.displayAs === "label" && item.labelValue
-                ? item.labelValue
-                : fmt(item.rawValue);
-              return (
-                <div key={item.label}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: "0 8px", alignItems: "center" }}>
-                    <span style={{ fontSize: "12px", color: "#374151" }}>{item.label}</span>
-                    <span style={{ fontSize: "12px", color: "#111827", fontWeight: "600", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{rawDisplay}</span>
-                    <span style={{ fontSize: "12px", color: "#6B7280", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{fmt(item.weight, 0)}</span>
-                    <span style={{ fontSize: "12px", color: "#111827", fontWeight: "700", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{fmt(contribution)}</span>
-                  </div>
-                  {item.note && (
-                    <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "1px", lineHeight: "1.4" }}>{item.note}</div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Total row */}
-          <div style={{ marginTop: "10px", paddingTop: "10px", borderTop: "1.5px solid #F0F0F4", display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center" }}>
-            <span style={{ fontSize: "12px", color: "#111827", fontWeight: "700" }}>{label} score</span>
-            <span style={{ fontSize: "14px", fontWeight: "800", color, fontVariantNumeric: "tabular-nums" }}>{fmt(total)}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
 // ─── Detail panel (right drawer) ──────────────────────────────────────────────
 
-function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () => void }) {
+function DetailPanel({
+  action,
+  onClose,
+  weights,
+}: {
+  action: RankedAction;
+  onClose: () => void;
+  weights: { impact: number; alignment: number; feasibility: number };
+}) {
   const cobenefits = actionCoBenefitsMap[action.actionId] ?? [];
   const barriers = actionBarriersMap[action.actionId] ?? [];
   const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
+
+  const timelineDesc =
+    action.timelineScore === 1.0 ? "< 5 yr (1.0)"
+    : action.timelineScore === 0.5 ? "5–10 yr (0.5)"
+    : "> 10 yr (0.0)";
+
+  const impactDesc =
+    `Reduction share: ${(action.reductionShare * 100).toFixed(1)}% of city emissions` +
+    ` · timeline: ${timelineDesc}`;
+
+  const sectorMatchDesc = action.sectorComponent === 1.0 ? "yes" : "no";
+  const alignmentDesc =
+    `Policy support: ${action.policyComponent.toFixed(2)}` +
+    ` · sector match: ${sectorMatchDesc}` +
+    ` · strategic priorities: ${action.otherComponent.toFixed(2)}`;
+
+  const feasibilityDesc =
+    `Soft legal compliance: ${action.softLegalComponent.toFixed(2)}` +
+    ` · socioeconomic context: ${action.socioeconomicComponent.toFixed(2)}`;
 
   return (
     <>
@@ -280,71 +218,48 @@ function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () =>
           )}
 
           <div style={{ marginBottom: "22px" }}>
-            <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "12px" }}>Score breakdown</div>
+            <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "14px" }}>Score breakdown</div>
             <ScoreBar
-              label="Impact"
+              label="Impact score"
               value={action.impactScore}
-              breakdown={[
-                {
-                  label: "Emission coverage",
-                  rawValue: action.reductionShare,
-                  weight: 0.8,
-                  note: "Share of city's total emissions addressed by this action",
-                },
-                {
-                  label: "Timeline factor",
-                  rawValue: action.timelineScore,
-                  weight: 0.2,
-                  displayAs: "label",
-                  labelValue: action.timelineScore === 1.0 ? "100% (< 5 yrs)" : action.timelineScore === 0.5 ? "50% (5–10 yrs)" : "0% (> 10 yrs)",
-                  note: "How quickly this action can be implemented",
-                },
-              ]}
+              weight={weights.impact}
+              barColor="#3B82F6"
+              description={impactDesc}
             />
             <ScoreBar
-              label="Alignment"
+              label="Alignment score"
               value={action.alignmentScore}
-              breakdown={[
-                {
-                  label: "Policy support",
-                  rawValue: action.policyComponent,
-                  weight: 0.8,
-                  note: "Alignment with national and regional policy plans",
-                },
-                {
-                  label: "Sector match",
-                  rawValue: action.sectorComponent,
-                  weight: 0.15,
-                  displayAs: "label",
-                  labelValue: action.sectorComponent === 1.0 ? "100% (matched)" : "0% (no match)",
-                  note: "Whether this action falls within your selected priority sectors",
-                },
-                {
-                  label: "Strategic priorities",
-                  rawValue: action.otherComponent,
-                  weight: 0.05,
-                  note: "Co-benefit match with your stated strategic priorities",
-                },
-              ]}
+              weight={weights.alignment}
+              barColor="#8B5CF6"
+              description={alignmentDesc}
             />
             <ScoreBar
-              label="Feasibility"
+              label="Feasibility score"
               value={action.feasibilityScore}
-              breakdown={[
-                {
-                  label: "Soft legal compliance",
-                  rawValue: action.softLegalComponent,
-                  weight: 0.5,
-                  note: "Alignment with recommended and optional legal requirements",
-                },
-                {
-                  label: "Socioeconomic context",
-                  rawValue: action.socioeconomicComponent,
-                  weight: 0.5,
-                  note: "City's socioeconomic conditions relative to what this action requires",
-                },
-              ]}
+              weight={weights.feasibility}
+              barColor="#16A34A"
+              description={feasibilityDesc}
             />
+
+            {/* Final score formula */}
+            <div style={{
+              marginTop: "6px",
+              background: "#F9FAFB",
+              border: "1px solid #E5E7EB",
+              borderRadius: "8px",
+              padding: "11px 14px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "12px",
+            }}>
+              <span style={{ fontSize: "12px", color: "#4B5563", fontVariantNumeric: "tabular-nums", lineHeight: "1.5" }}>
+                Final score = ({action.impactScore.toFixed(2)}×{weights.impact.toFixed(2)}) + ({action.alignmentScore.toFixed(2)}×{weights.alignment.toFixed(2)}) + ({action.feasibilityScore.toFixed(2)}×{weights.feasibility.toFixed(2)})
+              </span>
+              <span style={{ fontSize: "16px", fontWeight: "800", color: "#16A34A", flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
+                {action.finalScore.toFixed(3)}
+              </span>
+            </div>
           </div>
 
           {cobenefits.length > 0 && (
@@ -742,6 +657,22 @@ export function Recommendations({ params }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [selectedAction, setSelectedAction] = useState<RankedAction | null>(null);
 
+  // Read scoring weights from localStorage (stored as integers, default 55/22/23)
+  const effectiveWeights = (() => {
+    try {
+      const form = JSON.parse(localStorage.getItem(`hiap:${locode}:strategic:form`) ?? "{}");
+      const raw = form.weights ?? { impact: 55, alignment: 22, feasibility: 23 };
+      const sum = raw.impact + raw.alignment + raw.feasibility;
+      return {
+        impact: raw.impact / sum,
+        alignment: raw.alignment / sum,
+        feasibility: raw.feasibility / sum,
+      };
+    } catch {
+      return { impact: 0.55, alignment: 0.22, feasibility: 0.23 };
+    }
+  })();
+
   // Pick top actions state
   const [pickedIds, setPickedIds] = useState<string[]>([]);
   const [pickMode, setPickMode] = useState(false);
@@ -827,7 +758,7 @@ export function Recommendations({ params }: Props) {
       <Navbar cityName={cityName} />
 
       {selectedAction && (
-        <DetailPanel action={selectedAction} onClose={() => setSelectedAction(null)} />
+        <DetailPanel action={selectedAction} onClose={() => setSelectedAction(null)} weights={effectiveWeights} />
       )}
 
       {/* Page header */}
