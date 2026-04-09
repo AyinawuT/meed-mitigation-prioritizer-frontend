@@ -254,6 +254,7 @@ export function CityProfile({ params }: CityProfileProps) {
 
             <button
               disabled={!canGenerate}
+              onClick={canGenerate ? () => navigate(`/city/${citySlug}/preflight`) : undefined}
               style={{
                 background: canGenerate ? "#16A34A" : "#E5E7EB",
                 color: canGenerate ? "white" : "#9CA3AF",
