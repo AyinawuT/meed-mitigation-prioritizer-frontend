@@ -160,7 +160,7 @@ export function Methodology() {
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "48px 48px 40px" }}>
         <div style={{ maxWidth: "820px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", fontWeight: "600", color: NAVY, letterSpacing: "0.08em", marginBottom: "12px" }}>
-            HOW HIAP WORKS
+            HOW MEED+ HIAP WORKS
           </div>
           <h1 style={{ fontSize: "36px", fontWeight: "700", color: "#111827", margin: "0 0 16px", lineHeight: "1.2" }}>
             The prioritisation methodology
