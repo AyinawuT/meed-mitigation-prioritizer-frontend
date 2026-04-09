@@ -87,11 +87,19 @@ export function About() {
                 infrastructure for climate action. Within the MEED+ Chile project, the Open Earth Foundation is
                 responsible for the design and development of MEED+ HIAP — the High Impact Action Prioritiser.
               </p>
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.7" }}>
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
                 This includes the three-pillar scoring methodology (impact, alignment, feasibility), the pipeline
                 that processes city data and policy signals into ranked action recommendations, and the interface
                 through which city planners interact with the tool and interpret results.
               </p>
+              <a
+                href="https://www.openearth.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "13px", color: GREEN, fontWeight: "600", textDecoration: "none" }}
+              >
+                Visit openearth.org ↗
+              </a>
             </div>
 
             {/* SSG */}
@@ -123,12 +131,20 @@ export function About() {
                 project, SSG brings the city-level knowledge that makes the tool's outputs credible and locally
                 relevant.
               </p>
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.7" }}>
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
                 SSG provides the greenhouse gas inventories for each participating Chilean city — the emissions
                 data that underpins the impact scoring — as well as the legal and policy documents covering
                 Chile's NDC, regional PARCCs, and municipal PACCCs that drive the alignment and feasibility
                 assessments.
               </p>
+              <a
+                href="https://ssg.coop/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "13px", color: NAVY, fontWeight: "600", textDecoration: "none" }}
+              >
+                Visit ssg.coop ↗
+              </a>
             </div>
 
           </div>
