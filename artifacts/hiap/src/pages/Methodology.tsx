@@ -149,6 +149,7 @@ export function Methodology() {
     { id: "alignment", label: "Pillar 2 — Alignment" },
     { id: "feasibility", label: "Pillar 3 — Feasibility" },
     { id: "hard-filter", label: "The hard filter — legal eligibility" },
+    { id: "excluded-actions", label: "Excluded actions — city preferences" },
     { id: "interpret", label: "How to interpret your results" },
   ];
 
@@ -457,6 +458,45 @@ export function Methodology() {
           <CalloutBox color="blue">
             A "no evidence" result on a mandatory requirement does not block the action — it passes with a flag.
             Only a confirmed "not_aligned" result causes removal.
+          </CalloutBox>
+        </div>
+
+        {/* ── Excluded actions ── */}
+        <div id="excluded-actions" style={{ scrollMarginTop: "72px", marginBottom: "48px" }}>
+          <SectionHeading id="excluded-actions-h">Excluded actions — city preferences</SectionHeading>
+          <Divider />
+          <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 20px", lineHeight: "1.7" }}>
+            Cities can instruct HIAP to remove specific types of actions from the ranking entirely before scoring begins.
+            This is separate from the legal hard filter — it reflects political, operational, or mandate-based decisions
+            that are specific to your city.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
+            <Step n={1} title="City enters exclusion instructions">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                On the Strategic Preferences page, a city can describe in plain language which types of actions should not
+                appear in the ranking — for example: <em>"Do not include actions that significantly increase household costs
+                for vulnerable communities"</em> or <em>"Exclude any actions that require new fossil fuel infrastructure."</em>
+              </p>
+            </Step>
+            <Step n={2} title="Instructions are matched against the action library">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                The exclusion text is interpreted semantically and matched against action names, categories, and descriptions
+                across the full library of 155 actions. Any action that matches the described criteria is removed
+                before scoring begins — it will not receive a score and will not appear in the ranked results.
+              </p>
+            </Step>
+            <Step n={3} title="Excluded actions are shown transparently">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                Removed actions appear in the results page under a separate "Excluded actions" section, showing which
+                actions were removed and why. Cities can review and adjust their exclusion criteria by returning to
+                Strategic Preferences and re-running the ranking.
+              </p>
+            </Step>
+          </div>
+          <CalloutBox color="amber">
+            Excluded actions are removed before any score is calculated — they are not penalised, just omitted. This
+            distinction matters: an action excluded by city preference might score very highly if re-included. Cities
+            should use this feature for genuine mandate or political constraints, not as a way to filter by score.
           </CalloutBox>
         </div>
 
