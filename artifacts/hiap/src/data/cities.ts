@@ -23,7 +23,7 @@ export const CITIES: CityData[] = [
     emissionsYear: "2023",
     population: "214,857",
     area: "2,242 km²",
-    populationDensity: "953.7 hab/km²",
+    populationDensity: "95.8 hab/km²",
     biome: "Atacama Desert",
     mapUrl:
       "https://www.openstreetmap.org/export/embed.html?bbox=-70.22,-20.35,-70.06,-20.17&layer=mapnik",
