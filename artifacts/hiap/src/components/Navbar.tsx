@@ -103,7 +103,7 @@ export function Navbar({ cityName }: NavbarProps) {
             onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
           >
-            <span>🇨🇱</span>
+            <span>{lang === "en" ? "🇬🇧" : "🇨🇱"}</span>
             <span style={{ fontWeight: "500" }}>{lang === "en" ? "EN" : "ES"}</span>
             <span style={{ fontSize: "10px" }}>▾</span>
           </button>
@@ -142,7 +142,7 @@ export function Navbar({ cityName }: NavbarProps) {
                   onMouseEnter={(e) => { if (lang !== l) (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"; }}
                   onMouseLeave={(e) => { if (lang !== l) (e.currentTarget as HTMLButtonElement).style.background = "white"; }}
                 >
-                  <span style={{ fontSize: "16px" }}>🇨🇱</span>
+                  <span style={{ fontSize: "16px" }}>{l === "en" ? "🇬🇧" : "🇨🇱"}</span>
                   <div>
                     <div>{l === "en" ? "English" : "Español"}</div>
                     <div style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: "400" }}>
