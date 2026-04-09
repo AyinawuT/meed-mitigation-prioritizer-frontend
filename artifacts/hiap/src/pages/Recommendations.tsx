@@ -94,18 +94,93 @@ function ReductionBar({ priority }: { priority: string }) {
 
 // ─── Score bar (detail panel) ─────────────────────────────────────────────────
 
-function ScoreBar({ label, value }: { label: string; value: number }) {
+type BreakdownItem = { label: string; value: string; weight: string; note?: string };
+
+function ScoreBar({
+  label,
+  value,
+  breakdown,
+}: {
+  label: string;
+  value: number;
+  breakdown?: BreakdownItem[];
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const pct = Math.round(Math.min(value, 1) * 100);
   const color = pct >= 75 ? "#16A34A" : pct >= 55 ? "#F59E0B" : "#6B7280";
+
+  useEffect(() => {
+    if (!open) return;
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [open]);
+
   return (
-    <div style={{ marginBottom: "10px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-        <span style={{ fontSize: "12px", color: "#6B7280" }}>{label}</span>
+    <div ref={ref} style={{ marginBottom: "12px", position: "relative" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+          <span style={{ fontSize: "12px", color: "#6B7280" }}>{label}</span>
+          {breakdown && (
+            <button
+              onClick={() => setOpen((v) => !v)}
+              title="How this score is calculated"
+              style={{
+                background: open ? "#EEF2FF" : "none",
+                border: open ? "1px solid #C7D2FE" : "1px solid #E5E7EB",
+                borderRadius: "50%",
+                width: "16px", height: "16px",
+                cursor: "pointer", padding: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: open ? "#4338CA" : "#9CA3AF",
+                fontSize: "9px", fontWeight: "700", lineHeight: 1,
+                flexShrink: 0, transition: "all 0.12s",
+              }}
+            >
+              i
+            </button>
+          )}
+        </div>
         <span style={{ fontSize: "12px", fontWeight: "600", color }}>{pct}</span>
       </div>
       <div style={{ background: "#F0F0F4", borderRadius: "3px", height: "6px" }}>
         <div style={{ background: color, width: `${pct}%`, height: "6px", borderRadius: "3px" }} />
       </div>
+
+      {open && breakdown && (
+        <div style={{
+          position: "absolute", left: 0, top: "calc(100% + 6px)", zIndex: 100,
+          background: "white", border: "1px solid #E5E7EB", borderRadius: "10px",
+          boxShadow: "0 6px 24px rgba(0,0,0,0.13)", padding: "14px 16px",
+          width: "100%", minWidth: "280px",
+        }}>
+          <div style={{ fontSize: "11px", fontWeight: "700", color: "#111827", marginBottom: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+            How {label} is calculated
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {breakdown.map((item) => (
+              <div key={item.label}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span style={{ fontSize: "12px", color: "#374151", fontWeight: "500" }}>{item.label}</span>
+                    <span style={{ fontSize: "10px", color: "#9CA3AF", background: "#F5F5F7", borderRadius: "3px", padding: "1px 5px" }}>{item.weight} weight</span>
+                  </div>
+                  <span style={{ fontSize: "12px", fontWeight: "700", color: "#111827" }}>{item.value}</span>
+                </div>
+                {item.note && (
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{item.note}</div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: "10px", paddingTop: "8px", borderTop: "1px solid #F0F0F4", fontSize: "10px", color: "#9CA3AF" }}>
+            Score shown is 0–100 (raw 0–1 × 100)
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -173,9 +248,66 @@ function DetailPanel({ action, onClose }: { action: RankedAction; onClose: () =>
 
           <div style={{ marginBottom: "22px" }}>
             <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "12px" }}>Score breakdown</div>
-            <ScoreBar label="Impact" value={action.impactScore} />
-            <ScoreBar label="Alignment" value={action.alignmentScore} />
-            <ScoreBar label="Feasibility" value={action.feasibilityScore} />
+            <ScoreBar
+              label="Impact"
+              value={action.impactScore}
+              breakdown={[
+                {
+                  label: "Emission coverage",
+                  value: `${(action.reductionShare * 100).toFixed(1)}%`,
+                  weight: "80%",
+                  note: "Share of city's total emissions addressed by this action",
+                },
+                {
+                  label: "Timeline factor",
+                  value: action.timelineScore === 1.0 ? "Fast" : action.timelineScore === 0.5 ? "Medium" : "Long",
+                  weight: "20%",
+                  note: action.timelineScore === 1.0 ? "Under 5 years" : action.timelineScore === 0.5 ? "5–10 years" : "More than 10 years",
+                },
+              ]}
+            />
+            <ScoreBar
+              label="Alignment"
+              value={action.alignmentScore}
+              breakdown={[
+                {
+                  label: "Policy support",
+                  value: Math.round(action.policyComponent * 100).toString(),
+                  weight: "80%",
+                  note: "How well this action aligns with national and regional policy plans",
+                },
+                {
+                  label: "Sector match",
+                  value: action.sectorComponent === 1.0 ? "Yes ✓" : "No",
+                  weight: "15%",
+                  note: "Whether this action falls within your selected priority sectors",
+                },
+                {
+                  label: "Strategic priorities",
+                  value: Math.round(action.otherComponent * 100).toString(),
+                  weight: "5%",
+                  note: "Co-benefit match with your stated strategic priorities",
+                },
+              ]}
+            />
+            <ScoreBar
+              label="Feasibility"
+              value={action.feasibilityScore}
+              breakdown={[
+                {
+                  label: "Soft legal compliance",
+                  value: Math.round(action.softLegalComponent * 100).toString(),
+                  weight: "50%",
+                  note: "Alignment with recommended and optional legal requirements",
+                },
+                {
+                  label: "Socioeconomic context",
+                  value: Math.round(action.socioeconomicComponent * 100).toString(),
+                  weight: "50%",
+                  note: "City's socioeconomic conditions relative to what this action requires",
+                },
+              ]}
+            />
           </div>
 
           {cobenefits.length > 0 && (
