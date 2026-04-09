@@ -920,6 +920,34 @@ export function Recommendations({ params }: Props) {
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 48px 64px" }}>
 
+        {/* Ranking formula banner */}
+        <div style={{
+          background: "#FFFFFF",
+          border: "1px solid #E5E7EB",
+          borderRadius: "10px",
+          padding: "12px 20px",
+          marginBottom: "24px",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          flexWrap: "wrap",
+        }}>
+          <span style={{ fontSize: "12px", color: "#9CA3AF", fontWeight: "500", marginRight: "4px" }}>Ranked by</span>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#3B82F6" }}>Impact</span>
+          <span style={{ fontSize: "13px", color: "#9CA3AF" }}>×</span>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#3B82F6" }}>{(effectiveWeights.impact * 100).toFixed(0)}%</span>
+          <span style={{ fontSize: "13px", color: "#9CA3AF", margin: "0 4px" }}>+</span>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#8B5CF6" }}>Alignment</span>
+          <span style={{ fontSize: "13px", color: "#9CA3AF" }}>×</span>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#8B5CF6" }}>{(effectiveWeights.alignment * 100).toFixed(0)}%</span>
+          <span style={{ fontSize: "13px", color: "#9CA3AF", margin: "0 4px" }}>+</span>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#16A34A" }}>Feasibility</span>
+          <span style={{ fontSize: "13px", color: "#9CA3AF" }}>×</span>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#16A34A" }}>{(effectiveWeights.feasibility * 100).toFixed(0)}%</span>
+          <span style={{ fontSize: "13px", color: "#9CA3AF", margin: "0 4px" }}>=</span>
+          <span style={{ fontSize: "13px", color: "#374151", fontWeight: "500" }}>Final score (0 – 1)</span>
+        </div>
+
         {/* Top picks section */}
         <div style={{ marginBottom: "32px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
