@@ -286,6 +286,14 @@ export function Landing() {
                     valueWeight: "600",
                     valueColor: "#111827",
                   },
+                  {
+                    icon: "📍",
+                    label: "Population density",
+                    value: selectedCity.populationDensity,
+                    valueSize: "16px",
+                    valueWeight: "600",
+                    valueColor: "#111827",
+                  },
                 ].map((stat) => (
                   <div key={stat.label} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                     <span style={{ fontSize: "16px", marginTop: "2px", color: "#9CA3AF", width: "20px", textAlign: "center" }}>
