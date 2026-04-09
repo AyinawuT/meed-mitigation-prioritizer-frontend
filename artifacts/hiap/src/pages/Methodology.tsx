@@ -148,8 +148,7 @@ export function Methodology() {
     { id: "impact", label: "Pillar 1 — Impact" },
     { id: "alignment", label: "Pillar 2 — Alignment" },
     { id: "feasibility", label: "Pillar 3 — Feasibility" },
-    { id: "hard-filter", label: "The hard filter — legal eligibility" },
-    { id: "excluded-actions", label: "Excluded actions — city preferences" },
+    { id: "pre-scoring-filters", label: "Pre-scoring filters" },
     { id: "interpret", label: "How to interpret your results" },
   ];
 
@@ -412,92 +411,80 @@ export function Methodology() {
           </div>
         </div>
 
-        {/* ── Hard filter ── */}
-        <div id="hard-filter" style={{ scrollMarginTop: "72px", marginBottom: "48px" }}>
-          <SectionHeading id="hard-filter-h">The hard filter — legal eligibility</SectionHeading>
+        {/* ── Pre-scoring filters ── */}
+        <div id="pre-scoring-filters" style={{ scrollMarginTop: "72px", marginBottom: "48px" }}>
+          <SectionHeading id="pre-scoring-filters-h">Pre-scoring filters</SectionHeading>
           <Divider />
-          <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
-            Before any scoring happens, actions that cannot legally be implemented in your city are removed entirely.
-            This is not a score penalty — it is a binary pass/fail gate.
+          <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 24px", lineHeight: "1.7" }}>
+            Before any scoring happens, two types of filter can remove actions from the ranking entirely.
+            Neither is a score penalty — removed actions receive no score at all.
           </p>
-          <div style={{ marginBottom: "20px" }}>
-            <CalloutBox color="amber">
-              Actions that fail a mandatory or required legal requirement are removed from the ranking entirely.
-              They will appear in your results under "Ineligible actions" with the specific legal signal that blocked them.
-              No score is calculated for these actions.
+
+          {/* Sub-section A: Legal hard filter */}
+          <div style={{ marginBottom: "28px" }}>
+            <div style={{ fontSize: "13px", fontWeight: "700", color: "#374151", letterSpacing: "0.04em", marginBottom: "10px", textTransform: "uppercase" }}>
+              A — Legal eligibility (hard filter)
+            </div>
+            <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
+              The system automatically checks every action against the mandatory and required legal requirements for your city.
+              If an action fails — meaning the legal environment actively prohibits or blocks it — it is removed before scoring begins.
+              This is objective and automatic; the city has no input into this filter.
+            </p>
+            <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "14px" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+                <thead>
+                  <tr style={{ background: "#F9FAFB" }}>
+                    {["Strength", "Effect on hard filter", "Effect on feasibility score"].map(h => (
+                      <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["mandatory", "#FEE2E2", "#991B1B", "Blocks action if not_aligned", "Not applicable — action removed"],
+                    ["required", "#FFEDD5", "#9A3412", "Blocks action if not_aligned", "Not applicable — action removed"],
+                    ["recommended", "#FEF9C3", "#713F12", "No block", "Scores into legal component"],
+                    ["optional", "#F3F4F6", "#374151", "No block", "Scores into legal component"],
+                    ["informational", "#EFF6FF", "#1E40AF", "No block", "No scoring effect"],
+                  ].map(([strength, bg, color, filter, feasibility]) => (
+                    <tr key={strength} style={{ borderBottom: "1px solid #F3F4F6" }}>
+                      <td style={{ padding: "10px 14px" }}>
+                        <span style={{ background: bg as string, color: color as string, padding: "2px 8px", borderRadius: "5px", fontSize: "12px", fontWeight: "500" }}>{strength}</span>
+                      </td>
+                      <td style={{ padding: "10px 14px", color: "#374151" }}>{filter}</td>
+                      <td style={{ padding: "10px 14px", color: "#6B7280" }}>{feasibility}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <CalloutBox color="blue">
+              A "no evidence" result on a mandatory requirement does not block the action — it passes with a flag.
+              Only a confirmed "not_aligned" result causes removal.
             </CalloutBox>
           </div>
-          <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "16px" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
-              <thead>
-                <tr style={{ background: "#F9FAFB" }}>
-                  {["Strength", "Effect on hard filter", "Effect on feasibility score"].map(h => (
-                    <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["mandatory", "#FEE2E2", "#991B1B", "Blocks action if not_aligned", "Not applicable — action removed"],
-                  ["required", "#FFEDD5", "#9A3412", "Blocks action if not_aligned", "Not applicable — action removed"],
-                  ["recommended", "#FEF9C3", "#713F12", "No block", "Scores into legal component"],
-                  ["optional", "#F3F4F6", "#374151", "No block", "Scores into legal component"],
-                  ["informational", "#EFF6FF", "#1E40AF", "No block", "No scoring effect"],
-                ].map(([strength, bg, color, filter, feasibility]) => (
-                  <tr key={strength} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                    <td style={{ padding: "10px 14px" }}>
-                      <span style={{ background: bg as string, color: color as string, padding: "2px 8px", borderRadius: "5px", fontSize: "12px", fontWeight: "500" }}>{strength}</span>
-                    </td>
-                    <td style={{ padding: "10px 14px", color: "#374151" }}>{filter}</td>
-                    <td style={{ padding: "10px 14px", color: "#6B7280" }}>{feasibility}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <CalloutBox color="blue">
-            A "no evidence" result on a mandatory requirement does not block the action — it passes with a flag.
-            Only a confirmed "not_aligned" result causes removal.
-          </CalloutBox>
-        </div>
 
-        {/* ── Excluded actions ── */}
-        <div id="excluded-actions" style={{ scrollMarginTop: "72px", marginBottom: "48px" }}>
-          <SectionHeading id="excluded-actions-h">Excluded actions — city preferences</SectionHeading>
-          <Divider />
-          <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 20px", lineHeight: "1.7" }}>
-            Cities can instruct HIAP to remove specific types of actions from the ranking entirely before scoring begins.
-            This is separate from the legal hard filter — it reflects political, operational, or mandate-based decisions
-            that are specific to your city.
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
-            <Step n={1} title="City enters exclusion instructions">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                On the Strategic Preferences page, a city can describe in plain language which types of actions should not
-                appear in the ranking — for example: <em>"Do not include actions that significantly increase household costs
-                for vulnerable communities"</em> or <em>"Exclude any actions that require new fossil fuel infrastructure."</em>
-              </p>
-            </Step>
-            <Step n={2} title="Instructions are matched against the action library">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                The exclusion text is interpreted semantically and matched against action names, categories, and descriptions
-                across the full library of 155 actions. Any action that matches the described criteria is removed
-                before scoring begins — it will not receive a score and will not appear in the ranked results.
-              </p>
-            </Step>
-            <Step n={3} title="Excluded actions are shown transparently">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                Removed actions appear in the results page under a separate "Excluded actions" section, showing which
-                actions were removed and why. Cities can review and adjust their exclusion criteria by returning to
-                Strategic Preferences and re-running the ranking.
-              </p>
-            </Step>
+          {/* Sub-section B: City preference exclusions */}
+          <div>
+            <div style={{ fontSize: "13px", fontWeight: "700", color: "#374151", letterSpacing: "0.04em", marginBottom: "10px", textTransform: "uppercase" }}>
+              B — City preference exclusions
+            </div>
+            <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
+              Cities can also instruct HIAP to remove specific types of actions based on political, operational, or
+              mandate-based decisions. Unlike the legal hard filter, this is a deliberate choice by the city — an excluded
+              action may be perfectly legal and could score very highly if re-included.
+            </p>
+            <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
+              On the Strategic Preferences page, cities describe in plain language which action types to exclude — for
+              example: <em>"Do not include actions that significantly increase household costs for vulnerable communities"</em> or{" "}
+              <em>"Exclude any actions that require new fossil fuel infrastructure."</em> These instructions are matched against
+              the action library before scoring begins.
+            </p>
+            <CalloutBox color="amber">
+              Cities should use preference exclusions for genuine mandate or political constraints, not to filter by expected score.
+              Removed actions are listed transparently in the results so the city can review and adjust if needed.
+            </CalloutBox>
           </div>
-          <CalloutBox color="amber">
-            Excluded actions are removed before any score is calculated — they are not penalised, just omitted. This
-            distinction matters: an action excluded by city preference might score very highly if re-included. Cities
-            should use this feature for genuine mandate or political constraints, not as a way to filter by score.
-          </CalloutBox>
         </div>
 
         {/* ── Interpret ── */}
