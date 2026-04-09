@@ -94,24 +94,64 @@ function ReductionBar({ priority }: { priority: string }) {
 
 // ─── Score bar (detail panel) ─────────────────────────────────────────────────
 
+type PopoverItem = {
+  label: string;
+  rawValue: number;  // 0–1
+  weight: number;    // 0–1 (sub-weight within this score)
+  note?: string;
+};
+
 function ScoreBar({
   label,
   value,
   weight,
   barColor,
   description,
+  popoverItems,
 }: {
   label: string;
   value: number;
   weight: number;
   barColor: string;
   description: string;
+  popoverItems?: PopoverItem[];
 }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const pct = Math.min(value, 1) * 100;
+
+  useEffect(() => {
+    if (!open) return;
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [open]);
+
   return (
-    <div style={{ marginBottom: "14px" }}>
+    <div ref={ref} style={{ marginBottom: "14px", position: "relative" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <span style={{ fontSize: "13px", fontWeight: "600", color: "#111827", width: "108px", flexShrink: 0 }}>{label}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", width: "118px", flexShrink: 0 }}>
+          <span style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{label}</span>
+          {popoverItems && (
+            <button
+              onClick={() => setOpen((v) => !v)}
+              title="How this score is calculated"
+              style={{
+                background: open ? "#EEF2FF" : "none",
+                border: `1px solid ${open ? "#C7D2FE" : "#E5E7EB"}`,
+                borderRadius: "50%",
+                width: "15px", height: "15px",
+                cursor: "pointer", padding: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: open ? "#4338CA" : "#9CA3AF",
+                fontSize: "9px", fontWeight: "700", lineHeight: 1,
+                flexShrink: 0, transition: "all 0.12s",
+              }}
+            >i</button>
+          )}
+        </div>
         <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "7px" }}>
           <div style={{ background: barColor, width: `${pct}%`, height: "7px", borderRadius: "4px" }} />
         </div>
@@ -122,9 +162,56 @@ function ScoreBar({
           × {weight.toFixed(2)}
         </span>
       </div>
-      <div style={{ paddingLeft: "118px", marginTop: "4px", fontSize: "11px", color: "#6B7280", lineHeight: "1.55" }}>
+      <div style={{ paddingLeft: "123px", marginTop: "4px", fontSize: "11px", color: "#6B7280", lineHeight: "1.55" }}>
         {description}
       </div>
+
+      {open && popoverItems && (
+        <div style={{
+          position: "absolute", left: 0, top: "calc(100% + 6px)", zIndex: 100,
+          background: "white", border: "1px solid #E5E7EB", borderRadius: "12px",
+          boxShadow: "0 8px 28px rgba(0,0,0,0.13)", padding: "16px 18px",
+          width: "340px",
+        }}>
+          <div style={{ fontSize: "11px", fontWeight: "700", color: "#111827", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            How {label} is calculated
+          </div>
+
+          {/* Column headers */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 52px 40px 52px", gap: "0 4px", marginBottom: "6px", paddingBottom: "6px", borderBottom: "1px solid #F0F0F4" }}>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textTransform: "uppercase" }}>Factor</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textAlign: "right", textTransform: "uppercase" }}>Score</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textAlign: "center", textTransform: "uppercase" }}>Wt.</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", textAlign: "right", textTransform: "uppercase" }}>Adds</span>
+          </div>
+
+          {/* Rows */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+            {popoverItems.map((item) => {
+              const contribution = item.rawValue * item.weight;
+              return (
+                <div key={item.label}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 52px 40px 52px", gap: "0 4px", alignItems: "baseline" }}>
+                    <span style={{ fontSize: "12px", color: "#374151" }}>{item.label}</span>
+                    <span style={{ fontSize: "12px", fontWeight: "600", color: "#111827", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{item.rawValue.toFixed(2)}</span>
+                    <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", fontVariantNumeric: "tabular-nums" }}>×{(item.weight * 100).toFixed(0)}%</span>
+                    <span style={{ fontSize: "12px", fontWeight: "700", color: barColor, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{contribution.toFixed(2)}</span>
+                  </div>
+                  {item.note && (
+                    <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "1px", gridColumn: "1 / -1" }}>{item.note}</div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Total */}
+          <div style={{ marginTop: "10px", paddingTop: "8px", borderTop: "1.5px solid #F0F0F4", display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center" }}>
+            <span style={{ fontSize: "12px", color: "#111827", fontWeight: "700" }}>{label} =</span>
+            <span style={{ fontSize: "15px", fontWeight: "800", color: barColor, fontVariantNumeric: "tabular-nums" }}>{value.toFixed(2)}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -225,6 +312,20 @@ function DetailPanel({
               weight={weights.impact}
               barColor="#3B82F6"
               description={impactDesc}
+              popoverItems={[
+                {
+                  label: "Emission coverage",
+                  rawValue: action.reductionShare,
+                  weight: 0.8,
+                  note: "Share of city's total emissions matched by this action",
+                },
+                {
+                  label: "Timeline factor",
+                  rawValue: action.timelineScore,
+                  weight: 0.2,
+                  note: action.timelineScore === 1.0 ? "Fast implementation (< 5 years)" : action.timelineScore === 0.5 ? "Medium implementation (5–10 years)" : "Long implementation (> 10 years)",
+                },
+              ]}
             />
             <ScoreBar
               label="Alignment score"
@@ -232,6 +333,26 @@ function DetailPanel({
               weight={weights.alignment}
               barColor="#8B5CF6"
               description={alignmentDesc}
+              popoverItems={[
+                {
+                  label: "Policy support",
+                  rawValue: action.policyComponent,
+                  weight: 0.8,
+                  note: "How well this action is backed by national and regional policy plans",
+                },
+                {
+                  label: "Sector match",
+                  rawValue: action.sectorComponent,
+                  weight: 0.15,
+                  note: action.sectorComponent === 1.0 ? "Matches your selected priority sectors" : "Does not match selected priority sectors",
+                },
+                {
+                  label: "Strategic priorities",
+                  rawValue: action.otherComponent,
+                  weight: 0.05,
+                  note: "Co-benefit overlap with your stated strategic priorities",
+                },
+              ]}
             />
             <ScoreBar
               label="Feasibility score"
@@ -239,6 +360,20 @@ function DetailPanel({
               weight={weights.feasibility}
               barColor="#16A34A"
               description={feasibilityDesc}
+              popoverItems={[
+                {
+                  label: "Soft legal compliance",
+                  rawValue: action.softLegalComponent,
+                  weight: 0.5,
+                  note: "Alignment with recommended and optional legal requirements",
+                },
+                {
+                  label: "Socioeconomic context",
+                  rawValue: action.socioeconomicComponent,
+                  weight: 0.5,
+                  note: "How well city conditions support this action",
+                },
+              ]}
             />
 
             {/* Final score formula */}
