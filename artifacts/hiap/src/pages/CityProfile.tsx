@@ -47,7 +47,7 @@ const SECTION_DEFS: SectionDef[] = [
     id: "preferences",
     priority: "LOW",
     title: "Strategic Preferences",
-    desc: "Sector priorities, co-benefits, budget range, and implementation timeline.",
+    desc: "Sector priorities, city political priorities, and implementation timeline.",
     progressKey: "strategic",
   },
   {
