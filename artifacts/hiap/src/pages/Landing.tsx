@@ -9,9 +9,15 @@ import { MapEmbed } from "@/components/MapEmbed";
 const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic", "policy"];
 
 function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED" {
+  // Only steps that require explicit user action count as "started".
+  // Socioeconomic, regulations, and policy are pre-filled and auto-complete on
+  // first visit — they must not trigger "IN PROGRESS" on their own.
+  const emissionsP = (getStepProgress(locode, "emissions").progress ?? 0);
+  const strategicP = (getStepProgress(locode, "strategic").progress ?? 0);
+  const userStarted = emissionsP > 0 || strategicP >= 50;
+  if (!userStarted) return "AVAILABLE";
+
   const progresses = PROFILE_STEPS.map((s) => getStepProgress(locode, s));
-  const anyWithProgress = progresses.some((p) => p.visited && (p.progress ?? 0) > 0);
-  if (!anyWithProgress) return "AVAILABLE";
   const allComplete = progresses.every((p) => p.visited && (p.progress ?? 0) >= 100);
   return allComplete ? "ONBOARDED" : "IN PROGRESS";
 }

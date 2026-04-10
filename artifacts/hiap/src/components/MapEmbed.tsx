@@ -50,21 +50,17 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
       .finally(() => setLoading(false));
   }, [cityName, regionName]);
 
-  const shell: React.CSSProperties = {
+  const base: React.CSSProperties = {
     borderRadius: "12px",
     overflow: "hidden",
     border: "1px solid #EBEBEB",
     height,
     boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
-    background: "#F5F5F7",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   };
 
   if (loading) {
     return (
-      <div style={shell}>
+      <div style={{ ...base, background: "#F5F5F7", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <span style={{ fontSize: "13px", color: "#9CA3AF" }}>Loading map…</span>
       </div>
     );
@@ -72,19 +68,22 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
 
   if (!embedUrl) {
     return (
-      <div style={shell}>
+      <div style={{ ...base, background: "#F5F5F7", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <span style={{ fontSize: "13px", color: "#9CA3AF" }}>Map not available</span>
       </div>
     );
   }
 
+  // Attribution bar is ~30px tall. Extend iframe height beyond the container
+  // so it overflows downward and gets clipped by overflow:hidden.
+  const ATTR_HEIGHT = 52;
   return (
-    <div style={{ ...shell, background: "transparent" }}>
+    <div style={{ ...base, position: "relative" }}>
       <iframe
         src={embedUrl}
         width="100%"
-        height="calc(100% + 32px)"
-        style={{ border: "none", display: "block", marginBottom: "-32px" }}
+        height={`calc(100% + ${ATTR_HEIGHT}px)`}
+        style={{ border: "none", display: "block", position: "absolute", top: 0, left: 0 }}
         title={`Map of ${cityName}`}
       />
     </div>
