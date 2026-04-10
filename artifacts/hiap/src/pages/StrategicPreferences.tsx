@@ -3,7 +3,7 @@ import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
-import { setStepProgress } from "@/lib/stepProgress";
+import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 
 const ALL_SECTORS = [
   "Stationary Energy",
@@ -288,7 +288,7 @@ export function StrategicPreferences({ params }: Props) {
         <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: "8px" }}>
           <button
             disabled={!canSave}
-            onClick={() => navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/policy`)}
+            onClick={() => { confirmStep(locode, "strategic"); navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/policy`); }}
             style={{
               background: canSave ? "#16A34A" : "#E5E7EB",
               color: canSave ? "white" : "#9CA3AF",

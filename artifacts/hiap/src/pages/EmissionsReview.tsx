@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { setStepProgress } from "@/lib/stepProgress";
+import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -235,6 +235,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
       setEditingIdx(null);
       setActiveTab("review");
     } else {
+      confirmStep(locode, "emissions");
       navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/socioeconomic`);
     }
   }

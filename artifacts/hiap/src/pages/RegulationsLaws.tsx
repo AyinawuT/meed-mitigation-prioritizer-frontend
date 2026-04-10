@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { setStepProgress } from "@/lib/stepProgress";
+import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -484,7 +484,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
             ← Socioeconomic Context
           </button>
           <button
-            onClick={() => navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`)}
+            onClick={() => { confirmStep(locode, "regulations"); navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`); }}
             style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}
           >
             {fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}

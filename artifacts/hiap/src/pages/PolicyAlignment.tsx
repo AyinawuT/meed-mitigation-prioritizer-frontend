@@ -3,7 +3,7 @@ import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
-import { setStepProgress } from "@/lib/stepProgress";
+import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import policyPlansData from "@/data/policyPlans.json";
 import actionNames from "@/data/actionNames.json";
 
@@ -244,7 +244,7 @@ export function PolicyAlignment({ params }: Props) {
           <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
             {fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
           </button>
-          <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
+          <button onClick={() => { confirmStep(locode, "policy"); navigate(`/city/${citySlug}/preflight`); }} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
             {fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
           </button>
         </div>
