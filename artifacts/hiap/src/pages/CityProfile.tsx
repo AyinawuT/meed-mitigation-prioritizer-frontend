@@ -38,7 +38,7 @@ const SECTION_DEFS: SectionDef[] = [
   },
   {
     id: "regulations",
-    priority: "MEDIUM",
+    priority: "HIGH",
     title: "Regulations & Laws",
     desc: "Local legislation and policies that determine which actions are feasible.",
     progressKey: "regulations",
