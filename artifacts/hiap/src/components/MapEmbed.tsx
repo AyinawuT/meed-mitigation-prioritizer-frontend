@@ -6,37 +6,48 @@ interface MapEmbedProps {
   height?: string;
 }
 
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function buildEmbedUrl(lat: number, lon: number, delta = 0.12): string {
+  const bbox = `${lon - delta},${lat - delta},${lon + delta},${lat + delta}`;
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
+}
+
 export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedProps) {
-  const cacheKey = `hiap:map:${cityName}:${regionName}`;
+  const cacheKey = `hiap:map2:${cityName}:${regionName}`;
 
   const [embedUrl, setEmbedUrl] = useState<string | null>(() => {
     try { return sessionStorage.getItem(cacheKey); } catch { return null; }
   });
-  const [loading, setLoading] = useState(!embedUrl);
+  const [loading, setLoading] = useState(embedUrl === null);
 
   useEffect(() => {
-    if (embedUrl) return;
-    const query = `${cityName}, ${regionName}, Chile`;
-    fetch(
-      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`,
-      { headers: { "Accept-Language": "es" } }
-    )
-      .then((r) => r.json())
+    if (embedUrl !== null) return;
+    const q = encodeURIComponent(`${cityName} ${regionName} Chile`);
+    fetch(`${BASE}/photon-geocode?q=${q}&limit=5&lang=en`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
       .then((data) => {
-        if (data?.length > 0) {
-          const lat = parseFloat(data[0].lat);
-          const lon = parseFloat(data[0].lon);
-          const delta = 0.12;
-          const bbox = `${lon - delta},${lat - delta},${lon + delta},${lat + delta}`;
-          const url = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
+        const features: any[] = data.features ?? [];
+        const match =
+          features.find((f) => f.properties?.country_code === "CL") ??
+          features[0];
+        if (match) {
+          const [lon, lat] = match.geometry.coordinates as [number, number];
+          const url = buildEmbedUrl(lat, lon);
           try { sessionStorage.setItem(cacheKey, url); } catch {}
           setEmbedUrl(url);
         } else {
+          try { sessionStorage.setItem(cacheKey, ""); } catch {}
           setEmbedUrl("");
         }
-        setLoading(false);
       })
-      .catch(() => { setEmbedUrl(""); setLoading(false); });
+      .catch(() => {
+        setEmbedUrl("");
+      })
+      .finally(() => setLoading(false));
   }, [cityName, regionName]);
 
   const shell: React.CSSProperties = {

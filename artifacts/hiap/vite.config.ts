@@ -66,6 +66,14 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+    proxy: {
+      "/photon-geocode": {
+        target: "https://photon.komoot.io",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/photon-geocode/, "/api"),
+        headers: { "User-Agent": "MEED-HIAP/1.0" },
+      },
+    },
   },
   preview: {
     port,

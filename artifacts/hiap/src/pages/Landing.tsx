@@ -10,8 +10,8 @@ const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic",
 
 function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED" {
   const progresses = PROFILE_STEPS.map((s) => getStepProgress(locode, s));
-  const anyVisited = progresses.some((p) => p.visited);
-  if (!anyVisited) return "AVAILABLE";
+  const anyWithProgress = progresses.some((p) => p.visited && (p.progress ?? 0) > 0);
+  if (!anyWithProgress) return "AVAILABLE";
   const allComplete = progresses.every((p) => p.visited && (p.progress ?? 0) >= 100);
   return allComplete ? "ONBOARDED" : "IN PROGRESS";
 }
