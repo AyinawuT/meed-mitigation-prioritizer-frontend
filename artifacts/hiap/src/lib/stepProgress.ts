@@ -21,7 +21,12 @@ export function getStepProgress(locode: string, step: string): StepProgress {
 
 export function setStepProgress(locode: string, step: string, data: StepProgress) {
   try {
-    localStorage.setItem(key(locode, step), JSON.stringify(data));
+    const existing = getStepProgress(locode, step);
+    const merged: StepProgress = { ...data };
+    if (existing.confirmed && !data.confirmed) {
+      merged.confirmed = true;
+    }
+    localStorage.setItem(key(locode, step), JSON.stringify(merged));
   } catch {}
 }
 
