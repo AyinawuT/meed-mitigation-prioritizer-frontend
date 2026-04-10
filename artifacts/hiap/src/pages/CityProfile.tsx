@@ -66,13 +66,14 @@ const PRIORITY_STYLES: Record<string, { bg: string; text: string }> = {
 };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
-  "IN PROGRESS": { bg: "#FFF3E0", text: "#C05621" },
-  "NOT STARTED": { bg: "#F5F5F5", text: "#9CA3AF" },
-  "COMPLETE":    { bg: "#F0FDF4", text: "#16A34A" },
+  "IN PROGRESS":  { bg: "#FFF3E0", text: "#C05621" },
+  "NOT STARTED":  { bg: "#F5F5F5", text: "#9CA3AF" },
+  "COMPLETE":     { bg: "#F0FDF4", text: "#16A34A" },
+  "NEEDS REVIEW": { bg: "#EEF2FF", text: "#4338CA" },
 };
 
 interface SectionState {
-  status: "NOT STARTED" | "IN PROGRESS" | "COMPLETE";
+  status: "NOT STARTED" | "IN PROGRESS" | "COMPLETE" | "NEEDS REVIEW";
   progress: number | null;
   sub: string | null;
   cta: string;
@@ -86,7 +87,10 @@ function computeSections(locode: string): SectionState[] {
       return { status: "NOT STARTED", progress: null, sub: null, cta: "Start →" };
     }
     if (pct >= 100) {
-      return { status: "COMPLETE", progress: pct, sub: p.sub ?? null, cta: p.confirmed ? "Continue →" : "Review →" };
+      if (p.confirmed) {
+        return { status: "COMPLETE", progress: pct, sub: p.sub ?? null, cta: "Continue →" };
+      }
+      return { status: "NEEDS REVIEW", progress: pct, sub: p.sub ?? null, cta: "Review →" };
     }
     return { status: "IN PROGRESS", progress: pct, sub: p.sub ?? null, cta: "Continue →" };
   });
