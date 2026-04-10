@@ -230,7 +230,7 @@ export function Processing({ params }: Props) {
                   {done ? "Recommendations ready" : "Generating action recommendations"}
                 </div>
                 <div style={{ fontSize: "12px", color: "#92400E", marginTop: "2px" }}>
-                  Started just now · {cityName} · Expected 1–2 min
+                  Started just now · {cityName} · Expected wait time 30 seconds
                 </div>
               </div>
             </div>
