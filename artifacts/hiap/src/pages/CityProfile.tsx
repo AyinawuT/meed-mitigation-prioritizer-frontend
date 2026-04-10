@@ -86,7 +86,7 @@ function computeSections(locode: string): SectionState[] {
       return { status: "NOT STARTED", progress: null, sub: null, cta: "Start →" };
     }
     if (pct >= 100) {
-      return { status: "COMPLETE", progress: pct, sub: p.sub ?? null, cta: p.confirmed ? "Continue →" : "Start →" };
+      return { status: "COMPLETE", progress: pct, sub: p.sub ?? null, cta: p.confirmed ? "Continue →" : "Review →" };
     }
     return { status: "IN PROGRESS", progress: pct, sub: p.sub ?? null, cta: "Continue →" };
   });
