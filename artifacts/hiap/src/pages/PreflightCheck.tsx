@@ -92,17 +92,27 @@ function computeConfidence(progMap: Record<string, StepProgress>): number {
   return Math.min(score, 98);
 }
 
-function confidenceLabel(pct: number): { label: string; color: string; hint: string | null } {
+function confidenceLabel(pct: number, progMap: Record<string, StepProgress>): { label: string; color: string; hint: string | null } {
+  const em = progMap["emissions"]?.progress ?? 0;
+  const so = progMap["socioeconomic"]?.progress ?? 0;
+
+  function buildHint(): string | null {
+    if (em === 0) return "Emissions data is the most critical input — without it, recommendations are based on sector averages only. Enter your GHG inventory to unlock accurate rankings.";
+    if (em > 0 && em < 100) return "Complete your emissions data by confirming all sectors to significantly improve ranking accuracy.";
+    if (so < 100) return "Adding socioeconomic data would raise confidence to ~85%.";
+    return null;
+  }
+
   if (pct >= 85) return { label: "High — strong basis for a reliable ranking.", color: "#16A34A", hint: null };
   if (pct >= 60) return {
     label: "Moderate — sufficient to generate a rankable list of actions.",
     color: "#F9A200",
-    hint: "Adding socioeconomic data would raise confidence to ~85%",
+    hint: buildHint(),
   };
   return {
     label: "Low — rankings may be unreliable. Add more data.",
     color: "#F23D33",
-    hint: "Complete emissions and socioeconomic data to improve confidence.",
+    hint: buildHint(),
   };
 }
 
@@ -187,7 +197,7 @@ export function PreflightCheck({ params }: Props) {
 
   const citySlug = city.locode.replace(" ", "-");
   const confidence = computeConfidence(progMap);
-  const { label: confLabel, color: confColor, hint: confHint } = confidenceLabel(confidence);
+  const { label: confLabel, color: confColor, hint: confHint } = confidenceLabel(confidence, progMap);
   const pilot = computePilotAvailability(progMap);
 
   const completeCount = STEPS.filter(s => !s.optional && getStatus(s, progMap[s.key] ?? { visited: false }) === "COMPLETE").length;
