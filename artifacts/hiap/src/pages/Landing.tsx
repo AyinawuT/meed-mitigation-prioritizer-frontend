@@ -241,14 +241,22 @@ export function Landing() {
                   border: "1px solid #EBEBEB",
                   height: "220px",
                   boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
+                  background: "#F5F5F7",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}>
-                  <iframe
-                    src={selectedCity.mapUrl}
-                    width="100%"
-                    height="100%"
-                    style={{ border: "none", display: "block" }}
-                    title={`Map of ${selectedCity.name}`}
-                  />
+                  {selectedCity.mapUrl ? (
+                    <iframe
+                      src={selectedCity.mapUrl}
+                      width="100%"
+                      height="100%"
+                      style={{ border: "none", display: "block" }}
+                      title={`Map of ${selectedCity.name}`}
+                    />
+                  ) : (
+                    <span style={{ fontSize: "13px", color: "#9CA3AF" }}>Map not available</span>
+                  )}
                 </div>
 
                 {/* CTA below the map */}
@@ -287,7 +295,9 @@ export function Landing() {
                 {[
                   {
                     icon: "↗",
-                    label: t("Inventory year {year}", { year: selectedCity.emissionsYear }),
+                    label: selectedCity.emissionsYear
+                      ? t("Inventory year {year}", { year: selectedCity.emissionsYear })
+                      : t("Total emissions"),
                     value: selectedCity.emissions,
                     valueSize: "22px",
                     valueWeight: "700",
@@ -323,8 +333,8 @@ export function Landing() {
                       {stat.icon}
                     </span>
                     <div>
-                      <div style={{ fontSize: stat.valueSize, fontWeight: stat.valueWeight as any, color: stat.valueColor, lineHeight: "1.2" }}>
-                        {stat.value}
+                      <div style={{ fontSize: stat.value ? stat.valueSize : "12px", fontWeight: stat.value ? stat.valueWeight as any : "400", color: stat.value ? stat.valueColor : "#9CA3AF", lineHeight: "1.2" }}>
+                        {stat.value ?? "No data available"}
                       </div>
                       <div style={{ fontSize: "12px", color: "#9CA3AF", marginTop: "2px" }}>{stat.label}</div>
                     </div>
@@ -399,7 +409,7 @@ export function Landing() {
         <div>
           <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>{t("Cities")}</h2>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            {t("{count} cities across northern Chile. Open a city profile to begin.", { count: String(CITIES.length) })}
+            {t("{count} comunas across Chile. Open a city profile to begin.", { count: String(CITIES.length) })}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
             {CITIES.map((city) => {

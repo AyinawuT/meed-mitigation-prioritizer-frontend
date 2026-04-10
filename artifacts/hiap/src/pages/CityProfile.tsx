@@ -176,12 +176,14 @@ function SectionCard({ def, state, onClick }: SectionCardProps) {
   );
 }
 
-function KeyStat({ label, value, sub }: { label: string; value: string; sub?: string }) {
+function KeyStat({ label, value, sub }: { label: string; value: string | null; sub?: string }) {
   return (
     <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 18px", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
       <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "4px", textTransform: "uppercase", letterSpacing: "0.04em" }}>{label}</div>
-      <div style={{ fontSize: "18px", fontWeight: "700", color: "#111827", lineHeight: "1.2" }}>{value}</div>
-      {sub && <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "3px" }}>{sub}</div>}
+      <div style={{ fontSize: value ? "18px" : "13px", fontWeight: value ? "700" : "400", color: value ? "#111827" : "#9CA3AF", lineHeight: "1.2" }}>
+        {value ?? "No data available"}
+      </div>
+      {value && sub && <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "3px" }}>{sub}</div>}
     </div>
   );
 }
@@ -247,8 +249,12 @@ export function CityProfile({ params }: CityProfileProps) {
               <h1 style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>{city.name}</h1>
               <div style={{ fontSize: "13px", color: "#6B7280", display: "flex", alignItems: "center", gap: "8px" }}>
                 <span>{city.region}</span>
-                <span style={{ color: "#D1D5DB" }}>·</span>
-                <span>{city.population} {t("residents")}</span>
+                {city.population && (
+                  <>
+                    <span style={{ color: "#D1D5DB" }}>·</span>
+                    <span>{city.population} {t("residents")}</span>
+                  </>
+                )}
               </div>
             </div>
 

@@ -78,8 +78,8 @@ const ES: Record<string, string> = {
 
   // ── Landing — cities grid ─────────────────────────────────────────────
   "Cities": "Ciudades",
-  "{count} cities across northern Chile. Open a city profile to begin.":
-    "{count} ciudades del norte de Chile. Abre un perfil de ciudad para comenzar.",
+  "{count} comunas across Chile. Open a city profile to begin.":
+    "{count} comunas en Chile. Abre un perfil para comenzar.",
 
   // ── CityProfile — breadcrumb & header ────────────────────────────────
   "residents": "habitantes",

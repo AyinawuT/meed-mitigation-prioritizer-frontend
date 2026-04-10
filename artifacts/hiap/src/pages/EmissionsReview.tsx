@@ -69,34 +69,33 @@ const IQQ_SECTORS: SectorRow[] = [
 function buildSectors(city: CityData): SectorRow[] {
   if (city.locode === "CL IQQ") return IQQ_SECTORS;
 
-  const mapped = parseFloat(city.emissions.replace(/,/g, "").replace(/[^0-9.]/g, ""));
-  return [
+  const SECTORS_TEMPLATE: SectorRow[] = [
     {
       sector: "Transportation",
       sub: "II.1.1 On-road · II.1.2 Railways · II.1.3 Waterborne",
       ref: "II.1",
-      emissions: Math.round(mapped * 0.47),
-      share: 47,
-      source: "SECCTIVAL " + city.emissionsYear,
-      status: "Confirmed",
+      emissions: null,
+      share: null,
+      source: null,
+      status: "Not mapped",
     },
     {
       sector: "Stationary Energy",
       sub: "I.1.1 Residential · I.2.1 Commercial & institutional · I.3.1 Manufacturing",
       ref: "I.1–I.3",
-      emissions: Math.round(mapped * 0.355),
-      share: 35.5,
-      source: "DEC " + city.emissionsYear,
-      status: "Confirmed",
+      emissions: null,
+      share: null,
+      source: null,
+      status: "Not mapped",
     },
     {
       sector: "Waste",
       sub: "III.1.1 Solid waste disposal · III.3.1 Wastewater treatment",
       ref: "III.1–III.3",
-      emissions: Math.round(mapped * 0.172),
-      share: 17.2,
-      source: "MRC " + String(parseInt(city.emissionsYear) - 1),
-      status: "Confirmed",
+      emissions: null,
+      share: null,
+      source: null,
+      status: "Not mapped",
     },
     {
       sector: "Industrial Processes & Product Use (IPPU)",
@@ -117,6 +116,7 @@ function buildSectors(city: CityData): SectorRow[] {
       status: "Not mapped",
     },
   ];
+  return SECTORS_TEMPLATE;
 }
 
 function recalcShares(rows: SectorRow[]): SectorRow[] {
@@ -174,7 +174,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const confirmedCount = sectors.filter((s) => s.status === "Confirmed").length;
   const totalEmissions = sectors.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
   const totalMillions = (totalEmissions / 1e6).toFixed(2);
-  const inventoryYear = city.locode === "CL IQQ" ? "2022" : city.emissionsYear;
+  const inventoryYear = city.locode === "CL IQQ" ? "2022" : (city.emissionsYear ?? "—");
 
   useEffect(() => {
     setStepProgress(locode, "emissions", {
