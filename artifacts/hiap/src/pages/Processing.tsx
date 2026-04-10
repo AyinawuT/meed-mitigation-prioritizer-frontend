@@ -321,13 +321,8 @@ export function Processing({ params }: Props) {
             {/* Footer */}
             <div style={{ margin: "12px 16px 16px", background: "#EEF2FF", border: "1px solid #C7D2FE", borderRadius: "8px", padding: "12px 16px", display: "flex", alignItems: "flex-start", gap: "10px" }}>
               <span style={{ fontSize: "13px", color: "#4338CA", flexShrink: 0, fontWeight: "700" }}>✓</span>
-              <div>
-                <div style={{ fontSize: "13px", fontWeight: "600", color: "#3730A3", marginBottom: "2px" }}>
-                  You can safely close this tab
-                </div>
-                <div style={{ fontSize: "12px", color: "#6366F1" }}>
-                  Results will be ready when you return. Notification will be sent to rl@santiago.cl.
-                </div>
+              <div style={{ fontSize: "13px", fontWeight: "600", color: "#3730A3" }}>
+                Results will be ready shortly!
               </div>
             </div>
           </div>
