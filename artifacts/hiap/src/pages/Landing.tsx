@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
+import { MapEmbed } from "@/components/MapEmbed";
 
 const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic", "policy"];
 
@@ -235,29 +236,11 @@ export function Landing() {
               {/* Left column: map + CTA button */}
               <div style={{ flex: "0 0 460px", display: "flex", flexDirection: "column", gap: "12px" }}>
                 {/* Map */}
-                <div style={{
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  border: "1px solid #EBEBEB",
-                  height: "220px",
-                  boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
-                  background: "#F5F5F7",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}>
-                  {selectedCity.mapUrl ? (
-                    <iframe
-                      src={selectedCity.mapUrl}
-                      width="100%"
-                      height="100%"
-                      style={{ border: "none", display: "block" }}
-                      title={`Map of ${selectedCity.name}`}
-                    />
-                  ) : (
-                    <span style={{ fontSize: "13px", color: "#9CA3AF" }}>Map not available</span>
-                  )}
-                </div>
+                <MapEmbed
+                  cityName={selectedCity.name}
+                  regionName={selectedCity.region}
+                  height="220px"
+                />
 
                 {/* CTA below the map */}
                 <button
