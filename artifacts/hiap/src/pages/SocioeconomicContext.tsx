@@ -4,6 +4,7 @@ import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
+import citiesMock from "@/data/citiesMock.json";
 
 type Tab = "review" | "adjust";
 type Category = "very high" | "high" | "medium" | "low" | "very low";
@@ -146,7 +147,20 @@ function formatValue(ind: Indicator): string {
 
 function buildIndicators(city: CityData): Indicator[] {
   if (city.locode === "CL IQQ") return IQQ_INDICATORS;
-  return IQQ_INDICATORS.map((ind) => ({ ...ind, value: 0, category: "medium" as Category }));
+  const mockCity = (citiesMock as { cities: Record<string, { attribute_value: number; attribute_category: string }>[]; }).cities
+    ?.find((c) => (c as unknown as { locode: string }).locode?.toUpperCase() === city.locode.toUpperCase());
+  if (!mockCity) {
+    return IQQ_INDICATORS.map((ind) => ({ ...ind, value: 0, category: "medium" as Category }));
+  }
+  return IQQ_INDICATORS.map((ind) => {
+    const field = (mockCity as Record<string, { attribute_value: number; attribute_category: string } | unknown>)[ind.key] as { attribute_value: number; attribute_category: string } | undefined;
+    if (!field || typeof field !== "object") return { ...ind, value: 0, category: "medium" as Category };
+    return {
+      ...ind,
+      value: field.attribute_value,
+      category: field.attribute_category as Category,
+    };
+  });
 }
 
 const THEMES = ["Income & Welfare", "Housing", "Mobility", "Industry"] as const;
