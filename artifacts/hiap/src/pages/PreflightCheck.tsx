@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
-import { getStepProgress, type StepProgress } from "@/lib/stepProgress";
+import { getStepProgress, setStepProgress, type StepProgress } from "@/lib/stepProgress";
 import policyPlansData from "@/data/policyPlans.json";
 
 // ── Candidate action count from plans data ──────────────────────────────────
@@ -143,6 +143,12 @@ export function PreflightCheck({ params }: Props) {
   useEffect(() => {
     const map: Record<string, StepProgress> = {};
     STEPS.forEach(s => { map[s.key] = getStepProgress(locode, s.key); });
+    // Iquique has all 5 sectors pre-confirmed in static data — seed progress if never visited
+    if (locode.toUpperCase() === "CL IQQ" && !(map["emissions"]?.visited)) {
+      const seeded: StepProgress = { visited: true, progress: 100, sub: "5 / 5 sectors confirmed · Inventory year 2022" };
+      setStepProgress(locode, "emissions", seeded);
+      map["emissions"] = seeded;
+    }
     setProgMap(map);
   }, [locode]);
 
