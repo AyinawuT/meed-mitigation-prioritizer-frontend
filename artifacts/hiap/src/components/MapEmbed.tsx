@@ -74,16 +74,13 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
     );
   }
 
-  // Attribution bar is ~30px tall. Extend iframe height beyond the container
-  // so it overflows downward and gets clipped by overflow:hidden.
-  const ATTR_HEIGHT = 52;
   return (
-    <div style={{ ...base, position: "relative" }}>
+    <div style={{ ...base }}>
       <iframe
         src={embedUrl}
         width="100%"
-        height={`calc(100% + ${ATTR_HEIGHT}px)`}
-        style={{ border: "none", display: "block", position: "absolute", top: 0, left: 0 }}
+        height="100%"
+        style={{ border: "none", display: "block" }}
         title={`Map of ${cityName}`}
       />
     </div>

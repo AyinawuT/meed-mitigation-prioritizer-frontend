@@ -9,13 +9,11 @@ import { MapEmbed } from "@/components/MapEmbed";
 const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic", "policy"];
 
 function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED" {
-  // Only steps that require explicit user action count as "started".
-  // Socioeconomic, regulations, and policy are pre-filled and auto-complete on
-  // first visit — they must not trigger "IN PROGRESS" on their own.
-  const emissionsP = (getStepProgress(locode, "emissions").progress ?? 0);
-  const strategicP = (getStepProgress(locode, "strategic").progress ?? 0);
-  const userStarted = emissionsP > 0 || strategicP >= 50;
-  if (!userStarted) return "AVAILABLE";
+  // Emissions is the only step that requires explicit user action (confirming
+  // individual sectors). All other steps auto-complete on first visit from
+  // pre-filled data, so they cannot signal that a user has "started" a city.
+  const emissionsP = getStepProgress(locode, "emissions").progress ?? 0;
+  if (!(emissionsP > 0)) return "AVAILABLE";
 
   const progresses = PROFILE_STEPS.map((s) => getStepProgress(locode, s));
   const allComplete = progresses.every((p) => p.visited && (p.progress ?? 0) >= 100);
