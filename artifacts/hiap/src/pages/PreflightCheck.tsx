@@ -403,30 +403,38 @@ export function PreflightCheck({ params }: Props) {
         </div>
 
         {/* ── Generate CTA ── */}
-        <div style={{ marginTop: "20px" }}>
-          {completeCount === 0 && (
-            <div style={{ background: "#EEF2FF", border: "1px solid #C7D2FE", borderRadius: "8px", padding: "10px 16px", fontSize: "12px", color: "#4338CA", marginBottom: "12px", display: "flex", gap: "6px" }}>
-              <span>ℹ</span>
-              <span>No steps completed — recommendations will use pre-loaded pilot data for Iquique.</span>
+        {(() => {
+          const emissionsProgress = progMap["emissions"]?.progress ?? 0;
+          const canGenerate = emissionsProgress > 0;
+          return (
+            <div style={{ marginTop: "20px" }}>
+              {!canGenerate && (
+                <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "12px 16px", fontSize: "13px", color: "#B91C1C", marginBottom: "12px", display: "flex", gap: "8px", alignItems: "flex-start" }}>
+                  <span style={{ flexShrink: 0, fontWeight: "700" }}>⚠</span>
+                  <span><strong>Emissions data required.</strong> Confirm at least one emissions sector before generating recommendations. Without it, there is no city-specific data to rank actions against.</span>
+                </div>
+              )}
+              <button
+                disabled={!canGenerate}
+                onClick={() => canGenerate && navigate(`/city/${citySlug}/processing`)}
+                style={{
+                  width: "100%", padding: "16px", borderRadius: "10px", border: "none",
+                  background: canGenerate ? "#16A34A" : "#D1D5DB",
+                  color: canGenerate ? "white" : "#9CA3AF",
+                  fontSize: "14px", fontWeight: "700",
+                  cursor: canGenerate ? "pointer" : "not-allowed",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+                  letterSpacing: "0.05em", textTransform: "uppercase",
+                  boxShadow: canGenerate ? "0 2px 12px rgba(22,163,74,0.30)" : "none",
+                  transition: "all 0.15s",
+                }}
+              >
+                <span style={{ fontSize: "16px" }}>⚡</span>
+                {canGenerate ? "Generate recommendations — confirm you're ready" : "Enter emissions data to continue"}
+              </button>
             </div>
-          )}
-          <button
-            onClick={() => navigate(`/city/${citySlug}/processing`)}
-            style={{
-              width: "100%", padding: "16px", borderRadius: "10px", border: "none",
-              background: "#16A34A",
-              color: "white", fontSize: "14px", fontWeight: "700",
-              cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              letterSpacing: "0.05em", textTransform: "uppercase",
-              boxShadow: "0 2px 12px rgba(22,163,74,0.30)",
-              transition: "all 0.15s",
-            }}
-          >
-            <span style={{ fontSize: "16px" }}>⚡</span>
-            Generate recommendations — confirm you're ready
-          </button>
-        </div>
+          );
+        })()}
       </div>
     </div>
   );
