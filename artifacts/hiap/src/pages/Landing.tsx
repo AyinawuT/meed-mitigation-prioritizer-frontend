@@ -9,14 +9,19 @@ import { MapEmbed } from "@/components/MapEmbed";
 const PROFILE_STEPS = ["emissions", "socioeconomic", "regulations", "strategic", "policy"];
 
 function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED" {
-  // Emissions is the only step that requires explicit user action (confirming
-  // individual sectors). All other steps auto-complete on first visit from
-  // pre-filled data, so they cannot signal that a user has "started" a city.
-  const emissionsP = getStepProgress(locode, "emissions").progress ?? 0;
-  if (!(emissionsP > 0)) return "AVAILABLE";
+  const steps = PROFILE_STEPS.map((s) => ({ key: s, ...getStepProgress(locode, s) }));
+  const emissionsP = steps.find((s) => s.key === "emissions")?.progress ?? 0;
 
-  const progresses = PROFILE_STEPS.map((s) => getStepProgress(locode, s));
-  const allComplete = progresses.every((p) => p.visited && (p.progress ?? 0) >= 100);
+  // A city is "started" if the user explicitly confirmed any step, or confirmed an emissions sector
+  const anyStarted = emissionsP > 0 || steps.some((s) => s.confirmed);
+  if (!anyStarted) return "AVAILABLE";
+
+  // Onboarded = all required steps confirmed with full progress
+  const required = ["emissions", "socioeconomic", "regulations", "strategic"];
+  const allComplete = required.every((key) => {
+    const p = steps.find((s) => s.key === key);
+    return p?.confirmed && (p?.progress ?? 0) >= 100;
+  });
   return allComplete ? "ONBOARDED" : "IN PROGRESS";
 }
 
