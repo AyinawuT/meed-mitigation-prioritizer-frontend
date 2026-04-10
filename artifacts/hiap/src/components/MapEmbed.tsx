@@ -83,8 +83,8 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
       <iframe
         src={embedUrl}
         width="100%"
-        height="100%"
-        style={{ border: "none", display: "block" }}
+        height="calc(100% + 32px)"
+        style={{ border: "none", display: "block", marginBottom: "-32px" }}
         title={`Map of ${cityName}`}
       />
     </div>
