@@ -228,10 +228,13 @@ export function CityProfile({ params }: CityProfileProps) {
 
   const citySlug = city.locode.replace(" ", "-");
   const sectionStates = computeSections(locode);
-  const completeCount  = sectionStates.filter((s) => s.status === "COMPLETE").length;
-  const progressCount  = sectionStates.filter((s) => s.status === "IN PROGRESS").length;
-  const notStarted     = sectionStates.filter((s) => s.status === "NOT STARTED").length;
-  const canGenerate    = completeCount >= 3;
+  const completeCount   = sectionStates.filter((s) => s.status === "COMPLETE").length;
+  const progressCount   = sectionStates.filter((s) => s.status === "IN PROGRESS").length;
+  const notStarted      = sectionStates.filter((s) => s.status === "NOT STARTED" || s.status === "NEEDS REVIEW").length;
+  const emissionsIdx    = SECTION_DEFS.findIndex((d) => d.id === "emissions");
+  const emissionsState  = sectionStates[emissionsIdx];
+  const emissionsReady  = emissionsState.status === "COMPLETE" || emissionsState.status === "IN PROGRESS";
+  const canGenerate     = emissionsReady && completeCount >= 3;
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -333,7 +336,12 @@ export function CityProfile({ params }: CityProfileProps) {
             {notStarted > 0 && `${notStarted} ${t("not started")}`}
             {completeCount === 0 && progressCount === 0 && notStarted === 0 && t("No sections started yet")}
           </span>
-          {!canGenerate && (
+          {!canGenerate && !emissionsReady && (
+            <span style={{ fontSize: "13px", color: "#F23D33", fontWeight: "500" }}>
+              Emissions Data required · enter your GHG inventory to unlock recommendations →
+            </span>
+          )}
+          {!canGenerate && emissionsReady && (
             <span style={{ fontSize: "13px", color: "#F9A200", fontWeight: "500" }}>
               {t("{n} more section{s} needed to unlock recommendations →", {
                 n: String(3 - completeCount),
