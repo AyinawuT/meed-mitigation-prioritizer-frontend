@@ -81,10 +81,10 @@ interface SectionState {
 function computeSections(locode: string): SectionState[] {
   return SECTION_DEFS.map((def) => {
     const p = getStepProgress(locode, def.progressKey);
-    if (!p.visited) {
+    const pct = p.progress ?? 0;
+    if (!p.visited || pct === 0) {
       return { status: "NOT STARTED", progress: null, sub: null, cta: "Start →" };
     }
-    const pct = p.progress ?? 0;
     if (pct >= 100) {
       return { status: "COMPLETE", progress: pct, sub: p.sub ?? null, cta: "Continue →" };
     }
