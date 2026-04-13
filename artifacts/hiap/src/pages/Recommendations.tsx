@@ -274,9 +274,6 @@ function DetailPanel({
           <div style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "4px" }}>
             {gpcSectorName(action.gpcRefs)}
           </div>
-          <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
-            {action.actionCategory}
-          </div>
           <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.35" }}>
             {action.actionName}
           </h2>
