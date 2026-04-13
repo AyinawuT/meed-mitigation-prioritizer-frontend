@@ -67,6 +67,10 @@ export default defineConfig({
       deny: ["**/.*"],
     },
     proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+      },
       "/photon-geocode": {
         target: "https://photon.komoot.io",
         changeOrigin: true,

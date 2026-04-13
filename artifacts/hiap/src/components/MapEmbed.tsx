@@ -6,15 +6,13 @@ interface MapEmbedProps {
   height?: string;
 }
 
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
-
 function buildEmbedUrl(lat: number, lon: number, delta = 0.12): string {
   const bbox = `${lon - delta},${lat - delta},${lon + delta},${lat + delta}`;
   return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
 }
 
 export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedProps) {
-  const cacheKey = `hiap:map2:${cityName}:${regionName}`;
+  const cacheKey = `hiap:map3:${cityName}:${regionName}`;
 
   const [embedUrl, setEmbedUrl] = useState<string | null>(() => {
     try { return sessionStorage.getItem(cacheKey); } catch { return null; }
@@ -23,20 +21,16 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
 
   useEffect(() => {
     if (embedUrl !== null) return;
-    const q = encodeURIComponent(`${cityName} ${regionName} Chile`);
-    fetch(`${BASE}/photon-geocode?q=${q}&limit=5&lang=en`)
+    const name = encodeURIComponent(cityName);
+    const region = encodeURIComponent(regionName);
+    fetch(`/api/geocode?name=${name}&region=${region}`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();
       })
-      .then((data) => {
-        const features: any[] = data.features ?? [];
-        const match =
-          features.find((f) => f.properties?.country_code === "CL") ??
-          features[0];
-        if (match) {
-          const [lon, lat] = match.geometry.coordinates as [number, number];
-          const url = buildEmbedUrl(lat, lon);
+      .then((data: { lat: number; lon: number }) => {
+        if (data.lat && data.lon) {
+          const url = buildEmbedUrl(data.lat, data.lon);
           try { sessionStorage.setItem(cacheKey, url); } catch {}
           setEmbedUrl(url);
         } else {
