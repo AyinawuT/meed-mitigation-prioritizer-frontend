@@ -74,7 +74,7 @@ export function Landing() {
   const hasDropdown = showDropdown && suggestions.length > 0;
 
   return (
-    <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Navbar />
 
       {/* Hero */}
@@ -340,7 +340,7 @@ export function Landing() {
 
 
       {/* Body */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 64px 60px" }}>
+      <div style={{ flex: 1, maxWidth: "1100px", margin: "0 auto", padding: "32px 64px 60px", width: "100%" }}>
         {/* How it works */}
         <div style={{ marginBottom: "40px" }}>
           <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>{t("How it works")}</h2>
