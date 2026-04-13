@@ -466,58 +466,718 @@
   "perActionScores": {
     "c40_0010": {
       "policyScore": 0.936,
-      "natScore": 0.44,
-      "regScore": 0.28
+      "natScore": 0.534,
+      "regScore": 0.398
     },
     "c40_0012": {
       "policyScore": 0.936,
-      "natScore": 0.44,
-      "regScore": 0.28
+      "natScore": 0.534,
+      "regScore": 0.398
     },
     "c40_0013": {
       "policyScore": 0.576,
-      "natScore": 0.44,
+      "natScore": 0.534,
       "regScore": null
+    },
+    "c40_0015": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "c40_0016": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0017": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0018": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
     },
     "c40_0023": {
       "policyScore": 1,
-      "natScore": 0.6,
-      "regScore": 0.28
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
     },
     "c40_0025": {
       "policyScore": 1,
-      "natScore": 0.6,
-      "regScore": 0.28
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
     },
     "c40_0029": {
       "policyScore": 0.936,
-      "natScore": 0.44,
-      "regScore": 0.28
+      "natScore": 0.534,
+      "regScore": 0.398
     },
     "c40_0034": {
       "policyScore": 1,
-      "natScore": 0.44,
-      "regScore": 0.44
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "c40_0035": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0036": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
     },
     "c40_0037": {
       "policyScore": 0.936,
-      "natScore": 0.44,
-      "regScore": 0.28
+      "natScore": 0.534,
+      "regScore": 0.398
     },
     "c40_0040": {
       "policyScore": 1,
-      "natScore": 0.6,
-      "regScore": 0.28
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "c40_0042": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0046": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0048": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0049": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "c40_0051": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0052": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0053": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0056": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0062": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "c40_0071": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0001": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0002": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0006": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0008": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0009": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0010": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0012": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0015": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0016": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0023": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0024": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0025": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0026": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0027": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0028": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0031": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0033": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0034": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0035": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0040": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0045": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0049": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0050": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0053": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0064": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0071": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0072": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "icare_0074": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0076": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0078": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0082": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0099": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0101": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0104": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0110": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "icare_0111": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "icare_0117": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0120": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0121": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0122": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0127": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0128": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0137": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0139": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0144": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0145": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0154": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0156": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.532
+    },
+    "icare_0160": {
+      "policyScore": 0.738,
+      "natScore": 0.6679999999999999,
+      "regScore": null
+    },
+    "icare_0162": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0163": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0164": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0165": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0169": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0170": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.532
+    },
+    "icare_0171": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "icare_0172": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0173": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0176": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "icare_0180": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0181": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0183": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0184": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "icare_0186": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0001": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "ipcc_0023": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0024": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0025": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0026": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0028": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0031": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0033": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0034": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0037": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0038": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "ipcc_0039": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "ipcc_0040": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0041": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0042": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0043": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "ipcc_0045": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "ipcc_0049": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0050": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0052": {
+      "policyScore": 0.738,
+      "natScore": 0.6679999999999999,
+      "regScore": null
+    },
+    "ipcc_0057": {
+      "policyScore": 0.738,
+      "natScore": 0.6679999999999999,
+      "regScore": null
+    },
+    "ipcc_0060": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0062": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0064": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0067": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
+    },
+    "ipcc_0068": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0069": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0070": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0071": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
     },
     "ipcc_0074": {
       "policyScore": 0.576,
-      "natScore": 0.44,
+      "natScore": 0.534,
       "regScore": null
+    },
+    "ipcc_0076": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0078": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.532
+    },
+    "ipcc_0083": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0084": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0085": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0086": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0087": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0088": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0089": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0090": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0091": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0092": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0094": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0096": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0097": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0098": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0099": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0100": {
+      "policyScore": 0.576,
+      "natScore": 0.534,
+      "regScore": null
+    },
+    "ipcc_0101": {
+      "policyScore": 1,
+      "natScore": 0.534,
+      "regScore": 0.532
+    },
+    "ipcc_0102": {
+      "policyScore": 0.738,
+      "natScore": 0.6679999999999999,
+      "regScore": null
+    },
+    "ipcc_0103": {
+      "policyScore": 0.738,
+      "natScore": 0.6679999999999999,
+      "regScore": null
+    },
+    "ipcc_0104": {
+      "policyScore": 1,
+      "natScore": 0.6679999999999999,
+      "regScore": 0.398
+    },
+    "ipcc_0105": {
+      "policyScore": 0.936,
+      "natScore": 0.534,
+      "regScore": 0.398
     }
   },
   "aggregateScores": {
-    "national": 0.89,
-    "regional": 0.3
+    "national": 0.566,
+    "regional": 0.425
   },
   "dataSource": {
     "locode": "CL ANF"
