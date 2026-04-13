@@ -411,6 +411,9 @@ export function Landing() {
           <span style={{ color: "#3B5FA0", fontSize: "12px" }}>
             High Impact Action Prioritizer — Climate Solutions for Chilean Cities
           </span>
+          <span style={{ color: "#93C5FD", fontSize: "12px", opacity: 0.7 }}>
+            By Open Earth Foundation &amp; Sustainability Solutions Group
+          </span>
         </div>
       </div>
     </div>
