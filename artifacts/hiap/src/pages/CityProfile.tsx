@@ -307,7 +307,8 @@ export function CityProfile({ params }: CityProfileProps) {
         </div>
         <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px", lineHeight: "1.5" }}>
           {t("Complete each section to build the foundation for your action recommendations. Sections marked")}{" "}
-          <strong style={{ color: "#F23D33" }}>{t("HIGH")}</strong> {t("have the greatest impact on ranking accuracy.")}
+          <strong style={{ color: "#F23D33" }}>{t("HIGH")}</strong> {t("have the greatest impact on ranking accuracy. Start with")}{" "}
+          <strong>{t("Emissions Data")}</strong>{t(".")}
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "16px" }}>
