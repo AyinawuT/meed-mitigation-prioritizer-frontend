@@ -87,7 +87,7 @@ export function Landing() {
                 {t("The right climate actions for your city, ranked by evidence")}
               </p>
               <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: "0" }}>
-                {t("MEED+ HIAP combines your city's emissions inventory, regulatory context, and socioeconomic profile to score and rank 155 climate mitigation actions — giving municipal teams a clear, data-driven starting point for their climate plans.")}
+                {t("MEED+ HIAP combines your city's emissions inventory, regulatory context, policy context, strategic preferences and socioeconomic profile to score and rank climate mitigation actions, giving municipal teams a clear, data-driven starting point for their climate plans.")}
               </p>
             </div>
 
