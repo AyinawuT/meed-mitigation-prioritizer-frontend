@@ -138,6 +138,76 @@ const CONCERN_ICON: Record<string, string> = {
   neutral: "→",
 };
 
+const RELEVANCE: Record<string, Record<string, string>> = {
+  poverty_rate: {
+    "very high": "Very high poverty — prioritise low-cost, high co-benefit interventions",
+    "high":      "High poverty → prioritise low-cost, co-benefit interventions",
+    "medium":    "Moderate poverty — balance equity and efficiency in action selection",
+    "low":       "Low poverty — broader range of investment-intensive actions feasible",
+    "very low":  "Very low poverty — full range of climate investments is viable",
+  },
+  median_household_income: {
+    "very high": "Very high income — strong capacity to invest in clean technology",
+    "high":      "High income enables significant investment in clean technology",
+    "medium":    "Moderate income enables investment in clean technology",
+    "low":       "Low income — prioritise affordable, high co-benefit actions",
+    "very low":  "Very low income — focus on no-cost and subsidised interventions",
+  },
+  unemployment_rate: {
+    "very high": "Very high unemployment — green jobs co-benefits are critical for political viability",
+    "high":      "High unemployment — green jobs co-benefits strengthen political viability",
+    "medium":    "Moderate unemployment — green job creation remains a viable co-benefit",
+    "low":       "Low unemployment — just-transition risks are minimal",
+    "very low":  "Very low unemployment — labour market is stable; transition risks minimal",
+  },
+  renter_share: {
+    "very high": "Very high renter share → severe split-incentive barrier for building retrofits",
+    "high":      "High renter share → split-incentive problem for building retrofits",
+    "medium":    "Mixed tenure — building retrofits viable with targeted landlord incentives",
+    "low":       "Low renter share — household-level retrofit programmes are largely feasible",
+    "very low":  "Very low renter share — building retrofit programmes face minimal tenure barriers",
+  },
+  home_ownership: {
+    "very high": "Very high ownership — household-level retrofit programmes are highly feasible",
+    "high":      "High ownership — retrofit programmes have broad potential reach",
+    "medium":    "Moderate ownership — targeted retrofit support recommended",
+    "low":       "Low ownership limits household-level retrofit programmes",
+    "very low":  "Very low ownership — focus retrofits on social housing and public buildings",
+  },
+  public_transport_share: {
+    "very high": "Very high PT use — investment in transit quality delivers large co-benefits",
+    "high":      "High PT use — transit investment can deliver significant modal shift gains",
+    "medium":    "Medium PT use — transit investment can shift modal split meaningfully",
+    "low":       "Low PT use — mode shift investment is challenging but high-impact if successful",
+    "very low":  "Very low PT use — significant behaviour change needed; prioritise infrastructure",
+  },
+  transport_logistics_employment: {
+    "very high": "Large freight sector — just-transition risks must be carefully managed",
+    "high":      "Significant freight sector — just-transition planning is important",
+    "medium":    "Moderate freight sector — just-transition considerations apply",
+    "low":       "Relatively small freight sector — lower just-transition risk",
+    "very low":  "Minimal freight employment — just-transition risk is negligible",
+  },
+  industry_construction_employment: {
+    "very high": "Very large industrial base → just-transition considerations are critical",
+    "high":      "Large industrial base → just-transition considerations critical",
+    "medium":    "Moderate industrial base — just-transition planning is recommended",
+    "low":       "Small industrial base — just-transition risks are limited",
+    "very low":  "Minimal industrial employment — just-transition risk is very low",
+  },
+  electricity_access: {
+    "very high": "Near-universal access — electrification of transport and heating is highly feasible",
+    "high":      "High electricity access — electrification actions are broadly feasible",
+    "medium":    "Moderate access — extend grid before prioritising electrification actions",
+    "low":       "Low electricity access — grid expansion should precede electrification actions",
+    "very low":  "Full access confirmed — electrification is feasible for all households",
+  },
+};
+
+function buildRelevance(key: string, category: Category): string {
+  return RELEVANCE[key]?.[category] ?? "—";
+}
+
 function formatValue(ind: Indicator): string {
   if (ind.units === "CLP") {
     return `CLP ${(ind.value / 1_000_000).toFixed(1)}M`;
@@ -146,19 +216,26 @@ function formatValue(ind: Indicator): string {
 }
 
 function buildIndicators(city: CityData): Indicator[] {
-  if (city.locode === "CL IQQ") return IQQ_INDICATORS;
+  if (city.locode === "CL IQQ") {
+    return IQQ_INDICATORS.map((ind) => ({
+      ...ind,
+      relevance: buildRelevance(ind.key, ind.category),
+    }));
+  }
   const mockCity = (citiesMock as { cities: Record<string, { attribute_value: number; attribute_category: string }>[]; }).cities
     ?.find((c) => (c as unknown as { locode: string }).locode?.toUpperCase() === city.locode.toUpperCase());
   if (!mockCity) {
-    return IQQ_INDICATORS.map((ind) => ({ ...ind, value: 0, category: "medium" as Category }));
+    return IQQ_INDICATORS.map((ind) => ({ ...ind, value: 0, category: "medium" as Category, relevance: buildRelevance(ind.key, "medium") }));
   }
   return IQQ_INDICATORS.map((ind) => {
     const field = (mockCity as Record<string, { attribute_value: number; attribute_category: string } | unknown>)[ind.key] as { attribute_value: number; attribute_category: string } | undefined;
-    if (!field || typeof field !== "object") return { ...ind, value: 0, category: "medium" as Category };
+    if (!field || typeof field !== "object") return { ...ind, value: 0, category: "medium" as Category, relevance: buildRelevance(ind.key, "medium") };
+    const category = field.attribute_category as Category;
     return {
       ...ind,
       value: field.attribute_value,
-      category: field.attribute_category as Category,
+      category,
+      relevance: buildRelevance(ind.key, category),
     };
   });
 }
