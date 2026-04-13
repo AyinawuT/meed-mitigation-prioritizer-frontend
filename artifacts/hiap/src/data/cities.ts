@@ -23,7 +23,7 @@ export const CITIES: CityData[] = [
     comunaCode: 'CL01101',
     regionCode: 'CL01',
     emissions: '9,118,054 tCO₂e',
-    emissionsYear: '2023',
+    emissionsYear: '2022',
     population: '214,857',
     area: '225 km²',
     populationDensity: '953.69 hab/km²',
