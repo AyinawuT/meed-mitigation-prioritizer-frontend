@@ -321,6 +321,8 @@ export function Processing({ params }: Props) {
         const [apiResult] = await callPrioritize({
           cityDataList: [cityInput],
           topN: 20,
+          createExplanations: true,
+          requestedLanguages: ["en"],
         });
         const result: PipelineResult = adaptApiResult(apiResult, cityInput.cityEmissionsData, 20);
         localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
