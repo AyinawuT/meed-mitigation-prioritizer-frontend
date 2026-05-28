@@ -356,7 +356,11 @@ function DetailPanel({
                   label: "Timeframe fit",
                   rawValue: action.timeframeComponent,
                   weight: 0.05,
-                  note: action.timeframeComponent === 1.0 ? "Exact match with preferred implementation timeframe" : action.timeframeComponent === 0.5 ? "Adjacent match or no preference set" : "Far mismatch with preferred timeframe",
+                  note: action.timeframeComponent === 1.0
+                    ? "Action timeline exactly matches the city's preferred horizon (Strategic Preferences)"
+                    : action.timeframeComponent === 0.5
+                    ? "Action timeline is adjacent to — or no preference was set in — Strategic Preferences"
+                    : "Action timeline does not match the city's preferred horizon (Strategic Preferences)",
                 },
               ]}
             />
