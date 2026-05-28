@@ -82,8 +82,9 @@ function toSectorTags(displayNames: string[]): string[] {
     .filter((t): t is string => Boolean(t));
 }
 
-// Strip any fields not accepted by the backend's strict GpcActivity schema.
-// The mock data includes `activityName` which the backend rejects with extra_forbidden.
+// Sanitize emissions data before sending to the backend:
+// - The mock JSON uses the old field name `activityName`; the backend now expects `activityType`.
+// - Strip any other extra fields the backend's strict schema would reject.
 function sanitizeEmissionsData(data: FrontendCityEmissionsData): FrontendCityEmissionsData {
   return {
     ...data,
@@ -92,15 +93,19 @@ function sanitizeEmissionsData(data: FrontendCityEmissionsData): FrontendCityEmi
         ref,
         {
           notationKey: entry.notationKey,
-          activities: entry.activities.map(({ activityType, totalEmissions, totalEmissionsUnit, activityValue, activityUnit, dataSource, notationKey }) => ({
-            activityType,
-            totalEmissions,
-            totalEmissionsUnit,
-            activityValue,
-            activityUnit,
-            dataSource,
-            notationKey,
-          })),
+          activities: entry.activities.map((raw) => {
+            const a = raw as typeof raw & { activityName?: string };
+            return {
+              // rename activityName → activityType (backend schema change)
+              activityType: a.activityType ?? a.activityName ?? null,
+              totalEmissions: a.totalEmissions,
+              totalEmissionsUnit: a.totalEmissionsUnit,
+              activityValue: a.activityValue,
+              activityUnit: a.activityUnit,
+              dataSource: a.dataSource,
+              notationKey: a.notationKey,
+            };
+          }),
         },
       ])
     ),
