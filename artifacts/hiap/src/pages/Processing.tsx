@@ -238,6 +238,15 @@ function adaptApiResult(
   const ranked: RankedAction[] = (apiResult.ranked_actions ?? []).map(a => {
     const local = LOCAL_ACTION_MAP.get(a.action_id);
     const score = a.final_score;
+
+    // Pull sub-scores from evidence_summary returned by the backend
+    type EvidenceSummary = {
+      impact?: { emissions_reduction_component_score?: number; timeline_component_score?: number };
+      alignment?: { policy_component_score?: number; sector_component_score?: number; co_benefit_component_score?: number };
+      feasibility?: { legal_component_score?: number; mitigation_feasibility_component_score?: number };
+    };
+    const ev = (a.evidence_summary ?? {}) as EvidenceSummary;
+
     return {
       rank: a.rank,
       actionId: a.action_id,
@@ -251,14 +260,14 @@ function adaptApiResult(
       impactScore:     a.impact_score,
       alignmentScore:  a.alignment_score,
       feasibilityScore: a.feasibility_score,
-      // Sub-scores not returned by the API — default to 0
-      reductionShare:        0,
-      timelineScore:         0,
-      policyComponent:       0,
-      sectorComponent:       0,
-      otherComponent:        0,
-      softLegalComponent:    0,
-      socioeconomicComponent: 0,
+      // Sub-scores from evidence_summary (backend now returns 0.5 for missing timeline, etc.)
+      reductionShare:        ev.impact?.emissions_reduction_component_score   ?? 0,
+      timelineScore:         ev.impact?.timeline_component_score               ?? 0,
+      policyComponent:       ev.alignment?.policy_component_score              ?? 0,
+      sectorComponent:       ev.alignment?.sector_component_score              ?? 0,
+      otherComponent:        ev.alignment?.co_benefit_component_score          ?? 0,
+      softLegalComponent:    ev.feasibility?.legal_component_score             ?? 0,
+      socioeconomicComponent: ev.feasibility?.mitigation_feasibility_component_score ?? 0,
       legalPassed: true,
       legalFlag:   false,
       gpcRefs:         local?.emissions?.gpc_reference_number ?? [],
