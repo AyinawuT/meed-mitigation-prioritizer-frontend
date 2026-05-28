@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
@@ -6,7 +6,6 @@ import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import citiesMock from "@/data/citiesMock.json";
 
-type Tab = "review" | "adjust";
 type Category = "very high" | "high" | "medium" | "low" | "very low";
 
 interface Indicator {
@@ -250,7 +249,6 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
-  const [activeTab, setActiveTab] = useState<Tab>("review");
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -258,12 +256,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
-  const original = city ? buildIndicators(city) : [];
-  const [indicators, setIndicators] = useState<Indicator[]>(original);
-  const [editingKey, setEditingKey] = useState<string | null>(null);
-  const [draftValue, setDraftValue] = useState("");
-  const [draftSource, setDraftSource] = useState("");
-  const [hasEdits, setHasEdits] = useState(false);
+  const indicators = city ? buildIndicators(city) : [];
 
   if (!city) {
     return (
@@ -289,44 +282,6 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
     });
   }, [locode, indicators.length]);
 
-  function startEdit(key: string) {
-    const ind = indicators.find((i) => i.key === key)!;
-    setEditingKey(key);
-    setDraftValue(ind.units === "CLP" ? String(ind.value / 1_000_000) : String(ind.value));
-    setDraftSource(ind.source);
-  }
-
-  function commitEdit(key: string): boolean {
-    const ind = indicators.find((i) => i.key === key)!;
-    const parsed = parseFloat(draftValue.replace(/,/g, ""));
-    if (isNaN(parsed) || parsed < 0) return false;
-    const actualValue = ind.units === "CLP" ? parsed * 1_000_000 : parsed;
-    setIndicators(indicators.map((i) =>
-      i.key === key
-        ? { ...i, value: actualValue, source: draftSource.trim() || i.source }
-        : i
-    ));
-    setEditingKey(null);
-    setHasEdits(true);
-    return true;
-  }
-
-  function cancelEdit() {
-    setEditingKey(null);
-  }
-
-  function handleDiscard() {
-    setIndicators(buildIndicators(city));
-    setEditingKey(null);
-    setHasEdits(false);
-    setActiveTab("review");
-  }
-
-  function handleTabChange(tab: Tab) {
-    setActiveTab(tab);
-    if (tab === "review") setEditingKey(null);
-  }
-
   const keyIndicators = [
     indicators.find((i) => i.key === "poverty_rate")!,
     indicators.find((i) => i.key === "unemployment_rate")!,
@@ -334,16 +289,10 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
     indicators.find((i) => i.key === "public_transport_share")!,
   ].filter(Boolean);
 
-  const inputStyle: React.CSSProperties = {
-    border: "1px solid #CBD5E1",
-    borderRadius: "6px",
-    padding: "5px 10px",
-    fontSize: "13px",
-    outline: "none",
-    width: "100%",
-    boxSizing: "border-box",
-    color: "#111827",
-  };
+  function handleConfirm() {
+    confirmStep(locode, "socioeconomic");
+    navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/regulations`);
+  }
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -365,45 +314,20 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
             <span style={{ color: "#374151" }}>Socioeconomic Context</span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "40px" }}>
-            <div>
-              <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-                Socioeconomic Context
-              </h1>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-                MEED+ HIAP uses socioeconomic indicators to assess how feasible each climate action is for {city.name}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.
-              </p>
-              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-                  {indicators.length} indicators loaded
-                </span>
-                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                  MEED+ FEASIBILITY: Socioeconomic context shapes 50% of feasibility score · Feasibility shapes 23% of ranking
-                </span>
-              </div>
-            </div>
-
-            <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
-              {(["review", "adjust"] as Tab[]).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => handleTabChange(tab)}
-                  style={{
-                    padding: "7px 18px",
-                    borderRadius: "6px",
-                    border: "none",
-                    background: activeTab === tab ? "#001EA7" : "white",
-                    color: activeTab === tab ? "white" : "#9CA3AF",
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    cursor: "pointer",
-                    outline: activeTab === tab ? "none" : "1px solid #DDDDE1",
-                    transition: "background 0.15s",
-                  }}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
+          <div>
+            <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
+              Socioeconomic Context
+            </h1>
+            <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
+              MEED+ HIAP uses socioeconomic indicators to assess how feasible each climate action is for {city.name}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.
+            </p>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
+                {indicators.length} indicators loaded
+              </span>
+              <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
+                MEED+ FEASIBILITY: Socioeconomic context shapes 50% of feasibility score · Feasibility shapes 23% of ranking
+              </span>
             </div>
           </div>
         </div>
@@ -461,7 +385,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #F0F0F0", background: "#FAFAFA" }}>
-                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "MEED+ CLIMATE RELEVANCE", activeTab === "adjust" ? "" : ""].map((h, i) => (
+                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "MEED+ CLIMATE RELEVANCE"].map((h, i) => (
                   <th key={i} style={{
                     padding: "10px 16px",
                     fontSize: "11px",
@@ -485,69 +409,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                   const isFirstInGroup = rowIdx === 0;
                   const isLastInGroup = rowIdx === rows.length - 1;
                   const isLastTheme = theme === THEMES[THEMES.length - 1];
-                  const isEditing = editingKey === ind.key && activeTab === "adjust";
                   const rowBorder = isLastInGroup && !isLastTheme ? "2px solid #F0F0F0" : "1px solid #F5F5F5";
-
-                  if (isEditing) {
-                    return (
-                      <tr key={ind.key} style={{ borderBottom: rowBorder, background: "#F8FAFF" }}>
-                        <td style={{ padding: "12px 16px", minWidth: "200px" }}>
-                          {isFirstInGroup && (
-                            <div style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>
-                              {theme}
-                            </div>
-                          )}
-                          <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827", marginBottom: "4px" }}>
-                            {ind.label}
-                          </div>
-                          <input
-                            type="text"
-                            value={draftSource}
-                            onChange={(e) => setDraftSource(e.target.value)}
-                            placeholder="Data source"
-                            style={{ ...inputStyle, fontSize: "11px", padding: "3px 8px", width: "150px" }}
-                          />
-                        </td>
-                        <td style={{ padding: "12px 16px", width: "120px" }}>
-                          <input
-                            type="text"
-                            value={draftValue}
-                            onChange={(e) => setDraftValue(e.target.value)}
-                            placeholder={ind.units === "CLP" ? "e.g. 1.2" : "e.g. 26.77"}
-                            style={{ ...inputStyle, width: "100px" }}
-                            autoFocus
-                          />
-                          <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "3px" }}>
-                            {ind.units === "CLP" ? "CLP millions" : "%"}
-                          </div>
-                        </td>
-                        <td style={{ padding: "12px 16px" }}>
-                          <span style={{ fontSize: "11px", background: style.bg, color: style.color, padding: "3px 10px", borderRadius: "4px", fontWeight: "600" }}>
-                            {style.label}
-                          </span>
-                        </td>
-                        <td colSpan={2} style={{ padding: "12px 16px" }}>
-                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
-                            <span style={{ fontSize: "12px", color: "#6B7280" }}>{ind.relevance}</span>
-                            <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
-                              <button
-                                onClick={() => commitEdit(ind.key)}
-                                style={{ fontSize: "12px", color: "white", background: "#16A34A", border: "none", borderRadius: "5px", padding: "4px 12px", cursor: "pointer", fontWeight: "500" }}
-                              >
-                                Save
-                              </button>
-                              <button
-                                onClick={cancelEdit}
-                                style={{ fontSize: "12px", color: "#6B7280", background: "#F5F5F5", border: "none", borderRadius: "5px", padding: "4px 10px", cursor: "pointer" }}
-                              >
-                                ✕
-                              </button>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  }
 
                   return (
                     <tr key={ind.key} style={{ borderBottom: rowBorder }}>
@@ -572,33 +434,10 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                           {style.label}
                         </span>
                       </td>
-                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280", maxWidth: "280px" }}>
-                        <span style={{ marginRight: "6px", color: ind.concern === "risk" ? "#B91C1C" : ind.concern === "opportunity" ? "#16A34A" : "#9CA3AF", fontWeight: "600" }}>
-                          {icon}
-                        </span>
+                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
+                        <span style={{ marginRight: "6px", fontSize: "13px" }}>{icon}</span>
                         {ind.relevance}
                       </td>
-                      {activeTab === "adjust" && (
-                        <td style={{ padding: "12px 16px" }}>
-                          <button
-                            onClick={() => startEdit(ind.key)}
-                            disabled={editingKey !== null}
-                            style={{
-                              fontSize: "12px",
-                              color: "#001EA7",
-                              background: "#EFF6FF",
-                              border: "none",
-                              borderRadius: "5px",
-                              padding: "4px 12px",
-                              cursor: editingKey !== null ? "not-allowed" : "pointer",
-                              fontWeight: "500",
-                              opacity: editingKey !== null && editingKey !== ind.key ? 0.5 : 1,
-                            }}
-                          >
-                            Edit
-                          </button>
-                        </td>
-                      )}
                     </tr>
                   );
                 });
@@ -648,54 +487,22 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
             ← Emissions Data
           </button>
 
-          <div style={{ display: "flex", gap: "8px" }}>
-            {activeTab === "adjust" && (
-              <button
-                onClick={handleDiscard}
-                style={{
-                  background: "white",
-                  border: "1px solid #DDDDE1",
-                  borderRadius: "8px",
-                  padding: "10px 20px",
-                  fontSize: "13px",
-                  color: "#DC2626",
-                  cursor: "pointer",
-                  fontWeight: "500",
-                }}
-              >
-                Discard changes
-              </button>
-            )}
-            <button
-              onClick={() => {
-                if (activeTab === "adjust") {
-                  if (editingKey !== null) {
-                    const saved = commitEdit(editingKey);
-                    if (!saved) cancelEdit();
-                  }
-                  setHasEdits(false);
-                  setEditingKey(null);
-                  setActiveTab("review");
-                } else {
-                  confirmStep(locode, "socioeconomic");
-                  navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/regulations`);
-                }
-              }}
-              style={{
-                background: "#16A34A",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                padding: "10px 24px",
-                fontSize: "13px",
-                fontWeight: "600",
-                cursor: "pointer",
-                boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
-              }}
-            >
-              {activeTab === "adjust" ? "Save & continue →" : fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
-            </button>
-          </div>
+          <button
+            onClick={handleConfirm}
+            style={{
+              background: "#16A34A",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              padding: "10px 24px",
+              fontSize: "13px",
+              fontWeight: "600",
+              cursor: "pointer",
+              boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
+            }}
+          >
+            {fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
+          </button>
         </div>
       </div>
     </div>

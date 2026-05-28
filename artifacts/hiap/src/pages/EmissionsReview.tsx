@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
-
-type Tab = "review" | "adjust";
 
 interface SectorRow {
   sector: string;
@@ -119,16 +117,6 @@ function buildSectors(city: CityData): SectorRow[] {
   return SECTORS_TEMPLATE;
 }
 
-function recalcShares(rows: SectorRow[]): SectorRow[] {
-  const total = rows.reduce((s, r) => s + (r.emissions ?? 0), 0);
-  return rows.map((r) => ({
-    ...r,
-    share: r.emissions !== null && total > 0
-      ? Math.round((r.emissions / total) * 1000) / 10
-      : null,
-  }));
-}
-
 interface EmissionsReviewProps {
   params: { locode: string };
 }
@@ -137,7 +125,6 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
-  const [activeTab, setActiveTab] = useState<Tab>("review");
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -145,16 +132,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
-  const original = city ? buildSectors(city) : [];
-  const [sectors, setSectors] = useState<SectorRow[]>(original);
-  const [editingIdx, setEditingIdx] = useState<number | null>(null);
-  const [draftEmissions, setDraftEmissions] = useState("");
-  const [draftSource, setDraftSource] = useState("");
-  const [hasEdits, setHasEdits] = useState(false);
-
-  useEffect(() => {
-    if (city) setSectors(buildSectors(city));
-  }, [urlLocode]);
+  const sectors = city ? buildSectors(city) : [];
 
   if (!city) {
     return (
@@ -184,72 +162,10 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
     });
   }, [locode, confirmedCount, sectors.length, inventoryYear]);
 
-  function startEdit(i: number) {
-    const row = sectors[i];
-    setEditingIdx(i);
-    setDraftEmissions(row.emissions !== null ? String(row.emissions) : "");
-    setDraftSource(row.source ?? "");
+  function handleConfirm() {
+    confirmStep(locode, "emissions");
+    navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/socioeconomic`);
   }
-
-  function cancelEdit() {
-    setEditingIdx(null);
-  }
-
-  function commitEdit(i: number): boolean {
-    const parsed = parseFloat(draftEmissions.replace(/,/g, ""));
-    if (isNaN(parsed) || parsed < 0) return false;
-    const updated = sectors.map((row, idx) =>
-      idx === i
-        ? { ...row, emissions: Math.round(parsed), source: draftSource.trim() || row.source, status: "Confirmed" as const }
-        : row
-    );
-    setSectors(recalcShares(updated));
-    setEditingIdx(null);
-    setHasEdits(true);
-    return true;
-  }
-
-  function saveEdit(i: number) {
-    commitEdit(i);
-  }
-
-  function handleDiscard() {
-    setSectors(buildSectors(city));
-    setEditingIdx(null);
-    setHasEdits(false);
-    setActiveTab("review");
-  }
-
-  function handleTabChange(tab: Tab) {
-    setActiveTab(tab);
-    if (tab === "review") setEditingIdx(null);
-  }
-
-  function handleSaveAndContinue() {
-    if (activeTab === "adjust") {
-      if (editingIdx !== null) {
-        const saved = commitEdit(editingIdx);
-        if (!saved) setEditingIdx(null);
-      }
-      setHasEdits(false);
-      setEditingIdx(null);
-      setActiveTab("review");
-    } else {
-      confirmStep(locode, "emissions");
-      navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/socioeconomic`);
-    }
-  }
-
-  const inputStyle: React.CSSProperties = {
-    border: "1px solid #CBD5E1",
-    borderRadius: "6px",
-    padding: "5px 10px",
-    fontSize: "13px",
-    outline: "none",
-    width: "100%",
-    boxSizing: "border-box",
-    color: "#111827",
-  };
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -271,82 +187,33 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
             <span style={{ color: "#374151" }}>Emissions Data</span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-              <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-                Emissions Data
-              </h1>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-                MEED+ HIAP uses {city.name}'s greenhouse gas inventory to identify which sectors contribute most to emissions. This data determines the potential impact of each climate action and shapes how actions are ranked.
-              </p>
-              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <span style={{
-                  fontSize: "11px",
-                  background: confirmedCount === sectors.length ? "#F0FDF4" : "#FFF3E0",
-                  color: confirmedCount === sectors.length ? "#16A34A" : "#C05621",
-                  padding: "2px 8px",
-                  borderRadius: "4px",
-                  fontWeight: "600",
-                }}>
-                  {confirmedCount} / {sectors.length} sectors confirmed
-                </span>
-                <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                  MEED+ IMPACT: shapes 55% of ranking
-                </span>
-                {hasEdits && (
-                  <span style={{ fontSize: "11px", background: "#FEF9C3", color: "#92400E", padding: "2px 8px", borderRadius: "4px", fontWeight: "500" }}>
-                    Unsaved changes
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div style={{ display: "flex", gap: "6px" }}>
-              {(["review", "adjust"] as Tab[]).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => handleTabChange(tab)}
-                  style={{
-                    padding: "7px 18px",
-                    borderRadius: "6px",
-                    border: "none",
-                    background: activeTab === tab ? "#001EA7" : "white",
-                    color: activeTab === tab ? "white" : "#9CA3AF",
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    cursor: "pointer",
-                    outline: activeTab === tab ? "none" : "1px solid #DDDDE1",
-                    transition: "background 0.15s",
-                  }}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
+          <div>
+            <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
+              Emissions Data
+            </h1>
+            <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
+              MEED+ HIAP uses {city.name}'s greenhouse gas inventory to identify which sectors contribute most to emissions. This data determines the potential impact of each climate action and shapes how actions are ranked.
+            </p>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <span style={{
+                fontSize: "11px",
+                background: confirmedCount === sectors.length ? "#F0FDF4" : "#FFF3E0",
+                color: confirmedCount === sectors.length ? "#16A34A" : "#C05621",
+                padding: "2px 8px",
+                borderRadius: "4px",
+                fontWeight: "600",
+              }}>
+                {confirmedCount} / {sectors.length} sectors confirmed
+              </span>
+              <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
+                MEED+ IMPACT: shapes 55% of ranking
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 40px" }}>
-        {/* Adjust mode warning */}
-        {activeTab === "adjust" && (
-          <div style={{
-            background: "#FFFBEB",
-            border: "1px solid #FDE68A",
-            borderRadius: "8px",
-            padding: "10px 16px",
-            marginBottom: "14px",
-            fontSize: "13px",
-            color: "#92400E",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}>
-            <span>⚠️</span>
-            <span>You are in edit mode. Changes will not affect rankings until you save.</span>
-          </div>
-        )}
-
         {/* Summary bar */}
         <div style={{
           background: "white",
@@ -384,7 +251,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #F0F0F0", background: "#FAFAFA" }}>
-                {["SECTOR", "SUB-SECTORS", "TOTAL tCO₂e", "% SHARE", "DATA SOURCE", "STATUS", ""].map((h) => (
+                {["SECTOR", "SUB-SECTORS", "TOTAL tCO₂e", "% SHARE", "DATA SOURCE", "STATUS"].map((h) => (
                   <th key={h} style={{
                     padding: "10px 16px",
                     fontSize: "11px",
@@ -402,79 +269,6 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
             <tbody>
               {sectors.map((row, i) => {
                 const isConfirmed = row.status === "Confirmed";
-                const isEditing = editingIdx === i && activeTab === "adjust";
-
-                if (isEditing) {
-                  return (
-                    <tr key={i} style={{ borderBottom: i < sectors.length - 1 ? "1px solid #E5E7EB" : "none", background: "#F8FAFF" }}>
-                      <td style={{ padding: "12px 16px" }}>
-                        <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{row.sector}</div>
-                        <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px", fontFamily: "monospace" }}>{row.ref}</div>
-                      </td>
-                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>{row.sub}</td>
-                      <td style={{ padding: "12px 16px", minWidth: "140px" }}>
-                        <input
-                          type="text"
-                          value={draftEmissions}
-                          onChange={(e) => setDraftEmissions(e.target.value)}
-                          placeholder="e.g. 8779938"
-                          style={inputStyle}
-                          autoFocus
-                        />
-                        <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "3px" }}>tCO₂e</div>
-                      </td>
-                      <td style={{ padding: "12px 16px", fontSize: "12px", color: "#9CA3AF" }}>
-                        auto
-                      </td>
-                      <td style={{ padding: "12px 16px", minWidth: "160px" }}>
-                        <input
-                          type="text"
-                          value={draftSource}
-                          onChange={(e) => setDraftSource(e.target.value)}
-                          placeholder="e.g. GPC Inventory 2022"
-                          style={inputStyle}
-                        />
-                      </td>
-                      <td style={{ padding: "12px 16px" }}>
-                        <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Pending</span>
-                      </td>
-                      <td style={{ padding: "12px 16px" }}>
-                        <div style={{ display: "flex", gap: "6px" }}>
-                          <button
-                            onClick={() => saveEdit(i)}
-                            style={{
-                              fontSize: "12px",
-                              color: "white",
-                              background: "#16A34A",
-                              border: "none",
-                              borderRadius: "5px",
-                              padding: "4px 12px",
-                              cursor: "pointer",
-                              fontWeight: "500",
-                            }}
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={cancelEdit}
-                            style={{
-                              fontSize: "12px",
-                              color: "#6B7280",
-                              background: "#F5F5F5",
-                              border: "none",
-                              borderRadius: "5px",
-                              padding: "4px 10px",
-                              cursor: "pointer",
-                            }}
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                }
-
                 return (
                   <tr key={i} style={{ borderBottom: i < sectors.length - 1 ? "1px solid #F5F5F5" : "none" }}>
                     <td style={{ padding: "13px 16px" }}>
@@ -500,42 +294,11 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                         <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Not mapped</span>
                       )}
                     </td>
-                    <td style={{ padding: "13px 16px" }}>
-                      {activeTab === "review" ? (
-                        isConfirmed ? <span style={{ fontSize: "13px", color: "#16A34A" }}>✓</span> : null
-                      ) : (
-                        <button
-                          onClick={() => startEdit(i)}
-                          disabled={editingIdx !== null}
-                          style={{
-                            fontSize: "12px",
-                            color: isConfirmed ? "#001EA7" : "#6B7280",
-                            background: isConfirmed ? "#EFF6FF" : "#F5F5F5",
-                            border: "none",
-                            borderRadius: "5px",
-                            padding: "4px 12px",
-                            cursor: editingIdx !== null ? "not-allowed" : "pointer",
-                            fontWeight: isConfirmed ? "500" : "400",
-                            opacity: editingIdx !== null && editingIdx !== i ? 0.5 : 1,
-                          }}
-                        >
-                          {isConfirmed ? "Edit" : "+ Add data"}
-                        </button>
-                      )}
-                    </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
-
-          {activeTab === "adjust" && (
-            <div style={{ padding: "12px 16px", borderTop: "1px solid #F0F0F0" }}>
-              <button style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", cursor: "pointer", fontWeight: "500" }}>
-                + Add another sector
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Footer navigation */}
@@ -556,41 +319,22 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
             ← City Profile
           </button>
 
-          <div style={{ display: "flex", gap: "8px" }}>
-            {activeTab === "adjust" && (
-              <button
-                onClick={handleDiscard}
-                style={{
-                  background: "white",
-                  border: "1px solid #DDDDE1",
-                  borderRadius: "8px",
-                  padding: "10px 20px",
-                  fontSize: "13px",
-                  color: "#DC2626",
-                  cursor: "pointer",
-                  fontWeight: "500",
-                }}
-              >
-                Discard changes
-              </button>
-            )}
-            <button
-              onClick={handleSaveAndContinue}
-              style={{
-                background: "#16A34A",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                padding: "10px 24px",
-                fontSize: "13px",
-                fontWeight: "600",
-                cursor: "pointer",
-                boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
-              }}
-            >
-              {activeTab === "adjust" ? "Save & continue →" : fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
-            </button>
-          </div>
+          <button
+            onClick={handleConfirm}
+            style={{
+              background: "#16A34A",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              padding: "10px 24px",
+              fontSize: "13px",
+              fontWeight: "600",
+              cursor: "pointer",
+              boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
+            }}
+          >
+            {fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
+          </button>
         </div>
       </div>
     </div>
