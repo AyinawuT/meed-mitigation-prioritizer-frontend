@@ -28,4 +28,4 @@ timeoutMs = 20000
 [userenv]
 
 [userenv.shared]
-HIAP_API_URL = " https://jaded-deonna-convolutely.ngrok-free.dev"
+HIAP_API_URL = "https://jaded-deonna-convolutely.ngrok-free.dev"
