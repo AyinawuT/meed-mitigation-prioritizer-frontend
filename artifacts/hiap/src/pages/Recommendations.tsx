@@ -606,11 +606,6 @@ function RankingTable({
   const [showDownload, setShowDownload] = useState(false);
   const dlRef = useRef<HTMLDivElement>(null);
 
-  // Competitive ranking: find which rank values appear more than once
-  const rankCounts = new Map<number, number>();
-  for (const a of actions) rankCounts.set(a.rank, (rankCounts.get(a.rank) ?? 0) + 1);
-  const tiedRanks = new Set([...rankCounts.entries()].filter(([, n]) => n > 1).map(([r]) => r));
-
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (dlRef.current && !dlRef.current.contains(e.target as Node)) {
@@ -752,10 +747,7 @@ function RankingTable({
                     </td>
                   )}
                   <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#001EA7", whiteSpace: "nowrap" }}>
-                    {tiedRanks.has(action.rank) ? `=${action.rank}` : `#${action.rank}`}
-                    {tiedRanks.has(action.rank) && (
-                      <span title="Tied score — equal rank" style={{ marginLeft: "4px", fontSize: "10px", background: "#EEF2FF", color: "#4338CA", borderRadius: "3px", padding: "1px 4px", fontWeight: "600", letterSpacing: "0.02em" }}>TIE</span>
-                    )}
+                    #{action.rank}
                   </td>
                   <td style={{ padding: "10px 14px", fontSize: "12px", color: "#111827", maxWidth: "280px" }}>
                     {action.actionName}
