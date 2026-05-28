@@ -133,8 +133,8 @@ export function buildMeta(endpoint: string, locodes: string[]): FrontendRequestM
     requestId: uuid(),
     generatedAtUtc: new Date().toISOString(),
     backendConsumer: "hiap-meed",
-    upstreamProvider: "meed-frontend",
-    apiContext: { endpoint, locodes },
+    upstreamProvider: "city_catalyst_frontend",
+    apiContext: { endpoint: `POST ${endpoint}`, locodes },
     totalRecords: locodes.length,
   };
 }
