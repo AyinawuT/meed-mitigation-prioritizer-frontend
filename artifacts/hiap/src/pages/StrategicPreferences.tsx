@@ -24,10 +24,10 @@ const CO_BENEFITS = [
 ];
 
 const TIMELINE_OPTIONS = [
-  { value: "short",  label: "Short-term",    sub: "Actions implementable in less than 5 years" },
-  { value: "medium", label: "Medium-term",   sub: "Actions implementable within 5–10 years" },
-  { value: "long",   label: "Long-term",     sub: "Actions requiring more than 10 years" },
-  { value: "none",   label: "No preference", sub: "Include actions across all timeframes" },
+  { value: "short",         label: "Short-term",    sub: "Actions implementable in less than 5 years" },
+  { value: "medium",        label: "Medium-term",   sub: "Actions implementable within 5–10 years" },
+  { value: "long",          label: "Long-term",     sub: "Actions requiring more than 10 years" },
+  { value: "no_preference", label: "No preference", sub: "Include actions across all timeframes" },
 ];
 
 interface Props { params: { locode: string } }
@@ -51,7 +51,7 @@ export function StrategicPreferences({ params }: Props) {
       return JSON.parse(raw) as {
         sectors?: string[];
         strategicPriorities?: string | string[];
-        timeline?: string | null;
+        timeline?: string | string[] | null;
         excludeText?: string;
         excludedSectors?: string[];
         excludedCoBenefits?: string[];
@@ -67,9 +67,14 @@ export function StrategicPreferences({ params }: Props) {
     ? saved.strategicPriorities
     : [];
 
+  // Backward compat: timeline was previously a string | null, now a string[]
+  const savedTimelines: string[] = Array.isArray(saved?.timeline)
+    ? saved.timeline
+    : (saved?.timeline ? [saved.timeline === "none" ? "no_preference" : saved.timeline] : []);
+
   const [sectors,            setSectors]           = useState<Set<string>>(new Set(saved?.sectors ?? []));
   const [priorities,         setPriorities]        = useState<Set<string>>(new Set(savedPriorities));
-  const [timeline,           setTimeline]          = useState<string | null>(saved?.timeline ?? null);
+  const [timelines,          setTimelines]         = useState<Set<string>>(new Set(savedTimelines));
   const [excludedSectors,    setExcludedSectors]   = useState<Set<string>>(new Set(saved?.excludedSectors ?? []));
   const [excludedCoBenefits, setExcludedCoBenefits] = useState<Set<string>>(new Set(saved?.excludedCoBenefits ?? []));
   const [excludeText,        setExcludeText]       = useState(saved?.excludeText ?? "");
@@ -99,7 +104,7 @@ export function StrategicPreferences({ params }: Props) {
       localStorage.setItem(storageKey, JSON.stringify({
         sectors: Array.from(sectors),
         strategicPriorities: Array.from(priorities),
-        timeline,
+        timeline: Array.from(timelines),
         excludeText,
         excludedSectors: Array.from(excludedSectors),
         excludedCoBenefits: Array.from(excludedCoBenefits),
@@ -110,16 +115,19 @@ export function StrategicPreferences({ params }: Props) {
     const parts: string[] = [];
     if (sectors.size > 0) parts.push(`${sectors.size} priority sector${sectors.size !== 1 ? "s" : ""}`);
     if (priorities.size > 0) parts.push(`${priorities.size} strategic priorit${priorities.size !== 1 ? "ies" : "y"}`);
-    if (timeline) parts.push(`${TIMELINE_OPTIONS.find(t => t.value === timeline)?.label.toLowerCase()} timeline`);
+    if (timelines.size > 0) {
+      const labels = TIMELINE_OPTIONS.filter(t => timelines.has(t.value)).map(t => t.label);
+      parts.push(labels.join(", ").toLowerCase() + " timeline");
+    }
     const hasExclusions = excludedSectors.size > 0 || excludedCoBenefits.size > 0 || excludeText.trim();
     if (hasExclusions) parts.push("exclusion criteria set");
 
     setStepProgress(locode, "strategic", {
       visited: true,
-      progress: timeline !== null ? 100 : sectors.size > 0 ? 50 : 10,
+      progress: timelines.size > 0 ? 100 : sectors.size > 0 ? 50 : 10,
       sub: parts.length > 0 ? parts.join(" · ") : undefined,
     });
-  }, [locode, sectors, priorities, timeline, excludedSectors, excludedCoBenefits, excludeText]);
+  }, [locode, sectors, priorities, timelines, excludedSectors, excludedCoBenefits, excludeText]);
 
   function toggleSector(s: string) {
     setSectors((prev) => { const n = new Set(prev); n.has(s) ? n.delete(s) : n.add(s); return n; });
@@ -133,8 +141,25 @@ export function StrategicPreferences({ params }: Props) {
   function toggleExcludedCoBenefit(k: string) {
     setExcludedCoBenefits((prev) => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n; });
   }
+  function toggleTimeline(v: string) {
+    setTimelines((prev) => {
+      const n = new Set(prev);
+      if (n.has(v)) {
+        n.delete(v);
+      } else {
+        // "No preference" is mutually exclusive with specific timeframes
+        if (v === "no_preference") {
+          n.clear();
+        } else {
+          n.delete("no_preference");
+        }
+        n.add(v);
+      }
+      return n;
+    });
+  }
 
-  const canSave = sectors.size > 0 || priorities.size > 0 || timeline !== null;
+  const canSave = sectors.size > 0 || priorities.size > 0 || timelines.size > 0;
   const hasAnyExclusion = excludedSectors.size > 0 || excludedCoBenefits.size > 0 || excludeText.trim();
 
   return (
@@ -257,34 +282,43 @@ export function StrategicPreferences({ params }: Props) {
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {TIMELINE_OPTIONS.map((opt) => {
-              const on = timeline === opt.value;
+              const on = timelines.has(opt.value);
               return (
                 <button
                   key={opt.value}
-                  onClick={() => setTimeline(on ? null : opt.value)}
+                  onClick={() => toggleTimeline(opt.value)}
                   style={{
                     display: "flex",
                     alignItems: "center",
                     gap: "14px",
-                    padding: "12px 16px",
+                    padding: "13px 16px",
                     borderRadius: "8px",
                     border: on ? "1.5px solid #001EA7" : "1.5px solid #E5E7EB",
                     background: on ? "#F5F7FF" : "white",
                     cursor: "pointer",
                     textAlign: "left",
                     transition: "all 0.12s",
+                    width: "100%",
                   }}
                 >
                   <div style={{
-                    width: "16px", height: "16px", borderRadius: "50%",
-                    border: on ? "5px solid #001EA7" : "1.5px solid #D1D5DB",
+                    width: "16px", height: "16px", borderRadius: "3px",
+                    border: on ? "none" : "1.5px solid #D1D5DB",
                     flexShrink: 0,
-                    background: "white",
+                    background: on ? "#001EA7" : "white",
                     boxSizing: "border-box",
-                  }} />
-                  <div>
-                    <div style={{ fontSize: "13px", fontWeight: on ? "600" : "400", color: on ? "#001EA7" : "#111827" }}>{opt.label}</div>
-                    <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "1px" }}>{opt.sub}</div>
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                    {on && (
+                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </div>
+                  <div style={{ fontSize: "13px", fontWeight: on ? "600" : "400", color: on ? "#001EA7" : "#111827" }}>
+                    {opt.label}
                   </div>
                 </button>
               );

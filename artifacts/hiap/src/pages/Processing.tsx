@@ -71,7 +71,7 @@ function buildCityInput(locode: string): FrontendCityInput {
   const storageKey = `hiap:${locode}:strategic:form`;
   let sectors: string[] = [];
   let strategicCoBenefitKeys: string[] = [];
-  let timeline: string | null = null;
+  let timelineValues: string[] = [];
   let savedWeights: { impact: number; alignment: number; feasibility: number } | undefined;
 
   try {
@@ -80,7 +80,7 @@ function buildCityInput(locode: string): FrontendCityInput {
       const saved = JSON.parse(raw) as {
         sectors?: string[];
         strategicPriorities?: string | string[];
-        timeline?: string | null;
+        timeline?: string | string[] | null;
         weights?: { impact: number; alignment: number; feasibility: number };
       };
       sectors = saved.sectors ?? [];
@@ -88,7 +88,12 @@ function buildCityInput(locode: string): FrontendCityInput {
       strategicCoBenefitKeys = Array.isArray(saved.strategicPriorities)
         ? saved.strategicPriorities
         : [];
-      timeline = saved.timeline ?? null;
+      // backward compat: timeline was previously string | null, now string[]
+      if (Array.isArray(saved.timeline)) {
+        timelineValues = saved.timeline;
+      } else if (saved.timeline) {
+        timelineValues = [saved.timeline === "none" ? "no_preference" : saved.timeline];
+      }
       savedWeights = saved.weights;
     }
   } catch {}
@@ -111,9 +116,9 @@ function buildCityInput(locode: string): FrontendCityInput {
       }
     : { impact: 0.55, alignment: 0.22, feasibility: 0.23 };
 
-  // Timeframe: convert string | null → valid API enum array
+  // Timeframe: filter to valid API enum values
   const cityStrategicPreferenceTimeframes = (
-    timeline && VALID_TIMEFRAMES.has(timeline) ? [timeline] : []
+    timelineValues.filter((t) => VALID_TIMEFRAMES.has(t))
   ) as ("short" | "medium" | "long" | "no_preference")[];
 
   // Use GPC emissions data from the mock (confirmed by user in EmissionsReview step)
