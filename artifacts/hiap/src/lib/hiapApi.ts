@@ -2,7 +2,7 @@
 // Switch to the deployed Kubernetes cluster URL when targeting production:
 //   e.g. "https://api.hiap.meed.earth"
 // Leave as "" to route through the shared proxy (works for both dev and published app).
-export const HIAP_API_BASE_URL = "";
+export const HIAP_API_BASE_URL = "http://localhost:8080";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
