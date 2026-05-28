@@ -45,7 +45,7 @@ function computeExclusionProposals(
   excludedCoBenefits: string[],
   excludeText: string
 ): ExclusionProposal[] {
-  const actions = (actionsRaw as unknown as ActionRawItem[]);
+  const actions = (actionsRaw as unknown as { actions: ActionRawItem[] }).actions ?? [];
   const textLower = excludeText.trim().toLowerCase();
   const textWords = textLower.split(/\W+/).filter(w => w.length > 3);
   const results: ExclusionProposal[] = [];
