@@ -1,8 +1,9 @@
 // ─── BACKEND BASE URL ────────────────────────────────────────────────────────
-// Switch to the deployed Kubernetes cluster URL when targeting production:
-//   e.g. "https://api.hiap.meed.earth"
-// Leave as "" to route through the shared proxy (works for both dev and published app).
-export const HIAP_API_BASE_URL = "http://localhost:8080";
+// All /v1/* calls are proxied through the local Express server at /api/v1/*.
+// The Express server forwards them server-to-server to the hiap-meed backend
+// (HIAP_BACKEND_URL env var, defaulting to http://localhost:8080).
+// Leave as "/api" for both dev and published app — the shared proxy handles routing.
+export const HIAP_API_BASE_URL = "/api";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
