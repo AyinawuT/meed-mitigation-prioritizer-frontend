@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, setStepProgress, type StepProgress } from "@/lib/stepProgress";
+import { callExclusionsPreview } from "@/lib/hiapApi";
 import policyPlansData from "@/data/policyPlans.json";
 
 // ── Candidate action count from plans data ──────────────────────────────────
@@ -150,6 +151,25 @@ export function PreflightCheck({ params }: Props) {
       map["emissions"] = seeded;
     }
     setProgMap(map);
+  }, [locode]);
+
+  // Call the exclusions preview API so confirmed excluded action IDs
+  // are available when the prioritization step runs.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(`hiap:${locode}:strategic:form`);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { excludeText?: string };
+      const excludeText = saved.excludeText ?? "";
+      callExclusionsPreview([{
+        locode,
+        excludedActionsFreeText: excludeText || null,
+      }])
+        .then(results => {
+          localStorage.setItem(`hiap:${locode}:exclusions:preview`, JSON.stringify(results));
+        })
+        .catch(() => { /* non-fatal — prioritize will run without pre-confirmed exclusions */ });
+    } catch { /* non-fatal */ }
   }, [locode]);
 
   function saveWeights(w: WeightState) {

@@ -1,0 +1,697 @@
+	
+openapi	"3.1.0"
+info	
+title	"HIAP-MEED"
+description	"HIAP-MEED prioritization service."
+version	"0.1.0"
+paths	
+/	
+get	
+summary	"Root"
+description	"Root endpoint."
+operationId	"root__get"
+responses	
+200	
+description	"Successful Response"
+content	
+application/json	
+schema	{ type: "object", title: "Response Root  Get", additionalProperties: {…} }
+/health	
+get	
+summary	"Health"
+description	"Health endpoint used for probes."
+operationId	"health_health_get"
+responses	
+200	
+description	"Successful Response"
+content	
+application/json	
+schema	{ type: "object", title: "Response Health Health Get", additionalProperties: {…} }
+/v1/prioritize/exclusions/preview	
+post	
+tags	
+0	"prioritization"
+summary	"Preview proposed action exclusions"
+description	"Evaluates raw exclusion preferences before ranking and returns a preview of the actions that would likely be excluded. This endpoint does not run the full prioritization pipeline and does not require confirmed `excludedActionIds` yet."
+operationId	"preview_exclusions_v1_prioritize_exclusions_preview_post"
+requestBody	
+content	
+application/json	
+schema	
+$ref	"#/components/schemas/ExclusionPreviewApiRequest"
+required	true
+responses	
+200	
+description	"Preview completed. Response contains proposed exclusions and warnings per city."
+content	
+application/json	
+schema	{ "$ref": "#/components/schemas/ExclusionPreviewApiResponse" }
+422	
+description	"Validation error in the request envelope or exclusion values."
+500	
+description	"Internal server error while building the exclusion preview."
+/v1/prioritize	
+post	
+tags	
+0	"prioritization"
+summary	"Run action prioritization synchronously"
+description	"Ranks actions for one or more cities from the caller request envelope. When `createExplanations=true`, the backend first generates canonical English explanations and then translates them into any additionally requested languages."
+operationId	"prioritize_v1_prioritize_post"
+requestBody	
+content	
+application/json	
+schema	
+$ref	"#/components/schemas/PrioritizerApiRequest"
+required	true
+responses	
+200	
+description	"Ranking completed. Response contains ranked actions, metadata, and optional warnings."
+content	
+application/json	
+schema	{ "$ref": "#/components/schemas/PrioritizerApiResponse" }
+422	
+description	"Validation error in the request envelope or prioritization inputs."
+500	
+description	"Internal server error while running the prioritization pipeline."
+/v1/explanations/translate	
+post	
+tags	
+0	"prioritization"
+summary	"Translate canonical explanations synchronously"
+description	"Accepts canonical English explanations and returns translations for the requested non-English target languages without rerunning prioritization. The endpoint is stateless: callers must provide the source explanation text in the request body."
+operationId	"translate_ranked_action_explanations_v1_explanations_translate_post"
+requestBody	
+content	
+application/json	
+schema	
+$ref	"#/components/schemas/ExplanationTranslationApiRequest"
+required	true
+responses	
+200	
+description	"Translation completed. Response contains translated explanations and aggregated warnings."
+content	
+application/json	
+schema	{ "$ref": "#/components/schemas/ExplanationTranslationApiResponse" }
+422	
+description	"Validation error in the request envelope, source language, or target languages."
+500	
+description	"Internal server error while translating explanations."
+components	
+schemas	
+ExclusionPreviewApiRequest	
+properties	
+meta	
+$ref	"#/components/schemas/FrontendRequestMeta"
+requestData	
+$ref	"#/components/schemas/ExclusionPreviewRequestData"
+additionalProperties	false
+type	"object"
+required	
+0	"meta"
+1	"requestData"
+title	"ExclusionPreviewApiRequest"
+description	"Caller -> hiap-meed request envelope for exclusion preview."
+ExclusionPreviewApiResponse	
+properties	
+results	
+items	
+$ref	"#/components/schemas/ExclusionPreviewCityResult"
+type	"array"
+title	"Results"
+type	"object"
+title	"ExclusionPreviewApiResponse"
+description	"Top-level response for exclusion preview."
+ExclusionPreviewCityInput	
+properties	
+locode	
+type	"string"
+minLength	1
+title	"Locode"
+excludedSectorTags	
+items	
+type	"string"
+type	"array"
+title	"Excludedsectortags"
+excludedCoBenefitKeys	
+items	
+type	"string"
+type	"array"
+title	"Excludedcobenefitkeys"
+excludedActionsFreeText	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Excludedactionsfreetext"
+additionalProperties	false
+type	"object"
+required	
+0	"locode"
+title	"ExclusionPreviewCityInput"
+description	"Single city payload for exclusion-preference preview."
+ExclusionPreviewCityResult	
+properties	
+locode	
+type	"string"
+minLength	1
+title	"Locode"
+proposedExcludedActions	
+items	
+$ref	"#/components/schemas/ProposedExcludedAction"
+type	"array"
+title	"Proposedexcludedactions"
+exclusionSummary	
+$ref	"#/components/schemas/ExclusionSummary"
+warnings	
+items	
+type	"string"
+type	"array"
+title	"Warnings"
+type	"object"
+required	
+0	"locode"
+title	"ExclusionPreviewCityResult"
+description	"Per-city exclusion preview response."
+ExclusionPreviewRequestData	
+properties	
+cityDataList	
+items	
+$ref	"#/components/schemas/ExclusionPreviewCityInput"
+type	"array"
+minItems	1
+title	"Citydatalist"
+additionalProperties	false
+type	"object"
+required	
+0	"cityDataList"
+title	"ExclusionPreviewRequestData"
+description	"RequestData section for exclusion preview requests."
+ExclusionSummary	
+properties	
+totalProposed	
+type	"integer"
+title	"Totalproposed"
+default	0
+byReasonType	
+additionalProperties	
+$ref	"#/components/schemas/ExclusionSummaryReasonGroup"
+type	"object"
+title	"Byreasontype"
+type	"object"
+title	"ExclusionSummary"
+description	"Summary of proposed exclusions grouped for caller review."
+ExclusionSummaryReasonGroup	
+properties	
+count	
+type	"integer"
+title	"Count"
+default	0
+actionIds	
+items	
+type	"string"
+type	"array"
+title	"Actionids"
+type	"object"
+title	"ExclusionSummaryReasonGroup"
+description	"Grouped exclusion count and action IDs for one reason type."
+ExplanationTranslationActionInput	
+properties	
+actionId	
+type	"string"
+minLength	1
+title	"Actionid"
+description	"Action ID whose canonical explanation should be translated."
+canonicalExplanation	
+type	"string"
+minLength	1
+title	"Canonicalexplanation"
+description	"Canonical English explanation text to translate from."
+additionalProperties	false
+type	"object"
+required	
+0	"actionId"
+1	"canonicalExplanation"
+title	"ExplanationTranslationActionInput"
+description	"One canonical explanation row provided for stateless translation."
+ExplanationTranslationApiRequest	
+properties	
+meta	
+$ref	"#/components/schemas/FrontendRequestMeta"
+description	"Caller request metadata envelope."
+requestData	
+$ref	"#/components/schemas/ExplanationTranslationRequestData"
+description	"Explanation translation request payload."
+additionalProperties	false
+type	"object"
+required	
+0	"meta"
+1	"requestData"
+title	"ExplanationTranslationApiRequest"
+description	"Caller -> hiap-meed request envelope for stateless explanation translation."
+ExplanationTranslationApiResponse	
+properties	
+translations	
+items	
+$ref	"#/components/schemas/ExplanationTranslationResult"
+type	"array"
+title	"Translations"
+description	"Translated explanation rows, one per requested action."
+warnings	
+items	
+type	"string"
+type	"array"
+title	"Warnings"
+description	"Top-level human-readable warnings aggregated by the backend."
+type	"object"
+title	"ExplanationTranslationApiResponse"
+description	"Top-level response for the stateless explanation translation endpoint."
+ExplanationTranslationRequestData	
+properties	
+sourceLanguage	
+type	"string"
+title	"Sourcelanguage"
+description	"Source language label for canonical explanation text. Must be `en`."
+default	"en"
+targetLanguages	
+items	
+type	"string"
+type	"array"
+minItems	1
+title	"Targetlanguages"
+description	"Non-English language codes to translate the canonical explanations into."
+rankedActions	
+items	
+$ref	"#/components/schemas/ExplanationTranslationActionInput"
+type	"array"
+minItems	1
+title	"Rankedactions"
+description	"Canonical explanation rows to translate."
+additionalProperties	false
+type	"object"
+required	
+0	"targetLanguages"
+1	"rankedActions"
+title	"ExplanationTranslationRequestData"
+description	"RequestData section for explanation translation requests."
+ExplanationTranslationResult	
+properties	
+actionId	
+type	"string"
+title	"Actionid"
+description	"Action ID for the translated explanation row."
+explanations	
+additionalProperties	
+type	"string"
+type	"object"
+title	"Explanations"
+description	"Translated explanation texts keyed by requested target language code."
+type	"object"
+required	
+0	"actionId"
+title	"ExplanationTranslationResult"
+description	"Translated explanation rows returned by the translation endpoint."
+FrontendApiContext	
+properties	
+endpoint	
+type	"string"
+title	"Endpoint"
+description	"Caller route or endpoint that originated the request."
+locodes	
+items	
+type	"string"
+type	"array"
+title	"Locodes"
+description	"One or more UN/LOCODE values included in the request context."
+additionalProperties	false
+type	"object"
+required	
+0	"endpoint"
+title	"FrontendApiContext"
+description	"Caller request API context metadata."
+FrontendCityEmissionsData	
+properties	
+inventoryYear	
+anyOf	
+0	
+type	"integer"
+1	
+type	"null"
+title	"Inventoryyear"
+description	"Inventory year for the provided city emissions data, when known."
+gpcData	
+additionalProperties	
+$ref	"#/components/schemas/GpcDataEntry"
+type	"object"
+title	"Gpcdata"
+description	"City emissions keyed by GPC reference number."
+additionalProperties	false
+type	"object"
+title	"FrontendCityEmissionsData"
+description	"City emissions payload provided by the caller request."
+FrontendCityInput	
+properties	
+locode	
+type	"string"
+minLength	1
+title	"Locode"
+description	"UN/LOCODE for the city to rank actions for."
+countryCode	
+type	"string"
+maxLength	2
+minLength	2
+title	"Countrycode"
+description	"ISO 3166-1 alpha-2 country code."
+populationSize	
+anyOf	
+0	
+type	"integer"
+1	
+type	"null"
+title	"Populationsize"
+description	"Optional caller-supplied population override for the city."
+excludedActionIds	
+items	
+type	"string"
+type	"array"
+title	"Excludedactionids"
+description	"Confirmed action IDs to exclude from ranking."
+weightsOverride	
+anyOf	
+0	
+additionalProperties	{ type: "number" }
+type	"object"
+1	
+type	"null"
+title	"Weightsoverride"
+description	"Optional override for impact/alignment/feasibility weights."
+cityStrategicPreferenceSectors	
+items	
+type	"string"
+type	"array"
+title	"Citystrategicpreferencesectors"
+description	"Selected sector tags the city wants to prioritize."
+cityStrategicPreferenceTimeframes	
+items	
+type	"string"
+enum	
+0	"short"
+1	"medium"
+2	"long"
+3	"no_preference"
+type	"array"
+title	"Citystrategicpreferencetimeframes"
+description	"Preferred implementation timeframes for ranked actions."
+cityStrategicPreferenceCoBenefitKeys	
+items	
+type	"string"
+type	"array"
+title	"Citystrategicpreferencecobenefitkeys"
+description	"Selected co-benefit keys the city wants to prioritize."
+cityEmissionsData	
+$ref	"#/components/schemas/FrontendCityEmissionsData"
+description	"Caller-supplied city emissions payload used by impact scoring."
+additionalProperties	false
+type	"object"
+required	
+0	"locode"
+1	"countryCode"
+2	"cityEmissionsData"
+title	"FrontendCityInput"
+description	"Single city payload within frontend prioritizer request."
+FrontendRequestMeta	
+properties	
+requestId	
+type	"string"
+title	"Requestid"
+description	"Caller-generated request identifier."
+generatedAtUtc	
+type	"string"
+title	"Generatedatutc"
+description	"Caller timestamp for when the request envelope was created."
+backendConsumer	
+type	"string"
+title	"Backendconsumer"
+description	"Backend service expected to consume this request."
+upstreamProvider	
+type	"string"
+title	"Upstreamprovider"
+description	"Originating frontend or upstream caller name."
+apiContext	
+$ref	"#/components/schemas/FrontendApiContext"
+description	"Lightweight caller route context for observability."
+totalRecords	
+type	"integer"
+title	"Totalrecords"
+description	"Number of city records carried in the request."
+additionalProperties	false
+type	"object"
+required	
+0	"requestId"
+1	"generatedAtUtc"
+2	"backendConsumer"
+3	"upstreamProvider"
+4	"apiContext"
+5	"totalRecords"
+title	"FrontendRequestMeta"
+description	"Metadata envelope for prioritizer requests sent by the current caller."
+GpcActivity	
+properties	
+activityType	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Activitytype"
+totalEmissions	
+anyOf	
+0	
+type	"number"
+1	
+type	"null"
+title	"Totalemissions"
+totalEmissionsUnit	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Totalemissionsunit"
+activityValue	
+anyOf	
+0	
+type	"number"
+1	
+type	"null"
+title	"Activityvalue"
+activityUnit	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Activityunit"
+dataSource	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Datasource"
+notationKey	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Notationkey"
+additionalProperties	false
+type	"object"
+title	"GpcActivity"
+description	"Single activity record for one GPC key."
+GpcDataEntry	
+properties	
+notationKey	
+anyOf	
+0	
+type	"string"
+1	
+type	"null"
+title	"Notationkey"
+activities	
+items	
+$ref	"#/components/schemas/GpcActivity"
+type	"array"
+title	"Activities"
+additionalProperties	false
+type	"object"
+title	"GpcDataEntry"
+description	"One GPC reference key payload containing optional activities."
+PrioritizerApiCityResult	
+properties	
+locode	
+type	"string"
+minLength	1
+title	"Locode"
+description	"UN/LOCODE for the ranked city."
+ranked_action_ids	
+items	
+type	"string"
+type	"array"
+title	"Ranked Action Ids"
+description	"Ordered action IDs returned for this city."
+ranked_actions	
+items	
+$ref	"#/components/schemas/RankedActionResult"
+type	"array"
+title	"Ranked Actions"
+description	"Detailed ranked actions with scores, evidence, and explanations."
+metadata	
+additionalProperties	true
+type	"object"
+title	"Metadata"
+description	"Diagnostics, timings, counts, and artifact-oriented metadata."
+warnings	
+items	
+type	"string"
+type	"array"
+title	"Warnings"
+description	"Top-level warnings for this city's explanation/translation flow."
+type	"object"
+required	
+0	"locode"
+title	"PrioritizerApiCityResult"
+description	"One city result entry returned by the prioritization endpoint."
+PrioritizerApiRequest	
+properties	
+meta	
+$ref	"#/components/schemas/FrontendRequestMeta"
+description	"Caller request metadata envelope."
+requestData	
+$ref	"#/components/schemas/PrioritizerRequestData"
+description	"Prioritization request payload."
+additionalProperties	false
+type	"object"
+required	
+0	"meta"
+1	"requestData"
+title	"PrioritizerApiRequest"
+description	"Caller -> hiap-meed request envelope for single or multi-city prioritization."
+PrioritizerApiResponse	
+properties	
+results	
+items	
+$ref	"#/components/schemas/PrioritizerApiCityResult"
+type	"array"
+title	"Results"
+description	"One prioritization result entry per requested city."
+type	"object"
+title	"PrioritizerApiResponse"
+description	"Top-level response for the caller prioritization request envelope."
+PrioritizerRequestData	
+properties	
+requestedLanguages	
+items	
+type	"string"
+type	"array"
+title	"Requestedlanguages"
+description	"Languages to include in the explanation output. English is always canonical."
+topN	
+anyOf	
+0	
+type	"integer"
+minimum	1.0JS:1
+1	
+type	"null"
+title	"Topn"
+description	"Optional number of top-ranked actions to return per city."
+createExplanations	
+type	"boolean"
+title	"Createexplanations"
+description	"Whether to generate qualitative explanations after ranking."
+default	false
+cityDataList	
+items	
+$ref	"#/components/schemas/FrontendCityInput"
+type	"array"
+minItems	1
+title	"Citydatalist"
+description	"One or more city inputs to prioritize within the same request."
+additionalProperties	false
+type	"object"
+required	
+0	"cityDataList"
+title	"PrioritizerRequestData"
+description	"RequestData section of the caller prioritizer request payload."
+ProposedExcludedAction	
+properties	
+actionId	
+type	"string"
+title	"Actionid"
+actionName	
+type	"string"
+title	"Actionname"
+reasons	
+items	
+type	"string"
+type	"array"
+title	"Reasons"
+matchedBy	
+items	
+type	"string"
+type	"array"
+title	"Matchedby"
+type	"object"
+required	
+0	"actionId"
+1	"actionName"
+title	"ProposedExcludedAction"
+description	"One action proposed for exclusion before user confirmation."
+RankedActionResult	
+properties	
+action_id	
+type	"string"
+title	"Action Id"
+description	"Stable action identifier."
+rank	
+type	"integer"
+title	"Rank"
+description	"Competitive rank position within the returned top-N set."
+final_score	
+type	"number"
+title	"Final Score"
+description	"Final weighted prioritization score."
+impact_score	
+type	"number"
+title	"Impact Score"
+description	"Impact block score."
+alignment_score	
+type	"number"
+title	"Alignment Score"
+description	"Alignment block score."
+feasibility_score	
+type	"number"
+title	"Feasibility Score"
+description	"Feasibility block score."
+evidence_summary	
+additionalProperties	true
+type	"object"
+title	"Evidence Summary"
+description	"Compact public evidence snapshot used to explain the ranking."
+explanations	
+additionalProperties	
+type	"string"
+type	"object"
+title	"Explanations"
+description	"Explanation texts keyed by language code."
+type	"object"
+required	
+0	"action_id"
+1	"rank"
+2	"final_score"
+3	"impact_score"
+4	"alignment_score"
+5	"feasibility_score"
+title	"RankedActionResult"
+description	"Public ranked action payload returned to API consumers."

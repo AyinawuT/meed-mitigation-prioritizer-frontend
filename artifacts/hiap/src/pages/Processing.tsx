@@ -3,9 +3,14 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import actionsData from "@/data/actions.json";
-import cityApiData from "@/data/cityData.json";
 import mockRequest from "@/data/prioritizerRequestMock.json";
-import { runPipeline, type PipelineResult, type CityIndicators } from "@/lib/scoringPipeline";
+import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
+import {
+  callPrioritize,
+  type FrontendCityInput,
+  type FrontendCityEmissionsData,
+  type PrioritizerApiCityResult,
+} from "@/lib/hiapApi";
 
 const ACTION_COUNT = (actionsData as { actions: unknown[] }).actions.length;
 
@@ -58,53 +63,43 @@ function currentStageName(overall: number): string {
   return STAGES[0].label;
 }
 
-// Map StrategicPreferences display labels → pipeline sector keys
-const SECTOR_NAME_MAP: Record<string, string[]> = {
-  "Stationary Energy": ["buildings", "energy"],
-  "Transportation": ["transportation"],
-  "Waste": ["waste"],
-  "Industrial Processes & Product Use (IPPU)": ["industry"],
-  "Agriculture, Forestry & Other Land Use (AFOLU)": ["nature", "agriculture"],
-};
+// Valid timeframe values accepted by the API
+const VALID_TIMEFRAMES = new Set(["short", "medium", "long", "no_preference"]);
 
-// Extract city indicators from city API data
-function extractCityIndicators(): CityIndicators {
-  const city = (cityApiData as { city: Record<string, { attribute_value?: number; attribute_category: string }> }).city;
-  const indicators: CityIndicators = {};
-  for (const [key, val] of Object.entries(city)) {
-    if (val && typeof val === "object" && "attribute_category" in val) {
-      indicators[key] = val;
-    }
-  }
-  return indicators;
-}
-
-// Build prioritizer request from localStorage + mock emissions
-function buildRequest(locode: string) {
-  // Load strategic preferences from localStorage
+// Build FrontendCityInput from localStorage + mock emissions data
+function buildCityInput(locode: string): FrontendCityInput {
   const storageKey = `hiap:${locode}:strategic:form`;
   let sectors: string[] = [];
-  let strategicPriorities = "";
-  let excludeText = "";
+  let timeline: string | null = null;
   let savedWeights: { impact: number; alignment: number; feasibility: number } | undefined;
+
   try {
     const raw = localStorage.getItem(storageKey);
     if (raw) {
       const saved = JSON.parse(raw) as {
-        sectors: string[];
-        strategicPriorities?: string;
-        excludeText?: string;
+        sectors?: string[];
+        timeline?: string | null;
         weights?: { impact: number; alignment: number; feasibility: number };
       };
       sectors = saved.sectors ?? [];
-      strategicPriorities = saved.strategicPriorities ?? "";
-      excludeText = saved.excludeText ?? "";
+      timeline = saved.timeline ?? null;
       savedWeights = saved.weights;
     }
   } catch {}
 
-  // Map display names → pipeline keys
-  const pipelineSectors = sectors.flatMap(s => SECTOR_NAME_MAP[s] ?? [s.toLowerCase()]);
+  // Read confirmed excluded action IDs from the exclusions preview step
+  let excludedActionIds: string[] = [];
+  try {
+    const previewRaw = localStorage.getItem(`hiap:${locode}:exclusions:preview`);
+    if (previewRaw) {
+      const previewResults = JSON.parse(previewRaw) as Array<{
+        proposedExcludedActions?: Array<{ actionId: string }>;
+      }>;
+      excludedActionIds = previewResults.flatMap(r =>
+        (r.proposedExcludedActions ?? []).map(a => a.actionId)
+      );
+    }
+  } catch {}
 
   // Convert integer % weights → decimal fractions; fall back to spec defaults
   const weightsOverride = savedWeights
@@ -115,18 +110,106 @@ function buildRequest(locode: string) {
       }
     : { impact: 0.55, alignment: 0.22, feasibility: 0.23 };
 
-  // Use mock GPC emissions data (confirmed by user in EmissionsReview step)
-  const mockCity = (mockRequest as { requestData: { cityDataList: Array<{ cityEmissionsData: unknown }> } })
-    .requestData.cityDataList[0];
+  // Timeframe: convert string | null → valid API enum array
+  const cityStrategicPreferenceTimeframes = (
+    timeline && VALID_TIMEFRAMES.has(timeline) ? [timeline] : []
+  ) as ("short" | "medium" | "long" | "no_preference")[];
+
+  // Use GPC emissions data from the mock (confirmed by user in EmissionsReview step)
+  const mockCity = (
+    mockRequest as {
+      requestData: { cityDataList: Array<{ cityEmissionsData: FrontendCityEmissionsData }> };
+    }
+  ).requestData.cityDataList[0];
+
+  const countryCode = locode.slice(0, 2).toUpperCase();
 
   return {
     locode,
-    cityStrategicPreferenceSectors: pipelineSectors,
-    cityStrategicPreferenceOther: strategicPriorities,
-    excludedActionsFreeText: excludeText,
+    countryCode,
+    excludedActionIds,
     weightsOverride,
-    cityEmissionsData: mockCity.cityEmissionsData as Parameters<typeof runPipeline>[0]["cityEmissionsData"],
-    topN: 20,
+    cityStrategicPreferenceSectors: sectors,
+    cityStrategicPreferenceTimeframes,
+    cityEmissionsData: mockCity.cityEmissionsData,
+  };
+}
+
+// Local action lookup for enriching API response with display metadata
+type LocalActionRecord = {
+  actionId: string;
+  actionName: string;
+  actionCategory: string;
+  actionSubcategory: string;
+  costInvestmentNeeded: string;
+  timelineForImplementation: string;
+  description: string;
+  emissions?: { gpc_reference_number: string[] };
+};
+const LOCAL_ACTIONS = (
+  actionsData as { actions: LocalActionRecord[] }
+).actions;
+const LOCAL_ACTION_MAP = new Map(LOCAL_ACTIONS.map(a => [a.actionId, a]));
+
+// Compute total emissions from GPC data (tCO₂e)
+function sumGpcEmissions(gpcData: FrontendCityEmissionsData["gpcData"]): number {
+  let total = 0;
+  for (const entry of Object.values(gpcData)) {
+    for (const activity of entry.activities ?? []) {
+      total += activity.totalEmissions ?? 0;
+    }
+  }
+  return total;
+}
+
+// Adapt the API city result into the PipelineResult shape the Recommendations page reads
+function adaptApiResult(
+  apiResult: PrioritizerApiCityResult,
+  emissionsData: FrontendCityEmissionsData,
+  topN: number
+): PipelineResult {
+  const ranked: RankedAction[] = (apiResult.ranked_actions ?? []).map(a => {
+    const local = LOCAL_ACTION_MAP.get(a.action_id);
+    const score = a.final_score;
+    return {
+      rank: a.rank,
+      actionId: a.action_id,
+      actionName:               local?.actionName               ?? a.action_id,
+      actionCategory:           local?.actionCategory           ?? "",
+      actionSubcategory:        local?.actionSubcategory        ?? "",
+      costInvestmentNeeded:     local?.costInvestmentNeeded     ?? "",
+      timelineForImplementation: local?.timelineForImplementation ?? "",
+      description:              local?.description              ?? "",
+      finalScore:      score,
+      impactScore:     a.impact_score,
+      alignmentScore:  a.alignment_score,
+      feasibilityScore: a.feasibility_score,
+      // Sub-scores not returned by the API — default to 0
+      reductionShare:        0,
+      timelineScore:         0,
+      policyComponent:       0,
+      sectorComponent:       0,
+      otherComponent:        0,
+      softLegalComponent:    0,
+      socioeconomicComponent: 0,
+      legalPassed: true,
+      legalFlag:   false,
+      gpcRefs:         local?.emissions?.gpc_reference_number ?? [],
+      matchedEmissions: 0,
+      explanation: a.explanations?.en ?? "",
+      priority: score >= 0.7 ? "high" : score >= 0.4 ? "medium" : "low",
+    };
+  });
+
+  const totalCityEmissions = sumGpcEmissions(emissionsData.gpcData);
+
+  return {
+    ranked,
+    discarded: [],
+    totalCityEmissions,
+    cityEmissionsByGpc: {},
+    locode: apiResult.locode,
+    topN,
   };
 }
 
@@ -142,6 +225,7 @@ export function Processing({ params }: Props) {
 
   const [overall, setOverall] = useState(0);
   const [done, setDone] = useState(false);
+  const [apiDone, setApiDone] = useState(false);
   const [pipelineError, setPipelineError] = useState<string | null>(null);
   const startTime = useRef(Date.now());
 
@@ -162,27 +246,33 @@ export function Processing({ params }: Props) {
     return () => clearInterval(interval);
   }, []);
 
-  // Run pipeline synchronously on mount
+  // Call the real prioritization API and store the result
   useEffect(() => {
-    try {
-      const req = buildRequest(locode);
-      const indicators = extractCityIndicators();
-      const result: PipelineResult = runPipeline(req, indicators);
-      localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      const stack = err instanceof Error ? (err.stack ?? "") : "";
-      console.error("Pipeline error:", msg, stack);
-      setPipelineError(msg || "Unknown pipeline error");
+    async function run() {
+      try {
+        const cityInput = buildCityInput(locode);
+        const [apiResult] = await callPrioritize({
+          cityDataList: [cityInput],
+          topN: 20,
+        });
+        const result: PipelineResult = adaptApiResult(apiResult, cityInput.cityEmissionsData, 20);
+        localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setPipelineError(msg || "Prioritization API error");
+      } finally {
+        setApiDone(true);
+      }
     }
+    run();
   }, [locode]);
 
-  // Only navigate to recommendations if pipeline succeeded
+  // Navigate only when both animation and API call are complete
   useEffect(() => {
-    if (!done || pipelineError) return;
+    if (!done || !apiDone || pipelineError) return;
     const t = setTimeout(() => navigate(`/city/${citySlug}/recommendations`), 900);
     return () => clearTimeout(t);
-  }, [done, pipelineError]);
+  }, [done, apiDone, pipelineError]);
 
   const displayPct = done ? 100 : overall;
 

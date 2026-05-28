@@ -5,6 +5,7 @@ import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
 import actionsRaw from "@/data/actions.json";
 import { useLanguage } from "@/lib/i18n";
+import { callTranslateExplanations } from "@/lib/hiapApi";
 
 // ─── Co-benefits lookup ────────────────────────────────────────────────────────
 
@@ -780,7 +781,7 @@ interface Props { params: { locode: string } }
 
 export function Recommendations({ params }: Props) {
   const [, navigate] = useLocation();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city = CITIES.find((c) => c.locode.toLowerCase() === locode.toLowerCase());
@@ -823,6 +824,35 @@ export function Recommendations({ params }: Props) {
       setError("Could not load results. Please try generating recommendations again.");
     }
   }, [locode]);
+
+  // Translate action explanations when the active language is not English
+  useEffect(() => {
+    if (!result || lang === "en") return;
+    const actionsWithExplanations = result.ranked.filter(a => a.explanation);
+    if (actionsWithExplanations.length === 0) return;
+
+    callTranslateExplanations(
+      actionsWithExplanations.map(a => ({
+        actionId: a.actionId,
+        canonicalExplanation: a.explanation,
+      })),
+      [lang]
+    )
+      .then(translations => {
+        const byId = new Map(translations.map(t => [t.actionId, t.explanations]));
+        setResult(prev => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            ranked: prev.ranked.map(a => {
+              const translated = byId.get(a.actionId)?.[lang];
+              return translated ? { ...a, explanation: translated } : a;
+            }),
+          };
+        });
+      })
+      .catch(() => { /* non-fatal — fall back to English explanations */ });
+  }, [result?.ranked.length, lang]);
 
   if (error) {
     return (
