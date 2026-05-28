@@ -184,7 +184,7 @@ export function StrategicPreferences({ params }: Props) {
             Tell MEED+ HIAP which sectors and goals matter most to your city, how quickly actions must be implementable, and whether any types of actions should be excluded from the ranking.
           </p>
           <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-            MEED+ ALIGNMENT & IMPACT: Alignment shapes 22% of ranking — priority sectors 15% of alignment score, strategic priorities 5% · Implementation timeline shapes 20% of impact score · Impact shapes 55% of ranking
+            MEED+ ALIGNMENT: Alignment shapes 22% of ranking — policy support 75% · priority sectors 15% · timeframe preference 5% · strategic co-benefits 5% · Impact shapes 55% of ranking
           </p>
         </div>
       </div>
@@ -276,9 +276,9 @@ export function StrategicPreferences({ params }: Props) {
         </Section>
 
         {/* Implementation Timeline */}
-        <Section title="Implementation Timeline" required badge="IMPACT · 20%">
+        <Section title="Implementation Timeline" required badge="ALIGNMENT · 5%">
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            How quickly do you need actions to be implementable? This filters and weights actions by their time-to-impact.
+            Select your city's preferred implementation horizon. Actions whose timeline matches your preference receive a higher alignment score.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {TIMELINE_OPTIONS.map((opt) => {
