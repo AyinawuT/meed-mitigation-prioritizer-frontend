@@ -2,9 +2,9 @@ import { Router } from "express";
 
 const router = Router();
 
-// Target backend URL — override with HIAP_BACKEND_URL env var for different environments.
+// Target backend URL — set HIAP_API_URL env var to point to the hiap-meed backend.
 // Defaults to localhost:8080 (port-forwarded hiap-meed service).
-const HIAP_BACKEND_URL = process.env.HIAP_BACKEND_URL ?? "http://localhost:8080";
+const HIAP_BACKEND_URL = process.env.HIAP_API_URL ?? "http://localhost:8080";
 
 async function proxyPost(
   upstreamPath: string,

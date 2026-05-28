@@ -1,9 +1,9 @@
 // ─── BACKEND BASE URL ────────────────────────────────────────────────────────
-// All /v1/* calls are proxied through the local Express server at /api/v1/*.
+// All /v1/* calls are proxied through the local Express server at /v1/*.
 // The Express server forwards them server-to-server to the hiap-meed backend
-// (HIAP_BACKEND_URL env var, defaulting to http://localhost:8080).
-// Leave as "/api" for both dev and published app — the shared proxy handles routing.
-export const HIAP_API_BASE_URL = "/api";
+// (HIAP_API_URL env var, defaulting to http://localhost:8080).
+// Leave as "" — the shared proxy routes /v1 → api-server for both dev and prod.
+export const HIAP_API_BASE_URL = "";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 

@@ -2,6 +2,7 @@ import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import router from "./routes";
+import hiapProxyRouter from "./routes/hiapProxy";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
@@ -28,6 +29,10 @@ app.use(
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// hiap-meed proxy routes — mounted at root so frontend can call /v1/... directly
+// (the shared proxy routes /v1 → this server via artifact.toml)
+app.use(hiapProxyRouter);
 
 app.use("/api", router);
 
