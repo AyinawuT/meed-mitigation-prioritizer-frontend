@@ -4,8 +4,91 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, setStepProgress, type StepProgress } from "@/lib/stepProgress";
-import { callExclusionsPreview } from "@/lib/hiapApi";
 import policyPlansData from "@/data/policyPlans.json";
+import actionsRaw from "@/data/actions.json";
+
+// ── Co-benefit / sector lookup maps ─────────────────────────────────────────
+const CO_BENEFIT_LABELS: Record<string, string> = {
+  air_quality:             "Air Quality",
+  water_quality:           "Water Quality",
+  habitat:                 "Habitat & Biodiversity",
+  housing:                 "Housing",
+  stakeholder_engagement:  "Stakeholder Engagement",
+  cost_of_living:          "Cost of Living",
+  mobility:                "Mobility",
+};
+
+const SECTOR_GPC_NUM: Record<string, string> = {
+  "Stationary Energy":                             "I",
+  "Transportation":                                "II",
+  "Waste":                                         "III",
+  "Industrial Processes & Product Use (IPPU)":     "IV",
+  "Agriculture, Forestry & Other Land Use (AFOLU)":"V",
+};
+
+type ActionRawItem = {
+  actionId: string;
+  actionName: string;
+  actionCategory: string;
+  emissions?: { sector_number?: string };
+  coBenefits?: Record<string, { impact_relationship?: string }>;
+};
+
+type ExclusionProposal = {
+  actionId: string;
+  actionName: string;
+  reasons: { label: string; type: "Sector" | "Co-benefit" | "Free text" }[];
+};
+
+function computeExclusionProposals(
+  excludedSectors: string[],
+  excludedCoBenefits: string[],
+  excludeText: string
+): ExclusionProposal[] {
+  const actions = (actionsRaw as unknown as ActionRawItem[]);
+  const textLower = excludeText.trim().toLowerCase();
+  const textWords = textLower.split(/\W+/).filter(w => w.length > 3);
+  const results: ExclusionProposal[] = [];
+
+  for (const action of actions) {
+    const reasons: ExclusionProposal["reasons"] = [];
+
+    // Sector exclusion
+    const sectorNum = action.emissions?.sector_number;
+    for (const sector of excludedSectors) {
+      if (sectorNum && SECTOR_GPC_NUM[sector] === sectorNum) {
+        reasons.push({ label: sector, type: "Sector" });
+        break;
+      }
+    }
+
+    // Co-benefit (negative impact) exclusion
+    for (const key of excludedCoBenefits) {
+      if (action.coBenefits?.[key]?.impact_relationship === "negative") {
+        reasons.push({ label: CO_BENEFIT_LABELS[key] ?? key, type: "Co-benefit" });
+      }
+    }
+
+    // Free-text exclusion
+    if (textWords.length > 0) {
+      const nameLower = action.actionName.toLowerCase();
+      const catLower  = action.actionCategory.toLowerCase();
+      if (textWords.some(w => nameLower.includes(w) || catLower.includes(w))) {
+        reasons.push({ label: "Free text", type: "Free text" });
+      }
+    }
+
+    if (reasons.length > 0) results.push({ actionId: action.actionId, actionName: action.actionName, reasons });
+  }
+
+  return results;
+}
+
+type ExclusionForm = {
+  excludedSectors: string[];
+  excludedCoBenefits: string[];
+  excludeText: string;
+};
 
 // ── Candidate action count from plans data ──────────────────────────────────
 const CANDIDATE_ACTION_COUNT = new Set<string>(
@@ -130,6 +213,11 @@ export function PreflightCheck({ params }: Props) {
   const strategicKey = `hiap:${locode}:strategic:form`;
 
   const [progMap, setProgMap] = useState<Record<string, StepProgress>>({});
+  const [exclusionForm, setExclusionForm] = useState<ExclusionForm | null>(null);
+  const [confirmedIds, setConfirmedIds] = useState<string[]>([]);
+  const [showPreview, setShowPreview] = useState(false);
+  const [proposals, setProposals] = useState<ExclusionProposal[]>([]);
+  const [previewSelected, setPreviewSelected] = useState<Set<string>>(new Set());
   const [weights, setWeights] = useState<WeightState>(() => {
     try {
       const raw = localStorage.getItem(strategicKey);
@@ -153,24 +241,58 @@ export function PreflightCheck({ params }: Props) {
     setProgMap(map);
   }, [locode]);
 
-  // Call the exclusions preview API so confirmed excluded action IDs
-  // are available when the prioritization step runs.
+  // Load exclusion criteria and confirmed IDs from localStorage
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(`hiap:${locode}:strategic:form`);
-      if (!raw) return;
-      const saved = JSON.parse(raw) as { excludeText?: string };
-      const excludeText = saved.excludeText ?? "";
-      callExclusionsPreview([{
-        locode,
-        excludedActionsFreeText: excludeText || null,
-      }])
-        .then(results => {
-          localStorage.setItem(`hiap:${locode}:exclusions:preview`, JSON.stringify(results));
-        })
-        .catch(() => { /* non-fatal — prioritize will run without pre-confirmed exclusions */ });
-    } catch { /* non-fatal */ }
+      const raw = localStorage.getItem(strategicKey);
+      if (raw) {
+        const form = JSON.parse(raw) as {
+          excludedSectors?: string[];
+          excludedCoBenefits?: string[];
+          excludeText?: string;
+        };
+        setExclusionForm({
+          excludedSectors:    form.excludedSectors    ?? [],
+          excludedCoBenefits: form.excludedCoBenefits ?? [],
+          excludeText:        form.excludeText        ?? "",
+        });
+      }
+    } catch {}
+    try {
+      const raw = localStorage.getItem(`hiap:${locode}:exclusions:confirmed`);
+      if (raw) setConfirmedIds(JSON.parse(raw) as string[]);
+    } catch {}
   }, [locode]);
+
+  function openPreview() {
+    if (!exclusionForm) return;
+    const computed = computeExclusionProposals(
+      exclusionForm.excludedSectors,
+      exclusionForm.excludedCoBenefits,
+      exclusionForm.excludeText
+    );
+    setProposals(computed);
+    setPreviewSelected(new Set(computed.map(p => p.actionId)));
+    setShowPreview(true);
+  }
+
+  function confirmExclusions() {
+    const ids = Array.from(previewSelected);
+    localStorage.setItem(`hiap:${locode}:exclusions:confirmed`, JSON.stringify(ids));
+    setConfirmedIds(ids);
+    setShowPreview(false);
+  }
+
+  function clearExclusions() {
+    localStorage.removeItem(`hiap:${locode}:exclusions:confirmed`);
+    setConfirmedIds([]);
+  }
+
+  const hasExclusionCriteria = exclusionForm != null && (
+    exclusionForm.excludedSectors.length > 0 ||
+    exclusionForm.excludedCoBenefits.length > 0 ||
+    exclusionForm.excludeText.trim().length > 0
+  );
 
   function saveWeights(w: WeightState) {
     try {
@@ -427,6 +549,153 @@ export function PreflightCheck({ params }: Props) {
             )}
           </div>
         </div>
+
+        {/* ── Exclusion Review ── */}
+        {hasExclusionCriteria && (
+          <div style={{ marginTop: "20px", background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "22px 24px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: 0 }}>Exclusion Review</h2>
+              <span style={{ marginLeft: "auto", fontSize: "10px", background: "#FEF2F2", color: "#DC2626", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em", border: "1px solid #FECACA" }}>OPTIONAL</span>
+            </div>
+            <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
+              You have set exclusion preferences in Strategic Preferences. Preview which actions would be excluded and confirm your selection before generating the ranking.
+            </p>
+
+            {/* Summary card */}
+            <div style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "14px 16px", marginBottom: "14px" }}>
+              <div style={{ fontSize: "13px", color: "#374151", marginBottom: "5px" }}>
+                <strong>Sectors to exclude:</strong>{" "}
+                {exclusionForm!.excludedSectors.length > 0 ? exclusionForm!.excludedSectors.join(", ") : <span style={{ color: "#9CA3AF" }}>None</span>}
+              </div>
+              <div style={{ fontSize: "13px", color: "#374151", marginBottom: "5px" }}>
+                <strong>Co-benefits (negative impact):</strong>{" "}
+                {exclusionForm!.excludedCoBenefits.length > 0
+                  ? exclusionForm!.excludedCoBenefits.map(k => CO_BENEFIT_LABELS[k] ?? k).join(", ")
+                  : <span style={{ color: "#9CA3AF" }}>None</span>}
+              </div>
+              <div style={{ fontSize: "13px", color: "#374151", marginBottom: "10px" }}>
+                <strong>Free text:</strong>{" "}
+                {exclusionForm!.excludeText.trim()
+                  ? <em>"{exclusionForm!.excludeText.trim()}"</em>
+                  : <span style={{ color: "#9CA3AF" }}>None</span>}
+              </div>
+              <button
+                onClick={() => navigate(`/city/${citySlug}/strategic?from=preflight`)}
+                style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}
+              >
+                Edit exclusion criteria →
+              </button>
+            </div>
+
+            {/* Confirmed count badge */}
+            {confirmedIds.length > 0 && !showPreview && (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "10px 14px", marginBottom: "12px" }}>
+                <div>
+                  <span style={{ fontSize: "13px", fontWeight: "700", color: "#DC2626" }}>
+                    {confirmedIds.length} action{confirmedIds.length !== 1 ? "s" : ""} confirmed for exclusion
+                  </span>
+                  <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>These will be removed from the ranking when you generate recommendations.</div>
+                </div>
+                <button
+                  onClick={clearExclusions}
+                  style={{ fontSize: "12px", color: "#6B7280", background: "white", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "5px 12px", cursor: "pointer", flexShrink: 0, marginLeft: "12px" }}
+                >
+                  Clear
+                </button>
+              </div>
+            )}
+
+            {/* Preview button */}
+            {!showPreview && (
+              <button
+                onClick={openPreview}
+                style={{ fontSize: "13px", fontWeight: "600", color: "#374151", background: "white", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "10px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+              >
+                Preview proposed exclusions →
+              </button>
+            )}
+
+            {/* Inline preview panel */}
+            {showPreview && (
+              <div>
+                <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>
+                  <strong>{proposals.length} action{proposals.length !== 1 ? "s" : ""}</strong> matched your exclusion criteria. Select which ones to exclude from the ranking.
+                </p>
+                <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
+                  <button onClick={() => setPreviewSelected(new Set(proposals.map(p => p.actionId)))} style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}>Select all</button>
+                  <button onClick={() => setPreviewSelected(new Set())} style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}>Deselect all</button>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px", maxHeight: "360px", overflowY: "auto", marginBottom: "14px" }}>
+                  {proposals.map(p => {
+                    const sel = previewSelected.has(p.actionId);
+                    return (
+                      <button
+                        key={p.actionId}
+                        onClick={() => {
+                          setPreviewSelected(prev => {
+                            const n = new Set(prev);
+                            sel ? n.delete(p.actionId) : n.add(p.actionId);
+                            return n;
+                          });
+                        }}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "10px",
+                          padding: "12px 14px",
+                          borderRadius: "8px",
+                          border: sel ? "1.5px solid #DC2626" : "1.5px solid #E5E7EB",
+                          background: sel ? "#FEF2F2" : "white",
+                          cursor: "pointer",
+                          textAlign: "left",
+                          transition: "all 0.1s",
+                        }}
+                      >
+                        <span style={{
+                          width: "16px", height: "16px", borderRadius: "3px", flexShrink: 0,
+                          border: sel ? "none" : "1.5px solid #D1D5DB",
+                          background: sel ? "#DC2626" : "white",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          boxSizing: "border-box", marginTop: "1px",
+                        }}>
+                          {sel && <span style={{ color: "white", fontSize: "11px", lineHeight: 1 }}>✓</span>}
+                        </span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: "13px", fontWeight: sel ? "600" : "400", color: sel ? "#DC2626" : "#111827" }}>{p.actionName}</div>
+                          <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "3px" }}>
+                            {p.reasons.map((r, i) => (
+                              <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginRight: "6px" }}>
+                                Action has negative impact on selected co-benefit(s): {r.label.toLowerCase()}
+                              </span>
+                            ))}
+                          </div>
+                          <div style={{ marginTop: "5px", display: "flex", gap: "5px", flexWrap: "wrap" }}>
+                            {p.reasons.map((r, i) => (
+                              <span key={i} style={{ fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
+                                background: r.type === "Sector" ? "#EEF2FF" : r.type === "Co-benefit" ? "#EEF2FF" : "#FEF3C7",
+                                color: r.type === "Free text" ? "#92400E" : "#4338CA",
+                              }}>{r.type}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                  <button
+                    onClick={confirmExclusions}
+                    style={{ fontSize: "13px", fontWeight: "700", color: "white", background: "#DC2626", border: "none", borderRadius: "8px", padding: "11px 22px", cursor: "pointer" }}
+                  >
+                    Confirm {previewSelected.size} exclusion{previewSelected.size !== 1 ? "s" : ""}
+                  </button>
+                  <button onClick={() => setShowPreview(false)} style={{ fontSize: "13px", color: "#6B7280", background: "none", border: "none", padding: 0, cursor: "pointer" }}>Cancel</button>
+                  <span style={{ marginLeft: "auto", fontSize: "12px", color: "#6B7280" }}>{previewSelected.size} of {proposals.length} selected</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* ── Generate CTA ── */}
         {(() => {

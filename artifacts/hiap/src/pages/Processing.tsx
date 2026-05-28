@@ -70,6 +70,7 @@ const VALID_TIMEFRAMES = new Set(["short", "medium", "long", "no_preference"]);
 function buildCityInput(locode: string): FrontendCityInput {
   const storageKey = `hiap:${locode}:strategic:form`;
   let sectors: string[] = [];
+  let strategicCoBenefitKeys: string[] = [];
   let timeline: string | null = null;
   let savedWeights: { impact: number; alignment: number; feasibility: number } | undefined;
 
@@ -78,26 +79,26 @@ function buildCityInput(locode: string): FrontendCityInput {
     if (raw) {
       const saved = JSON.parse(raw) as {
         sectors?: string[];
+        strategicPriorities?: string | string[];
         timeline?: string | null;
         weights?: { impact: number; alignment: number; feasibility: number };
       };
       sectors = saved.sectors ?? [];
+      // backward compat: strategicPriorities was previously a free-text string
+      strategicCoBenefitKeys = Array.isArray(saved.strategicPriorities)
+        ? saved.strategicPriorities
+        : [];
       timeline = saved.timeline ?? null;
       savedWeights = saved.weights;
     }
   } catch {}
 
-  // Read confirmed excluded action IDs from the exclusions preview step
+  // Read confirmed excluded action IDs (user confirmed via the Exclusion Review step)
   let excludedActionIds: string[] = [];
   try {
-    const previewRaw = localStorage.getItem(`hiap:${locode}:exclusions:preview`);
-    if (previewRaw) {
-      const previewResults = JSON.parse(previewRaw) as Array<{
-        proposedExcludedActions?: Array<{ actionId: string }>;
-      }>;
-      excludedActionIds = previewResults.flatMap(r =>
-        (r.proposedExcludedActions ?? []).map(a => a.actionId)
-      );
+    const confirmedRaw = localStorage.getItem(`hiap:${locode}:exclusions:confirmed`);
+    if (confirmedRaw) {
+      excludedActionIds = JSON.parse(confirmedRaw) as string[];
     }
   } catch {}
 
@@ -130,6 +131,7 @@ function buildCityInput(locode: string): FrontendCityInput {
     excludedActionIds,
     weightsOverride,
     cityStrategicPreferenceSectors: sectors,
+    cityStrategicPreferenceCoBenefitKeys: strategicCoBenefitKeys,
     cityStrategicPreferenceTimeframes,
     cityEmissionsData: mockCity.cityEmissionsData,
   };
