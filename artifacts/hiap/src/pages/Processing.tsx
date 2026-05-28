@@ -82,6 +82,31 @@ function toSectorTags(displayNames: string[]): string[] {
     .filter((t): t is string => Boolean(t));
 }
 
+// Strip any fields not accepted by the backend's strict GpcActivity schema.
+// The mock data includes `activityName` which the backend rejects with extra_forbidden.
+function sanitizeEmissionsData(data: FrontendCityEmissionsData): FrontendCityEmissionsData {
+  return {
+    ...data,
+    gpcData: Object.fromEntries(
+      Object.entries(data.gpcData).map(([ref, entry]) => [
+        ref,
+        {
+          notationKey: entry.notationKey,
+          activities: entry.activities.map(({ activityType, totalEmissions, totalEmissionsUnit, activityValue, activityUnit, dataSource, notationKey }) => ({
+            activityType,
+            totalEmissions,
+            totalEmissionsUnit,
+            activityValue,
+            activityUnit,
+            dataSource,
+            notationKey,
+          })),
+        },
+      ])
+    ),
+  };
+}
+
 // Build FrontendCityInput from localStorage + mock emissions data
 function buildCityInput(locode: string): FrontendCityInput {
   const storageKey = `hiap:${locode}:strategic:form`;
@@ -168,7 +193,7 @@ function buildCityInput(locode: string): FrontendCityInput {
     cityStrategicPreferenceSectors,
     cityStrategicPreferenceCoBenefitKeys: strategicCoBenefitKeys,
     cityStrategicPreferenceTimeframes,
-    cityEmissionsData: mockCity.cityEmissionsData,
+    cityEmissionsData: sanitizeEmissionsData(mockCity.cityEmissionsData),
   };
 }
 
