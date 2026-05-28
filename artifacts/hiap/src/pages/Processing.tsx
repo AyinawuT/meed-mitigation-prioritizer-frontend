@@ -241,11 +241,13 @@ function adaptApiResult(
 
     // Pull sub-scores from evidence_summary returned by the backend
     type EvidenceSummary = {
+      hard_filter?: { discard_reason?: string | null; legal_assessment_present?: boolean; legal_verdict_category?: string | null };
       impact?: { emissions_reduction_component_score?: number; timeline_component_score?: number };
-      alignment?: { policy_component_score?: number; sector_component_score?: number; co_benefit_component_score?: number };
+      alignment?: { policy_component_score?: number; sector_component_score?: number; co_benefit_component_score?: number; timeframe_component_score?: number };
       feasibility?: { legal_component_score?: number; mitigation_feasibility_component_score?: number };
     };
     const ev = (a.evidence_summary ?? {}) as EvidenceSummary;
+    const verdictCategory = ev.hard_filter?.legal_verdict_category ?? null;
 
     return {
       rank: a.rank,
@@ -260,16 +262,17 @@ function adaptApiResult(
       impactScore:     a.impact_score,
       alignmentScore:  a.alignment_score,
       feasibilityScore: a.feasibility_score,
-      // Sub-scores from evidence_summary (backend now returns 0.5 for missing timeline, etc.)
-      reductionShare:        ev.impact?.emissions_reduction_component_score   ?? 0,
-      timelineScore:         ev.impact?.timeline_component_score               ?? 0,
-      policyComponent:       ev.alignment?.policy_component_score              ?? 0,
-      sectorComponent:       ev.alignment?.sector_component_score              ?? 0,
-      otherComponent:        ev.alignment?.co_benefit_component_score          ?? 0,
-      softLegalComponent:    ev.feasibility?.legal_component_score             ?? 0,
+      // Sub-scores from evidence_summary
+      reductionShare:        ev.impact?.emissions_reduction_component_score         ?? 0,
+      timelineScore:         ev.impact?.timeline_component_score                    ?? 0,
+      policyComponent:       ev.alignment?.policy_component_score                   ?? 0,
+      sectorComponent:       ev.alignment?.sector_component_score                   ?? 0,
+      otherComponent:        ev.alignment?.co_benefit_component_score               ?? 0,
+      timeframeComponent:    ev.alignment?.timeframe_component_score                ?? 0,
+      softLegalComponent:    ev.feasibility?.legal_component_score                  ?? 0,
       socioeconomicComponent: ev.feasibility?.mitigation_feasibility_component_score ?? 0,
-      legalPassed: true,
-      legalFlag:   false,
+      legalPassed: verdictCategory !== "blocked",
+      legalFlag:   verdictCategory === "blocked",
       gpcRefs:         local?.emissions?.gpc_reference_number ?? [],
       matchedEmissions: 0,
       explanation: a.explanations?.en ?? "",

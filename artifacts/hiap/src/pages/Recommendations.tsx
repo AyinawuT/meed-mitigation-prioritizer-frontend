@@ -246,7 +246,8 @@ function DetailPanel({
   const alignmentDesc =
     `Policy support: ${action.policyComponent.toFixed(2)}` +
     ` · sector match: ${sectorMatchDesc}` +
-    ` · strategic priorities: ${action.otherComponent.toFixed(2)}`;
+    ` · strategic priorities: ${action.otherComponent.toFixed(2)}` +
+    ` · timeframe fit: ${action.timeframeComponent.toFixed(2)}`;
 
   const feasibilityDesc =
     `Soft legal compliance: ${action.softLegalComponent.toFixed(2)}` +
@@ -336,7 +337,7 @@ function DetailPanel({
                 {
                   label: "Policy support",
                   rawValue: action.policyComponent,
-                  weight: 0.8,
+                  weight: 0.75,
                   note: "How well this action is backed by national and regional policy plans",
                 },
                 {
@@ -350,6 +351,12 @@ function DetailPanel({
                   rawValue: action.otherComponent,
                   weight: 0.05,
                   note: "Co-benefit overlap with your stated strategic priorities",
+                },
+                {
+                  label: "Timeframe fit",
+                  rawValue: action.timeframeComponent,
+                  weight: 0.05,
+                  note: action.timeframeComponent === 1.0 ? "Exact match with preferred implementation timeframe" : action.timeframeComponent === 0.5 ? "Adjacent match or no preference set" : "Far mismatch with preferred timeframe",
                 },
               ]}
             />

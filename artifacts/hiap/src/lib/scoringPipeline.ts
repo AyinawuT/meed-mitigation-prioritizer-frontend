@@ -51,6 +51,7 @@ export interface RankedAction {
   otherComponent: number;
   softLegalComponent: number;
   socioeconomicComponent: number;
+  timeframeComponent: number;
   legalPassed: boolean;
   legalFlag: boolean;
   gpcRefs: string[];
@@ -664,6 +665,7 @@ export function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
+      timeframeComponent: 0,
       legalPassed: true,
       legalFlag,
       gpcRefs: action.emissions?.gpc_reference_number ?? [],
