@@ -71,8 +71,8 @@ function computeExclusionProposals(
 
     // Free-text exclusion
     if (textWords.length > 0) {
-      const nameLower = action.actionName.toLowerCase();
-      const catLower  = action.actionCategory.toLowerCase();
+      const nameLower = action.actionName?.toLowerCase() ?? "";
+      const catLower  = action.actionCategory?.toLowerCase() ?? "";
       if (textWords.some(w => nameLower.includes(w) || catLower.includes(w))) {
         reasons.push({ label: "Free text", type: "Free text" });
       }
