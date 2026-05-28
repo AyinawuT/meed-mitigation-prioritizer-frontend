@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, setStepProgress, type StepProgress } from "@/lib/stepProgress";
+import { callExclusionsPreview } from "@/lib/hiapApi";
 import policyPlansData from "@/data/policyPlans.json";
 import actionsRaw from "@/data/actions.json";
 
@@ -24,6 +25,15 @@ const SECTOR_GPC_NUM: Record<string, string> = {
   "Waste":                                         "III",
   "Industrial Processes & Product Use (IPPU)":     "IV",
   "Agriculture, Forestry & Other Land Use (AFOLU)":"V",
+};
+
+// Sector display name → API snake_case tag (validated by the exclusion preview endpoint)
+const SECTOR_DISPLAY_TO_TAG: Record<string, string> = {
+  "Stationary Energy":                                         "stationary_energy",
+  "Transportation":                                            "transportation",
+  "Waste":                                                     "waste",
+  "Industrial Processes & Product Use (IPPU)":                 "ippu",
+  "Agriculture, Forestry & Other Land Use (AFOLU)":            "afolu",
 };
 
 type ActionRawItem = {
@@ -218,6 +228,8 @@ export function PreflightCheck({ params }: Props) {
   const [showPreview, setShowPreview] = useState(false);
   const [proposals, setProposals] = useState<ExclusionProposal[]>([]);
   const [previewSelected, setPreviewSelected] = useState<Set<string>>(new Set());
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [previewFallback, setPreviewFallback] = useState(false);
   const [weights, setWeights] = useState<WeightState>(() => {
     try {
       const raw = localStorage.getItem(strategicKey);
@@ -264,16 +276,54 @@ export function PreflightCheck({ params }: Props) {
     } catch {}
   }, [locode]);
 
-  function openPreview() {
+  async function openPreview() {
     if (!exclusionForm) return;
-    const computed = computeExclusionProposals(
-      exclusionForm.excludedSectors,
-      exclusionForm.excludedCoBenefits,
-      exclusionForm.excludeText
-    );
-    setProposals(computed);
-    setPreviewSelected(new Set(computed.map(p => p.actionId)));
-    setShowPreview(true);
+    setPreviewLoading(true);
+    setPreviewFallback(false);
+
+    // Map sector display names → API snake_case tags required by the exclusion preview endpoint
+    const excludedSectorTags = exclusionForm.excludedSectors
+      .map((s) => SECTOR_DISPLAY_TO_TAG[s])
+      .filter((t): t is string => Boolean(t));
+
+    try {
+      const results = await callExclusionsPreview([{
+        locode,
+        excludedSectorTags,
+        excludedCoBenefitKeys: exclusionForm.excludedCoBenefits,
+        excludedActionsFreeText: exclusionForm.excludeText.trim() || null,
+      }]);
+
+      const cityResult = results.find((r) => r.locode === locode) ?? results[0];
+      const apiProposals = cityResult?.proposedExcludedActions ?? [];
+
+      // Adapt API ProposedExcludedAction → local ExclusionProposal shape
+      const computed: ExclusionProposal[] = apiProposals.map((p) => ({
+        actionId: p.actionId,
+        actionName: p.actionName,
+        reasons: (p.matchedBy ?? []).map((mb) => {
+          if (mb === "sector")     return { label: "Sector",    type: "Sector"    as const };
+          if (mb === "co_benefit") return { label: "Co-benefit", type: "Co-benefit" as const };
+          return                          { label: "Free text", type: "Free text" as const };
+        }),
+      }));
+
+      setProposals(computed);
+      setPreviewSelected(new Set(computed.map((p) => p.actionId)));
+    } catch {
+      // API unavailable — fall back to local static computation so the UI still works
+      const computed = computeExclusionProposals(
+        exclusionForm.excludedSectors,
+        exclusionForm.excludedCoBenefits,
+        exclusionForm.excludeText
+      );
+      setProposals(computed);
+      setPreviewSelected(new Set(computed.map((p) => p.actionId)));
+      setPreviewFallback(true);
+    } finally {
+      setPreviewLoading(false);
+      setShowPreview(true);
+    }
   }
 
   function confirmExclusions() {
@@ -608,16 +658,22 @@ export function PreflightCheck({ params }: Props) {
             {/* Preview button */}
             {!showPreview && (
               <button
-                onClick={openPreview}
-                style={{ fontSize: "13px", fontWeight: "600", color: "#374151", background: "white", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "10px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+                onClick={() => { void openPreview(); }}
+                disabled={previewLoading}
+                style={{ fontSize: "13px", fontWeight: "600", color: "#374151", background: "white", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "10px 18px", cursor: previewLoading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: "6px", opacity: previewLoading ? 0.7 : 1 }}
               >
-                Preview proposed exclusions →
+                {previewLoading ? "Loading preview…" : "Preview proposed exclusions →"}
               </button>
             )}
 
             {/* Inline preview panel */}
             {showPreview && (
               <div>
+                {previewFallback && (
+                  <div style={{ fontSize: "12px", color: "#B45309", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "6px", padding: "6px 10px", marginBottom: "10px" }}>
+                    Preview generated locally (backend unavailable). Free-text matching is approximate.
+                  </div>
+                )}
                 <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>
                   <strong>{proposals.length} action{proposals.length !== 1 ? "s" : ""}</strong> matched your exclusion criteria. Select which ones to exclude from the ranking.
                 </p>

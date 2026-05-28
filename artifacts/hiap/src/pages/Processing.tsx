@@ -66,10 +66,26 @@ function currentStageName(overall: number): string {
 // Valid timeframe values accepted by the API
 const VALID_TIMEFRAMES = new Set(["short", "medium", "long", "no_preference"]);
 
+// Sector display name → API snake_case tag
+// The API validates cityStrategicPreferenceSectors against this exact set.
+const SECTOR_DISPLAY_TO_TAG: Record<string, string> = {
+  "Stationary Energy":                                         "stationary_energy",
+  "Transportation":                                            "transportation",
+  "Waste":                                                     "waste",
+  "Industrial Processes & Product Use (IPPU)":                 "ippu",
+  "Agriculture, Forestry & Other Land Use (AFOLU)":            "afolu",
+};
+
+function toSectorTags(displayNames: string[]): string[] {
+  return displayNames
+    .map((n) => SECTOR_DISPLAY_TO_TAG[n])
+    .filter((t): t is string => Boolean(t));
+}
+
 // Build FrontendCityInput from localStorage + mock emissions data
 function buildCityInput(locode: string): FrontendCityInput {
   const storageKey = `hiap:${locode}:strategic:form`;
-  let sectors: string[] = [];
+  let sectorDisplayNames: string[] = [];
   let strategicCoBenefitKeys: string[] = [];
   let timelineValues: string[] = [];
   let savedWeights: { impact: number; alignment: number; feasibility: number } | undefined;
@@ -83,7 +99,7 @@ function buildCityInput(locode: string): FrontendCityInput {
         timeline?: string | string[] | null;
         weights?: { impact: number; alignment: number; feasibility: number };
       };
-      sectors = saved.sectors ?? [];
+      sectorDisplayNames = saved.sectors ?? [];
       // backward compat: strategicPriorities was previously a free-text string
       strategicCoBenefitKeys = Array.isArray(saved.strategicPriorities)
         ? saved.strategicPriorities
@@ -116,10 +132,17 @@ function buildCityInput(locode: string): FrontendCityInput {
       }
     : { impact: 0.55, alignment: 0.22, feasibility: 0.23 };
 
-  // Timeframe: filter to valid API enum values
+  // Timeframe: filter to valid API enum values.
+  // no_preference must NOT be combined with other values per API contract.
+  const validTimelines = timelineValues.filter((t) => VALID_TIMEFRAMES.has(t));
   const cityStrategicPreferenceTimeframes = (
-    timelineValues.filter((t) => VALID_TIMEFRAMES.has(t))
+    validTimelines.includes("no_preference")
+      ? ["no_preference"]
+      : validTimelines
   ) as ("short" | "medium" | "long" | "no_preference")[];
+
+  // Map sector display names → API snake_case tags (validated enum on the API side)
+  const cityStrategicPreferenceSectors = toSectorTags(sectorDisplayNames);
 
   // Use GPC emissions data from the mock (confirmed by user in EmissionsReview step)
   const mockCity = (
@@ -130,12 +153,19 @@ function buildCityInput(locode: string): FrontendCityInput {
 
   const countryCode = locode.slice(0, 2).toUpperCase();
 
+  // Derive populationSize from city data (strip formatting characters)
+  const cityObj = CITIES.find((c) => c.locode.toLowerCase() === locode.toLowerCase());
+  const populationSize = cityObj?.population
+    ? parseInt(cityObj.population.replace(/[^0-9]/g, ""), 10) || null
+    : null;
+
   return {
     locode,
     countryCode,
+    populationSize,
     excludedActionIds,
     weightsOverride,
-    cityStrategicPreferenceSectors: sectors,
+    cityStrategicPreferenceSectors,
     cityStrategicPreferenceCoBenefitKeys: strategicCoBenefitKeys,
     cityStrategicPreferenceTimeframes,
     cityEmissionsData: mockCity.cityEmissionsData,
