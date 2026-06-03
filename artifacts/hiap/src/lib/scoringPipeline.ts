@@ -88,6 +88,7 @@ export interface PrioritizerRequest {
   populationSize?: number;
   weightsOverride?: { impact: number; alignment: number; feasibility: number };
   cityStrategicPreferenceSectors?: string[];
+  cityStrategicPreferenceTimeframes?: string[];
   cityStrategicPreferenceOther?: string;
   excludedActionsFreeText?: string;
   cityEmissionsData: {
@@ -333,21 +334,55 @@ function scoreImpact(
 
 // ─── Step 4: Alignment scoring ────────────────────────────────────────────────
 
+// Map user timeframe preference keys → action timelineForImplementation values
+const TIMEFRAME_TO_TIMELINE: Record<string, string> = {
+  short:  "<5 years",
+  medium: "5-10 years",
+  long:   ">10 years",
+};
+// Adjacency order for partial-match scoring
+const TIMELINE_ORDER = ["<5 years", "5-10 years", ">10 years"];
+
+function scoreTimeframeMatch(
+  actionTimeline: string | undefined,
+  timeframes: string[]
+): number {
+  if (!timeframes.length || !actionTimeline) return 0.5; // neutral
+  if (timeframes.includes("no_preference")) return 1.0;  // user accepts all
+  const preferredTimelines = timeframes.map((t) => TIMEFRAME_TO_TIMELINE[t]).filter(Boolean);
+  if (!preferredTimelines.length) return 0.5;
+  const actionIdx = TIMELINE_ORDER.indexOf(actionTimeline);
+  if (actionIdx === -1) return 0.5;
+  const dists = preferredTimelines.map((pref) => {
+    const prefIdx = TIMELINE_ORDER.indexOf(pref);
+    return prefIdx === -1 ? 2 : Math.abs(actionIdx - prefIdx);
+  });
+  const minDist = Math.min(...dists);
+  if (minDist === 0) return 1.0;
+  if (minDist === 1) return 0.5;
+  return 0.0;
+}
+
 function scoreAlignment(
   action: ActionRecord,
   sectors: string[],
-  coBenefitDimensions: string[]
-): { alignmentScore: number; policyComponent: number; sectorComponent: number; otherComponent: number } {
+  coBenefitDimensions: string[],
+  timeframes: string[]
+): { alignmentScore: number; policyComponent: number; sectorComponent: number; otherComponent: number; timeframeComponent: number } {
   const policyComponent = policyMap.get(action.actionId) ?? 0.0;
   const gpcRefs = action.emissions?.gpc_reference_number ?? [];
   const sectorComponent =
     sectors.length > 0 && actionMatchesSectors(gpcRefs, sectors) ? 1.0 : 0.0;
   const otherComponent = scoreCobenefitMatch(action, coBenefitDimensions);
+  const timeframeComponent = scoreTimeframeMatch(action.timelineForImplementation, timeframes);
 
   const alignmentScore =
-    0.8 * policyComponent + 0.15 * sectorComponent + 0.05 * otherComponent;
+    0.75 * policyComponent +
+    0.15 * sectorComponent +
+    0.05 * otherComponent +
+    0.05 * timeframeComponent;
 
-  return { alignmentScore, policyComponent, sectorComponent, otherComponent };
+  return { alignmentScore, policyComponent, sectorComponent, otherComponent, timeframeComponent };
 }
 
 // ─── Step 5: Feasibility scoring ──────────────────────────────────────────────
@@ -569,13 +604,14 @@ export function runPipeline(
   const sectors = req.cityStrategicPreferenceSectors ?? [];
   const freeText = req.cityStrategicPreferenceOther ?? "";
   const coBenefitDimensions = matchedCoBenefitDimensions(freeText);
+  const timeframes = req.cityStrategicPreferenceTimeframes ?? [];
   const topN = req.topN ?? 20;
 
   const scored = valid.map((action) => {
     const { impactScore, reductionShare, timelineScore, matchedEmissions, impactText } =
       scoreImpact(action, byRef, total);
-    const { alignmentScore, policyComponent, sectorComponent, otherComponent } =
-      scoreAlignment(action, sectors, coBenefitDimensions);
+    const { alignmentScore, policyComponent, sectorComponent, otherComponent, timeframeComponent } =
+      scoreAlignment(action, sectors, coBenefitDimensions, timeframes);
     const { feasibilityScore, softLegalComponent, socioeconomicComponent } =
       scoreFeasibility(action, cityIndicators);
 
@@ -598,6 +634,7 @@ export function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
+      timeframeComponent,
       matchedEmissions,
       legalFlag: flagged.has(action.actionId),
     };
@@ -624,6 +661,7 @@ export function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
+      timeframeComponent,
       matchedEmissions,
       legalFlag,
     } = item;
@@ -665,7 +703,7 @@ export function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
-      timeframeComponent: 0,
+      timeframeComponent,
       legalPassed: true,
       legalFlag,
       gpcRefs: action.emissions?.gpc_reference_number ?? [],
