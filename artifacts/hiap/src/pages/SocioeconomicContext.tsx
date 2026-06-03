@@ -1,10 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
-import citiesMock from "@/data/citiesMock.json";
 
 type Category = "very high" | "high" | "medium" | "low" | "very low";
 
@@ -214,25 +213,27 @@ function formatValue(ind: Indicator): string {
   return `${ind.value}%`;
 }
 
-function buildIndicators(city: CityData): Indicator[] {
-  if (city.locode === "CL IQQ") {
-    return IQQ_INDICATORS.map((ind) => ({
-      ...ind,
-      relevance: buildRelevance(ind.key, ind.category),
-    }));
-  }
-  const mockCity = (citiesMock as { cities: Record<string, { attribute_value: number; attribute_category: string }>[]; }).cities
-    ?.find((c) => (c as unknown as { locode: string }).locode?.toUpperCase() === city.locode.toUpperCase());
-  if (!mockCity) {
-    return IQQ_INDICATORS.map((ind) => ({ ...ind, value: 0, category: "medium" as Category, relevance: buildRelevance(ind.key, "medium") }));
-  }
+// Maps UI indicator keys → API city_attributes keys where the names differ
+const API_ATTRIBUTE_KEY: Record<string, string> = {
+  electricity_access:            "electricity_access_rate",
+  transport_logistics_employment: "employment_in_transport_and_logistics",
+  industry_construction_employment: "employment_construction",
+};
+
+type ApiCityData = Record<string, { attribute_value: number; attribute_category: string }>;
+
+function buildIndicators(
+  _city: CityData,
+  apiData: ApiCityData | null
+): Indicator[] {
   return IQQ_INDICATORS.map((ind) => {
-    const field = (mockCity as Record<string, { attribute_value: number; attribute_category: string } | unknown>)[ind.key] as { attribute_value: number; attribute_category: string } | undefined;
-    if (!field || typeof field !== "object") return { ...ind, value: 0, category: "medium" as Category, relevance: buildRelevance(ind.key, "medium") };
-    const category = field.attribute_category as Category;
+    const apiKey = API_ATTRIBUTE_KEY[ind.key] ?? ind.key;
+    const field = apiData?.[apiKey];
+    const category = (field?.attribute_category as Category | undefined) ?? ind.category;
+    const value = field?.attribute_value ?? ind.value;
     return {
       ...ind,
-      value: field.attribute_value,
+      value,
       category,
       relevance: buildRelevance(ind.key, category),
     };
@@ -256,7 +257,19 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
-  const indicators = city ? buildIndicators(city) : [];
+  const [apiCityData, setApiCityData] = useState<ApiCityData | null>(null);
+
+  useEffect(() => {
+    const url = `https://ccglobal.openearth.dev/api/v0/city_attributes/${encodeURIComponent(locode)}`;
+    fetch(url)
+      .then(r => r.json())
+      .then((json: { city?: ApiCityData }) => {
+        if (json.city) setApiCityData(json.city);
+      })
+      .catch(() => { /* keep hardcoded fallback values */ });
+  }, [locode]);
+
+  const indicators = city ? buildIndicators(city, apiCityData) : [];
 
   if (!city) {
     return (

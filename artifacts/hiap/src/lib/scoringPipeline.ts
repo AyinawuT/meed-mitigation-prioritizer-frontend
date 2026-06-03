@@ -1,6 +1,5 @@
 import actionsRaw from "@/data/actions.json";
 import legalRaw from "@/data/actionsLegal.json";
-import policyRaw from "@/data/actionsPolicySignals.json";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -118,9 +117,31 @@ for (const entry of legalRaw.legal_requirements) {
   legalMap.set(entry.action_id, entry.requirements);
 }
 
-const policyMap = new Map<string, number>();
-for (const entry of (policyRaw as { policy_signals: Array<{ action_id: string; policy_support_score: number }> }).policy_signals) {
-  policyMap.set(entry.action_id, entry.policy_support_score);
+// Fetch live policy scores from the API; returns empty map on any error
+async function fetchPolicyMap(locode: string): Promise<Map<string, number>> {
+  const map = new Map<string, number>();
+  try {
+    const url = `https://ccglobal.openearth.dev/api/v1/cities/${encodeURIComponent(locode)}/action-policy-scores?top_evidence_limit=5`;
+    const res = await fetch(url);
+    if (!res.ok) return map;
+    const data = await res.json() as { scores?: Array<{ src_action_id: string; policy_support_score: number }> };
+    for (const s of data.scores ?? []) map.set(s.src_action_id, s.policy_support_score);
+  } catch { /* fall through — all actions default to 0 policy score */ }
+  return map;
+}
+
+// Fetch live mitigation feasibility scores; returns empty map on any error
+async function fetchMitigationFeasibilityMap(locode: string): Promise<Map<string, number>> {
+  const map = new Map<string, number>();
+  try {
+    const countryCode = locode.slice(0, 2).toUpperCase();
+    const url = `https://ccglobal.openearth.dev/api/v1/cities/${encodeURIComponent(locode)}/action-mitigation-feasibility-scores?country_code=${countryCode}`;
+    const res = await fetch(url);
+    if (!res.ok) return map;
+    const data = await res.json() as { scores?: Array<{ src_action_id: string; action_score: number }> };
+    for (const s of data.scores ?? []) map.set(s.src_action_id, s.action_score);
+  } catch { /* fall through — all actions default to 0.5 */ }
+  return map;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -379,7 +400,8 @@ function scoreAlignment(
   action: ActionRecord,
   sectors: string[],
   coBenefitDimensions: string[],
-  timeframes: string[]
+  timeframes: string[],
+  policyMap: Map<string, number>
 ): { alignmentScore: number; policyComponent: number; sectorComponent: number; otherComponent: number; timeframeComponent: number } {
   const policyComponent = policyMap.get(action.actionId) ?? 0.0;
   const gpcRefs = action.emissions?.gpc_reference_number ?? [];
@@ -401,7 +423,8 @@ function scoreAlignment(
 
 function scoreFeasibility(
   action: ActionRecord,
-  cityIndicators: CityIndicators
+  cityIndicators: CityIndicators,
+  mitigationFeasibilityMap?: Map<string, number>
 ): { feasibilityScore: number; softLegalComponent: number; socioeconomicComponent: number } {
   // Soft legal
   const reqs = legalMap.get(action.actionId) ?? [];
@@ -419,37 +442,33 @@ function scoreFeasibility(
     softLegalComponent = scores.reduce((a, b) => a + b, 0) / scores.length;
   }
 
-  // Socioeconomic
-  const indicators = action.socioeconomicIndicators ?? [];
-  let socioeconomicComponent = 0.5; // default neutral
+  // Mitigation feasibility component:
+  // Use the pre-fetched action_score from the live API when available; fall back
+  // to local indicator-based computation when the API has no score for this action.
+  let socioeconomicComponent: number;
+  if (mitigationFeasibilityMap?.has(action.actionId)) {
+    socioeconomicComponent = mitigationFeasibilityMap.get(action.actionId)!;
+  } else {
+    socioeconomicComponent = 0.5; // neutral default
 
-  if (indicators.length > 0) {
-    let weightedSum = 0;
-    let totalWeight = 0;
-
-    for (const rule of indicators) {
-      // Always count the weight in the denominator, even if city data is missing
-      // (matches reference pipeline: missing indicator contributes 0 but dilutes the average)
-      totalWeight += rule.weight;
-
-      // Remap action key → city key
-      const cityKey = INDICATOR_KEY_MAP[rule.indicator_key] ?? rule.indicator_key;
-      const cityAttr = cityIndicators[cityKey];
-      if (!cityAttr) continue; // 0 contribution to numerator, weight already counted above
-
-      const bucket = normalizeBucket(cityAttr.attribute_category);
-      let bucketScore = BUCKET_SCORE[bucket] ?? 0;
-
-      if (rule.direction === "constraining") {
-        bucketScore = -bucketScore;
+    const indicators = action.socioeconomicIndicators ?? [];
+    if (indicators.length > 0) {
+      let weightedSum = 0;
+      let totalWeight = 0;
+      for (const rule of indicators) {
+        // Always count the weight in the denominator (missing indicator contributes 0)
+        totalWeight += rule.weight;
+        const cityKey = INDICATOR_KEY_MAP[rule.indicator_key] ?? rule.indicator_key;
+        const cityAttr = cityIndicators[cityKey];
+        if (!cityAttr) continue;
+        const bucket = normalizeBucket(cityAttr.attribute_category);
+        let bucketScore = BUCKET_SCORE[bucket] ?? 0;
+        if (rule.direction === "constraining") bucketScore = -bucketScore;
+        weightedSum += bucketScore * rule.weight;
       }
-
-      weightedSum += bucketScore * rule.weight;
-    }
-
-    if (totalWeight > 0) {
-      const average = weightedSum / totalWeight;
-      socioeconomicComponent = (average + 2) / 4; // normalize -2..2 → 0..1
+      if (totalWeight > 0) {
+        socioeconomicComponent = (weightedSum / totalWeight + 2) / 4;
+      }
     }
   }
 
@@ -591,10 +610,10 @@ function priorityLabel(
 
 // ─── Main pipeline entry point ────────────────────────────────────────────────
 
-export function runPipeline(
+export async function runPipeline(
   req: PrioritizerRequest,
   cityIndicators: CityIndicators
-): PipelineResult {
+): Promise<PipelineResult> {
   const weights = req.weightsOverride ?? {
     impact: 0.55,
     alignment: 0.22,
@@ -611,6 +630,12 @@ export function runPipeline(
 
   const { byRef, total } = deriveEmissions(req.cityEmissionsData.gpcData);
 
+  // Fetch live policy scores + mitigation feasibility scores in parallel
+  const [policyMap, mitigationFeasibilityMap] = await Promise.all([
+    fetchPolicyMap(req.locode),
+    fetchMitigationFeasibilityMap(req.locode),
+  ]);
+
   const { valid, discarded, flagged } = hardFilter(actions);
 
   const sectors = req.cityStrategicPreferenceSectors ?? [];
@@ -626,9 +651,9 @@ export function runPipeline(
     const { impactScore, reductionShare, timelineScore, matchedEmissions, impactText } =
       scoreImpact(action, byRef, total);
     const { alignmentScore, policyComponent, sectorComponent, otherComponent, timeframeComponent } =
-      scoreAlignment(action, sectors, coBenefitDimensions, timeframes);
+      scoreAlignment(action, sectors, coBenefitDimensions, timeframes, policyMap);
     const { feasibilityScore, softLegalComponent, socioeconomicComponent } =
-      scoreFeasibility(action, cityIndicators);
+      scoreFeasibility(action, cityIndicators, mitigationFeasibilityMap);
 
     const finalScore =
       impactScore * normWeights.impact +

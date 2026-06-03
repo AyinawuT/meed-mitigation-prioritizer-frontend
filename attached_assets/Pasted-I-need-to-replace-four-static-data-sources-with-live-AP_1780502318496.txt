@@ -1,0 +1,32 @@
+I need to replace four static data sources with live API calls. Here is exactly what needs to change based on the actual files in the codebase:
+1 — SocioeconomicContext.tsx — replace citiesMock.json
+Currently line 7 imports:
+javascriptimport citiesMock from "@/data/citiesMock.json";
+Remove this import and replace with a fetch to:
+https://ccglobal.openearth.dev/api/v0/city_attributes/{locode}
+Use this to populate the city indicator values displayed on the Socioeconomic Context page.
+2 — Socioeconomic feasibility scores per action — replace local computation in scoringPipeline.ts
+Currently the pipeline computes socioeconomic feasibility scores locally by matching city indicator values against action rules. Replace the city indicator input with a fetch to:
+https://ccglobal.openearth.dev/api/v1/cities/{locode}/action-mitigation-feasibility-scores?country_code=CL
+This returns pre-calculated feasibility scores per action based on the IPCC SR1.5 framework. Use these scores directly as the socioeconomic component in the feasibility pillar instead of computing them locally.
+3 — PolicyAlignment.tsx — replace policyPlans.json
+Currently lines 7-8 import:
+javascriptimport policyPlansData from "@/data/policyPlans.json";
+import actionNames from "@/data/actionNames.json";
+Remove the policyPlansData import and replace with a fetch to:
+https://ccglobal.openearth.dev/api/v1/cities/{locode}/action-policy-scores?top_evidence_limit=5
+Keep actionNames.json unchanged — only replace policyPlans.json.
+4 — scoringPipeline.ts — replace actionsPolicySignals.json
+Currently line 3 imports:
+javascriptimport policyRaw from "@/data/actionsPolicySignals.json";
+Remove this import and fetch policy scores from:
+https://ccglobal.openearth.dev/api/v1/cities/{locode}/action-policy-scores?top_evidence_limit=5
+The pipeline currently uses policy_support_score per action as the policyComponent in the Alignment pillar at 80% weight. Keep that logic exactly the same — only replace the data source.
+Important notes for all four changes:
+
+These are all public endpoints, no authentication needed
+The locode in the URL must use %20 for spaces — CL IQQ becomes CL%20IQQ
+Do not change any UI or display logic — only replace the data sources
+Leave actionsLegal.json unchanged — legal data update coming next week
+Leave emissions data unchanged — moving to S3 separately
+Note that endpoints 3 and 4 call the same URL — fetch it once and share the result between both uses to avoid making the same API call twice

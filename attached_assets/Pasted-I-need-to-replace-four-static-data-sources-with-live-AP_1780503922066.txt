@@ -1,0 +1,29 @@
+I need to replace four static data sources with live API calls and update the scoring weights to match the updated pipeline description. Here is exactly what needs to change:
+
+1 — SocioeconomicContext.tsx — replace citiesMock.json
+Currently line 7 imports:
+javascriptimport citiesMock from "@/data/citiesMock.json";
+Remove this import and replace with a fetch to:
+https://ccglobal.openearth.dev/api/v0/city_attributes/{locode}
+Replace {locode} with the current city's locode with spaces encoded as %20 — so CL IQQ becomes CL%20IQQ. Fetch this data when the component mounts and use it to populate the city indicator values displayed on the page.
+
+2 — Socioeconomic feasibility scores per action — replace local computation in scoringPipeline.ts
+Currently the pipeline computes socioeconomic feasibility scores locally by matching city indicator values against action rules. Replace the city indicator input with a fetch to:
+https://ccglobal.openearth.dev/api/v1/cities/{locode}/action-mitigation-feasibility-scores?country_code=CL
+This returns pre-calculated feasibility scores per action based on the IPCC SR1.5 framework. Use these scores directly as the socioeconomic component in the feasibility pillar instead of computing them locally.
+
+3 — PolicyAlignment.tsx — replace policyPlans.json
+Currently lines 7-8 import:
+javascriptimport policyPlansData from "@/data/policyPlans.json";
+import actionNames from "@/data/actionNames.json";
+Remove the policyPlansData import and replace with a fetch to:
+https://ccglobal.openearth.dev/api/v1/cities/{locode}/action-policy-scores?top_evidence_limit=5
+Keep actionNames.json unchanged — only replace policyPlans.json.
+
+4 — scoringPipeline.ts — replace actionsPolicySignals.json
+Currently line 3 imports:
+javascriptimport policyRaw from "@/data/actionsPolicySignals.json";
+Remove this import and fetch policy scores from:
+https://ccglobal.openearth.dev/api/v1/cities/{locode}/action-policy-scores?top_evidence_limit=5
+The pipeline uses policy_support_score per action as the policyComponent in the Alignment pillar at 0.75 weight. Keep that logic exactly the same — only replace the data source.
+Note: endpoints 3 and 4 call the same URL — fetch it once and s
