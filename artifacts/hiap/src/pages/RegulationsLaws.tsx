@@ -196,7 +196,7 @@ export function RegulationsLaws({ params }: RegulationsLawsProps) {
                 mandatory or required legal check are excluded from the ranking unless you override them.
               </p>
               <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-                MEED+ FEASIBILITY: Regulations and laws shapes 50% of feasibility score · Feasibility shapes 23% of ranking
+                MEED+ FEASIBILITY: Legal verdict shapes 50% of feasibility score · Feasibility shapes 23% of ranking
               </p>
             </div>
 
