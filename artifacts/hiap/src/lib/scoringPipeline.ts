@@ -89,6 +89,7 @@ export interface PrioritizerRequest {
   weightsOverride?: { impact: number; alignment: number; feasibility: number };
   cityStrategicPreferenceSectors?: string[];
   cityStrategicPreferenceTimeframes?: string[];
+  cityStrategicPreferenceCoBenefitKeys?: string[];
   cityStrategicPreferenceOther?: string;
   excludedActionsFreeText?: string;
   cityEmissionsData: {
@@ -163,25 +164,31 @@ const PRIORITY_KEYWORD_MAP: Record<string, string[]> = {
   water_quality:         ["water", "flood", "drought", "water quality", "aquifer", "sanitation", "water access"],
 };
 
-// Co-benefit impact text → 0–1 score
-const COBENEFIT_SCORE: Record<string, number> = {
-  very_low: 0.2,
-  low:      0.4,
-  medium:   0.6,
-  high:     0.8,
-  very_high: 1.0,
+// Co-benefit impact_text → approximate magnitude on a 0–2 scale
+// (mirrors the backend's impact_numeric range of -2..+2)
+const COBENEFIT_MAGNITUDE: Record<string, number> = {
+  very_low: 0.5,
+  low:      1.0,
+  medium:   1.5,
+  high:     2.0,
+  very_high: 2.0,
 };
 
 // GPC sector prefix → strategic preference sectors
+// Canonical API keys (sent by frontend as cityStrategicPreferenceSectors)
 const SECTOR_GPC_PREFIX: Record<string, string[]> = {
-  transportation: ["II"],
-  buildings: ["I"],
-  energy: ["I", "IV"],
-  waste: ["III"],
-  nature: ["V"],
-  agriculture: ["V"],
-  industry: ["IV"],
-  water: ["III.4"],
+  stationary_energy: ["I"],
+  transportation:    ["II"],
+  waste:             ["III"],
+  ippu:              ["IV"],
+  afolu:             ["V"],
+  // Legacy display-name aliases kept for backward compat
+  buildings:         ["I"],
+  energy:            ["I", "IV"],
+  nature:            ["V"],
+  agriculture:       ["V"],
+  industry:          ["IV"],
+  water:             ["III.4"],
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -212,20 +219,25 @@ function matchedCoBenefitDimensions(freeText: string): string[] {
   return matched;
 }
 
-/** Score an action against the city's free-text strategic priorities via co-benefits */
+/** Score an action against co-benefit dimension keys.
+ *  Matches the backend formula: normalize(sum(impact_numeric), min=-2n, max=2n)
+ *  impact_numeric is approximated from impact_text + direction since local data
+ *  has no impact_numeric field. Missing key = 0. No dimensions = 0.5 (neutral). */
 function scoreCobenefitMatch(action: ActionRecord, dimensions: string[]): number {
-  if (dimensions.length === 0) return 0.0;
+  if (dimensions.length === 0) return 0.5; // neutral per spec
   const coBenefits = action.coBenefits ?? {};
-  let total = 0;
+  let sum = 0;
   for (const dim of dimensions) {
     const benefit = coBenefits[dim];
-    if (benefit && benefit.impact_relationship === "positive") {
-      const text = normalizeImpactText(benefit.impact_text ?? "low");
-      total += COBENEFIT_SCORE[text] ?? 0.2;
-    }
-    // Negative or absent co-benefit → contributes 0 for this dimension
+    if (!benefit) continue; // missing → contributes 0
+    const mag = COBENEFIT_MAGNITUDE[normalizeImpactText(benefit.impact_text ?? "")] ?? 1.0;
+    if (benefit.impact_relationship === "positive") sum += mag;
+    else if (benefit.impact_relationship === "negative") sum -= mag;
+    // neutral → 0
   }
-  return total / dimensions.length;
+  const n = dimensions.length;
+  // normalize from [-2n, 2n] → [0, 1]
+  return Math.max(0, Math.min(1, (sum + n * 2) / (n * 4)));
 }
 
 function actionMatchesSectors(gpcRefs: string[], sectors: string[]): boolean {
@@ -325,7 +337,7 @@ function scoreImpact(
       : 0;
 
   const timelineRaw = normalizeTimeline(action.timelineForImplementation ?? "");
-  const tlScore = TIMELINE_SCORE[timelineRaw] ?? 0.0;
+  const tlScore = TIMELINE_SCORE[timelineRaw] ?? 0.5; // unknown timeline → neutral 0.5 per spec
 
   const impactScore = 0.8 * reductionShare + 0.2 * tlScore;
 
@@ -348,7 +360,7 @@ function scoreTimeframeMatch(
   timeframes: string[]
 ): number {
   if (!timeframes.length || !actionTimeline) return 0.5; // neutral
-  if (timeframes.includes("no_preference")) return 1.0;  // user accepts all
+  if (timeframes.includes("no_preference")) return 0.5;  // neutral per spec
   const preferredTimelines = timeframes.map((t) => TIMEFRAME_TO_TIMELINE[t]).filter(Boolean);
   if (!preferredTimelines.length) return 0.5;
   const actionIdx = TIMELINE_ORDER.indexOf(actionTimeline);
@@ -603,7 +615,10 @@ export function runPipeline(
 
   const sectors = req.cityStrategicPreferenceSectors ?? [];
   const freeText = req.cityStrategicPreferenceOther ?? "";
-  const coBenefitDimensions = matchedCoBenefitDimensions(freeText);
+  // Prefer canonical co-benefit keys from the request; fall back to free-text matching
+  const coBenefitDimensions = req.cityStrategicPreferenceCoBenefitKeys?.length
+    ? req.cityStrategicPreferenceCoBenefitKeys
+    : matchedCoBenefitDimensions(freeText);
   const timeframes = req.cityStrategicPreferenceTimeframes ?? [];
   const topN = req.topN ?? 20;
 

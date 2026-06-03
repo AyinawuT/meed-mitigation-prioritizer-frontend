@@ -372,16 +372,16 @@ function DetailPanel({
               description={feasibilityDesc}
               popoverItems={[
                 {
-                  label: "Soft legal compliance",
+                  label: "Legal verdict",
                   rawValue: action.softLegalComponent,
                   weight: 0.5,
-                  note: "Alignment with recommended and optional legal requirements",
+                  note: "Legal verdict score from regulatory assessment",
                 },
                 {
-                  label: "Socioeconomic context",
+                  label: "Mitigation feasibility",
                   rawValue: action.socioeconomicComponent,
                   weight: 0.5,
-                  note: "How well city conditions support this action",
+                  note: "City-specific mitigation feasibility score",
                 },
               ]}
             />
