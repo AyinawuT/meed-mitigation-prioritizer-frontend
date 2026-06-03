@@ -168,11 +168,11 @@ const BUCKET_SCORE: Record<string, number> = {
   very_high: 2,
 };
 
-// Indicator key mapping: actions use these keys → city data uses mapped keys
-const INDICATOR_KEY_MAP: Record<string, string> = {
-  employment_in_transport_and_logistics: "transport_logistics_employment",
-  electricity_access_rate: "electricity_access",
-};
+// Indicator key mapping: action rule keys → cityIndicators lookup keys.
+// Action rules in actions.json use the same keys as the ccglobal API response
+// (e.g. "electricity_access_rate", "employment_in_transport_and_logistics"),
+// so no remapping is needed — the map is intentionally empty.
+const INDICATOR_KEY_MAP: Record<string, string> = {};
 
 // Free-text strategic priority keywords → co-benefit dimension
 const PRIORITY_KEYWORD_MAP: Record<string, string[]> = {

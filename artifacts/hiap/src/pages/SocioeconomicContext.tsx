@@ -11,116 +11,227 @@ interface Indicator {
   key: string;
   label: string;
   value: number;
-  units: "percent" | "CLP";
+  units: string;
   category: Category;
-  theme: "Income & Welfare" | "Housing" | "Mobility" | "Industry";
+  theme: string;
   relevance: string;
   concern: "risk" | "opportunity" | "neutral";
   source: string;
 }
 
-// Real data from city.json / city-context.csv (Iquique, 2022 census)
-const IQQ_INDICATORS: Indicator[] = [
-  {
-    key: "poverty_rate",
-    label: "Poverty Rate",
-    value: 26.77,
-    units: "percent",
-    category: "very high",
-    theme: "Income & Welfare",
-    relevance: "High poverty → prioritise low-cost, co-benefit interventions",
-    concern: "risk",
-    source: "CASEN 2022",
+type ApiCityData = Record<string, { attribute_value: number; attribute_category: string; attribute_units?: string }>;
+
+interface IndicatorMeta {
+  label: string;
+  source: string;
+  theme: string;
+  units: string;
+  relevance?: Partial<Record<Category, string>>;
+  concern?: "risk" | "opportunity" | "neutral";
+}
+
+const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
+  poverty_rate: {
+    label: "Poverty Rate", source: "CASEN 2022", theme: "Income & Welfare", units: "percent", concern: "risk",
+    relevance: {
+      "very high": "Very high poverty — prioritise low-cost, high co-benefit interventions",
+      "high":      "High poverty → prioritise low-cost, co-benefit interventions",
+      "medium":    "Moderate poverty — balance equity and efficiency in action selection",
+      "low":       "Low poverty — broader range of investment-intensive actions feasible",
+      "very low":  "Very low poverty — full range of climate investments is viable",
+    },
   },
-  {
-    key: "median_household_income",
-    label: "Median Household Income",
-    value: 1200000,
-    units: "CLP",
-    category: "high",
-    theme: "Income & Welfare",
-    relevance: "Moderate income enables investment in clean technology",
-    concern: "opportunity",
-    source: "CASEN 2022",
+  median_household_income: {
+    label: "Median Household Income", source: "CASEN 2022", theme: "Income & Welfare", units: "CLP", concern: "opportunity",
+    relevance: {
+      "very high": "Very high income — strong capacity to invest in clean technology",
+      "high":      "High income — good capacity to invest in clean technology",
+      "medium":    "Moderate income enables investment in clean technology",
+      "low":       "Lower income — limited household investment capacity",
+      "very low":  "Very low income — focus on no-cost and subsidised interventions",
+    },
   },
-  {
-    key: "unemployment_rate",
-    label: "Unemployment Rate",
-    value: 9.44,
-    units: "percent",
-    category: "high",
-    theme: "Income & Welfare",
-    relevance: "Green jobs co-benefits strengthen political viability",
-    concern: "risk",
-    source: "INE 2022",
+  unemployment_rate: {
+    label: "Unemployment Rate", source: "INE 2022", theme: "Income & Welfare", units: "percent", concern: "risk",
+    relevance: {
+      "very high": "Very high unemployment — green job creation is a critical co-benefit",
+      "high":      "High unemployment — green jobs co-benefit strengthens political viability",
+      "medium":    "Moderate unemployment — green job creation remains a viable co-benefit",
+      "low":       "Low unemployment — labour market is tight; just-transition risks are lower",
+      "very low":  "Very low unemployment — labour constraints may affect implementation pace",
+    },
   },
-  {
-    key: "renter_share",
-    label: "Renter Share",
-    value: 43.48,
-    units: "percent",
-    category: "high",
-    theme: "Housing",
-    relevance: "High renter share → split-incentive problem for building retrofits",
-    concern: "risk",
-    source: "CENSO 2017",
+  renter_share: {
+    label: "Renter Share", source: "CENSO 2017", theme: "Housing", units: "percent", concern: "risk",
+    relevance: {
+      "very high": "Very high renter share → severe split-incentive barrier for building retrofits",
+      "high":      "High renter share — split-incentive problem for building retrofits",
+      "medium":    "Mixed tenure — building retrofits viable with targeted landlord incentives",
+      "low":       "Low renter share — building retrofit programmes can reach most households",
+      "very low":  "Very low renter share — most households own; retrofit programmes are effective",
+    },
   },
-  {
-    key: "home_ownership",
-    label: "Home Ownership",
-    value: 40.0,
-    units: "percent",
-    category: "very low",
-    theme: "Housing",
-    relevance: "Low ownership limits household-level retrofit programmes",
-    concern: "risk",
-    source: "CENSO 2017",
+  home_ownership: {
+    label: "Home Ownership", source: "CENSO 2017", theme: "Housing", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high ownership — retrofit programmes can directly target homeowners",
+      "high":      "High ownership — focus retrofits on owner-occupied homes",
+      "medium":    "Moderate ownership — mix of tenure types; combined approach needed",
+      "low":       "Low ownership — focus retrofits on social housing and public buildings",
+      "very low":  "Very low ownership — focus retrofits on social housing and public buildings",
+    },
   },
-  {
-    key: "public_transport_share",
-    label: "Public Transport Mode Share",
-    value: 31.84,
-    units: "percent",
-    category: "medium",
-    theme: "Mobility",
-    relevance: "Medium PT use — transit investment can shift modal split",
-    concern: "opportunity",
-    source: "EOD 2021",
+  public_transport_share: {
+    label: "Public Transport Mode Share", source: "EOD 2021", theme: "Mobility", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high PT use — transit investment can deliver significant modal shift gains",
+      "high":      "High PT use — transit investment can deliver significant modal shift gains",
+      "medium":    "Medium PT use — transit investment can shift modal split",
+      "low":       "Low PT use — mode shift investment is challenging but high-impact if successful",
+      "very low":  "Very low PT use — significant behaviour change needed; prioritise infrastructure",
+    },
   },
-  {
-    key: "transport_logistics_employment",
-    label: "Transport & Logistics Employment",
-    value: 7.35,
-    units: "percent",
-    category: "low",
-    theme: "Mobility",
-    relevance: "Relatively small freight sector — lower just-transition risk",
-    concern: "neutral",
-    source: "INE 2022",
+  employment_in_transport_and_logistics: {
+    label: "Transport & Logistics Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Large freight sector — just-transition risks must be carefully managed",
+      "high":      "Significant freight sector — just-transition planning is important",
+      "medium":    "Moderate freight sector — just-transition considerations apply",
+      "low":       "Relatively small freight sector — lower just-transition risk",
+      "very low":  "Minimal freight employment — just-transition risk is negligible",
+    },
   },
-  {
-    key: "industry_construction_employment",
-    label: "Industry & Construction Employment",
-    value: 22.79,
-    units: "percent",
-    category: "high",
-    theme: "Industry",
-    relevance: "Large industrial base → just-transition considerations critical",
-    concern: "risk",
-    source: "INE 2022",
+  employment_construction: {
+    label: "Construction Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large construction sector — just-transition considerations are critical",
+      "high":      "Large construction sector — just-transition considerations are important",
+      "medium":    "Moderate construction sector — just-transition planning is recommended",
+      "low":       "Small construction sector — just-transition risks are limited",
+      "very low":  "Minimal construction employment — just-transition risk is very low",
+    },
   },
-  {
-    key: "electricity_access",
-    label: "Electricity Access",
-    value: 100.0,
-    units: "percent",
-    category: "very low",
-    theme: "Industry",
-    relevance: "Full access → electrification feasible for all households",
-    concern: "opportunity",
-    source: "SEC 2022",
+  electricity_access_rate: {
+    label: "Electricity Access", source: "INE 2022", theme: "Energy", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Near-universal access — electrification of transport and heating is highly feasible",
+      "high":      "High electricity access — electrification actions are broadly feasible",
+      "medium":    "Moderate access — extend grid before prioritising electrification actions",
+      "low":       "Low electricity access — grid expansion should precede electrification actions",
+      "very low":  "Very low access — grid expansion is a prerequisite for electrification actions",
+    },
   },
-];
+  employment_agriculture_forestry: {
+    label: "Agriculture & Forestry Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large agriculture sector — AFOLU actions have strong local labour impact",
+      "high":      "Large agriculture sector — AFOLU actions have notable labour implications",
+      "medium":    "Moderate agricultural employment — AFOLU actions have measurable local reach",
+      "low":       "Small agriculture sector — limited AFOLU just-transition exposure",
+      "very low":  "Minimal agricultural employment — AFOLU just-transition risk is very low",
+    },
+  },
+  employment_electricity_gas: {
+    label: "Electricity & Gas Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large utilities workforce — energy transition just-transition is critical",
+      "high":      "Significant utilities workforce — energy transition planning is important",
+      "medium":    "Moderate utilities employment — just-transition planning is advisable",
+      "low":       "Small utilities workforce — energy transition just-transition risk is limited",
+      "very low":  "Minimal utilities employment — energy transition risk is very low",
+    },
+  },
+  employment_manufacturing: {
+    label: "Manufacturing Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large manufacturing base — industrial decarbonisation is a key priority",
+      "high":      "Large manufacturing base — industrial decarbonisation has major impact",
+      "medium":    "Moderate manufacturing employment — IPPU actions have measurable reach",
+      "low":       "Small manufacturing base — IPPU actions have limited local impact",
+      "very low":  "Minimal manufacturing employment — industrial decarbonisation has low priority",
+    },
+  },
+  employment_mining: {
+    label: "Mining Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large mining sector — extraction emissions and just-transition are critical",
+      "high":      "Significant mining sector — just-transition considerations are important",
+      "medium":    "Moderate mining employment — just-transition planning is advisable",
+      "low":       "Small mining sector — limited extraction sector just-transition exposure",
+      "very low":  "Minimal mining employment — extraction sector just-transition risk is very low",
+    },
+  },
+  employment_water_waste: {
+    label: "Water & Waste Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large water/waste sector — waste and water actions have high local impact",
+      "high":      "Significant water/waste workforce — waste management actions are highly relevant",
+      "medium":    "Moderate water/waste employment — waste actions have measurable local reach",
+      "low":       "Small water/waste sector — waste actions have limited labour implications",
+      "very low":  "Minimal water/waste employment — waste actions affect very few workers",
+    },
+  },
+  disability_prevalence: {
+    label: "Disability Prevalence", source: "", theme: "Demographics", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high disability prevalence — accessibility must be central to action design",
+      "high":      "High disability prevalence — accessibility considerations are important",
+      "medium":    "Moderate disability prevalence — accessibility should be addressed in design",
+      "low":       "Low disability prevalence — standard accessibility provisions are sufficient",
+      "very low":  "Very low disability prevalence — baseline accessibility provisions apply",
+    },
+  },
+  fixed_internet_household_share: {
+    label: "Fixed Internet Household Access", source: "", theme: "Digital Infrastructure", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Near-universal internet access — smart city and digital monitoring actions are highly feasible",
+      "high":      "High internet access — digital infrastructure actions have strong reach",
+      "medium":    "Moderate internet access — digital actions can reach most households",
+      "low":       "Low internet access — digital solutions have limited penetration",
+      "very low":  "Very low internet access — digital monitoring and smart city actions face barriers",
+    },
+  },
+  indigenous_identification_rate: {
+    label: "Indigenous Population Share", source: "", theme: "Demographics", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high indigenous share — FPIC and culturally appropriate co-design are essential",
+      "high":      "High indigenous population share — culturally inclusive engagement is critical",
+      "medium":    "Moderate indigenous share — inclusive engagement should be planned",
+      "low":       "Low indigenous share — standard community engagement applies",
+      "very low":  "Very low indigenous share — standard community engagement applies",
+    },
+  },
+  literacy_rate: {
+    label: "Literacy Rate", source: "", theme: "Demographics", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high literacy — public communication and behaviour change programmes are highly effective",
+      "high":      "High literacy — public engagement and awareness campaigns are broadly effective",
+      "medium":    "Moderate literacy — multi-format communication supports broader engagement",
+      "low":       "Low literacy — visual and community-based communication is essential",
+      "very low":  "Very low literacy — text-based public communication has limited reach",
+    },
+  },
+  mean_years_schooling: {
+    label: "Mean Years of Schooling", source: "", theme: "Demographics", units: "years", concern: "opportunity",
+    relevance: {
+      "very high": "High education levels — technical workforce capacity for complex actions is strong",
+      "high":      "Good education levels — capacity for technical and professional green jobs is high",
+      "medium":    "Moderate education levels — targeted training can build capacity for green jobs",
+      "low":       "Lower education levels — vocational training is key to green job access",
+      "very low":  "Low education levels — foundational skills development should accompany action delivery",
+    },
+  },
+  population: {
+    label: "Population", source: "", theme: "Demographics", units: "count", concern: "neutral",
+    relevance: {
+      "very high": "Very large city — actions with high per-capita impact maximise absolute emissions reductions",
+      "high":      "Large city — broad-reach actions deliver significant total emissions reductions",
+      "medium":    "Medium-sized city — mix of city-wide and targeted actions is effective",
+      "low":       "Small city — targeted, high-leverage actions deliver the most impact",
+      "very low":  "Very small city — highly targeted interventions maximise proportional impact",
+    },
+  },
+};
 
 const CATEGORY_STYLES: Record<Category, { bg: string; color: string; label: string }> = {
   "very high": { bg: "#FEF2F2", color: "#B91C1C", label: "Very High" },
@@ -131,116 +242,41 @@ const CATEGORY_STYLES: Record<Category, { bg: string; color: string; label: stri
 };
 
 const CONCERN_ICON: Record<string, string> = {
-  risk: "⚠",
+  risk:        "⚠",
   opportunity: "↑",
-  neutral: "→",
+  neutral:     "→",
 };
 
-const RELEVANCE: Record<string, Record<string, string>> = {
-  poverty_rate: {
-    "very high": "Very high poverty — prioritise low-cost, high co-benefit interventions",
-    "high":      "High poverty → prioritise low-cost, co-benefit interventions",
-    "medium":    "Moderate poverty — balance equity and efficiency in action selection",
-    "low":       "Low poverty — broader range of investment-intensive actions feasible",
-    "very low":  "Very low poverty — full range of climate investments is viable",
-  },
-  median_household_income: {
-    "very high": "Very high income — strong capacity to invest in clean technology",
-    "high":      "High income enables significant investment in clean technology",
-    "medium":    "Moderate income enables investment in clean technology",
-    "low":       "Low income — prioritise affordable, high co-benefit actions",
-    "very low":  "Very low income — focus on no-cost and subsidised interventions",
-  },
-  unemployment_rate: {
-    "very high": "Very high unemployment — green jobs co-benefits are critical for political viability",
-    "high":      "High unemployment — green jobs co-benefits strengthen political viability",
-    "medium":    "Moderate unemployment — green job creation remains a viable co-benefit",
-    "low":       "Low unemployment — just-transition risks are minimal",
-    "very low":  "Very low unemployment — labour market is stable; transition risks minimal",
-  },
-  renter_share: {
-    "very high": "Very high renter share → severe split-incentive barrier for building retrofits",
-    "high":      "High renter share → split-incentive problem for building retrofits",
-    "medium":    "Mixed tenure — building retrofits viable with targeted landlord incentives",
-    "low":       "Low renter share — household-level retrofit programmes are largely feasible",
-    "very low":  "Very low renter share — building retrofit programmes face minimal tenure barriers",
-  },
-  home_ownership: {
-    "very high": "Very high ownership — household-level retrofit programmes are highly feasible",
-    "high":      "High ownership — retrofit programmes have broad potential reach",
-    "medium":    "Moderate ownership — targeted retrofit support recommended",
-    "low":       "Low ownership limits household-level retrofit programmes",
-    "very low":  "Very low ownership — focus retrofits on social housing and public buildings",
-  },
-  public_transport_share: {
-    "very high": "Very high PT use — investment in transit quality delivers large co-benefits",
-    "high":      "High PT use — transit investment can deliver significant modal shift gains",
-    "medium":    "Medium PT use — transit investment can shift modal split meaningfully",
-    "low":       "Low PT use — mode shift investment is challenging but high-impact if successful",
-    "very low":  "Very low PT use — significant behaviour change needed; prioritise infrastructure",
-  },
-  transport_logistics_employment: {
-    "very high": "Large freight sector — just-transition risks must be carefully managed",
-    "high":      "Significant freight sector — just-transition planning is important",
-    "medium":    "Moderate freight sector — just-transition considerations apply",
-    "low":       "Relatively small freight sector — lower just-transition risk",
-    "very low":  "Minimal freight employment — just-transition risk is negligible",
-  },
-  industry_construction_employment: {
-    "very high": "Very large industrial base → just-transition considerations are critical",
-    "high":      "Large industrial base → just-transition considerations critical",
-    "medium":    "Moderate industrial base — just-transition planning is recommended",
-    "low":       "Small industrial base — just-transition risks are limited",
-    "very low":  "Minimal industrial employment — just-transition risk is very low",
-  },
-  electricity_access: {
-    "very high": "Near-universal access — electrification of transport and heating is highly feasible",
-    "high":      "High electricity access — electrification actions are broadly feasible",
-    "medium":    "Moderate access — extend grid before prioritising electrification actions",
-    "low":       "Low electricity access — grid expansion should precede electrification actions",
-    "very low":  "Full access confirmed — electrification is feasible for all households",
-  },
-};
-
-function buildRelevance(key: string, category: Category): string {
-  return RELEVANCE[key]?.[category] ?? "—";
-}
+const THEME_ORDER = [
+  "Income & Welfare", "Housing", "Mobility", "Energy", "Employment",
+  "Demographics", "Digital Infrastructure", "Other",
+];
 
 function formatValue(ind: Indicator): string {
-  if (ind.units === "CLP") {
-    return `CLP ${(ind.value / 1_000_000).toFixed(1)}M`;
-  }
+  if (ind.units === "CLP") return `CLP ${(ind.value / 1_000_000).toFixed(1)}M`;
+  if (ind.units === "years") return `${ind.value.toFixed(1)} yrs`;
+  if (ind.units === "count") return ind.value.toLocaleString();
   return `${ind.value}%`;
 }
 
-// Maps UI indicator keys → API city_attributes keys where the names differ
-const API_ATTRIBUTE_KEY: Record<string, string> = {
-  electricity_access:            "electricity_access_rate",
-  transport_logistics_employment: "employment_in_transport_and_logistics",
-  industry_construction_employment: "employment_construction",
-};
-
-type ApiCityData = Record<string, { attribute_value: number; attribute_category: string }>;
-
-function buildIndicators(
-  _city: CityData,
-  apiData: ApiCityData | null
-): Indicator[] {
-  return IQQ_INDICATORS.map((ind) => {
-    const apiKey = API_ATTRIBUTE_KEY[ind.key] ?? ind.key;
-    const field = apiData?.[apiKey];
-    const category = (field?.attribute_category as Category | undefined) ?? ind.category;
-    const value = field?.attribute_value ?? ind.value;
-    return {
-      ...ind,
-      value,
-      category,
-      relevance: buildRelevance(ind.key, category),
-    };
-  });
+function buildIndicatorsFromApi(apiData: ApiCityData): Indicator[] {
+  return Object.entries(apiData)
+    .filter(([, field]) =>
+      typeof field === "object" && field !== null &&
+      "attribute_value" in field && "attribute_category" in field
+    )
+    .map(([key, field]) => {
+      const meta = INDICATOR_ENRICHMENT[key];
+      const category = (field.attribute_category as Category) ?? "medium";
+      const units = meta?.units ?? field.attribute_units ?? "percent";
+      const label = meta?.label ?? key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      const theme = meta?.theme ?? "Other";
+      const relevance = meta?.relevance?.[category] ?? "";
+      const concern = meta?.concern ?? "neutral";
+      const source = meta?.source ?? "";
+      return { key, label, value: field.attribute_value, units, category, theme, relevance, concern, source };
+    });
 }
-
-const THEMES = ["Income & Welfare", "Housing", "Mobility", "Industry"] as const;
 
 interface SocioeconomicContextProps {
   params: { locode: string };
@@ -269,7 +305,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
       .catch(() => { /* keep hardcoded fallback values */ });
   }, [locode]);
 
-  const indicators = city ? buildIndicators(city, apiCityData) : [];
+  const indicators = apiCityData ? buildIndicatorsFromApi(apiCityData) : [];
 
   if (!city) {
     return (
@@ -295,12 +331,18 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
     });
   }, [locode, indicators.length]);
 
+  const themes = [...new Set(indicators.map((i) => i.theme))].sort((a, b) => {
+    const ai = THEME_ORDER.indexOf(a);
+    const bi = THEME_ORDER.indexOf(b);
+    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+  });
+
   const keyIndicators = [
-    indicators.find((i) => i.key === "poverty_rate")!,
-    indicators.find((i) => i.key === "unemployment_rate")!,
-    indicators.find((i) => i.key === "home_ownership")!,
-    indicators.find((i) => i.key === "public_transport_share")!,
-  ].filter(Boolean);
+    indicators.find((i) => i.key === "poverty_rate"),
+    indicators.find((i) => i.key === "unemployment_rate"),
+    indicators.find((i) => i.key === "home_ownership"),
+    indicators.find((i) => i.key === "public_transport_share"),
+  ].filter((i): i is Indicator => i !== undefined);
 
   function handleConfirm() {
     confirmStep(locode, "socioeconomic");
@@ -414,14 +456,14 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               </tr>
             </thead>
             <tbody>
-              {THEMES.map((theme) => {
+              {themes.map((theme) => {
                 const rows = indicators.filter((ind) => ind.theme === theme);
                 return rows.map((ind, rowIdx) => {
                   const style = CATEGORY_STYLES[ind.category];
                   const icon = CONCERN_ICON[ind.concern];
                   const isFirstInGroup = rowIdx === 0;
                   const isLastInGroup = rowIdx === rows.length - 1;
-                  const isLastTheme = theme === THEMES[THEMES.length - 1];
+                  const isLastTheme = theme === themes[themes.length - 1];
                   const rowBorder = isLastInGroup && !isLastTheme ? "2px solid #F0F0F0" : "1px solid #F5F5F5";
 
                   return (
