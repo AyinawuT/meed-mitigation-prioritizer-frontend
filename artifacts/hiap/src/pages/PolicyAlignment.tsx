@@ -309,7 +309,7 @@ export function PolicyAlignment({ params }: Props) {
               <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "4px" }}>Upload your municipal climate plan</div>
               <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "12px" }}>Drag and drop or click to browse · PDF or Word document</div>
               <div style={{ fontSize: "11px", color: "#6B7280", background: "#F3F4F6", borderRadius: "6px", padding: "8px 14px", display: "inline-block", textAlign: "left", maxWidth: "420px" }}>
-                MEED+ HIAP will scan your PACCC, PLADECO, or local climate action plan and map its contents to the candidate actions, adding a municipal alignment score to the ranking.
+                Upload your PACCC, PLADECO, or local climate action plan. Our team will download and process the document to extract policy signals, which will then be added to the ranking in a future update — it will not be reflected immediately.
               </div>
             </div>
           ) : (
