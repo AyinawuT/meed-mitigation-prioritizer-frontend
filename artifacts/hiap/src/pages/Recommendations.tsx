@@ -445,7 +445,7 @@ function DetailPanel({
             width: "100%", background: "#001EA7", color: "white", border: "none",
             borderRadius: "8px", padding: "12px", fontSize: "13px", fontWeight: "600", cursor: "pointer",
           }}>
-            ✦ Generate Plan
+            ✦ Review Existing Projects for this Action
           </button>
         </div>
       </div>
@@ -580,7 +580,7 @@ function TopPickCard({
         onMouseOver={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#001EA7"; (e.currentTarget as HTMLElement).style.background = "#F5F7FF"; }}
         onMouseOut={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#E5E7EB"; (e.currentTarget as HTMLElement).style.background = "white"; }}
       >
-        <span>✦</span> Generate Plan
+        <span>✦</span> Review Existing Projects for this Action
       </button>
     </div>
   );
