@@ -1,0 +1,10 @@
+.git
+.github
+.canvas
+node_modules
+**/node_modules
+dist
+**/dist
+coverage
+artifacts/mockup-sandbox
+*.log
