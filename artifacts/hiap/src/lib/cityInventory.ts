@@ -139,3 +139,13 @@ export function getEmissionsData(locode: string): ParsedCityInventory | null {
   if (!raw) return null;
   return parseInventory(raw);
 }
+
+/** Returns a compact formatted total, e.g. "9.08M tCO₂e", or null if no inventory exists. */
+export function getFormattedTotalEmissions(locode: string): string | null {
+  const data = getEmissionsData(locode);
+  if (!data) return null;
+  const total = data.rows.reduce((sum, r) => sum + (r.emissions ?? 0), 0);
+  if (total === 0) return null;
+  const millions = total / 1_000_000;
+  return `${millions.toFixed(2)}M tCO₂e`;
+}

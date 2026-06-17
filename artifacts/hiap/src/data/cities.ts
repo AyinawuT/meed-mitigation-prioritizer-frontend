@@ -22,7 +22,7 @@ export const CITIES: CityData[] = [
     region: 'Tarapacá',
     comunaCode: 'CL01101',
     regionCode: 'CL01',
-    emissions: '9,118,054 tCO₂e',
+    emissions: null,
     emissionsYear: '2022',
     population: '214,857',
     area: '225 km²',

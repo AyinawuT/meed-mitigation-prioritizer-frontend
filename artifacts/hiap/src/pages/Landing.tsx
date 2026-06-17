@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { getFormattedTotalEmissions } from "@/lib/cityInventory";
 import { useLanguage } from "@/lib/i18n";
 import { MapEmbed } from "@/components/MapEmbed";
 
@@ -290,7 +291,7 @@ export function Landing() {
                     label: selectedCity.emissionsYear
                       ? t("Inventory year {year}", { year: selectedCity.emissionsYear })
                       : t("Total emissions"),
-                    value: selectedCity.emissions,
+                    value: getFormattedTotalEmissions(selectedCity.locode) ?? selectedCity.emissions,
                     valueSize: "22px",
                     valueWeight: "700",
                     valueColor: "#111827",

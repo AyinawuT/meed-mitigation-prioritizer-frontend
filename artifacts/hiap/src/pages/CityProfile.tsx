@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { getFormattedTotalEmissions } from "@/lib/cityInventory";
 import { useLanguage } from "@/lib/i18n";
 
 const STEP_ROUTES: Record<string, string> = {
@@ -293,7 +294,7 @@ export function CityProfile({ params }: CityProfileProps) {
       {/* Key stats */}
       <div style={{ background: "#FAFAFA", borderBottom: "1px solid #EBEBEB", padding: "14px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
-          <KeyStat label={t("Total emissions")} value={city.emissions} sub={t("Inventory year {year}", { year: city.emissionsYear })} />
+          <KeyStat label={t("Total emissions")} value={getFormattedTotalEmissions(city.locode) ?? city.emissions} sub={t("Inventory year {year}", { year: city.emissionsYear })} />
           <KeyStat label={t("Population")} value={city.population} sub={city.region} />
           <KeyStat label={t("Land area")} value={city.area} sub={city.biome} />
           <KeyStat label={t("Pop. density")} value={city.populationDensity} sub={t("inhabitants per km²")} />
