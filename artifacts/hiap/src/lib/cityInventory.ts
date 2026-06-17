@@ -140,6 +140,13 @@ export function getEmissionsData(locode: string): ParsedCityInventory | null {
   return parseInventory(raw);
 }
 
+/** Returns the inventory year as a string, or null if no inventory exists. */
+export function getInventoryYear(locode: string): string | null {
+  const raw = INVENTORY_REGISTRY[locode.toUpperCase()];
+  if (!raw) return null;
+  return String(raw.data.year);
+}
+
 /** Returns a compact formatted total, e.g. "9.08M tCO₂e", or null if no inventory exists. */
 export function getFormattedTotalEmissions(locode: string): string | null {
   const data = getEmissionsData(locode);
