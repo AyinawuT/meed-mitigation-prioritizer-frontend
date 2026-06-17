@@ -5190,6 +5190,21 @@ export const CITIES: CityData[] = [
     biome: null,
     mapUrl: null,
   },
+  {
+    locode: 'CL ZAL',
+    name: 'Valdivia',
+    country: 'Chile',
+    region: 'Los Ríos',
+    comunaCode: 'CL14101',
+    regionCode: 'CL14',
+    emissions: null,
+    emissionsYear: '2020',
+    population: null,
+    area: null,
+    populationDensity: null,
+    biome: null,
+    mapUrl: null,
+  },
 ];
 
 export const CITIES_BY_LOCODE: Record<string, CityData> = Object.fromEntries(
