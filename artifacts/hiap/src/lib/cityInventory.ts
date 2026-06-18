@@ -1,4 +1,3 @@
-import iqqRaw from "@/data/inventories/CL-IQQ.json";
 import zalRaw from "@/data/inventories/CL-ZAL.json";
 
 // ─── CityCatalyst JSON types ──────────────────────────────────────────────────
@@ -128,7 +127,6 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
 // import it here, and add an entry to INVENTORY_REGISTRY keyed by LOCODE.
 
 const INVENTORY_REGISTRY: Record<string, CityCatalystInventory> = {
-  "CL IQQ": iqqRaw as CityCatalystInventory,
   "CL ZAL": zalRaw as CityCatalystInventory,
 };
 
