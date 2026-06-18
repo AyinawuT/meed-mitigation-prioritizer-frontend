@@ -1,0 +1,21 @@
+kind = "web"
+previewPath = "/"
+title = "HIAP — Climate Action Prioritizer"
+version = "1.0.0"
+id = "artifacts/hiap"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20040
+
+[services.development]
+run = "bash -c 'PATH=/nix/store/bl6iwirn83qj9r8wng43kfdqd5mfahj8-nodejs-22.22.0/bin:$PATH node node_modules/vite/bin/vite.js --config vite.config.ts --host 0.0.0.0'"
+
+[services.env]
+PORT = "20040"
+BASE_PATH = "/"

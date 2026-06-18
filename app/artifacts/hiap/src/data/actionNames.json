@@ -1,0 +1,52 @@
+{
+  "c40_0010": {
+    "name": "Introduce energy-efficiency standards for new residential buildings",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Regulation & Standards"
+  },
+  "c40_0012": {
+    "name": "Introduce energy-efficiency standards for new institutional buildings",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Regulation & Standards"
+  },
+  "c40_0013": {
+    "name": "Support Implementation of Industrial Building Efficiency Standards.",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Regulation & Standards"
+  },
+  "c40_0023": {
+    "name": "Adopt zero-emission bus fleets for public transport",
+    "category": "Projects & Physical Actions",
+    "subcategory": "Mobility & Transport Projects"
+  },
+  "c40_0034": {
+    "name": "Enact and enforce material bans in order to restrict single use and non-recyclable materials",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Regulation & Standards"
+  },
+  "c40_0040": {
+    "name": "Implement Volume-Based Collection policy",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Regulation & Standards"
+  },
+  "c40_0037": {
+    "name": "Implement residential and business segregated collection of recyclables, organic, and residual waste",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Public Programs / Incentives"
+  },
+  "ipcc_0074": {
+    "name": "Promote compact urban form through spatial planning",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Strategic Plans"
+  },
+  "c40_0025": {
+    "name": "Promote deployment of zero-emission freight fleets (trucks)",
+    "category": "Policies, Plans & Programs",
+    "subcategory": "Public Programs / Incentives"
+  },
+  "c40_0029": {
+    "name": "Electrify municipal vehicle fleets",
+    "category": "Projects & Physical Actions",
+    "subcategory": "Mobility & Transport Projects"
+  }
+}
