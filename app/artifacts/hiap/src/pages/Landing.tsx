@@ -3,6 +3,8 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { getFormattedTotalEmissions, getInventoryYear } from "@/lib/cityInventory";
+import { useCityAttributes } from "@/hooks/use-city-attributes";
 import { useLanguage } from "@/lib/i18n";
 import { MapEmbed } from "@/components/MapEmbed";
 
@@ -37,6 +39,7 @@ export function Landing() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const suggestions = searchCities(searchVal);
+  const cityAttrs = useCityAttributes(selectedCity?.locode ?? "");
 
   function selectCity(city: CityData) {
     setSearchVal(city.name);
@@ -287,10 +290,8 @@ export function Landing() {
                 {[
                   {
                     icon: "↗",
-                    label: selectedCity.emissionsYear
-                      ? t("Inventory year {year}", { year: selectedCity.emissionsYear })
-                      : t("Total emissions"),
-                    value: selectedCity.emissions,
+                    label: (() => { const yr = getInventoryYear(selectedCity.locode) ?? selectedCity.emissionsYear; return yr ? t("Inventory year {year}", { year: yr }) : t("Total emissions"); })(),
+                    value: getFormattedTotalEmissions(selectedCity.locode) ?? selectedCity.emissions ?? undefined,
                     valueSize: "22px",
                     valueWeight: "700",
                     valueColor: "#111827",
@@ -298,7 +299,7 @@ export function Landing() {
                   {
                     icon: "👥",
                     label: t("Total population"),
-                    value: selectedCity.population,
+                    value: cityAttrs.population,
                     valueSize: "16px",
                     valueWeight: "600",
                     valueColor: "#111827",
@@ -306,7 +307,7 @@ export function Landing() {
                   {
                     icon: "⬜",
                     label: t("Total land area"),
-                    value: selectedCity.area,
+                    value: cityAttrs.area,
                     valueSize: "16px",
                     valueWeight: "600",
                     valueColor: "#111827",
@@ -314,7 +315,7 @@ export function Landing() {
                   {
                     icon: "📍",
                     label: t("Population density"),
-                    value: selectedCity.populationDensity,
+                    value: cityAttrs.populationDensity,
                     valueSize: "16px",
                     valueWeight: "600",
                     valueColor: "#111827",
