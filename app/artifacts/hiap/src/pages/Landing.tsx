@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
-import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
+import { CITIES_WITH_INVENTORY, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
 import { getFormattedTotalEmissions, getInventoryYear } from "@/lib/cityInventory";
 import { useCityAttributes } from "@/hooks/use-city-attributes";
@@ -27,7 +27,6 @@ function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED
   return allComplete ? "ONBOARDED" : "IN PROGRESS";
 }
 
-const QUICK_CITIES = ["Iquique", "Antofagasta", "Arica", "Alto Hospicio", "Taltal"];
 
 export function Landing() {
   const [, navigate] = useLocation();
@@ -180,14 +179,11 @@ export function Landing() {
                 </div>
               )}
 
-              {/* Quick links */}
+              {/* Quick links — only cities with inventory data */}
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "10px" }}>
-                {QUICK_CITIES.map((name) => {
-                  const city = CITIES.find((c) => c.name === name);
-                  if (!city) return null;
-                  return (
+                {CITIES_WITH_INVENTORY.map((city) => (
                     <button
-                      key={name}
+                      key={city.locode}
                       onMouseDown={() => selectCity(city)}
                       style={{
                         background: "none",
@@ -200,10 +196,9 @@ export function Landing() {
                         textDecorationColor: "#D1D5DB",
                       }}
                     >
-                      {name}
+                      {city.name}
                     </button>
-                  );
-                })}
+                  ))}
               </div>
             </div>
           </div>
