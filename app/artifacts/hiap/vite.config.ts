@@ -4,15 +4,15 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
-const rawVitePort = process.env.VITE_PORT ?? "3000";
-const vitePort = Number(rawVitePort);
+const rawPort = process.env.PORT ?? "3000";
+const vitePort = Number(rawPort);
 
 if (Number.isNaN(vitePort) || vitePort <= 0) {
-  throw new Error(`Invalid VITE_PORT value: "${rawVitePort}"`);
+  throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
 const basePath = process.env.BASE_PATH ?? "/";
-const apiPort = process.env.PORT ?? "8000";
+const apiPort = process.env.VITE_API_PORT ?? "8080";
 
 export default defineConfig({
   base: basePath,

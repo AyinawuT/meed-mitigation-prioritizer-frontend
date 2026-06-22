@@ -10,7 +10,7 @@ name = "API Server"
 paths = ["/api", "/v1"]
 
 [services.development]
-run = "pnpm --filter @workspace/api-server run dev"
+run = "bash -c 'export PATH=/nix/store/bl6iwirn83qj9r8wng43kfdqd5mfahj8-nodejs-22.22.0/bin:$PATH; node ./build.mjs && node --enable-source-maps ./dist/index.mjs'"
 
 [services.production]
 
