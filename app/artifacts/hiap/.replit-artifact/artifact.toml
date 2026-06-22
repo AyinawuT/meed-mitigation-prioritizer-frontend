@@ -15,7 +15,7 @@ paths = [ "/" ]
 localPort = 20040
 
 [services.development]
-run = "bash -c 'PATH=/nix/store/bl6iwirn83qj9r8wng43kfdqd5mfahj8-nodejs-22.22.0/bin:$PATH node node_modules/vite/bin/vite.js --config vite.config.ts --host 0.0.0.0'"
+run = "bash -c 'VITE_PORT=20040 PORT=3000 BASE_PATH=/ PATH=/nix/store/bl6iwirn83qj9r8wng43kfdqd5mfahj8-nodejs-22.22.0/bin:$PATH node node_modules/vite/bin/vite.js --config vite.config.ts --host 0.0.0.0'"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/hiap", "run", "build" ]

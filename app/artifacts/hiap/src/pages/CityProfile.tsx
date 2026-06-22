@@ -297,6 +297,10 @@ export function CityProfile({ params }: CityProfileProps) {
       {/* Key stats */}
       <div style={{ background: "#FAFAFA", borderBottom: "1px solid #EBEBEB", padding: "14px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
+          <KeyStat label={t("Total Emissions")} value={getFormattedTotalEmissions(locode)} />
+          <KeyStat label={t("Population")} value={cityAttrs.population} sub={city.region} />
+          <KeyStat label={t("Land Area")} value={cityAttrs.area} />
+          <KeyStat label={t("Pop. Density")} value={cityAttrs.populationDensity} sub={t("inhabitants per km²")} />
         </div>
       </div>
 
