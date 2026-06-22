@@ -1,8 +1,10 @@
 import { useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
-import { CITIES, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
+import { CITIES_WITH_INVENTORY, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { getFormattedTotalEmissions, getInventoryYear } from "@/lib/cityInventory";
+import { useCityAttributes } from "@/hooks/use-city-attributes";
 import { useLanguage } from "@/lib/i18n";
 import { MapEmbed } from "@/components/MapEmbed";
 
@@ -25,7 +27,6 @@ function getCityStatus(locode: string): "AVAILABLE" | "IN PROGRESS" | "ONBOARDED
   return allComplete ? "ONBOARDED" : "IN PROGRESS";
 }
 
-const QUICK_CITIES = ["Iquique", "Antofagasta", "Arica", "Alto Hospicio", "Taltal"];
 
 export function Landing() {
   const [, navigate] = useLocation();
@@ -37,6 +38,7 @@ export function Landing() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const suggestions = searchCities(searchVal);
+  const cityAttrs = useCityAttributes(selectedCity?.locode ?? "");
 
   function selectCity(city: CityData) {
     setSearchVal(city.name);
@@ -177,14 +179,11 @@ export function Landing() {
                 </div>
               )}
 
-              {/* Quick links */}
+              {/* Quick links — only cities with inventory data */}
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "10px" }}>
-                {QUICK_CITIES.map((name) => {
-                  const city = CITIES.find((c) => c.name === name);
-                  if (!city) return null;
-                  return (
+                {CITIES_WITH_INVENTORY.map((city) => (
                     <button
-                      key={name}
+                      key={city.locode}
                       onMouseDown={() => selectCity(city)}
                       style={{
                         background: "none",
@@ -197,10 +196,9 @@ export function Landing() {
                         textDecorationColor: "#D1D5DB",
                       }}
                     >
-                      {name}
+                      {city.name}
                     </button>
-                  );
-                })}
+                  ))}
               </div>
             </div>
           </div>
@@ -287,10 +285,8 @@ export function Landing() {
                 {[
                   {
                     icon: "↗",
-                    label: selectedCity.emissionsYear
-                      ? t("Inventory year {year}", { year: selectedCity.emissionsYear })
-                      : t("Total emissions"),
-                    value: selectedCity.emissions,
+                    label: (() => { const yr = getInventoryYear(selectedCity.locode) ?? selectedCity.emissionsYear; return yr ? t("Inventory year {year}", { year: yr }) : t("Total emissions"); })(),
+                    value: getFormattedTotalEmissions(selectedCity.locode) ?? selectedCity.emissions ?? undefined,
                     valueSize: "22px",
                     valueWeight: "700",
                     valueColor: "#111827",
@@ -298,7 +294,7 @@ export function Landing() {
                   {
                     icon: "👥",
                     label: t("Total population"),
-                    value: selectedCity.population,
+                    value: cityAttrs.population,
                     valueSize: "16px",
                     valueWeight: "600",
                     valueColor: "#111827",
@@ -306,7 +302,7 @@ export function Landing() {
                   {
                     icon: "⬜",
                     label: t("Total land area"),
-                    value: selectedCity.area,
+                    value: cityAttrs.area,
                     valueSize: "16px",
                     valueWeight: "600",
                     valueColor: "#111827",
@@ -314,7 +310,7 @@ export function Landing() {
                   {
                     icon: "📍",
                     label: t("Population density"),
-                    value: selectedCity.populationDensity,
+                    value: cityAttrs.populationDensity,
                     valueSize: "16px",
                     valueWeight: "600",
                     valueColor: "#111827",

@@ -4,118 +4,15 @@ import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
+import { getEmissionsData, type EmissionSectorRow } from "@/lib/cityInventory";
 
-interface SectorRow {
-  sector: string;
-  sub: string;
-  ref: string;
-  emissions: number | null;
-  share: number | null;
-  source: string | null;
-  status: "Confirmed" | "Not mapped";
-}
-
-// Computed from prioritizer-request.json (inventoryYear: 2022)
-const IQQ_SECTORS: SectorRow[] = [
-  {
-    sector: "Stationary Energy",
-    sub: "I.1.1 Residential combustion · I.1.2 Residential electricity",
-    ref: "I.1–I.3",
-    emissions: 8779938,
-    share: 96.7,
-    source: "GPC Inventory 2022",
-    status: "Confirmed",
-  },
-  {
-    sector: "Transportation",
-    sub: "II.1.1 On-road transport",
-    ref: "II.1",
-    emissions: 27588,
-    share: 0.3,
-    source: "GPC Inventory 2022",
-    status: "Confirmed",
-  },
-  {
-    sector: "Waste",
-    sub: "III.4.1 Wastewater treatment & discharge",
-    ref: "III.1–III.4",
-    emissions: 236604,
-    share: 2.6,
-    source: "GPC Inventory 2022",
-    status: "Confirmed",
-  },
-  {
-    sector: "Industrial Processes & Product Use (IPPU)",
-    sub: "IV.1 Industrial processes · IV.2 Product use",
-    ref: "IV.1–IV.2",
-    emissions: 32167,
-    share: 0.4,
-    source: "GPC Inventory 2022",
-    status: "Confirmed",
-  },
-  {
-    sector: "Agriculture, Forestry & Other Land Use (AFOLU)",
-    sub: "V.1 Livestock",
-    ref: "V.1–V.3",
-    emissions: 130,
-    share: 0.0,
-    source: "GPC Inventory 2022",
-    status: "Confirmed",
-  },
+const EMPTY_SECTORS: EmissionSectorRow[] = [
+  { sector: "Stationary Energy",                           sub: "I.1–I.8",    ref: "I.1–I.8",    emissions: null, share: null, source: null, status: "Not mapped" },
+  { sector: "Transportation",                              sub: "II.1–II.5",  ref: "II.1–II.5",  emissions: null, share: null, source: null, status: "Not mapped" },
+  { sector: "Waste",                                       sub: "III.1–III.4",ref: "III.1–III.4",emissions: null, share: null, source: null, status: "Not mapped" },
+  { sector: "Industrial Processes & Product Use (IPPU)",   sub: "IV.1–IV.4",  ref: "IV.1–IV.4",  emissions: null, share: null, source: null, status: "Not mapped" },
+  { sector: "Agriculture, Forestry & Other Land Use (AFOLU)", sub: "V.1–V.3",ref: "V.1–V.3",    emissions: null, share: null, source: null, status: "Not mapped" },
 ];
-
-function buildSectors(city: CityData): SectorRow[] {
-  if (city.locode === "CL IQQ") return IQQ_SECTORS;
-
-  const SECTORS_TEMPLATE: SectorRow[] = [
-    {
-      sector: "Transportation",
-      sub: "II.1.1 On-road · II.1.2 Railways · II.1.3 Waterborne",
-      ref: "II.1",
-      emissions: null,
-      share: null,
-      source: null,
-      status: "Not mapped",
-    },
-    {
-      sector: "Stationary Energy",
-      sub: "I.1.1 Residential · I.2.1 Commercial & institutional · I.3.1 Manufacturing",
-      ref: "I.1–I.3",
-      emissions: null,
-      share: null,
-      source: null,
-      status: "Not mapped",
-    },
-    {
-      sector: "Waste",
-      sub: "III.1.1 Solid waste disposal · III.3.1 Wastewater treatment",
-      ref: "III.1–III.3",
-      emissions: null,
-      share: null,
-      source: null,
-      status: "Not mapped",
-    },
-    {
-      sector: "Industrial Processes & Product Use (IPPU)",
-      sub: "IV.1 Industrial processes · IV.2 Product use",
-      ref: "IV.1–IV.2",
-      emissions: null,
-      share: null,
-      source: null,
-      status: "Not mapped",
-    },
-    {
-      sector: "Agriculture, Forestry & Other Land Use (AFOLU)",
-      sub: "V.1 Livestock · V.2 Land · V.3 Aggregate sources",
-      ref: "V.1–V.3",
-      emissions: null,
-      share: null,
-      source: null,
-      status: "Not mapped",
-    },
-  ];
-  return SECTORS_TEMPLATE;
-}
 
 interface EmissionsReviewProps {
   params: { locode: string };
@@ -132,7 +29,9 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
-  const sectors = city ? buildSectors(city) : [];
+  const inventoryData = getEmissionsData(locode);
+  const sectors = inventoryData?.rows ?? EMPTY_SECTORS;
+  const inventoryYear = inventoryData?.year.toString() ?? city?.emissionsYear ?? "—";
 
   if (!city) {
     return (
@@ -152,7 +51,6 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const confirmedCount = sectors.filter((s) => s.status === "Confirmed").length;
   const totalEmissions = sectors.reduce((sum, s) => sum + (s.emissions ?? 0), 0);
   const totalMillions = (totalEmissions / 1e6).toFixed(2);
-  const inventoryYear = city.locode === "CL IQQ" ? "2022" : (city.emissionsYear ?? "—");
 
   useEffect(() => {
     setStepProgress(locode, "emissions", {
@@ -227,9 +125,9 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
           flexWrap: "wrap",
         }}>
           {[
-            { label: "Total GHG Emissions", value: `${totalMillions}M tCO₂e` },
+            { label: "Total GHG Emissions", value: inventoryData ? `${totalMillions}M tCO₂e` : "—" },
             { label: "Inventory Year", value: inventoryYear },
-            { label: "Primary Source", value: "Municipal records" },
+            { label: "Primary Source", value: inventoryData ? "CityCatalyst" : "—" },
             { label: "Completeness", value: `${confirmedCount} of ${sectors.length} sectors` },
           ].map((s) => (
             <div key={s.label}>

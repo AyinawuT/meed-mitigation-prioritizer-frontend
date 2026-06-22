@@ -3,6 +3,8 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
+import { getFormattedTotalEmissions, getInventoryYear } from "@/lib/cityInventory";
+import { useCityAttributes } from "@/hooks/use-city-attributes";
 import { useLanguage } from "@/lib/i18n";
 
 const STEP_ROUTES: Record<string, string> = {
@@ -207,6 +209,8 @@ export function CityProfile({ params }: CityProfileProps) {
     (c) => c.locode.toLowerCase() === locode.toLowerCase()
   );
 
+  const cityAttrs = useCityAttributes(locode);
+
   useEffect(() => {
     setTick((t) => t + 1);
   }, [locode]);
@@ -256,10 +260,10 @@ export function CityProfile({ params }: CityProfileProps) {
               <h1 style={{ fontSize: "24px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>{city.name}</h1>
               <div style={{ fontSize: "13px", color: "#6B7280", display: "flex", alignItems: "center", gap: "8px" }}>
                 <span>{city.region}</span>
-                {city.population && (
+                {cityAttrs.population && (
                   <>
                     <span style={{ color: "#D1D5DB" }}>·</span>
-                    <span>{city.population} {t("residents")}</span>
+                    <span>{cityAttrs.population} {t("residents")}</span>
                   </>
                 )}
               </div>
@@ -293,10 +297,10 @@ export function CityProfile({ params }: CityProfileProps) {
       {/* Key stats */}
       <div style={{ background: "#FAFAFA", borderBottom: "1px solid #EBEBEB", padding: "14px 64px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
-          <KeyStat label={t("Total emissions")} value={city.emissions} sub={t("Inventory year {year}", { year: city.emissionsYear ?? "N/A" })} />
-          <KeyStat label={t("Population")} value={city.population} sub={city.region ?? undefined} />
-          <KeyStat label={t("Land area")} value={city.area} sub={city.biome ?? undefined} />
-          <KeyStat label={t("Pop. density")} value={city.populationDensity} sub={t("inhabitants per km²")} />
+          <KeyStat label={t("Total Emissions")} value={getFormattedTotalEmissions(locode)} />
+          <KeyStat label={t("Population")} value={cityAttrs.population} sub={city.region} />
+          <KeyStat label={t("Land Area")} value={cityAttrs.area} />
+          <KeyStat label={t("Pop. Density")} value={cityAttrs.populationDensity} sub={t("inhabitants per km²")} />
         </div>
       </div>
 

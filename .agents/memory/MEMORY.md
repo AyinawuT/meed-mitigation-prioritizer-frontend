@@ -1,0 +1,4 @@
+- [Vite 7 allowedHosts bug](vite7-allowedhosts.md) — `allowedHosts: "all"` (string) is broken in Vite 7.3.1; use `true` (boolean).
+- [HIAP artifact router fix](hiap-artifact-routing.md) — Port routing: proxy uses PORT env var (= localPort), not openPorts scan; pnpm breaks in bash -c after artifact.toml mutations.
+- [HIAP workspace structure](hiap-workspace-structure.md) — actual source + workflow CWD is app/artifacts/hiap/; flat artifacts/hiap/ is a stale copy; node_modules symlinked.
+- [Deployment config quirks](deployment-config-quirks.md) — `.replit` needs `[deployment]` + `[[artifacts]]`; use `verifyAndReplaceDotReplit`; production CWD is workspace root.
