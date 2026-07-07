@@ -277,21 +277,61 @@ function adaptApiResult(
     };
   };
 
+  // Blocked actions were removed by the Hard Filter before ranking.
+  // They are stored in metadata.hard_filter_evidence_by_action_id, keyed by action_id.
+  // ranked_actions only contains actions that passed the Hard Filter.
+  type HardFilterEvidence = {
+    discard_reason?: string | null;
+    legal_assessment_present?: boolean;
+    legal_verdict_category?: string | null;
+    legal?: LegalEvidence;
+  };
+
   const legalExcluded: LegalExcludedAction[] = [];
   const legalFlagged: LegalExcludedAction[] = [];
 
-  const ranked: RankedAction[] = (apiResult.ranked_actions ?? []).flatMap(a => {
+  const hardFilterById = (
+    (apiResult.metadata?.hard_filter_evidence_by_action_id ?? {}) as Record<string, HardFilterEvidence>
+  );
+  for (const [actionId, hfEv] of Object.entries(hardFilterById)) {
+    const lv = hfEv.legal;
+    const verdict = lv?.verdict_category ?? hfEv.legal_verdict_category ?? null;
+    if (verdict !== "blocked") continue;  // only surface legally-blocked exclusions
+    const local = LOCAL_ACTION_MAP.get(actionId);
+    const gpcRefs = local?.emissions?.gpc_reference_number ?? [];
+    legalExcluded.push({
+      actionId,
+      actionName: local?.actionName ?? actionId,
+      sectorTag: gpcToSectorTag(gpcRefs),
+      legalData: {
+        assessment_present: lv?.assessment_present ?? hfEv.legal_assessment_present ?? true,
+        assessment_missing: lv?.assessment_missing ?? false,
+        verdict_category: "blocked",
+        component_score: lv?.component_score ?? 0,
+        ownership_category: (lv?.ownership_category ?? null) as LegalData["ownership_category"],
+        ownership_score: lv?.ownership_score ?? 0,
+        ownership_description: lv?.ownership_description ?? null,
+        ownership_description_es: lv?.ownership_description_es ?? null,
+        restrictions_category: (lv?.restrictions_category ?? null) as LegalData["restrictions_category"],
+        restrictions_score: lv?.restrictions_score ?? 0,
+        restrictions_description: lv?.restrictions_description ?? null,
+        restrictions_description_es: lv?.restrictions_description_es ?? null,
+        legal_justification: lv?.legal_justification ?? null,
+        legal_justification_en: lv?.legal_justification_en ?? null,
+        legal_references: lv?.legal_references ?? [],
+      },
+    });
+  }
+
+  // ranked_actions contains only actions that passed the Hard Filter.
+  // Among them, those with assessment_missing === true are flagged (amber card).
+  const ranked: RankedAction[] = (apiResult.ranked_actions ?? []).map(a => {
     const local = LOCAL_ACTION_MAP.get(a.action_id);
     const score = a.final_score;
     const ev = (a.evidence_summary ?? {}) as EvidenceSummary;
 
-    // Build LegalData from new nested schema with fallback to old flat schema
     const legalEv = ev.feasibility?.legal ?? null;
-    const verdictCategory = (
-      legalEv?.verdict_category ??
-      ev.hard_filter?.legal_verdict_category ??
-      null
-    ) as LegalData["verdict_category"];
+    const verdictCategory = (legalEv?.verdict_category ?? null) as LegalData["verdict_category"];
 
     const legalData: LegalData | null = legalEv ? {
       assessment_present: legalEv.assessment_present ?? true,
@@ -315,51 +355,30 @@ function adaptApiResult(
     const sectorTag = gpcToSectorTag(gpcRefs);
     const actionName = local?.actionName ?? a.action_id;
 
-    // If backend includes blocked-verdict actions in ranked_actions, route them to legalExcluded
-    if (verdictCategory === "blocked") {
-      legalExcluded.push({
-        actionId: a.action_id,
-        actionName,
-        sectorTag,
-        legalData: legalData ?? {
-          assessment_present: true,
-          assessment_missing: false,
-          verdict_category: "blocked",
-          component_score: ev.feasibility?.legal_component_score ?? 0,
-          ownership_category: null, ownership_score: 0,
-          ownership_description: null, ownership_description_es: null,
-          restrictions_category: null, restrictions_score: 0,
-          restrictions_description: null, restrictions_description_es: null,
-          legal_justification: null, legal_justification_en: null, legal_references: [],
-        },
-      });
-      return [];
-    }
-
-    // Flag actions with missing assessment — still included in ranking, recorded separately
+    // Flagged: assessment_missing — still in ranking, recorded separately for amber card
     if (legalEv !== null && legalData?.assessment_missing === true) {
       legalFlagged.push({ actionId: a.action_id, actionName, sectorTag, legalData });
     }
 
-    return [{
+    return {
       rank: a.rank,
       actionId: a.action_id,
       actionName,
-      actionCategory:           local?.actionCategory           ?? "",
-      actionSubcategory:        local?.actionSubcategory        ?? "",
-      costInvestmentNeeded:     local?.costInvestmentNeeded     ?? "",
+      actionCategory:            local?.actionCategory            ?? "",
+      actionSubcategory:         local?.actionSubcategory         ?? "",
+      costInvestmentNeeded:      local?.costInvestmentNeeded      ?? "",
       timelineForImplementation: local?.timelineForImplementation ?? "",
-      description:              local?.description              ?? "",
+      description:               local?.description               ?? "",
       finalScore:      score,
       impactScore:     a.impact_score,
       alignmentScore:  a.alignment_score,
       feasibilityScore: a.feasibility_score,
-      reductionShare:        ev.impact?.emissions_reduction_component_score         ?? 0,
-      timelineScore:         ev.impact?.timeline_component_score                    ?? 0,
-      policyComponent:       ev.alignment?.policy_component_score                   ?? 0,
-      sectorComponent:       ev.alignment?.sector_component_score                   ?? 0,
-      otherComponent:        ev.alignment?.co_benefit_component_score               ?? 0,
-      timeframeComponent:    ev.alignment?.timeframe_component_score                ?? 0,
+      reductionShare:        ev.impact?.emissions_reduction_component_score          ?? 0,
+      timelineScore:         ev.impact?.timeline_component_score                     ?? 0,
+      policyComponent:       ev.alignment?.policy_component_score                    ?? 0,
+      sectorComponent:       ev.alignment?.sector_component_score                    ?? 0,
+      otherComponent:        ev.alignment?.co_benefit_component_score                ?? 0,
+      timeframeComponent:    ev.alignment?.timeframe_component_score                 ?? 0,
       softLegalComponent:    legalData?.component_score ?? ev.feasibility?.legal_component_score ?? 0,
       socioeconomicComponent: ev.feasibility?.mitigation_feasibility_component_score ?? 0,
       legalPassed: true,
@@ -370,43 +389,8 @@ function adaptApiResult(
       matchedEmissions: 0,
       explanation: a.explanations?.en ?? "",
       priority: score >= 0.7 ? "high" : score >= 0.4 ? "medium" : "low",
-    }];
+    };
   });
-
-  // Also check metadata for explicitly excluded-by-legal actions (some API versions return these separately)
-  type MetaExcludedAction = { action_id?: string; action_name?: string; legal?: LegalEvidence };
-  const metaExcluded = (
-    (apiResult.metadata?.excluded_by_legal ?? apiResult.metadata?.blocked_actions ?? []) as MetaExcludedAction[]
-  );
-  for (const meta of metaExcluded) {
-    const actionId = meta.action_id ?? "";
-    if (!actionId || legalExcluded.some(e => e.actionId === actionId)) continue;
-    const local = LOCAL_ACTION_MAP.get(actionId);
-    const gpcRefs = local?.emissions?.gpc_reference_number ?? [];
-    const lv = meta.legal;
-    legalExcluded.push({
-      actionId,
-      actionName: local?.actionName ?? meta.action_name ?? actionId,
-      sectorTag: gpcToSectorTag(gpcRefs),
-      legalData: {
-        assessment_present: lv?.assessment_present ?? true,
-        assessment_missing: lv?.assessment_missing ?? false,
-        verdict_category: (lv?.verdict_category ?? "blocked") as LegalData["verdict_category"],
-        component_score: lv?.component_score ?? 0,
-        ownership_category: (lv?.ownership_category ?? null) as LegalData["ownership_category"],
-        ownership_score: lv?.ownership_score ?? 0,
-        ownership_description: lv?.ownership_description ?? null,
-        ownership_description_es: lv?.ownership_description_es ?? null,
-        restrictions_category: (lv?.restrictions_category ?? null) as LegalData["restrictions_category"],
-        restrictions_score: lv?.restrictions_score ?? 0,
-        restrictions_description: lv?.restrictions_description ?? null,
-        restrictions_description_es: lv?.restrictions_description_es ?? null,
-        legal_justification: lv?.legal_justification ?? null,
-        legal_justification_en: lv?.legal_justification_en ?? null,
-        legal_references: lv?.legal_references ?? [],
-      },
-    });
-  }
 
   const totalCityEmissions = sumGpcEmissions(emissionsData.gpcData);
 

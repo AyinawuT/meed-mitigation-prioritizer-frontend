@@ -1,5 +1,9 @@
 import type { PipelineResult, LegalData, LegalExcludedAction, RankedAction } from "./scoringPipeline";
 
+// The backend uses the same verdict vocabulary for all three categories:
+//   ownership_category:    "enabled" = city-owned | "conditional" = shared | "blocked" = external authority
+//   restrictions_category: "enabled" = none        | "conditional" = soft   | "blocked" = hard restrictions
+
 function blockedLegal(
   ownershipDesc: string,
   restrictionsDesc: string,
@@ -11,11 +15,11 @@ function blockedLegal(
     assessment_missing: false,
     verdict_category: "blocked",
     component_score: 0,
-    ownership_category: "external_authority",
+    ownership_category: "blocked",      // external authority — city cannot implement
     ownership_score: 0,
     ownership_description: ownershipDesc,
     ownership_description_es: ownershipDesc,
-    restrictions_category: "hard_restrictions",
+    restrictions_category: "blocked",   // hard legal restrictions
     restrictions_score: 0,
     restrictions_description: restrictionsDesc,
     restrictions_description_es: restrictionsDesc,
@@ -35,11 +39,11 @@ function flaggedLegal(
     assessment_missing: true,
     verdict_category: "conditional",
     component_score: 0.4,
-    ownership_category: "shared_ownership",
+    ownership_category: "conditional",  // shared ownership — assessment incomplete
     ownership_score: 0.5,
     ownership_description: ownershipDesc,
     ownership_description_es: ownershipDesc,
-    restrictions_category: "soft_restrictions",
+    restrictions_category: "conditional", // soft restrictions — assessment incomplete
     restrictions_score: 0.5,
     restrictions_description: restrictionsDesc,
     restrictions_description_es: restrictionsDesc,
@@ -55,11 +59,11 @@ function enabledLegal(score: number, refs: string[]): LegalData {
     assessment_missing: false,
     verdict_category: "enabled",
     component_score: score,
-    ownership_category: "city_owned",
+    ownership_category: "enabled",      // city-owned / full authority
     ownership_score: score,
     ownership_description: "The municipality holds direct authority to implement this action under existing Chilean legislation.",
     ownership_description_es: "El municipio tiene autoridad directa para implementar esta acción bajo la legislación chilena vigente.",
-    restrictions_category: "none",
+    restrictions_category: "enabled",   // no legal restrictions
     restrictions_score: 1.0,
     restrictions_description: "No legal restrictions identified. The municipality may proceed independently.",
     restrictions_description_es: "No se identificaron restricciones legales. El municipio puede proceder de forma independiente.",

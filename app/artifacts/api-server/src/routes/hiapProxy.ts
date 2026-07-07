@@ -15,7 +15,10 @@ async function proxyPost(
   logger.info({ url, requestBody: body }, "hiap-proxy: forwarding request");
   const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "true",
+    },
     body: JSON.stringify(body),
   });
   const data = (await res.json()) as unknown;

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/scoringPipeline";
+import { seedValdivia } from "@/lib/seedTestData";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
 
@@ -241,14 +242,12 @@ export function RegulationsLaws({ params }: Props) {
 
     // Dev seed: ?seed=test injects synthetic blocked+flagged data then removes itself
     if (search.includes("seed=test")) {
-      import("@/lib/seedTestData").then(m => {
-        m.seedValdivia();
-        window.history.replaceState(null, "", window.location.pathname);
-        try {
-          const raw = localStorage.getItem(`hiap:${locode}:results`);
-          if (raw) setResult(JSON.parse(raw) as PipelineResult);
-        } catch {}
-      });
+      seedValdivia();
+      window.history.replaceState(null, "", window.location.pathname);
+      try {
+        const raw = localStorage.getItem(`hiap:${locode}:results`);
+        if (raw) setResult(JSON.parse(raw) as PipelineResult);
+      } catch {}
       return;
     }
 
