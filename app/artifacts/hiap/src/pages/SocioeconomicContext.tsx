@@ -522,7 +522,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
         }}>
           <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
           <span>
-            <strong>How MEED+ HIAP uses this data:</strong> Socioeconomic conditions feed into the mitigation feasibility component, which makes up 50% of the
+            <strong>How MEED+ HIAP uses this data:</strong> Socioeconomic conditions feed into the mitigation feasibility component, which makes up 33% of the
             feasibility score, which in turn shapes 23% of the final action ranking by default.
             They adjust scores to account for feasibility constraints (e.g. low income limits
             capital-intensive actions) and amplify co-benefits (e.g. green jobs matter more
