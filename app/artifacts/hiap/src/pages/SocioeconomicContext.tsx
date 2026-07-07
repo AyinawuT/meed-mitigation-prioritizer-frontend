@@ -380,9 +380,15 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
                 {indicators.length} indicators loaded
               </span>
-              <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                MEED+ FEASIBILITY: Mitigation feasibility shapes 50% of feasibility score · Feasibility shapes 23% of ranking
-              </span>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: "6px",
+                background: "#F0FDF4", border: "1px solid #BBF7D0",
+                borderRadius: "6px", padding: "5px 12px",
+                fontSize: "11px", color: "#15803D", fontWeight: "600",
+              }}>
+                <span>⚖</span>
+                <span>MEED+ FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
+              </div>
             </div>
           </div>
         </div>
