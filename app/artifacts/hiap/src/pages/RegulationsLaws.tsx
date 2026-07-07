@@ -75,18 +75,20 @@ function sectorBreakdown(actions: { sectorTag: string }[]): string {
 
 function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
   const [open, setOpen] = useState(false);
+  const [justOpen, setJustOpen] = useState(false);
   const ld = action.legalData;
   const ownershipDesc = ld.ownership_description_es || ld.ownership_description;
   const restrictionsDesc = ld.restrictions_description_es || ld.restrictions_description;
   const justification = ld.legal_justification_en || ld.legal_justification;
+  const hasDetail = ld.ownership_category || ld.restrictions_category || justification || ld.legal_references.length > 0;
 
   return (
     <div style={{
       background: "white", border: "1px solid #FECACA", borderRadius: "10px",
-      padding: "16px 18px",
+      overflow: "hidden",
     }}>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", flexWrap: "wrap", marginBottom: "12px" }}>
+      {/* Always-visible header row */}
+      <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "14px 16px", flexWrap: "wrap" }}>
         <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", flex: 1, minWidth: "120px" }}>
           {action.actionName}
         </span>
@@ -95,75 +97,93 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
           fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
           background: "#FEF2F2", color: "#DC2626", whiteSpace: "nowrap",
         }}>
-          Excluded from ranking
+          Excluded
         </span>
-      </div>
-
-      {/* Ownership — always shown; description rendered when available */}
-      {ld.ownership_category && (
-        <div style={{ marginBottom: "8px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: ownershipDesc ? "4px" : 0 }}>
-            <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "80px", flexShrink: 0 }}>Ownership</span>
-            <VerdictChip category={ld.ownership_category} />
-          </div>
-          {ownershipDesc && (
-            <p style={{ fontSize: "12px", color: "#4B5563", margin: "0 0 0 88px", lineHeight: "1.5" }}>
-              {ownershipDesc}
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Restrictions — always shown; description rendered when available */}
-      {ld.restrictions_category && (
-        <div style={{ marginBottom: "8px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: restrictionsDesc ? "4px" : 0 }}>
-            <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "80px", flexShrink: 0 }}>Restrictions</span>
-            <VerdictChip category={ld.restrictions_category} />
-          </div>
-          {restrictionsDesc && (
-            <p style={{ fontSize: "12px", color: "#4B5563", margin: "0 0 0 88px", lineHeight: "1.5" }}>
-              {restrictionsDesc}
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Legal reasoning — collapsible; shown only when justification text is available */}
-      {justification && (
-        <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "8px", marginTop: "4px" }}>
+        {hasDetail && (
           <button
             onClick={() => setOpen(v => !v)}
             style={{
-              background: "none", border: "none", cursor: "pointer", padding: 0,
-              fontSize: "12px", fontWeight: "600", color: "#6B7280",
+              background: "none", border: "1px solid #FECACA", borderRadius: "6px",
+              cursor: "pointer", padding: "3px 8px",
+              fontSize: "11px", fontWeight: "600", color: "#9CA3AF",
               display: "flex", alignItems: "center", gap: "4px",
+              whiteSpace: "nowrap",
             }}
           >
-            <span style={{ fontSize: "10px" }}>{open ? "▲" : "▼"}</span>
-            Legal reasoning
+            {open ? "Hide details ▲" : "Why excluded? ▼"}
           </button>
-          {open && (
-            <p style={{
-              fontSize: "12px", color: "#4B5563", marginTop: "8px", marginBottom: 0, lineHeight: "1.6",
-            }}>
-              {justification}
-            </p>
-          )}
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* Legal references */}
-      {ld.legal_references.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
-          {ld.legal_references.map((ref, i) => (
-            <span key={i} style={{
-              fontSize: "10px", padding: "2px 6px", borderRadius: "4px",
-              background: "#F3F4F6", color: "#374151", fontFamily: "monospace",
-            }}>
-              {ref}
-            </span>
-          ))}
+      {/* Collapsible detail panel */}
+      {open && (
+        <div style={{ borderTop: "1px solid #FEE2E2", padding: "12px 16px", background: "#FFFBFB" }}>
+
+          {/* Ownership */}
+          {ld.ownership_category && (
+            <div style={{ marginBottom: "10px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: ownershipDesc ? "4px" : 0 }}>
+                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>Ownership</span>
+                <VerdictChip category={ld.ownership_category} />
+              </div>
+              {ownershipDesc && (
+                <p style={{ fontSize: "12px", color: "#4B5563", margin: "4px 0 0 92px", lineHeight: "1.5" }}>
+                  {ownershipDesc}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Restrictions */}
+          {ld.restrictions_category && (
+            <div style={{ marginBottom: justification || ld.legal_references.length > 0 ? "10px" : 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: restrictionsDesc ? "4px" : 0 }}>
+                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>Restrictions</span>
+                <VerdictChip category={ld.restrictions_category} />
+              </div>
+              {restrictionsDesc && (
+                <p style={{ fontSize: "12px", color: "#4B5563", margin: "4px 0 0 92px", lineHeight: "1.5" }}>
+                  {restrictionsDesc}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Legal justification — nested collapsible */}
+          {justification && (
+            <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "8px", marginTop: "4px" }}>
+              <button
+                onClick={() => setJustOpen(v => !v)}
+                style={{
+                  background: "none", border: "none", cursor: "pointer", padding: 0,
+                  fontSize: "11px", fontWeight: "600", color: "#9CA3AF",
+                  display: "flex", alignItems: "center", gap: "4px",
+                }}
+              >
+                <span style={{ fontSize: "9px" }}>{justOpen ? "▲" : "▼"}</span>
+                Legal justification
+              </button>
+              {justOpen && (
+                <p style={{ fontSize: "12px", color: "#4B5563", marginTop: "8px", marginBottom: 0, lineHeight: "1.6" }}>
+                  {justification}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Legal references */}
+          {ld.legal_references.length > 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
+              {ld.legal_references.map((ref, i) => (
+                <span key={i} style={{
+                  fontSize: "10px", padding: "2px 6px", borderRadius: "4px",
+                  background: "#F3F4F6", color: "#374151", fontFamily: "monospace",
+                }}>
+                  {ref}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
