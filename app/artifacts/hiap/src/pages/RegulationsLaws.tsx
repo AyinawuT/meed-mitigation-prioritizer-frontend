@@ -297,6 +297,18 @@ export function RegulationsLaws({ params }: Props) {
       .finally(() => setLegalLoading(false));
   }, [locode, search]);
 
+  // When results load, mark step progress at 100% so the city profile card
+  // shows "NEEDS REVIEW" (and "COMPLETE" once the user clicks Continue →)
+  useEffect(() => {
+    if (!result) return;
+    const excl = result.legalExcluded?.length ?? 0;
+    const incl = result.ranked?.length ?? 0;
+    const sub = excl > 0
+      ? `${excl} excluded · ${incl} included`
+      : `${incl} actions included`;
+    setStepProgress(locode, "regulations", { visited: true, progress: 100, sub });
+  }, [locode, result]);
+
   // Derived stats — handle both new and old stored results gracefully
   const ranked: RankedAction[] = result?.ranked ?? [];
   const legalExcluded: LegalExcludedAction[] = result?.legalExcluded ?? [];
