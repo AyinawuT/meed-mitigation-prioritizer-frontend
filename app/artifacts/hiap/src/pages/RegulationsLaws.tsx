@@ -99,33 +99,37 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
         </span>
       </div>
 
-      {/* Ownership */}
-      {ownershipDesc && (
+      {/* Ownership — always shown; description rendered when available */}
+      {ld.ownership_category && (
         <div style={{ marginBottom: "8px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: ownershipDesc ? "4px" : 0 }}>
             <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "80px", flexShrink: 0 }}>Ownership</span>
             <VerdictChip category={ld.ownership_category} />
           </div>
-          <p style={{ fontSize: "12px", color: "#4B5563", margin: "0 0 0 88px", lineHeight: "1.5" }}>
-            {ownershipDesc}
-          </p>
+          {ownershipDesc && (
+            <p style={{ fontSize: "12px", color: "#4B5563", margin: "0 0 0 88px", lineHeight: "1.5" }}>
+              {ownershipDesc}
+            </p>
+          )}
         </div>
       )}
 
-      {/* Restrictions */}
-      {restrictionsDesc && (
+      {/* Restrictions — always shown; description rendered when available */}
+      {ld.restrictions_category && (
         <div style={{ marginBottom: "8px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: restrictionsDesc ? "4px" : 0 }}>
             <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "80px", flexShrink: 0 }}>Restrictions</span>
             <VerdictChip category={ld.restrictions_category} />
           </div>
-          <p style={{ fontSize: "12px", color: "#4B5563", margin: "0 0 0 88px", lineHeight: "1.5" }}>
-            {restrictionsDesc}
-          </p>
+          {restrictionsDesc && (
+            <p style={{ fontSize: "12px", color: "#4B5563", margin: "0 0 0 88px", lineHeight: "1.5" }}>
+              {restrictionsDesc}
+            </p>
+          )}
         </div>
       )}
 
-      {/* Legal reasoning — collapsible */}
+      {/* Legal reasoning — collapsible; shown only when justification text is available */}
       {justification && (
         <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "8px", marginTop: "4px" }}>
           <button
