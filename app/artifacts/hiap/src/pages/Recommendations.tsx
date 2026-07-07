@@ -890,7 +890,7 @@ export function Recommendations({ params }: Props) {
     );
   }
 
-  const { ranked, discarded, totalCityEmissions } = result;
+  const { ranked, discarded, legalExcluded, totalCityEmissions } = result;
 
   // Determine top picks: user-selected (in order) or pipeline top 3
   const pickedActions = pickedIds
@@ -951,7 +951,7 @@ export function Recommendations({ params }: Props) {
                 {t("Top mitigation actions for {name}", { name: cityName })}
               </h1>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-                {ranked.length} {t("actions ranked")} · {discarded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
+                {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
           </div>
