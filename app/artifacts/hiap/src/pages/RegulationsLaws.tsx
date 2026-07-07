@@ -5,7 +5,6 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/scoringPipeline";
-import { seedValdivia } from "@/lib/seedTestData";
 import { runPipelineForCity } from "@/lib/pipelineRunner";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
@@ -267,16 +266,6 @@ export function RegulationsLaws({ params }: Props) {
   useEffect(() => {
     setStepProgress(locode, "regulations", { visited: true });
 
-    // Dev seed: ?seed=test injects synthetic blocked+flagged data then removes itself
-    if (search.includes("seed=test")) {
-      seedValdivia();
-      window.history.replaceState(null, "", window.location.pathname);
-      try {
-        const raw = localStorage.getItem(`hiap:${locode}:results`);
-        if (raw) setResult(JSON.parse(raw) as PipelineResult);
-      } catch {}
-      return;
-    }
 
     // Load any previously cached result
     try {
