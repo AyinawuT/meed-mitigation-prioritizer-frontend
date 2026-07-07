@@ -278,8 +278,9 @@ export function Methodology() {
               <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Default weight: 23%</p>
               <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>Can your city realistically implement this action given its legal and socioeconomic context?</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <Subcomp pct="50%" title="Legal verdict" desc="Direct legal verdict score from regulatory assessment" color="green" />
-                <Subcomp pct="50%" title="Mitigation feasibility" desc="City-specific mitigation feasibility score derived from socioeconomic and contextual factors" color="green" />
+                <Subcomp pct="33%" title="Legal verdict" desc="Municipal authority and legal restrictions assessment — ownership and restrictions dimensions combined into a single component score" color="green" />
+                <Subcomp pct="33%" title="Mitigation feasibility" desc="City-specific mitigation feasibility score derived from socioeconomic and contextual factors" color="green" />
+                <Subcomp pct="33%" title="Financial feasibility" desc="Availability of financing routes and comparable funded projects — currently in development" color="green" />
               </div>
             </div>
           </div>
@@ -367,26 +368,34 @@ export function Methodology() {
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <Step n={1} title="Legal verdict">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6" }}>
-                Each action receives a legal verdict score (0–1) from a regulatory assessment. A "blocked" verdict removes the action
-                entirely before scoring; all others contribute a numeric score used in the feasibility calculation.
+                Each action is assessed across two legal dimensions: <strong>Ownership</strong> (does the municipality have the legal
+                authority to implement this action?) and <strong>Restrictions</strong> (are there legal restrictions or authorizations
+                that would constrain implementation?). Each dimension returns a verdict category, and both are combined into a single
+                component score (0–1) that feeds into the feasibility calculation.
               </p>
-              <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden" }}>
+              <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "12px" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
                   <thead>
                     <tr style={{ background: "#F9FAFB" }}>
-                      {["Alignment status", "Score contribution", "Meaning"].map(h => (
+                      {["Verdict", "Component score", "What it means"].map(h => (
                         <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
                     {[
-                      ["aligns", "1.0", "Legal environment actively supports this action"],
-                      ["no_evidence", "0.5", "No legal signal found — neutral score"],
-                      ["not_aligned", "0.0", "Legal friction exists — reduces feasibility"],
-                    ].map(([status, score, meaning]) => (
-                      <tr key={status} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                        <td style={{ padding: "10px 14px", fontFamily: "monospace", color: "#374151" }}>{status}</td>
+                      ["enabled", "1.0", "Full municipal authority; no legal restrictions identified"],
+                      ["conditional", "~0.5", "Shared or partial authority, or soft restrictions — legal groundwork may be needed"],
+                      ["blocked", "removed", "No authority or hard legal restriction — action excluded before scoring"],
+                    ].map(([verdict, score, meaning], i) => (
+                      <tr key={verdict} style={{ borderBottom: i < 2 ? "1px solid #F3F4F6" : "none" }}>
+                        <td style={{ padding: "10px 14px" }}>
+                          <span style={{
+                            fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
+                            background: verdict === "enabled" ? "#F0FDF4" : verdict === "conditional" ? "#FFFBEB" : "#FEF2F2",
+                            color: verdict === "enabled" ? "#16A34A" : verdict === "conditional" ? "#D97706" : "#DC2626",
+                          }}>{verdict}</span>
+                        </td>
                         <td style={{ padding: "10px 14px", color: "#374151", fontWeight: "600" }}>{score}</td>
                         <td style={{ padding: "10px 14px", color: "#6B7280" }}>{meaning}</td>
                       </tr>
@@ -394,6 +403,11 @@ export function Methodology() {
                   </tbody>
                 </table>
               </div>
+              <CalloutBox color="blue">
+                If either the ownership or restrictions dimension returns <strong>blocked</strong>, the action is removed from the ranking
+                entirely before scoring begins. A <strong>conditional</strong> result flags the action for review but does not remove it —
+                it scores at a reduced component score.
+              </CalloutBox>
             </Step>
             <Step n={2} title="Mitigation feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
@@ -403,11 +417,13 @@ export function Methodology() {
               </p>
               <CodeBlock>{"bucket_score:  very_low=-2  low=-1  medium=0  high=+1  very_high=+2\ndirection:     supportive → keep sign    constraining → reverse sign\nnormalised:    (weighted_average + 2) ÷ 4  →  gives 0–1 range"}</CodeBlock>
             </Step>
-            <Step n={3} title="Combine both components">
+            <Step n={3} title="Combine components into a feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Legal verdict and mitigation feasibility components are weighted equally at 50% each.
+                The feasibility score is built from three components: legal verdict, mitigation feasibility, and financial feasibility.
+                Financial feasibility (financing routes and comparable funded projects) is currently in development.
+                The active formula uses the two live components weighted equally:
               </p>
-              <CodeBlock>{"feasibility_score = (0.50 × legal_verdict) + (0.50 × mitigation_feasibility)"}</CodeBlock>
+              <CodeBlock>{"feasibility_score = (0.50 × legal_verdict) + (0.50 × mitigation_feasibility)\n\n// Target formula (once financial feasibility is live):\nfeasibility_score = (0.33 × legal_verdict) + (0.33 × mitigation_feasibility) + (0.33 × financial_feasibility)"}</CodeBlock>
             </Step>
           </div>
         </div>
@@ -427,41 +443,44 @@ export function Methodology() {
               A — Legal eligibility (hard filter)
             </div>
             <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
-              The system automatically checks every action against the mandatory and required legal requirements for your city.
-              If an action fails — meaning the legal environment actively prohibits or blocks it — it is removed before scoring begins.
+              The system automatically assesses every action against the municipal legal context for your city, evaluating two
+              dimensions — <strong>ownership</strong> (legal authority) and <strong>restrictions</strong> (legal constraints).
+              If either dimension returns a <strong>blocked</strong> verdict, the action is removed before scoring begins.
               This is objective and automatic; the city has no input into this filter.
             </p>
             <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "14px" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
                 <thead>
                   <tr style={{ background: "#F9FAFB" }}>
-                    {["Strength", "Effect on hard filter", "Effect on feasibility score"].map(h => (
+                    {["Dimension", "Verdict", "Effect"].map(h => (
                       <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    ["mandatory", "#FEE2E2", "#991B1B", "Blocks action if not_aligned", "Not applicable — action removed"],
-                    ["required", "#FFEDD5", "#9A3412", "Blocks action if not_aligned", "Not applicable — action removed"],
-                    ["recommended", "#FEF9C3", "#713F12", "No block", "Scores into legal component"],
-                    ["optional", "#F3F4F6", "#374151", "No block", "Scores into legal component"],
-                    ["informational", "#EFF6FF", "#1E40AF", "No block", "No scoring effect"],
-                  ].map(([strength, bg, color, filter, feasibility]) => (
-                    <tr key={strength} style={{ borderBottom: "1px solid #F3F4F6" }}>
+                    ["Ownership", "blocked", "#FEE2E2", "#991B1B", "Municipality lacks legal authority — action removed"],
+                    ["Ownership", "conditional", "#FFFBEB", "#D97706", "Shared or partial authority — scores at reduced rate, flagged"],
+                    ["Ownership", "enabled", "#F0FDF4", "#16A34A", "Full municipal authority — scores at full rate"],
+                    ["Restrictions", "blocked", "#FEE2E2", "#991B1B", "Hard legal restriction — action removed"],
+                    ["Restrictions", "conditional", "#FFFBEB", "#D97706", "Soft restrictions or authorisation needed — scores at reduced rate"],
+                    ["Restrictions", "enabled", "#F0FDF4", "#16A34A", "No restrictions identified — scores at full rate"],
+                  ].map(([dimension, verdict, bg, color, effect], i) => (
+                    <tr key={i} style={{ borderBottom: "1px solid #F3F4F6" }}>
+                      <td style={{ padding: "10px 14px", color: "#374151", fontWeight: i % 3 === 0 ? "600" : "400" }}>{i % 3 === 0 ? dimension : ""}</td>
                       <td style={{ padding: "10px 14px" }}>
-                        <span style={{ background: bg as string, color: color as string, padding: "2px 8px", borderRadius: "5px", fontSize: "12px", fontWeight: "500" }}>{strength}</span>
+                        <span style={{ background: bg, color, padding: "2px 8px", borderRadius: "4px", fontSize: "11px", fontWeight: "600" }}>{verdict}</span>
                       </td>
-                      <td style={{ padding: "10px 14px", color: "#374151" }}>{filter}</td>
-                      <td style={{ padding: "10px 14px", color: "#6B7280" }}>{feasibility}</td>
+                      <td style={{ padding: "10px 14px", color: "#6B7280" }}>{effect}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             <CalloutBox color="blue">
-              A "no evidence" result on a mandatory requirement does not block the action — it passes with a flag.
-              Only a confirmed "not_aligned" result causes removal.
+              If the assessment is missing for an action (no evidence found), the action is <strong>not blocked</strong> — it passes
+              with a conditional flag for the city to review. Only a confirmed <strong>blocked</strong> verdict on either dimension
+              causes removal.
             </CalloutBox>
           </div>
 
