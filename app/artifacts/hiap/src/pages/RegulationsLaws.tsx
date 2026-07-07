@@ -6,6 +6,7 @@ import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/scoringPipeline";
 import { seedValdivia } from "@/lib/seedTestData";
+import { runPipelineForCity } from "@/lib/pipelineRunner";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
 
@@ -236,6 +237,8 @@ export function RegulationsLaws({ params }: Props) {
 
   const [result, setResult] = useState<PipelineResult | null>(null);
   const [sectorFilter, setSectorFilter] = useState("all");
+  const [legalLoading, setLegalLoading] = useState(false);
+  const [legalError, setLegalError] = useState<string | null>(null);
 
   useEffect(() => {
     setStepProgress(locode, "regulations", { visited: true });
@@ -251,10 +254,23 @@ export function RegulationsLaws({ params }: Props) {
       return;
     }
 
+    // Load any previously cached result
     try {
       const raw = localStorage.getItem(`hiap:${locode}:results`);
-      if (raw) setResult(JSON.parse(raw) as PipelineResult);
+      if (raw) {
+        setResult(JSON.parse(raw) as PipelineResult);
+        return; // already have data — skip the live fetch
+      }
     } catch {}
+
+    // No cached result — run the pipeline now so the user sees legal data at step 3.
+    // Strategic preferences default gracefully when not yet filled in (steps 4–6).
+    setLegalLoading(true);
+    setLegalError(null);
+    runPipelineForCity(locode, { topN: 20, createExplanations: false })
+      .then((r) => setResult(r))
+      .catch((err) => setLegalError(err instanceof Error ? err.message : String(err)))
+      .finally(() => setLegalLoading(false));
   }, [locode, search]);
 
   // Derived stats — handle both new and old stored results gracefully
@@ -339,20 +355,54 @@ export function RegulationsLaws({ params }: Props) {
           />
         </div>
 
-        {/* No pipeline data yet */}
-        {!result && (
+        {/* Legal review loading */}
+        {!result && legalLoading && (
           <div style={{
             background: "white", border: "1px solid #E5E7EB", borderRadius: "12px",
-            padding: "36px 28px", textAlign: "center",
+            padding: "40px 28px", textAlign: "center",
           }}>
-            <div style={{ fontSize: "36px", marginBottom: "12px" }}>⚖</div>
-            <div style={{ fontSize: "14px", fontWeight: "700", color: "#374151", marginBottom: "8px" }}>
-              Legal review data not yet available
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+              <div style={{
+                width: "32px", height: "32px", borderRadius: "50%",
+                border: "3px solid #E5E7EB", borderTopColor: "#001EA7",
+                animation: "spin 0.8s linear infinite",
+              }} />
             </div>
-            <div style={{ fontSize: "13px", color: "#6B7280", lineHeight: "1.6", maxWidth: "400px", margin: "0 auto" }}>
-              Legal review data will be populated after you run the prioritization pipeline.
-              Continue setting up your strategic preferences to proceed.
+            <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
+              Running legal review…
             </div>
+            <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
+              Checking all candidate actions against Chilean laws
+            </div>
+          </div>
+        )}
+
+        {/* Legal review error */}
+        {!result && !legalLoading && legalError && (
+          <div style={{
+            background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "12px",
+            padding: "28px 24px", textAlign: "center",
+          }}>
+            <div style={{ fontSize: "28px", marginBottom: "10px" }}>⚠</div>
+            <div style={{ fontSize: "14px", fontWeight: "700", color: "#991B1B", marginBottom: "6px" }}>
+              Could not load legal review
+            </div>
+            <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "16px", lineHeight: "1.5", maxWidth: "380px", margin: "0 auto 16px" }}>
+              {legalError}
+            </div>
+            <button
+              onClick={() => {
+                setLegalLoading(true);
+                setLegalError(null);
+                runPipelineForCity(locode, { topN: 20, createExplanations: false })
+                  .then((r) => setResult(r))
+                  .catch((err) => setLegalError(err instanceof Error ? err.message : String(err)))
+                  .finally(() => setLegalLoading(false));
+              }}
+              style={{ padding: "8px 20px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
+            >
+              Retry
+            </button>
           </div>
         )}
 
