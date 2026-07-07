@@ -51,7 +51,15 @@ type EvidenceSummary = {
   feasibility?: {
     legal?: LegalEvidence;
     legal_component_score?: number;
+    // v1 flat field (legacy)
     mitigation_feasibility_component_score?: number;
+    // v2+ nested object (current backend)
+    mitigation_feasibility?: {
+      component_score?: number;
+      component_source?: string;
+      score_present?: boolean;
+      score_missing?: boolean;
+    };
   };
 };
 
@@ -355,7 +363,9 @@ export function adaptApiResult(
       otherComponent:        ev.alignment?.co_benefit_component_score                ?? 0,
       timeframeComponent:    ev.alignment?.timeframe_component_score                 ?? 0,
       softLegalComponent:    legalData?.component_score ?? ev.feasibility?.legal_component_score ?? 0,
-      socioeconomicComponent: ev.feasibility?.mitigation_feasibility_component_score ?? 0,
+      socioeconomicComponent: ev.feasibility?.mitigation_feasibility?.component_score
+                           ?? ev.feasibility?.mitigation_feasibility_component_score
+                           ?? 0,
       legalPassed: true,
       legalFlag:   legalData?.assessment_missing === true,
       legalData,
