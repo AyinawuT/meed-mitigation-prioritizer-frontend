@@ -438,66 +438,6 @@ function DetailPanel({
             </div>
           )}
 
-          {/* Legal details from pipeline */}
-          {action.legalData ? (
-            <div style={{ marginBottom: "16px" }}>
-              <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>Legal verdict</div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "8px" }}>
-                {action.legalData.verdict_category === "enabled" && (
-                  <span style={{ fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px", background: "#F0FDF4", color: "#16A34A" }}>Enabled</span>
-                )}
-                {action.legalData.verdict_category === "conditional" && (
-                  <span style={{ fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px", background: "#FFFBEB", color: "#D97706" }}>Conditional</span>
-                )}
-                {action.legalData.verdict_category === "blocked" && (
-                  <span style={{ fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px", background: "#FEF2F2", color: "#DC2626" }}>Blocked</span>
-                )}
-                {action.legalData.assessment_missing && (
-                  <span style={{ fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px", background: "#FEF3C7", color: "#92400E" }}>Assessment pending</span>
-                )}
-                <span style={{ fontSize: "11px", color: "#9CA3AF" }}>
-                  score {action.legalData.component_score.toFixed(2)}
-                </span>
-              </div>
-              {(action.legalData.ownership_description_es || action.legalData.ownership_description) && (
-                <div style={{ marginBottom: "6px" }}>
-                  <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "2px" }}>Ownership</div>
-                  <div style={{ fontSize: "12px", color: "#4B5563", lineHeight: "1.5" }}>
-                    {action.legalData.ownership_description_es || action.legalData.ownership_description}
-                  </div>
-                </div>
-              )}
-              {(action.legalData.restrictions_description_es || action.legalData.restrictions_description) && (
-                <div style={{ marginBottom: "6px" }}>
-                  <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "2px" }}>Restrictions</div>
-                  <div style={{ fontSize: "12px", color: "#4B5563", lineHeight: "1.5" }}>
-                    {action.legalData.restrictions_description_es || action.legalData.restrictions_description}
-                  </div>
-                </div>
-              )}
-              {(action.legalData.legal_justification_en || action.legalData.legal_justification) && (
-                <div style={{ marginBottom: "6px" }}>
-                  <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "2px" }}>Legal basis</div>
-                  <div style={{ fontSize: "12px", color: "#4B5563", lineHeight: "1.5" }}>
-                    {action.legalData.legal_justification_en || action.legalData.legal_justification}
-                  </div>
-                </div>
-              )}
-              {action.legalData.legal_references.length > 0 && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-                  {action.legalData.legal_references.map((ref, i) => (
-                    <span key={i} style={{ fontSize: "10px", padding: "2px 6px", borderRadius: "4px", background: "#F3F4F6", color: "#374151", fontFamily: "monospace" }}>
-                      {ref}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          ) : action.legalFlag ? (
-            <div style={{ fontSize: "12px", color: "#B45309", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "6px", padding: "8px 12px", marginBottom: "16px" }}>
-              ⚠ One or more mandatory legal requirements have no evidence — flagged for review.
-            </div>
-          ) : null}
         </div>
 
         <div style={{ padding: "16px 28px", borderTop: "1px solid #EBEBEB", flexShrink: 0 }}>
