@@ -280,11 +280,21 @@ function adaptApiResult(
   // Blocked actions were removed by the Hard Filter before ranking.
   // They are stored in metadata.hard_filter_evidence_by_action_id, keyed by action_id.
   // ranked_actions only contains actions that passed the Hard Filter.
+  //
+  // Backend schema: rich legal data is in hfEv.legal (v2+) OR hfEv.legal_assessment_summary (v1).
+  // We try both so the adapter works against either backend version.
   type HardFilterEvidence = {
     discard_reason?: string | null;
     legal_assessment_present?: boolean;
     legal_verdict_category?: string | null;
     legal?: LegalEvidence;
+    legal_assessment_summary?: {
+      gpc_sector?: string | null;
+      ownership_category?: string | null;
+      ownership_score?: number;
+      restrictions_category?: string | null;
+      restrictions_score?: number;
+    };
   };
 
   const legalExcluded: LegalExcludedAction[] = [];
@@ -294,26 +304,31 @@ function adaptApiResult(
     (apiResult.metadata?.hard_filter_evidence_by_action_id ?? {}) as Record<string, HardFilterEvidence>
   );
   for (const [actionId, hfEv] of Object.entries(hardFilterById)) {
-    const lv = hfEv.legal;
+    const lv  = hfEv.legal;                     // v2+ rich object
+    const las = hfEv.legal_assessment_summary;   // v1 summary object (current backend)
     const verdict = lv?.verdict_category ?? hfEv.legal_verdict_category ?? null;
     if (verdict !== "blocked") continue;  // only surface legally-blocked exclusions
     const local = LOCAL_ACTION_MAP.get(actionId);
     const gpcRefs = local?.emissions?.gpc_reference_number ?? [];
+    // Prefer GPC refs from local map; fall back to gpc_sector from legal_assessment_summary
+    const sectorTag = gpcRefs.length > 0
+      ? gpcToSectorTag(gpcRefs)
+      : (las?.gpc_sector ?? "cross_sector");
     legalExcluded.push({
       actionId,
       actionName: local?.actionName ?? actionId,
-      sectorTag: gpcToSectorTag(gpcRefs),
+      sectorTag,
       legalData: {
         assessment_present: lv?.assessment_present ?? hfEv.legal_assessment_present ?? true,
         assessment_missing: lv?.assessment_missing ?? false,
         verdict_category: "blocked",
         component_score: lv?.component_score ?? 0,
-        ownership_category: (lv?.ownership_category ?? null) as LegalData["ownership_category"],
-        ownership_score: lv?.ownership_score ?? 0,
+        ownership_category: ((lv?.ownership_category ?? las?.ownership_category) ?? null) as LegalData["ownership_category"],
+        ownership_score: lv?.ownership_score ?? las?.ownership_score ?? 0,
         ownership_description: lv?.ownership_description ?? null,
         ownership_description_es: lv?.ownership_description_es ?? null,
-        restrictions_category: (lv?.restrictions_category ?? null) as LegalData["restrictions_category"],
-        restrictions_score: lv?.restrictions_score ?? 0,
+        restrictions_category: ((lv?.restrictions_category ?? las?.restrictions_category) ?? null) as LegalData["restrictions_category"],
+        restrictions_score: lv?.restrictions_score ?? las?.restrictions_score ?? 0,
         restrictions_description: lv?.restrictions_description ?? null,
         restrictions_description_es: lv?.restrictions_description_es ?? null,
         legal_justification: lv?.legal_justification ?? null,
