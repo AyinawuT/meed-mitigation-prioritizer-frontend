@@ -63,19 +63,30 @@ type EvidenceSummary = {
   };
 };
 
-// Backend schema: rich legal data is in hfEv.legal (v2+) OR hfEv.legal_assessment_summary (v1).
+// Backend schema: rich legal data lives in hfEv.legal_assessment_summary (current backend).
+// hfEv.legal is a legacy v2+ field that may not be present.
 type HardFilterEvidence = {
   discard_reason?: string | null;
   legal_assessment_present?: boolean;
-  legal_verdict_category?: string | null;
+  legal_verdict_category?: "blocked" | "conditional" | "enabled" | null;
+  legal_verdict_score?: number | null;
+  legal_hard_filter_blocked?: boolean;
+  confirmed_exclusion?: boolean;
   legal?: LegalEvidence;
   legal_assessment_summary?: {
     gpc_sector?: string | null;
     ownership_category?: string | null;
-    ownership_score?: number;
+    ownership_score?: number | null;
+    ownership_description?: string | null;
+    ownership_description_es?: string | null;
     restrictions_category?: string | null;
-    restrictions_score?: number;
-  };
+    restrictions_score?: number | null;
+    restrictions_description?: string | null;
+    restrictions_description_es?: string | null;
+    legal_justification?: string | null;
+    legal_justification_en?: string | null;
+    legal_references?: string[];
+  } | null;
 };
 
 // ─── Local action lookup ──────────────────────────────────────────────────────
@@ -271,10 +282,13 @@ export function adaptApiResult(
   );
 
   for (const [actionId, hfEv] of Object.entries(hardFilterById)) {
-    const lv  = hfEv.legal;                    // v2+ rich object
-    const las = hfEv.legal_assessment_summary; // v1 summary (current backend)
+    const lv  = hfEv.legal;                    // legacy v2+ rich object (may be absent)
+    const las = hfEv.legal_assessment_summary; // current backend structure
     const verdict = lv?.verdict_category ?? hfEv.legal_verdict_category ?? null;
-    if (verdict !== "blocked") continue;
+    const isBlocked = verdict === "blocked" || hfEv.legal_hard_filter_blocked === true;
+    const isMissingAssessment = verdict === null && hfEv.legal_assessment_present === false;
+
+    if (!isBlocked && !isMissingAssessment) continue;
 
     const local = LOCAL_ACTION_MAP.get(actionId);
     const gpcRefs = local?.emissions?.gpc_reference_number ?? [];
@@ -283,28 +297,36 @@ export function adaptApiResult(
         ? gpcToSectorTag(gpcRefs)
         : (las?.gpc_sector ?? "cross_sector");
 
-    legalExcluded.push({
+    const legalData: LegalData = {
+      assessment_present: lv?.assessment_present ?? hfEv.legal_assessment_present ?? !isMissingAssessment,
+      assessment_missing: lv?.assessment_missing ?? isMissingAssessment,
+      verdict_category: isBlocked ? "blocked" : "conditional",
+      component_score: lv?.component_score ?? hfEv.legal_verdict_score ?? 0,
+      ownership_category: ((lv?.ownership_category ?? las?.ownership_category) ?? null) as LegalData["ownership_category"],
+      ownership_score: lv?.ownership_score ?? las?.ownership_score ?? 0,
+      ownership_description: lv?.ownership_description ?? las?.ownership_description ?? null,
+      ownership_description_es: lv?.ownership_description_es ?? las?.ownership_description_es ?? null,
+      restrictions_category: ((lv?.restrictions_category ?? las?.restrictions_category) ?? null) as LegalData["restrictions_category"],
+      restrictions_score: lv?.restrictions_score ?? las?.restrictions_score ?? 0,
+      restrictions_description: lv?.restrictions_description ?? las?.restrictions_description ?? null,
+      restrictions_description_es: lv?.restrictions_description_es ?? las?.restrictions_description_es ?? null,
+      legal_justification: lv?.legal_justification ?? las?.legal_justification ?? null,
+      legal_justification_en: lv?.legal_justification_en ?? las?.legal_justification_en ?? null,
+      legal_references: lv?.legal_references ?? las?.legal_references ?? [],
+    };
+
+    const entry: LegalExcludedAction = {
       actionId,
       actionName: local?.actionName ?? actionId,
       sectorTag,
-      legalData: {
-        assessment_present: lv?.assessment_present ?? hfEv.legal_assessment_present ?? true,
-        assessment_missing: lv?.assessment_missing ?? false,
-        verdict_category: "blocked",
-        component_score: lv?.component_score ?? 0,
-        ownership_category: ((lv?.ownership_category ?? las?.ownership_category) ?? null) as LegalData["ownership_category"],
-        ownership_score: lv?.ownership_score ?? las?.ownership_score ?? 0,
-        ownership_description: lv?.ownership_description ?? null,
-        ownership_description_es: lv?.ownership_description_es ?? null,
-        restrictions_category: ((lv?.restrictions_category ?? las?.restrictions_category) ?? null) as LegalData["restrictions_category"],
-        restrictions_score: lv?.restrictions_score ?? las?.restrictions_score ?? 0,
-        restrictions_description: lv?.restrictions_description ?? null,
-        restrictions_description_es: lv?.restrictions_description_es ?? null,
-        legal_justification: lv?.legal_justification ?? null,
-        legal_justification_en: lv?.legal_justification_en ?? null,
-        legal_references: lv?.legal_references ?? [],
-      },
-    });
+      legalData,
+    };
+
+    if (isBlocked) {
+      legalExcluded.push(entry);
+    } else {
+      legalFlagged.push(entry);
+    }
   }
 
   const ranked: RankedAction[] = (apiResult.ranked_actions ?? []).map((a) => {
