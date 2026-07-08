@@ -402,6 +402,8 @@ export function adaptApiResult(
 
   const totalCityEmissions = sumGpcEmissions(emissionsData.gpcData);
 
+  const counts = apiResult.metadata?.counts as Record<string, number> | undefined;
+
   return {
     schemaVersion: PIPELINE_RESULT_SCHEMA_VERSION,
     ranked,
@@ -412,6 +414,7 @@ export function adaptApiResult(
     cityEmissionsByGpc: {},
     locode: apiResult.locode,
     topN,
+    validActionsCount: counts?.valid_actions,
   };
 }
 

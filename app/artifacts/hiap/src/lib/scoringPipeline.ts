@@ -104,6 +104,7 @@ export interface PipelineResult {
   cityEmissionsByGpc: Record<string, number>;
   locode: string;
   topN: number;
+  validActionsCount?: number;
 }
 
 export interface CityIndicators {

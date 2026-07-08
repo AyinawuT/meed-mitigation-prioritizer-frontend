@@ -326,7 +326,8 @@ export function RegulationsLaws({ params }: Props) {
   const legalFlagged: LegalExcludedAction[] = result?.legalFlagged ?? [];
 
   const conditionalCount = ranked.filter(a => a.legalData?.verdict_category === "conditional").length;
-  const includedCount = ranked.length;
+  const validActionsCount = result?.validActionsCount;
+  const includedCount = validActionsCount ?? ranked.length;
 
   // Unique sectors present in excluded + flagged lists
   const allSectors = [...new Set([
@@ -375,13 +376,11 @@ export function RegulationsLaws({ params }: Props) {
         <div style={{ display: "flex", gap: "12px", marginBottom: "28px", flexWrap: "wrap" }}>
           <SummaryCard
             count={includedCount}
-            label="Included in ranking"
+            label="passed legal review"
             sublabel={
               !result
                 ? "Run the pipeline to see legal review"
-                : conditionalCount > 0
-                  ? `${conditionalCount} passed with conditions`
-                  : "All passed with full legal authority"
+                : `top ${result?.topN ?? 20} shown in your ranking`
             }
             sectorLine={ranked.length > 0 ? sectorBreakdown(rankedSectorItems) : undefined}
             bg="#F0FDF4" border="#BBF7D0" countColor="#16A34A" icon="✓"
