@@ -76,6 +76,7 @@ function sectorBreakdown(actions: { sectorTag: string }[]): string {
 function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
   const [open, setOpen] = useState(false);
   const [justOpen, setJustOpen] = useState(false);
+  const [refsOpen, setRefsOpen] = useState(false);
   const ld = action.legalData;
   const ownershipDesc = ld.ownership_description || ld.ownership_description_es;
   const restrictionsDesc = ld.restrictions_description || ld.restrictions_description_es;
@@ -171,17 +172,32 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
             </div>
           )}
 
-          {/* Legal references */}
+          {/* Legal references — collapsible */}
           {ld.legal_references.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
-              {ld.legal_references.map((ref, i) => (
-                <span key={i} style={{
-                  fontSize: "10px", padding: "2px 6px", borderRadius: "4px",
-                  background: "#F3F4F6", color: "#374151", fontFamily: "monospace",
-                }}>
-                  {ref}
-                </span>
-              ))}
+            <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "8px", marginTop: "4px" }}>
+              <button
+                onClick={() => setRefsOpen(v => !v)}
+                style={{
+                  background: "none", border: "none", cursor: "pointer", padding: 0,
+                  fontSize: "11px", fontWeight: "600", color: "#9CA3AF",
+                  display: "flex", alignItems: "center", gap: "4px",
+                }}
+              >
+                <span style={{ fontSize: "9px" }}>{refsOpen ? "▲" : "▼"}</span>
+                Legal references
+              </button>
+              {refsOpen && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
+                  {ld.legal_references.map((ref, i) => (
+                    <span key={i} style={{
+                      fontSize: "10px", padding: "2px 6px", borderRadius: "4px",
+                      background: "#F3F4F6", color: "#374151", fontFamily: "monospace",
+                    }}>
+                      {ref}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
