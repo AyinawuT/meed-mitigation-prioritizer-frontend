@@ -92,7 +92,7 @@ export interface LegalExcludedAction {
   legalData: LegalData;
 }
 
-export const PIPELINE_RESULT_SCHEMA_VERSION = 2;
+export const PIPELINE_RESULT_SCHEMA_VERSION = 3;
 
 export interface PipelineResult {
   schemaVersion?: number;
