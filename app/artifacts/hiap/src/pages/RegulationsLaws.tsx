@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 import { runPipelineForCity } from "@/lib/pipelineRunner";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
@@ -267,12 +268,17 @@ export function RegulationsLaws({ params }: Props) {
     setStepProgress(locode, "regulations", { visited: true });
 
 
-    // Load any previously cached result
+    // Load any previously cached result — discard if schema is stale
     try {
       const raw = localStorage.getItem(`hiap:${locode}:results`);
       if (raw) {
-        setResult(JSON.parse(raw) as PipelineResult);
-        return; // already have data — skip the live fetch
+        const parsed = JSON.parse(raw) as PipelineResult;
+        if ((parsed.schemaVersion ?? 0) >= PIPELINE_RESULT_SCHEMA_VERSION) {
+          setResult(parsed);
+          return; // fresh data — skip the live fetch
+        }
+        // Stale schema — clear and fall through to re-fetch
+        localStorage.removeItem(`hiap:${locode}:results`);
       }
     } catch {}
 

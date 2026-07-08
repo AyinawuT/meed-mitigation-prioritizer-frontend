@@ -830,7 +830,13 @@ export function Recommendations({ params }: Props) {
         setError("No results found. Please complete the pre-flight check and generate recommendations.");
         return;
       }
-      setResult(JSON.parse(raw) as PipelineResult);
+      const parsed = JSON.parse(raw) as PipelineResult;
+      if ((parsed.schemaVersion ?? 0) < PIPELINE_RESULT_SCHEMA_VERSION) {
+        localStorage.removeItem(`hiap:${locode}:results`);
+        setError("No results found. Please complete the pre-flight check and generate recommendations.");
+        return;
+      }
+      setResult(parsed);
     } catch {
       setError("Could not load results. Please try generating recommendations again.");
     }

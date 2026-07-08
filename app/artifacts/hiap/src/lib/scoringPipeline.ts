@@ -92,7 +92,10 @@ export interface LegalExcludedAction {
   legalData: LegalData;
 }
 
+export const PIPELINE_RESULT_SCHEMA_VERSION = 2;
+
 export interface PipelineResult {
+  schemaVersion?: number;
   ranked: RankedAction[];
   discarded: DiscardedAction[];
   legalExcluded: LegalExcludedAction[];

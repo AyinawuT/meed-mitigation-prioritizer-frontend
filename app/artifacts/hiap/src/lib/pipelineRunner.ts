@@ -16,6 +16,7 @@ import {
   type PrioritizerApiCityResult,
 } from "@/lib/hiapApi";
 import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 
 // ─── Internal types matching the API response shape ───────────────────────────
 
@@ -402,6 +403,7 @@ export function adaptApiResult(
   const totalCityEmissions = sumGpcEmissions(emissionsData.gpcData);
 
   return {
+    schemaVersion: PIPELINE_RESULT_SCHEMA_VERSION,
     ranked,
     discarded: [],
     legalExcluded,
