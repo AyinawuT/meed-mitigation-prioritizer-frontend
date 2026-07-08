@@ -77,8 +77,8 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
   const [open, setOpen] = useState(false);
   const [justOpen, setJustOpen] = useState(false);
   const ld = action.legalData;
-  const ownershipDesc = ld.ownership_description_es || ld.ownership_description;
-  const restrictionsDesc = ld.restrictions_description_es || ld.restrictions_description;
+  const ownershipDesc = ld.ownership_description || ld.ownership_description_es;
+  const restrictionsDesc = ld.restrictions_description || ld.restrictions_description_es;
   const justification = ld.legal_justification_en || ld.legal_justification;
   const hasDetail = ld.ownership_category || ld.restrictions_category || justification || ld.legal_references.length > 0;
 
