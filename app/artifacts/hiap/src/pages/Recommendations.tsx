@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 import actionsRaw from "@/data/actions.json";
 import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
