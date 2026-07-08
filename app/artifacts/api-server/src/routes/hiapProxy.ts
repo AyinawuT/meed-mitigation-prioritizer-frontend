@@ -26,11 +26,8 @@ async function proxyPost(
     logger.error({ url, status: res.status, responseBody: data }, "hiap-proxy: upstream error response");
   } else {
     // Log first ranked action's explanations field to diagnose empty explanations
-    const d = data as { results?: [{ ranked_actions?: unknown[]; metadata?: unknown }]; metadata?: unknown };
-    const firstAction = d?.results?.[0]?.ranked_actions?.[0];
-    const metadataTopLevel = d?.metadata;
-    const metadataPerResult = d?.results?.[0]?.metadata;
-    logger.info({ url, status: res.status, firstRankedActionSample: firstAction, metadataTopLevel, metadataPerResult }, "hiap-proxy: upstream responded");
+    const firstAction = (data as { results?: [{ ranked_actions?: unknown[] }] })?.results?.[0]?.ranked_actions?.[0];
+    logger.info({ url, status: res.status, firstRankedActionSample: firstAction }, "hiap-proxy: upstream responded");
   }
   return { status: res.status, data };
 }
