@@ -1553,18 +1553,25 @@ export function Recommendations({ params }: Props) {
             {/* Top co-benefits section */}
             {topCoBenefits.length > 0 && (
               <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px 24px", marginBottom: "28px" }}>
-                <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "14px" }}>
-                  Top co-benefits across these actions
+                <div style={{ marginBottom: "16px" }}>
+                  <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
+                    Top co-benefits across these actions
+                  </div>
+                  <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
+                    What these top picks deliver beyond emissions reduction.
+                  </div>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
+                <div style={{ display: "flex", gap: "10px" }}>
                   {topCoBenefits.map(([cb, count]) => (
-                    <div key={cb} style={{ display: "flex", alignItems: "center", gap: "10px", background: "#F9FAFB", borderRadius: "8px", padding: "10px 12px" }}>
-                      <span style={{ fontSize: "18px", lineHeight: 1 }}>{CO_BENEFIT_ICONS[cb] ?? "✅"}</span>
-                      <div>
-                        <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{cb}</div>
-                        <div style={{ fontSize: "11px", color: "#9CA3AF" }}>
-                          {count === 1 ? "1 action" : `${count} actions`}
-                        </div>
+                    <div key={cb} style={{
+                      flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
+                      gap: "8px", background: "white", border: "1px solid #E5E7EB",
+                      borderRadius: "10px", padding: "16px 12px", textAlign: "center",
+                    }}>
+                      <span style={{ fontSize: "28px", lineHeight: 1 }}>{CO_BENEFIT_ICONS[cb] ?? "✅"}</span>
+                      <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{cb}</div>
+                      <div style={{ fontSize: "11px", color: "#9CA3AF" }}>
+                        {count} of {displayTop.length} top action{displayTop.length !== 1 ? "s" : ""}
                       </div>
                     </div>
                   ))}
