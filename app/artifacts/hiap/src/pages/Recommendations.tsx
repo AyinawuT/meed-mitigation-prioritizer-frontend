@@ -767,25 +767,13 @@ function DetailPanel({
 
 function TopPickCard({
   action,
-  index,
-  total,
   onDetail,
-  onMoveUp,
-  onMoveDown,
-  onRemove,
-  isUserPick,
   isPicked,
   onTogglePick,
   matchedProjectCount,
 }: {
   action: RankedAction;
-  index: number;
-  total: number;
   onDetail: (a: RankedAction) => void;
-  onMoveUp?: () => void;
-  onMoveDown?: () => void;
-  onRemove?: () => void;
-  isUserPick: boolean;
   isPicked: boolean;
   onTogglePick: (id: string) => void;
   matchedProjectCount: number;
@@ -801,38 +789,26 @@ function TopPickCard({
       display: "flex", flexDirection: "column", position: "relative",
       transition: "border-color 0.15s, box-shadow 0.15s",
     }}>
-      {/* Top row: TOP PICK badge + checkbox + reorder controls */}
+      {/* Top row: TOP PICK badge + checkbox */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
           <span style={{ fontSize: "13px", color: "#001EA7" }}>🔖</span>
           <span style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.06em" }}>TOP PICK</span>
         </div>
-        <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-          {isUserPick && (
-            <>
-              <button onClick={onMoveUp} disabled={index === 0}
-                style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "5px", width: "24px", height: "24px", cursor: index === 0 ? "default" : "pointer", color: index === 0 ? "#D1D5DB" : "#6B7280", fontSize: "12px", display: "flex", alignItems: "center", justifyContent: "center" }}>↑</button>
-              <button onClick={onMoveDown} disabled={index === total - 1}
-                style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "5px", width: "24px", height: "24px", cursor: index === total - 1 ? "default" : "pointer", color: index === total - 1 ? "#D1D5DB" : "#6B7280", fontSize: "12px", display: "flex", alignItems: "center", justifyContent: "center" }}>↓</button>
-              <button onClick={onRemove}
-                style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "5px", width: "24px", height: "24px", cursor: "pointer", color: "#9CA3AF", fontSize: "11px", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
-            </>
-          )}
-          {/* Checkbox */}
-          <button
-            onClick={() => onTogglePick(action.actionId)}
-            title={isPicked ? "Remove from selection" : "Add to selection"}
-            style={{
-              width: "20px", height: "20px", borderRadius: "5px",
-              border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
-              background: isPicked ? "#001EA7" : "white",
-              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              padding: 0, flexShrink: 0,
-            }}
-          >
-            {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
-          </button>
-        </div>
+        {/* Checkbox */}
+        <button
+          onClick={() => onTogglePick(action.actionId)}
+          title={isPicked ? "Remove from selection" : "Add to selection"}
+          style={{
+            width: "20px", height: "20px", borderRadius: "5px",
+            border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
+            background: isPicked ? "#001EA7" : "white",
+            cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            padding: 0, flexShrink: 0,
+          }}
+        >
+          {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
+        </button>
       </div>
 
       {/* Title */}
@@ -1431,40 +1407,14 @@ export function Recommendations({ params }: Props) {
   const { ranked, discarded, legalExcluded, totalCityEmissions } = result;
   const legalFlagged = result.legalFlagged ?? [];
 
-  // Determine top picks: user-selected (in order) or pipeline top 3
-  const pickedActions = pickedIds
-    .map(id => ranked.find(a => a.actionId === id))
-    .filter(Boolean) as RankedAction[];
-  const displayTop = pickedActions.length > 0 ? pickedActions : ranked.slice(0, 3);
-  const isUserPick = pickedActions.length > 0;
+  // Top 3 always come from the pipeline ranking
+  const displayTop = ranked.slice(0, 3);
 
   function togglePick(id: string) {
     setPickedIds(prev => {
       if (prev.includes(id)) return prev.filter(x => x !== id);
       return [...prev, id];
     });
-  }
-
-  function moveUp(index: number) {
-    if (index === 0) return;
-    setPickedIds(prev => {
-      const next = [...prev];
-      [next[index - 1], next[index]] = [next[index], next[index - 1]];
-      return next;
-    });
-  }
-
-  function moveDown(index: number) {
-    setPickedIds(prev => {
-      if (index === prev.length - 1) return prev;
-      const next = [...prev];
-      [next[index], next[index + 1]] = [next[index + 1], next[index]];
-      return next;
-    });
-  }
-
-  function removeFromPicks(id: string) {
-    setPickedIds(prev => prev.filter(x => x !== id));
   }
 
   function handleBrowseFullRanking() {
@@ -1488,7 +1438,7 @@ export function Recommendations({ params }: Props) {
   const topGpcEntry = Object.entries(result.cityEmissionsByGpc ?? {}).sort(([, a], [, b]) => b - a)[0];
   const topGpcSector = topGpcEntry ? gpcSectorName([topGpcEntry[0]]) : null;
 
-  const genCount = isUserPick ? pickedIds.length : displayTop.length;
+  const genCount = pickedIds.length > 0 ? pickedIds.length : displayTop.length;
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
@@ -1567,23 +1517,13 @@ export function Recommendations({ params }: Props) {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                 <div>
                   <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827" }}>
-                    {isUserPick ? t("My top picks") : `Top actions for ${cityName}`}
+                    {`Top actions for ${cityName}`}
                   </div>
                   <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "3px" }}>
-                    {isUserPick
-                      ? t("{n} action{s} selected — use arrows to reorder.", { n: String(pickedActions.length), s: pickedActions.length !== 1 ? "s" : "" })
-                      : `Highest-ranked actions based on ${cityName}'s data and priorities. Click a card for full scoring detail and matched projects.`}
+                    {`Highest-ranked actions based on ${cityName}'s data and priorities. Check a card to select it for output generation.`}
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: "10px", alignItems: "center", flexShrink: 0 }}>
-                  {isUserPick && (
-                    <button
-                      onClick={() => setPickedIds([])}
-                      style={{ fontSize: "12px", color: "#6B7280", background: "none", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "5px 12px", cursor: "pointer" }}
-                    >
-                      {t("Clear picks")}
-                    </button>
-                  )}
                   <button
                     onClick={handleBrowseFullRanking}
                     style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: "4px" }}
@@ -1594,17 +1534,11 @@ export function Recommendations({ params }: Props) {
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(displayTop.length, 3)}, 1fr)`, gap: "14px" }}>
-                {displayTop.map((action, i) => (
+                {displayTop.map((action) => (
                   <TopPickCard
                     key={action.actionId}
                     action={action}
-                    index={i}
-                    total={displayTop.length}
                     onDetail={setSelectedAction}
-                    onMoveUp={isUserPick ? () => moveUp(i) : undefined}
-                    onMoveDown={isUserPick ? () => moveDown(i) : undefined}
-                    onRemove={isUserPick ? () => removeFromPicks(action.actionId) : undefined}
-                    isUserPick={isUserPick}
                     isPicked={pickedIds.includes(action.actionId)}
                     onTogglePick={togglePick}
                     matchedProjectCount={feasibilityMap.get(action.actionId)?.inputs?.evidence?.n_existing_projects ?? 0}
@@ -1714,8 +1648,9 @@ export function Recommendations({ params }: Props) {
               <div>
                 <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "6px" }}>Next steps</div>
                 <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)", lineHeight: "1.55", maxWidth: "520px" }}>
-                  {genCount} action{genCount !== 1 ? "s" : ""} selected for a combined concept note.
-                  Use "Generate output for this action" on any single card for a one-off note instead.
+                  {pickedIds.length >= 2
+                    ? `${pickedIds.length} actions selected for a combined generated output. Use "Generate output for this action" on any single card for a one-off note instead.`
+                    : `Select more than one action for a combined generated output, or use "Generate output for this action" on any single card for a one-off note instead.`}
                 </div>
               </div>
               <button
