@@ -713,6 +713,7 @@ export function FinancialFeasibility({ params }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<FeasibilityRow | null>(null);
   const [activeRoute, setActiveRoute] = useState<string | null>(null);
+  const [activeSector, setActiveSector] = useState<string | null>(null);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -749,9 +750,17 @@ export function FinancialFeasibility({ params }: Props) {
 
   const routes = useMemo(() => Array.from(new Set(feasibility.map(r => r.route ?? "").filter(Boolean))), [feasibility]);
 
-  const filtered = activeRoute ? feasibility.filter(r => r.route === activeRoute) : feasibility;
+  const sectors = useMemo(() =>
+    Array.from(new Set(feasibility.map(r => r.sector ?? "").filter(Boolean))).sort(),
+    [feasibility]
+  );
 
-  useEffect(() => { setPage(1); }, [activeRoute]);
+  const filtered = useMemo(() => feasibility.filter(r =>
+    (!activeRoute  || r.route   === activeRoute) &&
+    (!activeSector || r.sector  === activeSector)
+  ), [feasibility, activeRoute, activeSector]);
+
+  useEffect(() => { setPage(1); }, [activeRoute, activeSector]);
 
   const pageRows = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
@@ -840,6 +849,18 @@ export function FinancialFeasibility({ params }: Props) {
               </button>
             );
           })}
+          {sectors.length > 0 && (
+            <select
+              value={activeSector ?? ""}
+              onChange={e => setActiveSector(e.target.value || null)}
+              style={{ marginLeft: "auto", fontSize: "13px", fontWeight: "600", color: activeSector ? "#001EA7" : "#374151", background: activeSector ? "#EEF2FF" : "white", border: `1.5px solid ${activeSector ? "#001EA7" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none", paddingRight: "28px", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center" }}
+            >
+              <option value="">All sectors</option>
+              {sectors.map(s => (
+                <option key={s} value={s}>{sectorLabel(s)}</option>
+              ))}
+            </select>
+          )}
         </div>
 
         <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "10px" }}>Sorted by score, highest first</div>
