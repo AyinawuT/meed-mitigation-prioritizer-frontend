@@ -249,15 +249,24 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
       </div>
 
       {/* City type */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: profileLabel.toLowerCase().includes("delivery-ready") ? "#16A34A" : "#1E3A8A", borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
-        <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
-          🏛️
-        </div>
-        <div>
-          <div style={{ fontSize: "13px", fontWeight: "700", color: "white", marginBottom: "4px" }}>{profileLabel}</div>
-          <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)", lineHeight: "1.55" }}>{profileDesc}</div>
-        </div>
-      </div>
+      {(() => {
+        const isDeliveryReady = profileLabel.toLowerCase().includes("delivery-ready");
+        const bg    = isDeliveryReady ? "#F0FDF4" : "#EFF6FF";
+        const iconBg = isDeliveryReady ? "#DCFCE7" : "#DBEAFE";
+        const titleColor = isDeliveryReady ? "#15803D" : "#1D4ED8";
+        const descColor  = isDeliveryReady ? "#166534" : "#1E40AF";
+        return (
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: bg, borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
+            <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
+              🏛️
+            </div>
+            <div>
+              <div style={{ fontSize: "13px", fontWeight: "700", color: titleColor, marginBottom: "4px" }}>{profileLabel}</div>
+              <div style={{ fontSize: "12px", color: descColor, lineHeight: "1.55" }}>{profileDesc}</div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Factors */}
       <div style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "4px" }}>
