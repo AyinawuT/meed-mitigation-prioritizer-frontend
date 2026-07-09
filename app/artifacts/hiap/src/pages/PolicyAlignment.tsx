@@ -349,6 +349,30 @@ export function PolicyAlignment({ params }: Props) {
 
 /* ── Sub-components ── */
 
+function ColHeader({ label, tip, minWidth, align }: { label: string; tip: string; minWidth: string; align?: "right" }) {
+  const [show, setShow] = useState(false);
+  return (
+    <span style={{ position: "relative", flexShrink: 0, minWidth, textAlign: align ?? "left", display: "inline-flex", alignItems: "center", gap: "3px", justifyContent: align === "right" ? "flex-end" : "flex-start" }}>
+      <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>{label}</span>
+      <button
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        style={{ background: "none", border: "none", padding: 0, cursor: "default", color: "#C4C9D4", fontSize: "10px", lineHeight: 1, flexShrink: 0 }}
+      >ⓘ</button>
+      {show && (
+        <div style={{
+          position: "absolute", bottom: "calc(100% + 6px)", [align === "right" ? "right" : "left"]: 0,
+          background: "#1F2937", color: "white", fontSize: "11px", lineHeight: "1.5",
+          borderRadius: "6px", padding: "8px 10px", width: "220px", zIndex: 100,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.18)", pointerEvents: "none",
+        }}>
+          {tip}
+        </div>
+      )}
+    </span>
+  );
+}
+
 function Breadcrumb({ items }: { items: { label: string; onClick?: () => void }[] }) {
   return (
     <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
@@ -451,9 +475,9 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
           <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingBottom: "6px", borderBottom: "1px solid #F3F4F6" }}>
             <span style={{ width: "8px", flexShrink: 0 }} />
             <span style={{ fontSize: "10px", color: "#9CA3AF", flex: 1, fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Action</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Signal type</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "110px", textAlign: "right", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Policy support</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "56px", textAlign: "right", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Strength</span>
+            <ColHeader label="Signal type" tip="The kind of policy backing found — e.g. a direct mandate (Policy action), budget allocation (Funding), institutional responsibility (Governance), inclusion in a sector strategy (Sector plan), or a link to an emissions target." minWidth="80px" />
+            <ColHeader label="Policy support" tip="How explicitly this plan covers the action, from 0% (no mention) to 100% (full, direct mandate). Scores above 75% are considered strong." minWidth="110px" align="right" />
+            <ColHeader label="Strength" tip="Overall signal quality: Strong = explicit, high-confidence coverage · Moderate = indirect or partial reference · Weak = incidental mention." minWidth="56px" align="right" />
           </div>
           {plan.actions.map(a => {
             const meta = ACTION_NAMES[a.id];
@@ -482,9 +506,6 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
               </div>
             );
           })}
-          <div style={{ marginTop: "4px", fontSize: "10px", color: "#C0C0C0", paddingTop: "6px", borderTop: "1px solid #F9F9F9" }}>
-            Policy support score: how well this plan's provisions explicitly cover the action (0% = no coverage · 100% = full explicit coverage)
-          </div>
         </div>
       )}
     </div>
