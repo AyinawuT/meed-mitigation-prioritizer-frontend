@@ -866,14 +866,14 @@ function TopPickCard({
         </div>
       </div>
 
-      {/* Matched projects badge */}
-      {matchedProjectCount > 0 && (
-        <div style={{ marginBottom: "10px" }}>
+      {/* Matched projects badge — always reserves same height so footer aligns */}
+      <div style={{ minHeight: "27px", marginBottom: "10px" }}>
+        {matchedProjectCount > 0 && (
           <span style={{ fontSize: "11px", fontWeight: "600", color: "#1D4ED8", background: "#EFF6FF", padding: "3px 8px", borderRadius: "4px", display: "inline-flex", alignItems: "center", gap: "4px" }}>
             📁 {matchedProjectCount} matched project{matchedProjectCount !== 1 ? "s" : ""}
           </span>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* See more details */}
       <button
