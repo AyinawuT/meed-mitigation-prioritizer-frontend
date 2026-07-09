@@ -313,7 +313,7 @@ export function RegulationsLaws({ params }: Props) {
   useEffect(() => {
     if (!result) return;
     const excl = result.legalExcluded?.length ?? 0;
-    const incl = result.ranked?.length ?? 0;
+    const incl = result.validActionsCount ?? result.ranked?.length ?? 0;
     const sub = excl > 0
       ? `${excl} excluded · ${incl} included`
       : `${incl} actions included`;
