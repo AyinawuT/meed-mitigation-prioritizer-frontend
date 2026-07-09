@@ -1089,31 +1089,69 @@ function ContextBreakdownTab({
   result,
   cityName,
   citySlug,
+  locode,
   feasibilityRows,
   navigate,
 }: {
   result: PipelineResult;
   cityName: string;
   citySlug: string;
+  locode: string;
   feasibilityRows: FeasibilityRow[];
   navigate: (to: string) => void;
 }) {
-  const { ranked, legalExcluded, legalFlagged, totalCityEmissions } = result;
+  const { legalExcluded, legalFlagged, totalCityEmissions } = result;
+
+  // Fetch city attributes for socioeconomic section
+  const [cityAttrs, setCityAttrs] = useState<Record<string, { attribute_value?: number; attribute_units?: string }> | null>(null);
+  useEffect(() => {
+    const url = `https://ccglobal.openearth.dev/api/v0/city_attributes/${encodeURIComponent(locode)}`;
+    fetch(url)
+      .then(r => r.json())
+      .then((json: { city?: Record<string, { attribute_value?: number; attribute_units?: string }> }) => {
+        if (json.city) setCityAttrs(json.city);
+      })
+      .catch(() => {});
+  }, [locode]);
 
   // Top GPC sector by emissions
   const sectorEmissions = result.cityEmissionsByGpc ?? {};
   const topGpcEntry = Object.entries(sectorEmissions).sort(([, a], [, b]) => b - a)[0];
-  const topGpcSector = topGpcEntry ? gpcSectorName([topGpcEntry[0]]) : null;
+  const topGpcSector = topGpcEntry ? gpcSectorName([topGpcEntry[0]]) : "—";
+
+  // Socioeconomic indicators
+  const indicatorCount = cityAttrs ? Object.values(cityAttrs).filter(
+    (f) => typeof f === "object" && f !== null && "attribute_value" in f
+  ).length : null;
+  const povertyRateRaw = cityAttrs?.poverty_rate?.attribute_value;
+  const populationRaw = cityAttrs?.population?.attribute_value;
 
   // City financial profile from feasibility rows
   const cityProfileStr = feasibilityRows[0]?.inputs?.city?.profile;
   const profAttrs = profileToAttrs(cityProfileStr);
 
-  const statCard = (value: string | number, label: string, sub?: string, color?: string) => (
+  const statCard = (label: string, value: string | number, sub?: string, valueColor?: string) => (
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "16px 20px" }}>
-      <div style={{ fontSize: "22px", fontWeight: "800", color: color ?? "#111827", fontVariantNumeric: "tabular-nums", marginBottom: "2px" }}>{value}</div>
-      <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{label}</div>
-      {sub && <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{sub}</div>}
+      <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "6px" }}>{label}</div>
+      <div style={{ fontSize: "22px", fontWeight: "800", color: valueColor ?? "#111827", fontVariantNumeric: "tabular-nums", lineHeight: 1.1 }}>{value}</div>
+      {sub && <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "4px" }}>{sub}</div>}
+    </div>
+  );
+
+  const divider = <div style={{ height: "1px", background: "#E5E7EB" }} />;
+
+  const sectionHead = (icon: string, title: string) => (
+    <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
+      <span style={{ fontSize: "18px" }}>{icon}</span> {title}
+    </div>
+  );
+
+  const viewLink = (label: string, to: string) => (
+    <div style={{ marginTop: "12px" }}>
+      <button onClick={() => navigate(to)}
+        style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+        {label} →
+      </button>
     </div>
   );
 
@@ -1122,153 +1160,96 @@ function ContextBreakdownTab({
 
       {/* Emissions Profile */}
       <div>
-        <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "16px" }}>🌍</span> Emissions Profile
-        </div>
+        {sectionHead("🏭", "Emissions Profile")}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-          {statCard(
-            `${(totalCityEmissions / 1_000_000).toFixed(2)} Mt`,
-            "Total CO₂e",
-            "City-wide annual emissions"
-          )}
-          {statCard(
-            topGpcSector ?? "—",
-            "Top emission sector",
-            "Highest GPC emission category",
-            "#001EA7"
-          )}
-          {statCard(
-            ranked.length,
-            "Actions assessed",
-            "GHG mitigation actions ranked"
-          )}
+          {statCard("Total emissions", `${(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e`)}
+          {statCard("Top sector", topGpcSector)}
+          {statCard("Inventory year", result.inventoryYear ? String(result.inventoryYear) : "—")}
         </div>
-        <div style={{ marginTop: "12px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/preflight`)}
-            style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-          >
-            View emissions data →
-          </button>
-        </div>
+        {viewLink("View emissions data", `/city/${citySlug}/preflight`)}
       </div>
 
-      {/* Divider */}
-      <div style={{ height: "1px", background: "#E5E7EB" }} />
+      {divider}
 
       {/* Socioeconomic Context */}
       <div>
-        <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "16px" }}>👥</span> Socioeconomic Context
+        {sectionHead("👥", "Socioeconomic Context")}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
+          {statCard("Indicators loaded", indicatorCount !== null ? String(indicatorCount) : "—")}
+          {statCard("Poverty rate",
+            povertyRateRaw !== undefined ? `${povertyRateRaw.toFixed(2)}%` : "—"
+          )}
+          {statCard("Population",
+            populationRaw !== undefined ? populationRaw.toLocaleString() : "—"
+          )}
         </div>
-        <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "16px 20px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-            <span style={{ fontSize: "14px", color: "#16A34A", fontWeight: "700" }}>✓</span>
-            <span style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>City indicators loaded</span>
-          </div>
-          <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.6", marginTop: "4px" }}>
-            City-specific socioeconomic indicators were used to assess mitigation feasibility for each action, adjusting feasibility scores based on local conditions.
-          </div>
-        </div>
-        <div style={{ marginTop: "12px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/socioeconomic`)}
-            style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-          >
-            View socioeconomic data →
-          </button>
-        </div>
+        {viewLink("View socioeconomic data", `/city/${citySlug}/socioeconomic`)}
       </div>
 
-      {/* Divider */}
-      <div style={{ height: "1px", background: "#E5E7EB" }} />
+      {divider}
 
       {/* Regulations & Laws */}
       <div>
-        <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "16px" }}>⚖</span> Regulations & Laws
+        {sectionHead("⚖️", "Regulations & Laws")}
+        <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
+          Each candidate action checked against Chilean laws. Actions failing a mandatory or required check are excluded from the ranking.
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
           <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px", padding: "16px 20px" }}>
-            <div style={{ fontSize: "24px", fontWeight: "800", color: "#15803D", fontVariantNumeric: "tabular-nums", marginBottom: "2px" }}>
-              {ranked.length}
+            <div style={{ fontSize: "28px", fontWeight: "800", color: "#15803D", fontVariantNumeric: "tabular-nums", marginBottom: "4px" }}>
+              {result.validActionsCount ?? result.ranked.length}
             </div>
-            <div style={{ fontSize: "12px", fontWeight: "600", color: "#15803D" }}>Included</div>
-            <div style={{ fontSize: "11px", color: "#16A34A", marginTop: "2px" }}>Passed legal requirements</div>
+            <div style={{ fontSize: "12px", fontWeight: "700", color: "#15803D" }}>Included in ranking</div>
+            <div style={{ fontSize: "11px", color: "#16A34A", marginTop: "2px" }}>Passed legal review</div>
           </div>
           <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "10px", padding: "16px 20px" }}>
-            <div style={{ fontSize: "24px", fontWeight: "800", color: "#DC2626", fontVariantNumeric: "tabular-nums", marginBottom: "2px" }}>
+            <div style={{ fontSize: "28px", fontWeight: "800", color: "#DC2626", fontVariantNumeric: "tabular-nums", marginBottom: "4px" }}>
               {legalExcluded.length}
             </div>
-            <div style={{ fontSize: "12px", fontWeight: "600", color: "#DC2626" }}>Excluded</div>
-            <div style={{ fontSize: "11px", color: "#EF4444", marginTop: "2px" }}>Failed mandatory legal checks</div>
+            <div style={{ fontSize: "12px", fontWeight: "700", color: "#DC2626" }}>Excluded from ranking</div>
+            <div style={{ fontSize: "11px", color: "#EF4444", marginTop: "2px" }}>Removed before scoring</div>
           </div>
           <div style={{ background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "10px", padding: "16px 20px" }}>
-            <div style={{ fontSize: "24px", fontWeight: "800", color: "#D97706", fontVariantNumeric: "tabular-nums", marginBottom: "2px" }}>
+            <div style={{ fontSize: "28px", fontWeight: "800", color: "#D97706", fontVariantNumeric: "tabular-nums", marginBottom: "4px" }}>
               {legalFlagged.length}
             </div>
-            <div style={{ fontSize: "12px", fontWeight: "600", color: "#D97706" }}>Flagged</div>
-            <div style={{ fontSize: "11px", color: "#F59E0B", marginTop: "2px" }}>Conditional or restricted</div>
+            <div style={{ fontSize: "12px", fontWeight: "700", color: "#D97706" }}>Flagged — evidence missing</div>
+            <div style={{ fontSize: "11px", color: "#F59E0B", marginTop: "2px" }}>Included in ranking, assessment pending</div>
           </div>
         </div>
-        <div style={{ marginTop: "12px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/regulations`)}
-            style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-          >
-            View legal analysis →
-          </button>
-        </div>
+        {viewLink("View legal analysis", `/city/${citySlug}/regulations`)}
       </div>
 
-      {/* Divider */}
-      <div style={{ height: "1px", background: "#E5E7EB" }} />
+      {divider}
 
       {/* Financial Feasibility */}
       <div>
-        <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "16px" }}>💰</span> Financial Feasibility
-        </div>
+        {sectionHead("💰", "Financial Feasibility")}
         {feasibilityRows.length === 0 ? (
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "20px", fontSize: "13px", color: "#9CA3AF", textAlign: "center" }}>
             Loading financial profile…
           </div>
         ) : (
-          <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "16px 20px" }}>
-            <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "12px" }}>
-              {cityName}'s financial profile
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
+            <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "16px 20px" }}>
+              <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "6px" }}>City profile</div>
+              <div style={{ fontSize: "16px", fontWeight: "800", color: "#111827" }}>{profAttrs.label}</div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
-              {/* City profile */}
-              <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "8px", padding: "12px 14px" }}>
-                <div style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>City profile</div>
-                <div style={{ fontSize: "13px", fontWeight: "700", color: "#15803D" }}>{profAttrs.label}</div>
+            {profAttrs.fa && (
+              <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "16px 20px" }}>
+                <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "6px" }}>Financial autonomy</div>
+                <div style={{ fontSize: "16px", fontWeight: "800", color: levelColor(profAttrs.fa, "has") }}>{levelLabel(profAttrs.fa)}</div>
               </div>
-              {/* Financial autonomy */}
-              {profAttrs.fa && (
-                <div style={{ background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "8px", padding: "12px 14px" }}>
-                  <div style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Financial autonomy</div>
-                  <div style={{ fontSize: "13px", fontWeight: "700", color: levelColor(profAttrs.fa, "has") }}>{levelLabel(profAttrs.fa)}</div>
-                </div>
-              )}
-              {/* Delivery capacity */}
-              {profAttrs.dc && (
-                <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "8px", padding: "12px 14px" }}>
-                  <div style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Delivery capacity</div>
-                  <div style={{ fontSize: "13px", fontWeight: "700", color: levelColor(profAttrs.dc, "has") }}>{levelLabel(profAttrs.dc)}</div>
-                </div>
-              )}
-            </div>
+            )}
+            {profAttrs.dc && (
+              <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "16px 20px" }}>
+                <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "6px" }}>Delivery capacity</div>
+                <div style={{ fontSize: "16px", fontWeight: "800", color: levelColor(profAttrs.dc, "has") }}>{levelLabel(profAttrs.dc)}</div>
+              </div>
+            )}
           </div>
         )}
-        <div style={{ marginTop: "12px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/financial-feasibility`)}
-            style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-          >
-            View full financial analysis →
-          </button>
-        </div>
+        {viewLink("View full financial analysis", `/city/${citySlug}/financial-feasibility`)}
       </div>
     </div>
   );
@@ -1734,6 +1715,7 @@ export function Recommendations({ params }: Props) {
             result={result}
             cityName={cityName}
             citySlug={citySlug}
+            locode={locode}
             feasibilityRows={feasibilityRows}
             navigate={navigate}
           />

@@ -108,6 +108,7 @@ export interface PipelineResult {
   locode: string;
   topN: number;
   validActionsCount?: number;
+  inventoryYear?: number;
 }
 
 export interface CityIndicators {
@@ -854,6 +855,7 @@ export async function runPipeline(
     legalExcluded: [],
     legalFlagged: [],
     validActionsCount: valid.length,
+    inventoryYear: req.cityEmissionsData.inventoryYear ?? undefined,
     totalCityEmissions: total,
     cityEmissionsByGpc: byRef,
     locode: req.locode,
