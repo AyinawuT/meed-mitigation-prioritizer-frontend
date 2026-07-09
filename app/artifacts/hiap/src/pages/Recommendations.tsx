@@ -744,6 +744,7 @@ function DetailPanel({
                         {proj.sector && <span>Sector: <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
                         {proj.funding_channel && <span>Channel: <strong style={{ color: "#374151" }}>{proj.funding_channel}</strong></span>}
                         {funder && <span>Funder: <strong style={{ color: "#374151" }}>{funder}</strong></span>}
+                        {proj.funding_sources?.[0]?.cycle && <span>Cycle: <strong style={{ color: "#374151" }}>{proj.funding_sources[0].cycle}</strong></span>}
                       </div>
                     </div>
                   );
