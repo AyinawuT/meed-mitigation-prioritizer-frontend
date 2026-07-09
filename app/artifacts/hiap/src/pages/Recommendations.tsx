@@ -1100,6 +1100,7 @@ function ContextBreakdownTab({
   locode,
   feasibilityRows,
   natPolicyScore,
+  policyScoresByAction,
   navigate,
 }: {
   result: PipelineResult;
@@ -1108,6 +1109,7 @@ function ContextBreakdownTab({
   locode: string;
   feasibilityRows: FeasibilityRow[];
   natPolicyScore: number | null;
+  policyScoresByAction: Record<string, number>;
   navigate: (to: string) => void;
 }) {
   const { legalExcluded, legalFlagged, totalCityEmissions } = result;
@@ -1274,8 +1276,13 @@ function ContextBreakdownTab({
       {/* Policy Alignment */}
       {(() => {
         const ranked = result.ranked;
-        const strongBacking = ranked.filter(a => a.policyComponent >= 0.75).length;
-        const moderateBacking = ranked.filter(a => a.policyComponent >= 0.5 && a.policyComponent < 0.75).length;
+        const hasPolicyData = Object.keys(policyScoresByAction).length > 0;
+        const strongBacking = hasPolicyData
+          ? ranked.filter(a => (policyScoresByAction[a.actionId] ?? 0) >= 0.75).length
+          : ranked.filter(a => a.policyComponent >= 0.75).length;
+        const moderateBacking = hasPolicyData
+          ? ranked.filter(a => { const s = policyScoresByAction[a.actionId] ?? 0; return s >= 0.5 && s < 0.75; }).length
+          : ranked.filter(a => a.policyComponent >= 0.5 && a.policyComponent < 0.75).length;
         const displayScore = natPolicyScore !== null
           ? `${(natPolicyScore * 100).toFixed(0)}%`
           : "—";
@@ -1328,6 +1335,7 @@ export function Recommendations({ params }: Props) {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [feasibilityRows, setFeasibilityRows] = useState<FeasibilityRow[]>([]);
   const [natPolicyScore, setNatPolicyScore] = useState<number | null>(null);
+  const [policyScoresByAction, setPolicyScoresByAction] = useState<Record<string, number>>({});
 
   // Read scoring weights from localStorage
   const effectiveWeights = (() => {
@@ -1388,8 +1396,12 @@ export function Recommendations({ params }: Props) {
       setFeasibilityRows(rows);
       setOpportunities(oppRes?.data ?? []);
       if (polRes?.scores?.length) {
-        const scores: number[] = (polRes.scores as { policy_support_score: number }[]).map(s => s.policy_support_score);
-        setNatPolicyScore(scores.reduce((a, b) => a + b, 0) / scores.length);
+        const rawScores = polRes.scores as { src_action_id: string; policy_support_score: number }[];
+        const byAction: Record<string, number> = {};
+        for (const s of rawScores) byAction[s.src_action_id] = s.policy_support_score;
+        setPolicyScoresByAction(byAction);
+        const vals = rawScores.map(s => s.policy_support_score);
+        setNatPolicyScore(vals.reduce((a, b) => a + b, 0) / vals.length);
       }
     }).catch(() => {});
   }, [locode, countryCode]);
@@ -1771,6 +1783,7 @@ export function Recommendations({ params }: Props) {
             locode={locode}
             feasibilityRows={feasibilityRows}
             natPolicyScore={natPolicyScore}
+            policyScoresByAction={policyScoresByAction}
             navigate={navigate}
           />
         )}
