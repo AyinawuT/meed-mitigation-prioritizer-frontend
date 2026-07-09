@@ -556,8 +556,8 @@ export function FinancialFeasibility({ params }: Props) {
                 No actions match the selected route.
               </div>
             ) : (
-              filtered.map(row => (
-                <ActionRow key={row.action_id} row={row} onSelect={() => setSelected(row)} />
+              filtered.map((row, i) => (
+                <ActionRow key={`${row.action_id}-${i}`} row={row} onSelect={() => setSelected(row)} />
               ))
             )}
           </div>
