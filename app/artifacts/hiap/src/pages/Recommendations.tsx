@@ -1732,7 +1732,7 @@ export function Recommendations({ params }: Props) {
 
                 {/* Policy alignment */}
                 <button
-                  onClick={() => navigate(`/city/${citySlug}/policy?from=recommendations`)}
+                  onClick={() => setActiveTab("context")}
                   style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
