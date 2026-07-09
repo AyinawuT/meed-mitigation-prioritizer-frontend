@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 import actionsRaw from "@/data/actions.json";
 import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
@@ -438,11 +439,6 @@ function DetailPanel({
             </div>
           )}
 
-          {action.legalFlag && (
-            <div style={{ fontSize: "12px", color: "#B45309", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "6px", padding: "8px 12px", marginBottom: "16px" }}>
-              ⚠ One or more mandatory legal requirements have no evidence — flagged for review.
-            </div>
-          )}
         </div>
 
         <div style={{ padding: "16px 28px", borderTop: "1px solid #EBEBEB", flexShrink: 0 }}>
@@ -835,7 +831,13 @@ export function Recommendations({ params }: Props) {
         setError("No results found. Please complete the pre-flight check and generate recommendations.");
         return;
       }
-      setResult(JSON.parse(raw) as PipelineResult);
+      const parsed = JSON.parse(raw) as PipelineResult;
+      if ((parsed.schemaVersion ?? 0) < PIPELINE_RESULT_SCHEMA_VERSION) {
+        localStorage.removeItem(`hiap:${locode}:results`);
+        setError("No results found. Please complete the pre-flight check and generate recommendations.");
+        return;
+      }
+      setResult(parsed);
     } catch {
       setError("Could not load results. Please try generating recommendations again.");
     }
@@ -895,7 +897,7 @@ export function Recommendations({ params }: Props) {
     );
   }
 
-  const { ranked, discarded, totalCityEmissions } = result;
+  const { ranked, discarded, legalExcluded, totalCityEmissions } = result;
 
   // Determine top picks: user-selected (in order) or pipeline top 3
   const pickedActions = pickedIds
@@ -956,7 +958,7 @@ export function Recommendations({ params }: Props) {
                 {t("Top mitigation actions for {name}", { name: cityName })}
               </h1>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-                {ranked.length} {t("actions ranked")} · {discarded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
+                {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
           </div>

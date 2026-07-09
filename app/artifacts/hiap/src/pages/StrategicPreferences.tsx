@@ -183,9 +183,15 @@ export function StrategicPreferences({ params }: Props) {
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
             Tell MEED+ HIAP which sectors and goals matter most to your city, how quickly actions must be implementable, and whether any types of actions should be excluded from the ranking.
           </p>
-          <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-            MEED+ ALIGNMENT: Alignment shapes 22% of ranking — policy support 75% · priority sectors 15% · timeframe preference 5% · strategic co-benefits 5% · Impact shapes 55% of ranking
-          </p>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            background: "#F0FDF4", border: "1px solid #BBF7D0",
+            borderRadius: "6px", padding: "5px 12px",
+            fontSize: "11px", color: "#15803D", fontWeight: "600",
+          }}>
+            <span>⚖</span>
+            <span>MEED+ ALIGNMENT: Alignment shapes 22% of ranking — priority sectors 15% · timeframe preference 5% · strategic priorities 5%</span>
+          </div>
         </div>
       </div>
 

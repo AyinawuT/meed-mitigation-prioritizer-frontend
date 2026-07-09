@@ -53,6 +53,8 @@ export interface RankedAction {
   timeframeComponent: number;
   legalPassed: boolean;
   legalFlag: boolean;
+  legalData: LegalData | null;
+  sectorTag: string;
   gpcRefs: string[];
   matchedEmissions: number;
   explanation: string;
@@ -65,13 +67,44 @@ export interface DiscardedAction {
   reason: string;
 }
 
+export interface LegalData {
+  assessment_present: boolean;
+  assessment_missing: boolean;
+  verdict_category: "enabled" | "conditional" | "blocked" | null;
+  component_score: number;
+  ownership_category: "enabled" | "conditional" | "blocked" | null;
+  ownership_score: number;
+  ownership_description: string | null;
+  ownership_description_es: string | null;
+  restrictions_category: "enabled" | "conditional" | "blocked" | null;
+  restrictions_score: number;
+  restrictions_description: string | null;
+  restrictions_description_es: string | null;
+  legal_justification: string | null;
+  legal_justification_en: string | null;
+  legal_references: string[];
+}
+
+export interface LegalExcludedAction {
+  actionId: string;
+  actionName: string;
+  sectorTag: string;
+  legalData: LegalData;
+}
+
+export const PIPELINE_RESULT_SCHEMA_VERSION = 4;
+
 export interface PipelineResult {
+  schemaVersion?: number;
   ranked: RankedAction[];
   discarded: DiscardedAction[];
+  legalExcluded: LegalExcludedAction[];
+  legalFlagged: LegalExcludedAction[];
   totalCityEmissions: number;
   cityEmissionsByGpc: Record<string, number>;
   locode: string;
   topN: number;
+  validActionsCount?: number;
 }
 
 export interface CityIndicators {
@@ -608,6 +641,21 @@ function priorityLabel(
   return "low";
 }
 
+// ─── Sector tag helpers ───────────────────────────────────────────────────────
+
+function gpcToSectorTag(gpcRefs: string[]): string {
+  if (!gpcRefs.length) return "cross_sector";
+  const prefix = gpcRefs[0].split(".")[0];
+  switch (prefix) {
+    case "I":   return "stationary_energy";
+    case "II":  return "transportation";
+    case "III": return "waste";
+    case "IV":  return "ippu";
+    case "V":   return "afolu";
+    default:    return "cross_sector";
+  }
+}
+
 // ─── Main pipeline entry point ────────────────────────────────────────────────
 
 export async function runPipeline(
@@ -746,6 +794,8 @@ export async function runPipeline(
       timeframeComponent,
       legalPassed: true,
       legalFlag,
+      legalData: null,
+      sectorTag: gpcToSectorTag(action.emissions?.gpc_reference_number ?? []),
       gpcRefs: action.emissions?.gpc_reference_number ?? [],
       matchedEmissions,
       explanation,
@@ -756,6 +806,8 @@ export async function runPipeline(
   return {
     ranked,
     discarded,
+    legalExcluded: [],
+    legalFlagged: [],
     totalCityEmissions: total,
     cityEmissionsByGpc: byRef,
     locode: req.locode,

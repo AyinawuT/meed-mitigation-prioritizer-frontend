@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seeding Valdivia test data…</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #F9FAFB; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .card { background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 32px 40px; max-width: 480px; text-align: center; }
+    h2 { margin: 0 0 8px; font-size: 18px; color: #111827; }
+    p  { margin: 0 0 20px; font-size: 14px; color: #6B7280; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; margin: 3px; }
+    .blocked { background: #FEE2E2; color: #991B1B; }
+    .flagged { background: #FEF3C7; color: #92400E; }
+    .passed  { background: #D1FAE5; color: #065F46; }
+    .spinner { width: 32px; height: 32px; border: 3px solid #E5E7EB; border-top-color: #001EA7; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="spinner"></div>
+  <h2>Seeding Valdivia test data</h2>
+  <p>Injecting 2 blocked + 2 flagged + 10 passing actions into localStorage…</p>
+  <div id="status">Working…</div>
+</div>
+<script>
+(function () {
+  const LOCODE = "CL LD";
+
+  // ── Legal data helpers ────────────────────────────────────────────────────
+
+  function blockedLegal(ownership, ownershipDesc, ownershipDescEs, restrictions, restrictionsDesc, restrictionsDescEs, justification, justificationEn, refs) {
+    return {
+      assessment_present: true, assessment_missing: false,
+      verdict_category: "blocked",
+      component_score: 0,
+      ownership_category: ownership,
+      ownership_score: 0,
+      ownership_description: ownershipDesc,
+      ownership_description_es: ownershipDescEs,
+      restrictions_category: restrictions,
+      restrictions_score: 0,
+      restrictions_description: restrictionsDesc,
+      restrictions_description_es: restrictionsDescEs,
+      legal_justification: justification,
+      legal_justification_en: justificationEn,
+      legal_references: refs,
+    };
+  }
+
+  function flaggedLegal(ownership, ownershipDesc, ownershipDescEs, restrictions, restrictionsDesc, restrictionsDescEs, refs) {
+    return {
+      assessment_present: false, assessment_missing: true,
+      verdict_category: "conditional",
+      component_score: 0.4,
+      ownership_category: ownership,
+      ownership_score: 0.5,
+      ownership_description: ownershipDesc,
+      ownership_description_es: ownershipDescEs,
+      restrictions_category: restrictions,
+      restrictions_score: 0.5,
+      restrictions_description: restrictionsDesc,
+      restrictions_description_es: restrictionsDescEs,
+      legal_justification: null,
+      legal_justification_en: null,
+      legal_references: refs,
+    };
+  }
+
+  function enabledLegal(ownership, score, refs) {
+    return {
+      assessment_present: true, assessment_missing: false,
+      verdict_category: "enabled",
+      component_score: score,
+      ownership_category: ownership,
+      ownership_score: score,
+      ownership_description: "The municipality holds direct authority to implement this action under existing Chilean legislation.",
+      ownership_description_es: "El municipio tiene autoridad directa para implementar esta acción bajo la legislación chilena vigente.",
+      restrictions_category: "none",
+      restrictions_score: 1.0,
+      restrictions_description: "No legal restrictions identified. The municipality may proceed independently.",
+      restrictions_description_es: "No se identificaron restricciones legales. El municipio puede proceder de forma independiente.",
+      legal_justification: "This action is fully within municipal competence under the Ley Orgánica Constitucional de Municipalidades (Law 18.695) and applicable sectoral laws.",
+      legal_justification_en: "This action is fully within municipal competence under the Organic Constitutional Law of Municipalities (Law 18.695) and applicable sectoral laws.",
+      legal_references: refs,
+    };
+  }
+
+  // ── Excluded (blocked) actions ────────────────────────────────────────────
+
+  const legalExcluded = [
+    {
+      actionId: "c40_0012",
+      actionName: "Introduce energy-efficiency standards for new institutional buildings",
+      sectorTag: "buildings",
+      legalData: blockedLegal(
+        "external_authority",
+        "El Ministerio de Vivienda y Urbanismo (MINVU) tiene la potestad normativa exclusiva sobre los estándares de eficiencia energética para edificaciones institucionales, a través de la Ordenanza General de Urbanismo y Construcciones.",
+        "El Ministerio de Vivienda y Urbanismo (MINVU) tiene la potestad normativa exclusiva sobre los estándares de eficiencia energética para edificaciones institucionales, a través de la Ordenanza General de Urbanismo y Construcciones.",
+        "hard_restrictions",
+        "La fijación de estándares de eficiencia energética para edificaciones nuevas está reservada al poder central por el Art. 4.1.10 de la OGUC. Los municipios no pueden legislar sobre construcción más allá de los planos reguladores comunales.",
+        "La fijación de estándares de eficiencia energética para edificaciones nuevas está reservada al poder central por el Art. 4.1.10 de la OGUC. Los municipios no pueden legislar sobre construcción más allá de los planos reguladores comunales.",
+        "The municipality cannot mandate energy-efficiency standards for institutional buildings. This authority resides exclusively with MINVU under the OGUC (Art. 4.1.10). The city may advocate for the adoption of these standards nationally but cannot implement them unilaterally.",
+        "The municipality cannot mandate energy-efficiency standards for institutional buildings. This authority resides exclusively with MINVU under the OGUC (Art. 4.1.10). The city may advocate for the adoption of these standards nationally but cannot implement them unilaterally.",
+        ["Ley 18.695 — Ley Orgánica Constitucional de Municipalidades, Art. 3", "Ordenanza General de Urbanismo y Construcciones (OGUC) D.S. 47, Art. 4.1.10", "Ley 20.936 — Transmisión Eléctrica y Calificación Energética de Edificios"]
+      )
+    },
+    {
+      actionId: "c40_0034",
+      actionName: "Enact and enforce material bans to restrict single-use and non-recyclable materials",
+      sectorTag: "waste",
+      legalData: blockedLegal(
+        "external_authority",
+        "La regulación de materiales y productos, incluyendo prohibiciones de plásticos de un solo uso, es competencia exclusiva del Gobierno Central a través del Ministerio del Medio Ambiente, bajo la Ley REP 20.920.",
+        "La regulación de materiales y productos, incluyendo prohibiciones de plásticos de un solo uso, es competencia exclusiva del Gobierno Central a través del Ministerio del Medio Ambiente, bajo la Ley REP 20.920.",
+        "hard_restrictions",
+        "Los municipios carecen de potestad para prohibir materiales en el mercado. La Ley REP (20.920) otorga ese poder al Ministerio del Medio Ambiente. Una ordenanza municipal que prohibiera materiales sería nula por invadir la competencia del legislador nacional.",
+        "Los municipios carecen de potestad para prohibir materiales en el mercado. La Ley REP (20.920) otorga ese poder al Ministerio del Medio Ambiente. Una ordenanza municipal que prohibiera materiales sería nula por invadir la competencia del legislador nacional.",
+        "Municipalities in Chile may not ban materials from the market. This authority belongs exclusively to the Ministry of the Environment under the Extended Producer Responsibility Law (REP, Law 20.920). A municipal ordinance attempting to ban materials would be struck down as ultra vires.",
+        "Municipalities in Chile may not ban materials from the market. This authority belongs exclusively to the Ministry of the Environment under the Extended Producer Responsibility Law (REP, Law 20.920). A municipal ordinance attempting to ban materials would be struck down as ultra vires.",
+        ["Ley 20.920 — Marco para la Gestión de Residuos, la Responsabilidad Extendida del Productor y Fomento al Reciclaje", "Ley 21.100 — Prohibición de Bolsas Plásticas Comerciales", "Ley 18.695 — LOCM, Art. 65 (límites de la potestad ordinamental municipal)"]
+      )
+    }
+  ];
+
+  // ── Flagged actions (included in ranking, evidence missing) ───────────────
+
+  const flaggedLegalData = {
+    c40_0013: flaggedLegal(
+      "shared_ownership",
+      "La implementación de estándares para edificaciones industriales involucra tanto competencias municipales (uso de suelo, permisos de edificación) como regulaciones sectoriales del Ministerio de Energía y la SEREMI. Se requiere análisis de habilitación más detallado.",
+      "La implementación de estándares para edificaciones industriales involucra tanto competencias municipales (uso de suelo, permisos de edificación) como regulaciones sectoriales del Ministerio de Energía y la SEREMI. Se requiere análisis de habilitación más detallado.",
+      "soft_restrictions",
+      "Posibles restricciones derivadas de la superposición entre la potestad municipal de planificación territorial (PRC) y la regulación sectorial energética-industrial. No se ha completado el análisis de compatibilidad.",
+      "Posibles restricciones derivadas de la superposición entre la potestad municipal de planificación territorial (PRC) y la regulación sectorial energética-industrial. No se ha completado el análisis de compatibilidad.",
+      ["Ley 18.695 — LOCM, Art. 3(b)", "D.S. 47 OGUC — Permisos de Edificación", "Ley 20.936 — Eficiencia Energética en Edificios"]
+    ),
+    c40_0040: flaggedLegal(
+      "shared_ownership",
+      "La tarificación por volumen de residuos puede requerir habilitación del Gobierno Regional y coordinación con el sistema de cobro de derechos municipales (Ley de Rentas Municipales). La base legal municipal existe, pero las modalidades de cobro están sujetas a interpretación.",
+      "La tarificación por volumen de residuos puede requerir habilitación del Gobierno Regional y coordinación con el sistema de cobro de derechos municipales (Ley de Rentas Municipales). La base legal municipal existe, pero las modalidades de cobro están sujetas a interpretación.",
+      "soft_restrictions",
+      "El régimen tarifario de residuos está parcialmente regulado por el D.F.L. 1-3.063 (Ley de Rentas Municipales). La adopción de cobros variables por volumen podría requerir modificación del instrumento tarifario comunal y/o autorización de SUBDERE.",
+      "El régimen tarifario de residuos está parcialmente regulado por el D.F.L. 1-3.063 (Ley de Rentas Municipales). La adopción de cobros variables por volumen podría requerir modificación del instrumento tarifario comunal y/o autorización de SUBDERE.",
+      ["D.F.L. 1-3.063 — Ley de Rentas Municipales, Art. 7", "Ley 18.695 — LOCM, Art. 65", "Ley 20.920 — Gestión de Residuos, Art. 15"]
+    )
+  };
+
+  // ── Ranked actions (passed legal review) ─────────────────────────────────
+
+  function ranked(rank, actionId, actionName, actionCategory, actionSubcategory, cat, subcat, cost, timeline, desc, gpcRefs, sectorTag, finalScore, legalData, legalFlag) {
+    const priority = finalScore >= 0.65 ? "high" : finalScore >= 0.40 ? "medium" : "low";
+    return {
+      rank, actionId, actionName, actionCategory, actionSubcategory,
+      costInvestmentNeeded: cost, timelineForImplementation: timeline,
+      description: desc, gpcRefs,
+      finalScore, impactScore: finalScore * 0.9, alignmentScore: finalScore * 0.85,
+      feasibilityScore: finalScore * 0.7,
+      reductionShare: finalScore * 0.3, timelineScore: 0.7,
+      policyComponent: 0.75, sectorComponent: 0.8,
+      otherComponent: 0.5, timeframeComponent: 0.6,
+      softLegalComponent: legalFlag ? 0.4 : 0.85,
+      socioeconomicComponent: 0.6,
+      matchedEmissions: Math.round(finalScore * 80000),
+      legalPassed: true, legalFlag,
+      legalData, sectorTag,
+      priority,
+      explanation: `Ranked #${rank} with a final score of ${finalScore.toFixed(2)}.`,
+    };
+  }
+
+  const rankedActions = [
+    ranked(1, "icare_0012", "Expand solar energy generation on municipal facilities and public spaces",
+      "Projects & Physical Actions", "Energy & Building Retrofits", null, null,
+      "medium", "<5 years",
+      "Install photovoltaic systems on municipal rooftops and public infrastructure to reduce grid dependency and demonstrate renewable energy leadership.",
+      ["I.4.4"], "stationary_energy", 0.78,
+      enabledLegal("city_owned", 0.95, ["Ley 20.936 — Eficiencia Energética", "Ley 20.571 — Net Billing para PMGD"]),
+      false),
+
+    ranked(2, "c40_0017", "Retrofit municipal buildings for energy efficiency",
+      "Projects & Physical Actions", "Energy & Building Retrofits", null, null,
+      "medium", "<5 years",
+      "Improve insulation, glazing, HVAC, and lighting in city-owned buildings to reduce energy consumption and operational costs.",
+      ["I.2.1", "I.2.2"], "buildings", 0.74,
+      enabledLegal("city_owned", 0.92, ["Ley 18.695 — LOCM, Art. 5", "Ley 20.936 — Calificación Energética"]),
+      false),
+
+    ranked(3, "c40_0023", "Adopt zero-emission bus fleets for public transport",
+      "Projects & Physical Actions", "Mobility & Transport Projects", null, null,
+      "high", "5-10 years",
+      "Replace diesel-powered buses with electric or hydrogen buses to reduce transport emissions and improve urban air quality.",
+      ["II.1.1"], "transportation", 0.71,
+      enabledLegal("city_owned", 0.88, ["Ley 18.696 — Transporte Público", "Ley 21.305 — Eficiencia Energética en Flotas Públicas"]),
+      false),
+
+    ranked(4, "c40_0013", "Support implementation of industrial building efficiency standards",
+      "Policies, Plans & Programs", "Regulation & Standards", null, null,
+      "low", "<5 years",
+      "Promote the adoption of energy efficiency standards for industrial buildings through technical assistance and incentive programmes.",
+      ["I.3.1", "I.3.2"], "buildings", 0.63,
+      flaggedLegalData["c40_0013"],
+      true),
+
+    ranked(5, "c40_0015", "Retrofit residential buildings for energy efficiency",
+      "Projects & Physical Actions", "Energy & Building Retrofits", null, null,
+      "medium", "5-10 years",
+      "Provide subsidies and technical support for homeowners and landlords to retrofit existing residential buildings with improved insulation and efficient appliances.",
+      ["I.1.1", "I.1.2"], "buildings", 0.61,
+      enabledLegal("city_owned", 0.80, ["Ley 18.695 — LOCM", "Programa de Eficiencia Energética en Viviendas MINVU"]),
+      false),
+
+    ranked(6, "c40_0035", "Optimize waste management systems",
+      "Policies, Plans & Programs", "Strategic Plans", null, null,
+      "low", "<5 years",
+      "Redesign waste collection routes, implement source-separation campaigns, and upgrade waste processing facilities to improve recovery rates.",
+      ["III.1.1"], "waste", 0.58,
+      enabledLegal("city_owned", 0.82, ["Ley 18.695 — LOCM, Art. 3(f)", "Ley 20.920 — Gestión de Residuos"]),
+      false),
+
+    ranked(7, "c40_0040", "Implement volume-based collection policy",
+      "Policies, Plans & Programs", "Regulation & Standards", null, null,
+      "low", "<5 years",
+      "Introduce differentiated tariffs for waste collection based on the volume generated to incentivize waste reduction at source.",
+      ["III.1.1"], "waste", 0.52,
+      flaggedLegalData["c40_0040"],
+      true),
+
+    ranked(8, "c40_0042", "Expand urban and peri-urban green spaces",
+      "Projects & Physical Actions", "Nature-Based Solutions", null, null,
+      "low", "<5 years",
+      "Develop new parks, greenways, and urban forests to sequester carbon, reduce urban heat islands, and improve biodiversity.",
+      ["V.2"], "nature", 0.50,
+      enabledLegal("city_owned", 0.78, ["Ley 18.695 — LOCM, Art. 5(d)", "Ley 19.300 — Bases Generales del Medio Ambiente"]),
+      false),
+
+    ranked(9, "c40_0025", "Promote deployment of zero-emission freight fleets",
+      "Policies, Plans & Programs", "Public Programs / Incentives", null, null,
+      "medium", "5-10 years",
+      "Develop incentive programmes and local purchasing policies to accelerate the transition to electric and hydrogen freight vehicles operating in the municipality.",
+      ["II.1.1"], "transportation", 0.47,
+      enabledLegal("city_owned", 0.72, ["Ley 18.695 — LOCM", "Ley 21.305 — Eficiencia Energética"]),
+      false),
+
+    ranked(10, "c40_0036", "Upgrade landfills to engineered sanitary landfills with gas capture",
+      "Projects & Physical Actions", "Infrastructure Development", null, null,
+      "high", "5-10 years",
+      "Retrofit existing disposal sites with engineered liner systems and landfill gas collection infrastructure to capture methane for energy use or flaring.",
+      ["III.1.1"], "waste", 0.42,
+      enabledLegal("shared_ownership", 0.65, ["Ley 20.920 — Gestión de Residuos", "D.S. 189/2008 MINSAL — Rellenos Sanitarios"]),
+      false),
+  ];
+
+  // ── Full PipelineResult ───────────────────────────────────────────────────
+
+  const result = {
+    ranked: rankedActions,
+    discarded: [],
+    legalExcluded,
+    legalFlagged: [
+      { actionId: "c40_0013", actionName: "Support implementation of industrial building efficiency standards", sectorTag: "buildings", legalData: flaggedLegalData["c40_0013"] },
+      { actionId: "c40_0040", actionName: "Implement volume-based collection policy", sectorTag: "waste", legalData: flaggedLegalData["c40_0040"] }
+    ],
+    totalCityEmissions: 130000,
+    cityEmissionsByGpc: { "I.1.1": 30000, "I.2.1": 20000, "II.1.1": 80000 },
+    locode: LOCODE,
+    topN: 20,
+  };
+
+  try {
+    localStorage.setItem("hiap:" + LOCODE + ":results", JSON.stringify(result));
+    document.getElementById("status").innerHTML =
+      '<div style="color:#065F46;font-weight:600;margin-bottom:12px">✓ Data seeded successfully</div>' +
+      '<span class="badge blocked">2 blocked</span>' +
+      '<span class="badge flagged">2 flagged</span>' +
+      '<span class="badge passed">8 passed</span>' +
+      '<p style="margin-top:16px;font-size:13px;color:#6B7280">Redirecting to Regulations &amp; Laws…</p>';
+    setTimeout(() => { window.location.href = "/city/CL-LD/regulations"; }, 1200);
+  } catch (e) {
+    document.getElementById("status").innerHTML =
+      '<div style="color:#991B1B">Error: ' + e.message + '</div>';
+  }
+})();
+</script>
+</body>
+</html>

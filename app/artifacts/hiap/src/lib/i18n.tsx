@@ -63,8 +63,8 @@ const ES: Record<string, string> = {
   "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, and strategic preferences.":
     "Revisa y confirma los datos de emisiones, contexto socioeconómico, regulaciones y leyes, alineación de políticas y preferencias estratégicas.",
   "Generate recommendations": "Generar recomendaciones",
-  "Run MEED+ HIAP's scoring pipeline across 155 mitigation actions ranked for your city.":
-    "Ejecuta el pipeline de puntuación de MEED+ HIAP a través de 155 acciones de mitigación clasificadas para tu ciudad.",
+  "Run MEED+ HIAP's scoring pipeline across over 100 mitigation actions ranked for your city.":
+    "Ejecuta el pipeline de puntuación de MEED+ HIAP a través de más de 100 acciones de mitigación clasificadas para tu ciudad.",
   "Act on the ranking": "Actúa sobre el ranking",
   "Download your ranked action plan and share with your city's climate team.":
     "Descarga tu plan de acción clasificado y compártelo con el equipo climático de tu ciudad.",

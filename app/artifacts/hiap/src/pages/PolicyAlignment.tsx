@@ -207,9 +207,15 @@ export function PolicyAlignment({ params }: Props) {
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
             MEED+ HIAP has assessed each candidate action against national, regional, and municipal climate policy. Policy alignment shapes how actions are ranked — better-backed actions score higher.
           </p>
-          <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-            MEED+ ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking
-          </p>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            background: "#F0FDF4", border: "1px solid #BBF7D0",
+            borderRadius: "6px", padding: "5px 12px",
+            fontSize: "11px", color: "#15803D", fontWeight: "600",
+          }}>
+            <span>⚖</span>
+            <span>MEED+ ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking</span>
+          </div>
         </div>
       </div>
 

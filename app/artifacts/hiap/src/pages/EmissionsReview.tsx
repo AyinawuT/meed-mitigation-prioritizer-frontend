@@ -103,9 +103,15 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
               }}>
                 {confirmedCount} / {sectors.length} sectors confirmed
               </span>
-              <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>
-                MEED+ IMPACT: shapes 55% of ranking
-              </span>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: "6px",
+                background: "#F0FDF4", border: "1px solid #BBF7D0",
+                borderRadius: "6px", padding: "5px 12px",
+                fontSize: "11px", color: "#15803D", fontWeight: "600",
+              }}>
+                <span>📊</span>
+                <span>MEED+ IMPACT: Emissions data shapes 55% of ranking</span>
+              </div>
             </div>
           </div>
         </div>

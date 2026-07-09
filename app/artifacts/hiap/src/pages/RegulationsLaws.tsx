@@ -4,488 +4,561 @@ import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
-import actionsLegal from "@/data/actionsLegal.json";
-import actionNames from "@/data/actionNames.json";
+import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
+import { runPipelineForCity } from "@/lib/pipelineRunner";
 
-type Tab = "review" | "adjust";
-type AlignmentStatus = "aligns" | "not_aligned" | "no_evidence";
-type Strength = "mandatory" | "required" | "recommended" | "optional" | "informational";
+// ─── Sector display helpers ───────────────────────────────────────────────────
 
-interface Requirement {
-  signal_code: string;
-  signal_name: string;
-  operator: string;
-  required_value: string;
-  legal_signal_value: string | null;
-  strength: Strength;
-  alignment_status: AlignmentStatus;
-  location_scope: string | null;
-  location_name: string | null;
-  evidence_ids: string[];
-  evidence_count: number;
-}
-
-interface ActionLegal {
-  action_id: string;
-  requirements: Requirement[];
-}
-
-interface ActionMeta {
-  name: string;
-  category: string;
-  subcategory: string;
-}
-
-const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
-
-const SIGNAL_SHORT: Record<string, string> = {
-  MUNI_WASTE_AUTHORITY:       "Waste management authority",
-  MUNI_TRANSPORT_AUTHORITY:   "Transport authority",
-  MUNI_PLANNING_AUTHORITY:    "Planning authority",
-  MUNI_ENV_STANDARDS:         "Environmental standards",
-  PLANS_ALIGNMENT:            "Plans alignment",
-  PROCUREMENT_PUBLIC_BIDDING: "Procurement process",
-  SUBSIDY_CAP_7PCT:           "Subsidy cap",
+const SECTOR_DISPLAY: Record<string, string> = {
+  stationary_energy: "Stationary Energy",
+  transportation:    "Transportation",
+  waste:             "Waste",
+  ippu:              "IPPU",
+  afolu:             "AFOLU",
+  cross_sector:      "Cross-sector",
 };
 
-const VALUE_DISPLAY: Record<string, string> = {
-  exclusive_authority: "exclusive authority",
-  apply_standards:     "may apply standards",
-  planning_authority:  "full planning authority",
-  comply:              "must comply",
-  public_bidding:      "public bidding",
-  direct_award:        "direct award",
-  restricted:          "restricted",
-  shared_authority:    "shared authority",
-  "0.07":              "7% cap",
-  "0.12":              "12% (exceeds cap)",
-  "0.05":              "5% (within cap)",
+const SECTOR_COLORS: Record<string, { bg: string; color: string }> = {
+  stationary_energy: { bg: "#EFF6FF", color: "#1D4ED8" },
+  transportation:    { bg: "#F0FDF4", color: "#15803D" },
+  waste:             { bg: "#FEF3C7", color: "#92400E" },
+  ippu:              { bg: "#FDF4FF", color: "#7E22CE" },
+  afolu:             { bg: "#ECFDF5", color: "#065F46" },
+  cross_sector:      { bg: "#F5F5F7", color: "#6B7280" },
 };
 
-const STRENGTH_LABEL: Record<Strength, string> = {
-  mandatory:     "mandatory",
-  required:      "required",
-  recommended:   "recommended",
-  optional:      "optional",
-  informational: "informational",
+const VERDICT_CHIPS: Record<string, { label: string; bg: string; color: string }> = {
+  enabled:     { label: "Enabled",     bg: "#F0FDF4", color: "#16A34A" },
+  conditional: { label: "Conditional", bg: "#FFFBEB", color: "#D97706" },
+  blocked:     { label: "Blocked",     bg: "#FEF2F2", color: "#DC2626" },
 };
 
-function getBlockingReqs(reqs: Requirement[]): Requirement[] {
-  return reqs.filter(
-    (r) =>
-      (r.strength === "mandatory" || r.strength === "required") &&
-      r.alignment_status === "not_aligned"
+function SectorChip({ tag }: { tag: string }) {
+  const s = SECTOR_COLORS[tag] ?? SECTOR_COLORS.cross_sector;
+  return (
+    <span style={{
+      fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
+      background: s.bg, color: s.color, whiteSpace: "nowrap",
+    }}>
+      {SECTOR_DISPLAY[tag] ?? tag}
+    </span>
   );
 }
 
-function getUncertainReqs(reqs: Requirement[]): Requirement[] {
-  return reqs.filter(
-    (r) =>
-      (r.strength === "mandatory" || r.strength === "required") &&
-      r.alignment_status === "no_evidence"
+function VerdictChip({ category }: { category: string | null }) {
+  if (!category) return null;
+  const chip = VERDICT_CHIPS[category];
+  if (!chip) return null;
+  return (
+    <span style={{
+      fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
+      background: chip.bg, color: chip.color, whiteSpace: "nowrap",
+    }}>
+      {chip.label}
+    </span>
   );
 }
 
-function blockReason(req: Requirement): string {
-  const signal = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
-  const required = VALUE_DISPLAY[req.required_value] ?? req.required_value;
-  const found = req.legal_signal_value ? (VALUE_DISPLAY[req.legal_signal_value] ?? req.legal_signal_value) : null;
-  const strength = STRENGTH_LABEL[req.strength];
-  if (found) {
-    return `${signal} — ${strength} requirement not met (needs ${required}, found ${found})`;
+function sectorBreakdown(actions: { sectorTag: string }[]): string {
+  const counts: Record<string, number> = {};
+  for (const a of actions) {
+    const tag = a.sectorTag || "cross_sector";
+    counts[tag] = (counts[tag] ?? 0) + 1;
   }
-  return `${signal} — ${strength} requirement not met (needs ${required})`;
+  return Object.entries(counts)
+    .map(([tag, n]) => `${n} ${SECTOR_DISPLAY[tag] ?? tag}`)
+    .join(" · ");
 }
 
-function uncertainReason(req: Requirement): string {
-  const signal = SIGNAL_SHORT[req.signal_code] ?? req.signal_name;
-  const required = VALUE_DISPLAY[req.required_value] ?? req.required_value;
-  return `${signal} — no evidence found that the city has ${required}`;
-}
+// ─── Excluded action card ─────────────────────────────────────────────────────
 
-interface RegulationsLawsProps {
-  params: { locode: string };
-}
-
-export function RegulationsLaws({ params }: RegulationsLawsProps) {
-  const [, navigate] = useLocation();
-  const search = useSearch();
-  const fromPreflight = search.includes("from=preflight");
-  const [activeTab, setActiveTab] = useState<Tab>("review");
-  const [overrides, setOverrides] = useState<Set<string>>(new Set());
-  const [overrideNotes, setOverrideNotes] = useState<Record<string, string>>({});
-  const [editingNote, setEditingNote] = useState<string | null>(null);
-  const [expandedUncertain, setExpandedUncertain] = useState(false);
-
-  const urlLocode = params.locode ?? "";
-  const locode = urlLocode.replace("-", " ");
-  const city: CityData | undefined = CITIES.find(
-    (c) => c.locode.toLowerCase() === locode.toLowerCase()
-  );
-
-  if (!city) {
-    return (
-      <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
-        <Navbar />
-        <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <p style={{ color: "#6B7280" }}>City not found.</p>
-          <button onClick={() => navigate("/")} style={{ marginTop: "16px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", cursor: "pointer" }}>
-            ← Back to cities
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const citySlug = city.locode.replace(" ", "-");
-  const actions = actionsLegal.legal_requirements as ActionLegal[];
-
-  const excluded   = actions.filter((a) => getBlockingReqs(a.requirements).length > 0);
-  const uncertain  = actions.filter((a) => getBlockingReqs(a.requirements).length === 0 && getUncertainReqs(a.requirements).length > 0);
-  const included   = actions.filter((a) => getBlockingReqs(a.requirements).length === 0 && getUncertainReqs(a.requirements).length === 0);
-
-  const excludedCount  = excluded.filter((a) => !overrides.has(a.action_id)).length;
-  const overriddenCount = overrides.size;
-  const includedCount  = included.length + overriddenCount;
-
-  useEffect(() => {
-    setStepProgress(locode, "regulations", {
-      visited: true,
-      progress: 100,
-      sub: `${actions.length} actions assessed · ${includedCount} included in ranking`,
-    });
-  }, [locode, actions.length, includedCount]);
-
-  function toggleOverride(id: string) {
-    setOverrides((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-        setEditingNote(null);
-      } else {
-        next.add(id);
-        setEditingNote(id);
-      }
-      return next;
-    });
-  }
+function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
+  const [open, setOpen] = useState(false);
+  const [justOpen, setJustOpen] = useState(false);
+  const [refsOpen, setRefsOpen] = useState(false);
+  const ld = action.legalData;
+  const ownershipDesc = ld.ownership_description || ld.ownership_description_es;
+  const restrictionsDesc = ld.restrictions_description || ld.restrictions_description_es;
+  const justification = ld.legal_justification_en || ld.legal_justification;
+  const hasDetail = ld.ownership_category || ld.restrictions_category || justification || ld.legal_references.length > 0;
 
   return (
-    <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
-      <Navbar cityName={city.name} />
+    <div style={{
+      background: "white", border: "1px solid #FECACA", borderRadius: "10px",
+      overflow: "hidden",
+    }}>
+      {/* Always-visible header row */}
+      <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "14px 16px", flexWrap: "wrap" }}>
+        <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", flex: 1, minWidth: "120px" }}>
+          {action.actionName}
+        </span>
+        <SectorChip tag={action.sectorTag} />
+        <span style={{
+          fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
+          background: "#FEF2F2", color: "#DC2626", whiteSpace: "nowrap",
+        }}>
+          Excluded
+        </span>
+        {hasDetail && (
+          <button
+            onClick={() => setOpen(v => !v)}
+            style={{
+              background: "none", border: "1px solid #FECACA", borderRadius: "6px",
+              cursor: "pointer", padding: "3px 8px",
+              fontSize: "11px", fontWeight: "600", color: "#9CA3AF",
+              display: "flex", alignItems: "center", gap: "4px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {open ? "Hide details ▲" : "Why excluded? ▼"}
+          </button>
+        )}
+      </div>
+
+      {/* Collapsible detail panel */}
+      {open && (
+        <div style={{ borderTop: "1px solid #FEE2E2", padding: "12px 16px", background: "#FFFBFB" }}>
+
+          {/* Ownership */}
+          {ld.ownership_category && (
+            <div style={{ marginBottom: "10px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: ownershipDesc ? "4px" : 0 }}>
+                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>Ownership</span>
+                <VerdictChip category={ld.ownership_category} />
+              </div>
+              {ownershipDesc && (
+                <p style={{ fontSize: "12px", color: "#4B5563", margin: "4px 0 0 92px", lineHeight: "1.5" }}>
+                  {ownershipDesc}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Restrictions */}
+          {ld.restrictions_category && (
+            <div style={{ marginBottom: justification || ld.legal_references.length > 0 ? "10px" : 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: restrictionsDesc ? "4px" : 0 }}>
+                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>Restrictions</span>
+                <VerdictChip category={ld.restrictions_category} />
+              </div>
+              {restrictionsDesc && (
+                <p style={{ fontSize: "12px", color: "#4B5563", margin: "4px 0 0 92px", lineHeight: "1.5" }}>
+                  {restrictionsDesc}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Legal justification — nested collapsible */}
+          {justification && (
+            <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "8px", marginTop: "4px" }}>
+              <button
+                onClick={() => setJustOpen(v => !v)}
+                style={{
+                  background: "none", border: "none", cursor: "pointer", padding: 0,
+                  fontSize: "11px", fontWeight: "600", color: "#9CA3AF",
+                  display: "flex", alignItems: "center", gap: "4px",
+                }}
+              >
+                <span style={{ fontSize: "9px" }}>{justOpen ? "▲" : "▼"}</span>
+                Legal justification
+              </button>
+              {justOpen && (
+                <p style={{ fontSize: "12px", color: "#4B5563", marginTop: "8px", marginBottom: 0, lineHeight: "1.6" }}>
+                  {justification}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Legal references — collapsible */}
+          {ld.legal_references.length > 0 && (
+            <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "8px", marginTop: "4px" }}>
+              <button
+                onClick={() => setRefsOpen(v => !v)}
+                style={{
+                  background: "none", border: "none", cursor: "pointer", padding: 0,
+                  fontSize: "11px", fontWeight: "600", color: "#9CA3AF",
+                  display: "flex", alignItems: "center", gap: "4px",
+                }}
+              >
+                <span style={{ fontSize: "9px" }}>{refsOpen ? "▲" : "▼"}</span>
+                Legal references
+              </button>
+              {refsOpen && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
+                  {ld.legal_references.map((ref, i) => (
+                    <span key={i} style={{
+                      fontSize: "10px", padding: "2px 6px", borderRadius: "4px",
+                      background: "#F3F4F6", color: "#374151", fontFamily: "monospace",
+                    }}>
+                      {ref}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Flagged action card ──────────────────────────────────────────────────────
+
+function FlaggedActionCard({ action }: { action: LegalExcludedAction }) {
+  return (
+    <div style={{
+      background: "white", border: "1px solid #FDE68A", borderRadius: "10px",
+      padding: "16px 18px",
+    }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", flexWrap: "wrap", marginBottom: "8px" }}>
+        <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", flex: 1, minWidth: "120px" }}>
+          {action.actionName}
+        </span>
+        <SectorChip tag={action.sectorTag} />
+        <span style={{
+          fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
+          background: "#FFFBEB", color: "#92400E", whiteSpace: "nowrap",
+        }}>
+          Assessment pending
+        </span>
+      </div>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
+        No legal assessment is available for this action yet. It has been included in the ranking with a neutral legal score.
+      </p>
+    </div>
+  );
+}
+
+// ─── Summary card ─────────────────────────────────────────────────────────────
+
+function SummaryCard({
+  count, label, sublabel, sectorLine, bg, border, countColor, icon,
+}: {
+  count: number; label: string; sublabel?: string; sectorLine?: string;
+  bg: string; border: string; countColor: string; icon: string;
+}) {
+  return (
+    <div style={{
+      flex: 1, minWidth: "170px", background: bg, border: `1px solid ${border}`,
+      borderRadius: "12px", padding: "16px 18px",
+    }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "2px" }}>
+        <span style={{ fontSize: "30px", fontWeight: "800", color: countColor, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
+          {count}
+        </span>
+        <span style={{ fontSize: "14px" }}>{icon}</span>
+      </div>
+      <div style={{ fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "3px" }}>{label}</div>
+      {sublabel && <div style={{ fontSize: "11px", color: "#6B7280", lineHeight: "1.4" }}>{sublabel}</div>}
+      {sectorLine && (
+        <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "6px", lineHeight: "1.4" }}>{sectorLine}</div>
+      )}
+    </div>
+  );
+}
+
+// ─── Main page component ──────────────────────────────────────────────────────
+
+interface Props { params: { locode: string } }
+
+export function RegulationsLaws({ params }: Props) {
+  const [, navigate] = useLocation();
+  const search = useSearch();
+  const urlLocode = params.locode ?? "";
+  const locode = urlLocode.replace("-", " ");
+  const city = CITIES.find(c => c.locode.toLowerCase() === locode.toLowerCase()) as CityData | undefined;
+  const citySlug = city ? city.locode.replace(" ", "-") : urlLocode;
+  const cityName = city?.name ?? locode;
+  const fromPreflight = search.includes("from=preflight");
+
+  const [result, setResult] = useState<PipelineResult | null>(null);
+  const [sectorFilter, setSectorFilter] = useState("all");
+  const [legalLoading, setLegalLoading] = useState(false);
+  const [legalError, setLegalError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setStepProgress(locode, "regulations", { visited: true });
+
+
+    // Load any previously cached result — discard if schema is stale
+    try {
+      const raw = localStorage.getItem(`hiap:${locode}:results`);
+      if (raw) {
+        const parsed = JSON.parse(raw) as PipelineResult;
+        if ((parsed.schemaVersion ?? 0) >= PIPELINE_RESULT_SCHEMA_VERSION) {
+          setResult(parsed);
+          return; // fresh data — skip the live fetch
+        }
+        // Stale schema — clear and fall through to re-fetch
+        localStorage.removeItem(`hiap:${locode}:results`);
+      }
+    } catch {}
+
+    // No cached result — run the pipeline now so the user sees legal data at step 3.
+    // Strategic preferences default gracefully when not yet filled in (steps 4–6).
+    setLegalLoading(true);
+    setLegalError(null);
+    runPipelineForCity(locode, { topN: 20, createExplanations: false })
+      .then((r) => setResult(r))
+      .catch((err) => setLegalError(err instanceof Error ? err.message : String(err)))
+      .finally(() => setLegalLoading(false));
+  }, [locode, search]);
+
+  // When results load, mark step progress at 100% so the city profile card
+  // shows "NEEDS REVIEW" (and "COMPLETE" once the user clicks Continue →)
+  useEffect(() => {
+    if (!result) return;
+    const excl = result.legalExcluded?.length ?? 0;
+    const incl = result.ranked?.length ?? 0;
+    const sub = excl > 0
+      ? `${excl} excluded · ${incl} included`
+      : `${incl} actions included`;
+    setStepProgress(locode, "regulations", { visited: true, progress: 100, sub });
+  }, [locode, result]);
+
+  // Derived stats — handle both new and old stored results gracefully
+  const ranked: RankedAction[] = result?.ranked ?? [];
+  const legalExcluded: LegalExcludedAction[] = result?.legalExcluded ?? [];
+  const legalFlagged: LegalExcludedAction[] = result?.legalFlagged ?? [];
+
+  const conditionalCount = ranked.filter(a => a.legalData?.verdict_category === "conditional").length;
+  const validActionsCount = result?.validActionsCount;
+  const includedCount = validActionsCount ?? ranked.length;
+
+  // Unique sectors present in excluded + flagged lists
+  const allSectors = [...new Set([
+    ...legalExcluded.map(a => a.sectorTag || "cross_sector"),
+    ...legalFlagged.map(a => a.sectorTag || "cross_sector"),
+  ])];
+
+  const filteredExcluded = sectorFilter === "all"
+    ? legalExcluded
+    : legalExcluded.filter(a => (a.sectorTag || "cross_sector") === sectorFilter);
+  const filteredFlagged = sectorFilter === "all"
+    ? legalFlagged
+    : legalFlagged.filter(a => (a.sectorTag || "cross_sector") === sectorFilter);
+
+  const rankedSectorItems = ranked.map(a => ({
+    sectorTag: (a as RankedAction & { sectorTag?: string }).sectorTag || "cross_sector",
+  }));
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#F9FAFB", display: "flex", flexDirection: "column" }}>
+      <Navbar cityName={cityName} />
       <StepBar activeStep={2} citySlug={citySlug} />
 
-      {/* Page header */}
-      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>Cities</button>
-            <span>›</span>
-            <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>{city.name}</button>
-            <span>›</span>
-            <span style={{ color: "#374151" }}>Regulations & Laws</span>
-          </div>
+      <div style={{ maxWidth: "840px", margin: "0 auto", padding: "32px 24px", width: "100%" }}>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "40px" }}>
-            <div>
-              <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-                Regulations & Laws
-              </h1>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-                MEED+ HIAP has checked each candidate action against Chilean municipal law. Actions that fail a
-                mandatory or required legal check are excluded from the ranking unless you override them.
-              </p>
-              <p style={{ fontSize: "13px", color: "#16A34A", fontWeight: "500", margin: 0 }}>
-                MEED+ FEASIBILITY: Legal verdict shapes 50% of feasibility score · Feasibility shapes 23% of ranking
+        {/* Header */}
+        <div style={{ marginBottom: "28px" }}>
+          <h1 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
+            Regulations &amp; Laws
+          </h1>
+          <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6", maxWidth: "640px" }}>
+            MEED+ HIAP has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
+          </p>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            background: "#F0FDF4", border: "1px solid #BBF7D0",
+            borderRadius: "6px", padding: "5px 12px",
+            fontSize: "11px", color: "#15803D", fontWeight: "600",
+          }}>
+            <span>⚖</span>
+            <span>MEED+ FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
+          </div>
+        </div>
+
+        {/* Summary cards */}
+        <div style={{ display: "flex", gap: "12px", marginBottom: "28px", flexWrap: "wrap" }}>
+          <SummaryCard
+            count={includedCount}
+            label="passed legal review"
+            sublabel={
+              !result
+                ? "Run the pipeline to see legal review"
+                : `top ${result?.topN ?? 20} shown in your ranking`
+            }
+            sectorLine={ranked.length > 0 ? sectorBreakdown(rankedSectorItems) : undefined}
+            bg="#F0FDF4" border="#BBF7D0" countColor="#16A34A" icon="✓"
+          />
+          <SummaryCard
+            count={legalExcluded.length}
+            label="Excluded from ranking"
+            sublabel="Removed before scoring"
+            sectorLine={legalExcluded.length > 0 ? sectorBreakdown(legalExcluded) : undefined}
+            bg="#FEF2F2" border="#FECACA" countColor="#DC2626" icon="✗"
+          />
+          <SummaryCard
+            count={legalFlagged.length}
+            label="Flagged — evidence missing"
+            sublabel="Included in ranking, assessment pending"
+            sectorLine={legalFlagged.length > 0 ? sectorBreakdown(legalFlagged) : undefined}
+            bg="#FFFBEB" border="#FDE68A" countColor="#D97706" icon="⚠"
+          />
+        </div>
+
+        {/* Legal review loading */}
+        {!result && legalLoading && (
+          <div style={{
+            background: "white", border: "1px solid #E5E7EB", borderRadius: "12px",
+            padding: "40px 28px", textAlign: "center",
+          }}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+              <div style={{
+                width: "32px", height: "32px", borderRadius: "50%",
+                border: "3px solid #E5E7EB", borderTopColor: "#001EA7",
+                animation: "spin 0.8s linear infinite",
+              }} />
+            </div>
+            <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
+              Running legal review…
+            </div>
+            <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
+              Checking all candidate actions against Chilean laws
+            </div>
+          </div>
+        )}
+
+        {/* Legal review error */}
+        {!result && !legalLoading && legalError && (
+          <div style={{
+            background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "12px",
+            padding: "28px 24px", textAlign: "center",
+          }}>
+            <div style={{ fontSize: "28px", marginBottom: "10px" }}>⚠</div>
+            <div style={{ fontSize: "14px", fontWeight: "700", color: "#991B1B", marginBottom: "6px" }}>
+              Could not load legal review
+            </div>
+            <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "16px", lineHeight: "1.5", maxWidth: "380px", margin: "0 auto 16px" }}>
+              {legalError}
+            </div>
+            <button
+              onClick={() => {
+                setLegalLoading(true);
+                setLegalError(null);
+                runPipelineForCity(locode, { topN: 20, createExplanations: false })
+                  .then((r) => setResult(r))
+                  .catch((err) => setLegalError(err instanceof Error ? err.message : String(err)))
+                  .finally(() => setLegalLoading(false));
+              }}
+              style={{ padding: "8px 20px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {/* Pipeline ran but all actions passed */}
+        {result && legalExcluded.length === 0 && legalFlagged.length === 0 && (
+          <div style={{
+            background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "12px",
+            padding: "28px 24px", textAlign: "center",
+          }}>
+            <div style={{ fontSize: "28px", marginBottom: "10px" }}>✅</div>
+            <div style={{ fontSize: "14px", fontWeight: "700", color: "#15803D", marginBottom: "6px" }}>
+              All actions passed the legal review
+            </div>
+            <div style={{ fontSize: "12px", color: "#4B5563" }}>
+              No actions were excluded or flagged based on legal authority requirements.
+            </div>
+          </div>
+        )}
+
+        {/* Sector filter */}
+        {result && allSectors.length > 1 && (
+          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "20px" }}>
+            {["all", ...allSectors].map(s => (
+              <button
+                key={s}
+                onClick={() => setSectorFilter(s)}
+                style={{
+                  padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: "600",
+                  cursor: "pointer", transition: "all 0.15s",
+                  background: sectorFilter === s ? "#001EA7" : "white",
+                  color: sectorFilter === s ? "white" : "#374151",
+                  border: sectorFilter === s ? "1px solid #001EA7" : "1px solid #D1D5DB",
+                }}
+              >
+                {s === "all" ? "All sectors" : SECTOR_DISPLAY[s] ?? s}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Excluded section */}
+        {result && filteredExcluded.length > 0 && (
+          <div style={{ marginBottom: "28px" }}>
+            <div style={{ marginBottom: "12px" }}>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
+                Excluded from ranking ({filteredExcluded.length})
+              </h2>
+              <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
+                These actions were removed before scoring. The city does not currently have the legal authority to implement them independently.
               </p>
             </div>
-
-            <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
-              {(["review", "adjust"] as Tab[]).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  style={{
-                    padding: "7px 18px", borderRadius: "6px", border: "none",
-                    background: activeTab === tab ? "#001EA7" : "white",
-                    color: activeTab === tab ? "white" : "#9CA3AF",
-                    fontSize: "13px", fontWeight: "500", cursor: "pointer",
-                    outline: activeTab === tab ? "none" : "1px solid #DDDDE1",
-                  }}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {filteredExcluded.map(a => (
+                <ExcludedActionCard key={a.actionId} action={a} />
               ))}
             </div>
           </div>
-        </div>
-      </div>
+        )}
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 64px 40px" }}>
-
-        {/* Summary row */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "20px" }}>
-          {[
-            {
-              value: includedCount,
-              label: "Included in ranking",
-              sub: `${included.length} passed legal review${overriddenCount > 0 ? ` · ${overriddenCount} manually reinstated` : ""}`,
-              bg: "#F0FDF4", valuecol: "#16A34A", border: "#BBF7D0",
-            },
-            {
-              value: excludedCount,
-              label: "Excluded from ranking",
-              sub: "Failed a mandatory or required legal check",
-              bg: excludedCount === 0 ? "#F0FDF4" : "#FEF2F2",
-              valuecol: excludedCount === 0 ? "#16A34A" : "#DC2626",
-              border: excludedCount === 0 ? "#BBF7D0" : "#FCA5A5",
-            },
-            {
-              value: uncertain.length,
-              label: "Flagged — evidence missing",
-              sub: "No evidence found for a mandatory check",
-              bg: uncertain.length === 0 ? "#F9FAFB" : "#FFFBEB",
-              valuecol: uncertain.length === 0 ? "#9CA3AF" : "#D97706",
-              border: uncertain.length === 0 ? "#E5E7EB" : "#FDE68A",
-            },
-          ].map((k) => (
-            <div key={k.label} style={{ background: k.bg, border: `1px solid ${k.border}`, borderRadius: "10px", padding: "16px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              <div style={{ fontSize: "28px", fontWeight: "700", color: k.valuecol, lineHeight: 1, marginBottom: "4px" }}>{k.value}</div>
-              <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "3px" }}>{k.label}</div>
-              <div style={{ fontSize: "11px", color: "#6B7280" }}>{k.sub}</div>
+        {/* Flagged section */}
+        {result && filteredFlagged.length > 0 && (
+          <div style={{ marginBottom: "28px" }}>
+            <div style={{ marginBottom: "12px" }}>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
+                Flagged — evidence missing ({filteredFlagged.length})
+              </h2>
+              <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
+                No legal assessment was found for these actions. They are included in the ranking with a neutral legal score.
+              </p>
             </div>
-          ))}
-        </div>
-
-        {/* ── EXCLUDED ACTIONS ── */}
-        {excluded.length > 0 && (
-          <div style={{ marginBottom: "16px" }}>
-            <div style={{ fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "8px" }}>
-              Excluded actions
-              <span style={{ fontSize: "12px", fontWeight: "400", color: "#9CA3AF", marginLeft: "8px" }}>
-                These actions failed one or more legal checks and will not appear in the ranking
-              </span>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {filteredFlagged.map(a => (
+                <FlaggedActionCard key={a.actionId} action={a} />
+              ))}
             </div>
-
-            <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              {excluded.map((action, idx) => {
-                const meta = ACTION_NAMES[action.action_id];
-                const blockingReqs = getBlockingReqs(action.requirements);
-                const isOverridden = overrides.has(action.action_id);
-                const isLast = idx === excluded.length - 1;
-                const isEditingThisNote = editingNote === action.action_id;
-
-                return (
-                  <div
-                    key={action.action_id}
-                    style={{
-                      padding: "16px 20px",
-                      borderBottom: isLast ? "none" : "1px solid #F5F5F5",
-                      background: isOverridden ? "#FFFBEB" : "white",
-                      transition: "background 0.2s",
-                    }}
-                  >
-                    <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                      {/* Left: action info */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
-                          <span style={{ fontSize: "13px", fontWeight: "600", color: isOverridden ? "#92400E" : "#111827" }}>
-                            {meta?.name ?? action.action_id}
-                          </span>
-                          {isOverridden && (
-                            <span style={{ fontSize: "11px", background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A", padding: "1px 7px", borderRadius: "4px", fontWeight: "600" }}>
-                              Manually reinstated
-                            </span>
-                          )}
-                        </div>
-                        {meta?.subcategory && (
-                          <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", padding: "1px 6px", borderRadius: "3px", display: "inline-block", marginBottom: "8px" }}>
-                            {meta.subcategory}
-                          </span>
-                        )}
-
-                        {/* Blocking reasons */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                          {blockingReqs.map((req) => (
-                            <div key={req.signal_code} style={{ display: "flex", gap: "6px", alignItems: "flex-start" }}>
-                              <span style={{ fontSize: "12px", color: "#DC2626", flexShrink: 0, marginTop: "1px" }}>✗</span>
-                              <span style={{ fontSize: "12px", color: "#6B7280" }}>{blockReason(req)}</span>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Override note */}
-                        {isOverridden && (
-                          <div style={{ marginTop: "10px" }}>
-                            {isEditingThisNote ? (
-                              <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                                <textarea
-                                  placeholder="Add a note explaining why this action should be included (optional)…"
-                                  value={overrideNotes[action.action_id] ?? ""}
-                                  onChange={(e) => setOverrideNotes((prev) => ({ ...prev, [action.action_id]: e.target.value }))}
-                                  style={{ flex: 1, fontSize: "12px", padding: "8px 10px", borderRadius: "6px", border: "1px solid #FDE68A", resize: "vertical", minHeight: "56px", fontFamily: "inherit", color: "#374151", outline: "none", background: "#FFFDF5" }}
-                                />
-                                <button
-                                  onClick={() => setEditingNote(null)}
-                                  style={{ fontSize: "12px", background: "#92400E", color: "white", border: "none", borderRadius: "6px", padding: "6px 12px", cursor: "pointer", fontWeight: "500", whiteSpace: "nowrap" }}
-                                >
-                                  Save note
-                                </button>
-                              </div>
-                            ) : (
-                              <div
-                                style={{ fontSize: "12px", color: "#92400E", background: "#FEF3C7", border: "1px solid #FDE68A", borderRadius: "6px", padding: "6px 10px", cursor: "pointer" }}
-                                onClick={() => setEditingNote(action.action_id)}
-                              >
-                                {overrideNotes[action.action_id]
-                                  ? <span>"{overrideNotes[action.action_id]}" <span style={{ color: "#D97706", textDecoration: "underline" }}>edit</span></span>
-                                  : <span style={{ color: "#D97706", textDecoration: "underline" }}>+ Add a note explaining the override</span>
-                                }
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right: override toggle */}
-                      {activeTab === "adjust" && (
-                        <div style={{ flexShrink: 0 }}>
-                          <button
-                            onClick={() => toggleOverride(action.action_id)}
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "600",
-                              padding: "7px 14px",
-                              borderRadius: "6px",
-                              cursor: "pointer",
-                              border: isOverridden ? "1px solid #FDE68A" : "1px solid #D1D5DB",
-                              background: isOverridden ? "#FEF3C7" : "white",
-                              color: isOverridden ? "#92400E" : "#6B7280",
-                              transition: "all 0.15s",
-                            }}
-                          >
-                            {isOverridden ? "↩ Remove override" : "Include in ranking"}
-                          </button>
-                        </div>
-                      )}
-
-                      {activeTab === "review" && isOverridden && (
-                        <span style={{ fontSize: "11px", color: "#D97706", flexShrink: 0, marginTop: "4px" }}>
-                          Overridden
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {activeTab === "review" && (
-              <div style={{ marginTop: "8px", fontSize: "12px", color: "#9CA3AF", textAlign: "right" }}>
-                Switch to <strong>Adjust</strong> mode to override individual exclusions
-              </div>
-            )}
           </div>
         )}
 
-        {/* ── FLAGGED / UNCERTAIN ── */}
-        {uncertain.length > 0 && (
-          <div style={{ marginBottom: "16px" }}>
-            <button
-              onClick={() => setExpandedUncertain((v) => !v)}
-              style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", cursor: "pointer", padding: 0, marginBottom: "8px" }}
-            >
-              <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>
-                Flagged actions ({uncertain.length})
-              </span>
-              <span style={{ fontSize: "12px", color: "#D97706", background: "#FFFBEB", border: "1px solid #FDE68A", padding: "1px 7px", borderRadius: "4px" }}>
-                Evidence missing
-              </span>
-              <span style={{ fontSize: "12px", color: "#9CA3AF" }}>
-                {expandedUncertain ? "▲ hide" : "▼ show"}
-              </span>
-            </button>
-
-            {expandedUncertain && (
-              <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-                {uncertain.map((action, idx) => {
-                  const meta = ACTION_NAMES[action.action_id];
-                  const uncReqs = getUncertainReqs(action.requirements);
-                  const isLast = idx === uncertain.length - 1;
-                  return (
-                    <div
-                      key={action.action_id}
-                      style={{ padding: "14px 20px", borderBottom: isLast ? "none" : "1px solid #F5F5F5" }}
-                    >
-                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "3px" }}>
-                        {meta?.name ?? action.action_id}
-                      </div>
-                      {meta?.subcategory && (
-                        <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", padding: "1px 6px", borderRadius: "3px", display: "inline-block", marginBottom: "6px" }}>
-                          {meta.subcategory}
-                        </span>
-                      )}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                        {uncReqs.map((req) => (
-                          <div key={req.signal_code} style={{ display: "flex", gap: "6px", alignItems: "flex-start" }}>
-                            <span style={{ fontSize: "12px", color: "#D97706", flexShrink: 0, marginTop: "1px" }}>?</span>
-                            <span style={{ fontSize: "12px", color: "#6B7280" }}>{uncertainReason(req)}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+        {/* Empty state when sector filter returns nothing */}
+        {result && sectorFilter !== "all" && filteredExcluded.length === 0 && filteredFlagged.length === 0 && (
+          <div style={{ textAlign: "center", padding: "24px", color: "#9CA3AF", fontSize: "13px" }}>
+            No excluded or flagged actions in {SECTOR_DISPLAY[sectorFilter] ?? sectorFilter}.
           </div>
         )}
 
-        {/* ── INCLUDED (summary only) ── */}
+        {/* Navigation */}
         <div style={{
-          background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px",
-          padding: "14px 20px", marginBottom: "20px",
-          display: "flex", alignItems: "center", gap: "12px",
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          marginTop: "40px", paddingTop: "24px", borderTop: "1px solid #E5E7EB",
         }}>
-          <span style={{ fontSize: "20px", color: "#16A34A" }}>✓</span>
-          <div>
-            <div style={{ fontSize: "13px", fontWeight: "600", color: "#166534" }}>
-              {includedCount} {includedCount === 1 ? "action" : "actions"} will proceed to ranking
-            </div>
-            <div style={{ fontSize: "12px", color: "#4ADE80" }}>
-              {included.length} passed legal review automatically
-              {overriddenCount > 0 && ` · ${overriddenCount} manually reinstated`}
-              {uncertain.length > 0 && ` · ${uncertain.length} flagged actions are included pending further evidence`}
-            </div>
-          </div>
-        </div>
-
-        {/* Info note */}
-        <div style={{
-          background: "#F0F9FF", border: "1px solid #BAE6FD", borderRadius: "8px",
-          padding: "12px 16px", marginBottom: "20px", fontSize: "12px", color: "#0369A1",
-          display: "flex", gap: "10px", alignItems: "flex-start",
-        }}>
-          <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
-          <span>
-            <strong>How MEED+ HIAP uses this data:</strong> Legal checks are based on Ley 18.695 (Ley Orgánica Constitucional de Municipalidades).
-            Actions that fail a <strong>mandatory</strong> or <strong>required</strong> check are excluded from the ranking
-            to avoid proposing legally non-viable actions. You can override any exclusion in{" "}
-            <strong>Adjust</strong> mode if you believe the action is viable for {city.name}.
-          </span>
-        </div>
-
-        {/* Footer navigation */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button
             onClick={() => navigate(`/city/${citySlug}/socioeconomic`)}
-            style={{ background: "white", border: "1px solid #DDDDE1", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", color: "#6B7280", cursor: "pointer", fontWeight: "500" }}
+            style={{
+              background: "white", color: "#374151", border: "1px solid #D1D5DB",
+              borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600",
+              cursor: "pointer",
+            }}
           >
             ← Socioeconomic Context
           </button>
           <button
-            onClick={() => { confirmStep(locode, "regulations"); navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`); }}
-            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}
+            onClick={() => {
+              confirmStep(locode, "regulations");
+              navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`);
+            }}
+            style={{
+              background: "#16A34A", color: "white", border: "none",
+              borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600",
+              cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
+            }}
           >
             {fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
           </button>

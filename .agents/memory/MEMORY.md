@@ -2,3 +2,4 @@
 - [HIAP artifact router fix](hiap-artifact-routing.md) — Port routing: proxy uses PORT env var (= localPort), not openPorts scan; pnpm breaks in bash -c after artifact.toml mutations.
 - [HIAP workspace structure](hiap-workspace-structure.md) — actual source + workflow CWD is app/artifacts/hiap/; flat artifacts/hiap/ is a stale copy; node_modules symlinked.
 - [Deployment config quirks](deployment-config-quirks.md) — `.replit` needs `[deployment]` + `[[artifacts]]`; use `verifyAndReplaceDotReplit`; production CWD is workspace root.
+- [HIAP hard_filter_evidence schema](hiap-hard-filter-schema.md) — backend blocked-action data lives in `legal_assessment_summary`, not `legal`; adaptApiResult must read both.
