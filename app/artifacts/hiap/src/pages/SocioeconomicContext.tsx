@@ -286,6 +286,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -346,7 +347,9 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
 
   function handleConfirm() {
     confirmStep(locode, "socioeconomic");
-    navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/regulations`);
+    if (fromRecommendations) navigate(`/city/${citySlug}/recommendations`);
+    else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
+    else navigate(`/city/${citySlug}/regulations`);
   }
 
   return (
@@ -562,7 +565,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
+            {fromRecommendations ? "Save & return to recommendations →" : fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
           </button>
         </div>
       </div>

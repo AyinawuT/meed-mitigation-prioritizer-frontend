@@ -274,6 +274,7 @@ export function RegulationsLaws({ params }: Props) {
   const citySlug = city ? city.locode.replace(" ", "-") : urlLocode;
   const cityName = city?.name ?? locode;
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
 
   const [result, setResult] = useState<PipelineResult | null>(null);
   const [sectorFilter, setSectorFilter] = useState("all");
@@ -567,7 +568,9 @@ export function RegulationsLaws({ params }: Props) {
           <button
             onClick={() => {
               confirmStep(locode, "regulations");
-              navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`);
+              if (fromRecommendations) navigate(`/city/${citySlug}/recommendations`);
+              else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
+              else navigate(`/city/${citySlug}/strategic`);
             }}
             style={{
               background: "#16A34A", color: "white", border: "none",
@@ -575,7 +578,7 @@ export function RegulationsLaws({ params }: Props) {
               cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
+            {fromRecommendations ? "Save & return to recommendations →" : fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
           </button>
         </div>
       </div>

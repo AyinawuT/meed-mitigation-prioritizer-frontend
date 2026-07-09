@@ -1166,7 +1166,7 @@ function ContextBreakdownTab({
           {statCard("Top sector", topGpcSector)}
           {statCard("Inventory year", result.inventoryYear ? String(result.inventoryYear) : "—")}
         </div>
-        {viewLink("View emissions data", `/city/${citySlug}/preflight`)}
+        {viewLink("View emissions data", `/city/${citySlug}/emissions?from=recommendations`)}
       </div>
 
       {divider}
@@ -1183,7 +1183,7 @@ function ContextBreakdownTab({
             populationRaw !== undefined ? populationRaw.toLocaleString() : "—"
           )}
         </div>
-        {viewLink("View socioeconomic data", `/city/${citySlug}/socioeconomic`)}
+        {viewLink("View socioeconomic data", `/city/${citySlug}/socioeconomic?from=recommendations`)}
       </div>
 
       {divider}
@@ -1217,7 +1217,7 @@ function ContextBreakdownTab({
             <div style={{ fontSize: "11px", color: "#F59E0B", marginTop: "2px" }}>Included in ranking, assessment pending</div>
           </div>
         </div>
-        {viewLink("View legal analysis", `/city/${citySlug}/regulations`)}
+        {viewLink("View legal analysis", `/city/${citySlug}/regulations?from=recommendations`)}
       </div>
 
       {divider}
@@ -1249,7 +1249,7 @@ function ContextBreakdownTab({
             )}
           </div>
         )}
-        {viewLink("View full financial analysis", `/city/${citySlug}/financial-feasibility`)}
+        {viewLink("View full financial analysis", `/city/${citySlug}/financial-feasibility?from=recommendations`)}
       </div>
     </div>
   );

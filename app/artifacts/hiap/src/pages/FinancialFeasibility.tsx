@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { FiInfo, FiInbox } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -698,6 +698,8 @@ interface Props { params: { locode: string } }
 
 export function FinancialFeasibility({ params }: Props) {
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const fromRecommendations = search.includes("from=recommendations");
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city: CityData | undefined = CITIES.find(c => c.locode.toLowerCase() === locode.toLowerCase());
@@ -924,9 +926,13 @@ export function FinancialFeasibility({ params }: Props) {
             style={{ background: "white", border: "1px solid #DDDDE1", color: "#374151", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
             ← Policy alignment
           </button>
-          <button onClick={() => { confirmStep(locode, "financial-feasibility"); navigate(`/city/${citySlug}/preflight`); }}
-            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
-            Pre-flight check →
+          <button
+            onClick={() => {
+              confirmStep(locode, "financial-feasibility");
+              navigate(fromRecommendations ? `/city/${citySlug}/recommendations` : `/city/${citySlug}/preflight`);
+            }}
+            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}>
+            {fromRecommendations ? "Save & return to recommendations →" : "Pre-flight check →"}
           </button>
         </div>
       </div>
