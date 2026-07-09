@@ -1,5 +1,6 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useLocation } from "wouter";
+import { FiInfo, FiInbox } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
@@ -175,15 +176,41 @@ function projectStatusStyle(s?: string) {
   return { bg: "#F3F4F6", color: "#6B7280" };
 }
 
+// ─── InfoTooltip ──────────────────────────────────────────────────────────────
+
+function InfoTooltip({ text }: { text: string }) {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+  return (
+    <span
+      ref={ref}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      style={{ position: "relative", display: "inline-flex", alignItems: "center", verticalAlign: "middle", marginLeft: "4px", cursor: "default" }}
+    >
+      <FiInfo size={12} color="#9CA3AF" style={{ flexShrink: 0 }} />
+      {visible && (
+        <span style={{
+          position: "absolute", bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)",
+          background: "white", border: "1px solid #E5E7EB", borderRadius: "8px",
+          padding: "10px 12px", width: "260px", zIndex: 200,
+          boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
+          fontSize: "12px", color: "#374151", lineHeight: "1.6", fontWeight: "400",
+          pointerEvents: "none",
+        }}>
+          {text}
+        </span>
+      )}
+    </span>
+  );
+}
+
 // ─── Empty state ──────────────────────────────────────────────────────────────
 
 function EmptyState({ title, body }: { title: string; body: string }) {
   return (
     <div style={{ border: "1px solid #F3F4F6", borderRadius: "8px", padding: "32px 20px", textAlign: "center" }}>
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style={{ margin: "0 auto 10px", display: "block" }}>
-        <circle cx="14" cy="14" r="13" stroke="#D1D5DB" strokeWidth="1.5" />
-        <circle cx="14" cy="14" r="6" stroke="#D1D5DB" strokeWidth="1.5" />
-      </svg>
+      <FiInbox size={28} color="#D1D5DB" style={{ margin: "0 auto 10px", display: "block" }} />
       <div style={{ fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>{title}</div>
       <div style={{ fontSize: "12px", color: "#9CA3AF", lineHeight: "1.6", maxWidth: "300px", margin: "0 auto" }}>{body}</div>
     </div>
@@ -232,11 +259,17 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
 
         {/* Row 1 */}
         <div style={{ padding: "12px 14px", borderBottom: "1px solid #E5E7EB", borderRight: "1px solid #E5E7EB" }}>
-          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px" }}>Capital intensity</div>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px", display: "flex", alignItems: "center" }}>
+            Capital intensity
+            <InfoTooltip text="How much money the action typically requires to implement, based on similar actions delivered elsewhere. Varies per action." />
+          </div>
           <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per action</div>
         </div>
         <div style={{ padding: "12px 14px", borderBottom: "1px solid #E5E7EB" }}>
-          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Financial autonomy</div>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px", display: "flex", alignItems: "center" }}>
+            Financial autonomy
+            <InfoTooltip text={`Share of ${cityName}'s budget raised locally rather than received from national transfers. Lower autonomy means less room to self-fund.`} />
+          </div>
           {fa ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px" }}>
@@ -251,11 +284,17 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
 
         {/* Row 2 */}
         <div style={{ padding: "12px 14px", borderRight: "1px solid #E5E7EB" }}>
-          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px" }}>Preparation complexity</div>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px", display: "flex", alignItems: "center" }}>
+            Preparation complexity
+            <InfoTooltip text="How much planning, technical design, or specialist input the action needs before it can start. Varies by action." />
+          </div>
           <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per action</div>
         </div>
         <div style={{ padding: "12px 14px" }}>
-          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Delivery capacity</div>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px", display: "flex", alignItems: "center" }}>
+            Delivery capacity
+            <InfoTooltip text={`Whether ${cityName} has enough qualified staff to plan, procure and run a project once it's financed.`} />
+          </div>
           {dc ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px" }}>
@@ -377,14 +416,20 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
                 <>
                   <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>What the action needs</div>
                   {ciLevel && (
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "12px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Capital intensity</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
+                        Capital intensity
+                        <InfoTooltip text="How much money the action typically requires to implement, based on similar actions delivered elsewhere. Varies per action." />
+                      </span>
                       <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(ciLevel, "needs") }}>{levelLabel(ciLevel)}</span>
                     </div>
                   )}
                   {pcLevel && (
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Preparation complexity</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
+                        Preparation complexity
+                        <InfoTooltip text="How much planning, technical design, or specialist input the action needs before it can start. Varies by action." />
+                      </span>
                       <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(pcLevel, "needs") }}>{levelLabel(pcLevel)}</span>
                     </div>
                   )}
@@ -395,14 +440,20 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
                 <>
                   <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>What {cityName} has</div>
                   {profAttrs.fa && (
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "12px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Financial autonomy</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
+                        Financial autonomy
+                        <InfoTooltip text={`Share of ${cityName}'s budget raised locally rather than received from national transfers. Lower autonomy means less room to self-fund.`} />
+                      </span>
                       <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.fa, "has") }}>{levelLabel(profAttrs.fa)}</span>
                     </div>
                   )}
                   {profAttrs.dc && (
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Delivery capacity</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
+                        Delivery capacity
+                        <InfoTooltip text={`Whether ${cityName} has enough qualified staff to plan, procure and run a project once it's financed.`} />
+                      </span>
                       <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.dc, "has") }}>{levelLabel(profAttrs.dc)}</span>
                     </div>
                   )}
