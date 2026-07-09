@@ -16,7 +16,7 @@ import {
   type PrioritizerApiCityResult,
 } from "@/lib/hiapApi";
 import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
-import { PIPELINE_RESULT_SCHEMA_VERSION, fetchFinancialFeasibilityMap } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 
 // ─── Internal types matching the API response shape ───────────────────────────
 
@@ -430,67 +430,11 @@ export function adaptApiResult(
   };
 }
 
-// ─── Financial feasibility merge ─────────────────────────────────────────────
-
-/**
- * Post-processes a PipelineResult with financial feasibility scores from the
- * climate-finance API. Recomputes feasibilityScore and finalScore per action
- * using the 3-way formula: ⅓ legal + ⅓ socioeconomic + ⅓ financial.
- * Actions with no financial_feasibility data keep the existing 2-way score.
- */
-function mergeFinancialFeasibility(
-  result: PipelineResult,
-  ffMap: Map<string, { score: number; route: string | null; reason: string | null }>,
-  weights: { impact: number; alignment: number; feasibility: number }
-): PipelineResult {
-  if (ffMap.size === 0) return result;
-
-  const wSum = weights.impact + weights.alignment + weights.feasibility;
-  const nw = {
-    impact:      weights.impact      / wSum,
-    alignment:   weights.alignment   / wSum,
-    feasibility: weights.feasibility / wSum,
-  };
-
-  const updated: RankedAction[] = result.ranked.map((action) => {
-    const ff = ffMap.get(action.actionId);
-    if (!ff || ff.score === 0) return action;
-
-    const feasibilityScore =
-      (1 / 3) * action.softLegalComponent +
-      (1 / 3) * action.socioeconomicComponent +
-      (1 / 3) * ff.score;
-
-    const finalScore =
-      action.impactScore   * nw.impact +
-      action.alignmentScore * nw.alignment +
-      feasibilityScore      * nw.feasibility;
-
-    return {
-      ...action,
-      financialFeasibilityComponent: ff.score,
-      financialFeasibilityRoute: ff.route,
-      financialFeasibilityReason: ff.reason,
-      feasibilityScore,
-      finalScore,
-    };
-  });
-
-  // Re-sort by updated finalScore and fix ranks/priorities
-  updated.sort((a, b) => b.finalScore - a.finalScore);
-  const total = updated.length;
-  const reranked = updated.map((a, i) => {
-    const rank = i + 1;
-    const pct = rank / total;
-    return {
-      ...a,
-      rank,
-      priority: (pct <= 0.35 ? "high" : pct <= 0.7 ? "medium" : "low") as RankedAction["priority"],
-    };
-  });
-
-  return { ...result, ranked: reranked };
-}
+// Note: financial feasibility scoring is now handled entirely by the backend
+// (0.34 × legal + 0.33 × mitigation + 0.33 × financial, neutral 0.5 fallback
+// for missing components). The evidence fields financialFeasibilityComponent,
+// financialFeasibilityRoute, and financialFeasibilityReason are already read
+// directly from evidence_summary.feasibility.financial_feasibility in adaptApiResult.
 
 // ─── Main exported runner ─────────────────────────────────────────────────────
 
@@ -505,23 +449,17 @@ export async function runPipelineForCity(
   const { topN = 20, createExplanations = false } = options;
   const cityInput = buildCityInput(locode);
 
-  const [apiResultArr, ffMap] = await Promise.all([
-    callPrioritize({
-      cityDataList: [cityInput],
-      topN,
-      createExplanations,
-      requestedLanguages: ["en"],
-    }),
-    fetchFinancialFeasibilityMap(locode),
-  ]);
+  const [apiResult] = await callPrioritize({
+    cityDataList: [cityInput],
+    topN,
+    createExplanations,
+    requestedLanguages: ["en"],
+  });
 
-  const [apiResult] = apiResultArr;
-  let result = adaptApiResult(apiResult, cityInput.cityEmissionsData, topN);
-
-  // Merge financial feasibility into the result using the 3-way formula
-  const weights = cityInput.weightsOverride as { impact: number; alignment: number; feasibility: number }
-    ?? { impact: 0.55, alignment: 0.22, feasibility: 0.23 };
-  result = mergeFinancialFeasibility(result, ffMap, weights);
+  // Backend computes the full 3-way feasibility score (legal + mitigation + financial)
+  // and returns all component evidence in evidence_summary.feasibility — no client-side
+  // re-computation needed.
+  const result = adaptApiResult(apiResult, cityInput.cityEmissionsData, topN);
 
   localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
   return result;

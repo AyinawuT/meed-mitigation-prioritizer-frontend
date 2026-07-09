@@ -529,17 +529,19 @@ function scoreFeasibility(
     }
   }
 
-  // Financial feasibility component from the climate-finance API
+  // Financial feasibility component from the climate-finance API.
+  // Missing rows default to neutral 0.5 (same rule as legal and mitigation feasibility).
   const ffEntry = financialFeasibilityMap?.get(action.actionId);
-  const financialFeasibilityComponent = ffEntry?.score ?? 0;
+  const financialFeasibilityComponent = ffEntry != null ? ffEntry.score : 0.5;
   const financialFeasibilityRoute = ffEntry?.route ?? null;
   const financialFeasibilityReason = ffEntry?.reason ?? null;
 
-  // Use 3-way formula when financial feasibility data is available for this action;
-  // fall back to 2-way (legal + socioeconomic) when it isn't.
-  const feasibilityScore = financialFeasibilityComponent > 0
-    ? (1 / 3) * softLegalComponent + (1 / 3) * socioeconomicComponent + (1 / 3) * financialFeasibilityComponent
-    : 0.5 * softLegalComponent + 0.5 * socioeconomicComponent;
+  // Always 3-way formula per spec: 0.34 × legal + 0.33 × mitigation + 0.33 × financial.
+  // Each component defaults to neutral 0.5 when data is missing.
+  const feasibilityScore =
+    0.34 * softLegalComponent +
+    0.33 * socioeconomicComponent +
+    0.33 * financialFeasibilityComponent;
 
   return { feasibilityScore, softLegalComponent, socioeconomicComponent, financialFeasibilityComponent, financialFeasibilityRoute, financialFeasibilityReason };
 }
