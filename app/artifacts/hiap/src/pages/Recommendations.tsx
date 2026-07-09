@@ -1481,7 +1481,7 @@ export function Recommendations({ params }: Props) {
               letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
               display: "flex", alignItems: "center", gap: "8px",
             }}>
-              <span>✦</span> Generate output for {genCount} action{genCount !== 1 ? "s" : ""}
+              <span>✦</span> {pickedIds.length > 0 ? `Generate output for ${pickedIds.length} action${pickedIds.length !== 1 ? "s" : ""}` : "Generate output for selected actions"}
             </button>
           </div>
 
