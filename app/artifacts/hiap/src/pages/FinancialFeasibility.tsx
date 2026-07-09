@@ -826,7 +826,7 @@ export function FinancialFeasibility({ params }: Props) {
         {/* Filter pills */}
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
           <button onClick={() => setActiveRoute(null)}
-            style={{ fontSize: "13px", fontWeight: "600", color: activeRoute === null ? "white" : "#374151", background: activeRoute === null ? "#111827" : "white", border: `1.5px solid ${activeRoute === null ? "#111827" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
+            style={{ fontSize: "13px", fontWeight: "600", color: activeRoute === null ? "white" : "#374151", background: activeRoute === null ? "#001EA7" : "white", border: `1.5px solid ${activeRoute === null ? "#001EA7" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
             All
           </button>
           {routes.map(route => {
