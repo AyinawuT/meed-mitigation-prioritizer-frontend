@@ -351,6 +351,22 @@ export function RegulationsLaws({ params }: Props) {
       <Navbar cityName={cityName} />
       <StepBar activeStep={2} citySlug={citySlug} />
 
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
+        <div style={{ maxWidth: "840px", margin: "0 auto" }}>
+          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
+              Cities
+            </button>
+            <span>›</span>
+            <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
+              {cityName}
+            </button>
+            <span>›</span>
+            <span style={{ color: "#374151" }}>Regulations &amp; Laws</span>
+          </div>
+        </div>
+      </div>
+
       <div style={{ maxWidth: "840px", margin: "0 auto", padding: "32px 24px", width: "100%" }}>
 
         {/* Header */}

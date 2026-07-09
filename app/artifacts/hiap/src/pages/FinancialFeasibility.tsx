@@ -791,11 +791,16 @@ export function FinancialFeasibility({ params }: Props) {
       {/* Page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>
-            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>Cities</button>
-            {" › "}
-            <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>{cityName}</button>
-            {" › "}Financial Feasibility
+          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
+              Cities
+            </button>
+            <span>›</span>
+            <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
+              {cityName}
+            </button>
+            <span>›</span>
+            <span style={{ color: "#374151" }}>Financial Feasibility</span>
           </div>
           <h1 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Financial Feasibility</h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, maxWidth: "720px", lineHeight: "1.65" }}>
