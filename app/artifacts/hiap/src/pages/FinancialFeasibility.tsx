@@ -533,7 +533,7 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
                         )}
                         {opp.source_url && (
                           <a href={opp.source_url} target="_blank" rel="noopener noreferrer"
-                            style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#6B7280", background: "#F3F4F6", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
+                            style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#001EA7", background: "#EEF2FF", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
                             View fund ↗
                           </a>
                         )}
