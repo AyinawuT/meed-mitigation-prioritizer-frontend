@@ -416,6 +416,14 @@ export function adaptApiResult(
 
   const counts = apiResult.metadata?.counts as Record<string, number> | undefined;
 
+  // validActionsCount: prefer API-supplied value; fall back to deriving it from
+  // LOCAL_ACTION_MAP minus hard-blocked actions (legalExcluded contains only
+  // verdict="blocked" entries — flagged/conditional ones are in legalFlagged and
+  // are still included in the ranking).
+  const validActionsCount =
+    counts?.valid_actions ??
+    (LOCAL_ACTION_MAP.size - legalExcluded.length);
+
   return {
     schemaVersion: PIPELINE_RESULT_SCHEMA_VERSION,
     ranked,
@@ -426,7 +434,7 @@ export function adaptApiResult(
     cityEmissionsByGpc: {},
     locode: apiResult.locode,
     topN,
-    validActionsCount: counts?.valid_actions,
+    validActionsCount,
   };
 }
 
