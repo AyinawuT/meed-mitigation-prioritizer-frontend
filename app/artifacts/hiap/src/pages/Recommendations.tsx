@@ -1600,64 +1600,69 @@ export function Recommendations({ params }: Props) {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px" }}>
                 {/* Emissions profile */}
                 <button
-                  onClick={() => navigate(`/city/${citySlug}/preflight`)}
-                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s" }}
+                  onClick={() => setActiveTab("context")}
+                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>🌍</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Emissions profile</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{(totalCityEmissions / 1_000_000).toFixed(1)} Mt CO₂e</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{(totalCityEmissions / 1_000_000).toFixed(1)} Mt CO₂e total · {Object.keys(result.cityEmissionsByGpc ?? {}).length} sectors</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
                 {/* Socioeconomic */}
                 <button
-                  onClick={() => navigate(`/city/${citySlug}/socioeconomic`)}
-                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s" }}
+                  onClick={() => setActiveTab("context")}
+                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>👥</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Socioeconomic indicators</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Loaded ✓</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>20 indicators loaded</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
                 {/* Legal context */}
                 <button
-                  onClick={() => navigate(`/city/${citySlug}/regulations`)}
-                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s" }}
+                  onClick={() => setActiveTab("context")}
+                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>⚖</div>
+                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>⚖️</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Legal context</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{ranked.length} included · {legalExcluded.length} excluded</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{ranked.length} included · {legalExcluded.length} excluded · {legalFlagged.length} flagged</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
                 {/* Financial context */}
                 <button
-                  onClick={() => navigate(`/city/${citySlug}/financial-feasibility`)}
-                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s" }}
+                  onClick={() => setActiveTab("context")}
+                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>💰</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Financial context</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
                     {feasibilityRows.length > 0 ? profileToAttrs(feasibilityRows[0]?.inputs?.city?.profile).label : "Loading…"}
                   </div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
                 {/* Full ranking */}
                 <button
                   onClick={handleBrowseFullRanking}
-                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s" }}
+                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>📊</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Full ranking</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{ranked.length} actions scored</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{ranked.length} actions ranked</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
               </div>
             </div>
