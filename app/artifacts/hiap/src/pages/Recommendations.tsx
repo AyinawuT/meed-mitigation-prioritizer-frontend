@@ -1099,6 +1099,7 @@ function ContextBreakdownTab({
   citySlug,
   locode,
   feasibilityRows,
+  natPolicyScore,
   navigate,
 }: {
   result: PipelineResult;
@@ -1106,6 +1107,7 @@ function ContextBreakdownTab({
   citySlug: string;
   locode: string;
   feasibilityRows: FeasibilityRow[];
+  natPolicyScore: number | null;
   navigate: (to: string) => void;
 }) {
   const { legalExcluded, legalFlagged, totalCityEmissions } = result;
@@ -1274,9 +1276,9 @@ function ContextBreakdownTab({
         const ranked = result.ranked;
         const strongBacking = ranked.filter(a => a.policyComponent >= 0.75).length;
         const moderateBacking = ranked.filter(a => a.policyComponent >= 0.5 && a.policyComponent < 0.75).length;
-        const avgPolicy = ranked.length > 0
-          ? ranked.reduce((s, a) => s + a.policyComponent, 0) / ranked.length
-          : 0;
+        const displayScore = natPolicyScore !== null
+          ? `${(natPolicyScore * 100).toFixed(0)}%`
+          : "—";
         return (
           <div>
             {sectionHead("📋", "Policy Alignment")}
@@ -1284,7 +1286,7 @@ function ContextBreakdownTab({
               How well ranked actions are backed by existing national policy frameworks.
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-              {statCard("Avg. national alignment", `${(avgPolicy * 100).toFixed(0)}%`, `across all ${ranked.length} ranked actions`)}
+              {statCard("Avg. national alignment", displayScore, "across all assessed actions")}
               {statCard("Strongly backed actions", String(strongBacking), "score above 75%")}
               {statCard("Moderate backing", String(moderateBacking), "score 50–75%")}
             </div>
@@ -1325,6 +1327,7 @@ export function Recommendations({ params }: Props) {
   // ccglobal data
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [feasibilityRows, setFeasibilityRows] = useState<FeasibilityRow[]>([]);
+  const [natPolicyScore, setNatPolicyScore] = useState<number | null>(null);
 
   // Read scoring weights from localStorage
   const effectiveWeights = (() => {
@@ -1366,22 +1369,28 @@ export function Recommendations({ params }: Props) {
     }
   }, [locode]);
 
-  // Fetch ccglobal opportunities + feasibility data
+  // Fetch ccglobal opportunities + feasibility data + policy scores
   useEffect(() => {
     const base = "https://ccglobal.openearth.dev";
     const enc = encodeURIComponent(locode);
-    const feasUrl = `${base}/api/v1/cities/${enc}/climate-finance/feasibility?country_code=${countryCode}`;
-    const oppUrl  = `${base}/api/v1/climate-finance/opportunities?country_code=${countryCode}&limit=200&offset=0`;
+    const feasUrl   = `${base}/api/v1/cities/${enc}/climate-finance/feasibility?country_code=${countryCode}`;
+    const oppUrl    = `${base}/api/v1/climate-finance/opportunities?country_code=${countryCode}&limit=200&offset=0`;
+    const policyUrl = `${base}/api/v1/cities/${enc}/action-policy-scores?top_evidence_limit=5`;
 
     Promise.all([
       fetch(feasUrl).then(r => r.ok ? r.json() : null).catch(() => null),
       fetch(oppUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-    ]).then(([feasRes, oppRes]) => {
+      fetch(policyUrl).then(r => r.ok ? r.json() : null).catch(() => null),
+    ]).then(([feasRes, oppRes, polRes]) => {
       const rows: FeasibilityRow[] = (feasRes?.data ?? []).filter(
         (r: FeasibilityRow) => typeof r.financial_feasibility === "number"
       );
       setFeasibilityRows(rows);
       setOpportunities(oppRes?.data ?? []);
+      if (polRes?.scores?.length) {
+        const scores: number[] = (polRes.scores as { policy_support_score: number }[]).map(s => s.policy_support_score);
+        setNatPolicyScore(scores.reduce((a, b) => a + b, 0) / scores.length);
+      }
     }).catch(() => {});
   }, [locode, countryCode]);
 
@@ -1761,6 +1770,7 @@ export function Recommendations({ params }: Props) {
             citySlug={citySlug}
             locode={locode}
             feasibilityRows={feasibilityRows}
+            natPolicyScore={natPolicyScore}
             navigate={navigate}
           />
         )}
