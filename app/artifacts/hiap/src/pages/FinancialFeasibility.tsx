@@ -876,12 +876,12 @@ export function FinancialFeasibility({ params }: Props) {
         {/* Footer nav */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "32px" }}>
           <button onClick={() => navigate(`/city/${citySlug}/policy`)}
-            style={{ background: "white", border: "1.5px solid #E5E7EB", color: "#374151", borderRadius: "100px", padding: "12px 24px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
-            Policy alignment
+            style={{ background: "white", border: "1px solid #DDDDE1", color: "#374151", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
+            ← Policy alignment
           </button>
           <button onClick={() => { confirmStep(locode, "financial-feasibility"); navigate(`/city/${citySlug}/preflight`); }}
-            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "100px", padding: "12px 32px", fontSize: "14px", fontWeight: "700", cursor: "pointer", textTransform: "uppercase", letterSpacing: "-0.01em" }}>
-            Pre-flight check
+            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
+            Pre-flight check →
           </button>
         </div>
       </div>
