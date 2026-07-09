@@ -812,13 +812,13 @@ function TopPickCard({
       </div>
 
       {/* Title */}
-      <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", lineHeight: "1.35", marginBottom: "8px" }}>
-        {action.actionName.length > 70 ? action.actionName.slice(0, 70) + "…" : action.actionName}
+      <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", lineHeight: "1.4", marginBottom: "8px" }}>
+        {action.actionName}
       </div>
 
       {/* Description */}
-      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "14px", flex: 1 }}>
-        {action.description.length > 110 ? action.description.slice(0, 110) + "…" : action.description}
+      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.55", marginBottom: "14px" }}>
+        {action.description}
       </div>
 
       {/* Reduction bar */}
@@ -848,13 +848,11 @@ function TopPickCard({
       </div>
 
       {/* Matched projects badge */}
-      {matchedProjectCount > 0 && (
-        <div style={{ marginBottom: "10px" }}>
-          <span style={{ fontSize: "11px", fontWeight: "600", color: "#1D4ED8", background: "#EFF6FF", padding: "3px 8px", borderRadius: "4px", display: "inline-flex", alignItems: "center", gap: "4px" }}>
-            📁 {matchedProjectCount} matched project{matchedProjectCount !== 1 ? "s" : ""}
-          </span>
-        </div>
-      )}
+      <div style={{ marginBottom: "10px" }}>
+        <span style={{ fontSize: "11px", fontWeight: "600", color: "white", background: "#374151", padding: "4px 10px", borderRadius: "20px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
+          <span style={{ fontSize: "12px" }}>🗂️</span> {matchedProjectCount} matched project{matchedProjectCount !== 1 ? "s" : ""}
+        </span>
+      </div>
 
       {/* See more details */}
       <button
