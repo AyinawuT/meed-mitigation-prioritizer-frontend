@@ -126,32 +126,38 @@ rawActions.forEach((a) => {
 });
 
 const CO_BENEFIT_ICONS: Record<string, string> = {
-  "Air Quality": "🌬️",
-  "Public Health": "❤️‍🩹",
-  "Biodiversity": "🦋",
-  "Employment": "👷",
-  "Economic Development": "💰",
-  "Social Equity": "🤲",
-  "Energy Security": "🔋",
-  "Water Management": "🌊",
-  "Water quality": "💧",
-  "Noise Reduction": "🎧",
-  "Urban Heat": "🌇",
-  "Food Security": "🥗",
-  "Resilience": "🏔️",
-  "Climate Resilience": "🌍",
-  "Gender Equity": "🫶",
-  "Education": "🎓",
-  "Innovation": "⚗️",
-  "Community Wellbeing": "🏘️",
-  "Housing": "🏠",
-  "Cost of living": "🪙",
-  "Stakeholder engagement": "🤝",
-  "Mobility": "🚲",
-  "Green spaces": "🌳",
-  "Mental health": "🧠",
-  "Waste reduction": "♻️",
+  "air quality": "🌬️",
+  "public health": "❤️‍🩹",
+  "biodiversity": "🦋",
+  "habitat": "🌿",
+  "employment": "👷",
+  "economic development": "💰",
+  "social equity": "🤲",
+  "energy security": "🔋",
+  "water management": "🌊",
+  "water quality": "💧",
+  "noise reduction": "🎧",
+  "urban heat": "🌇",
+  "food security": "🥗",
+  "resilience": "🏔️",
+  "climate resilience": "🌍",
+  "gender equity": "🫶",
+  "education": "🎓",
+  "innovation": "⚗️",
+  "community wellbeing": "🏘️",
+  "housing": "🏠",
+  "cost of living": "🪙",
+  "stakeholder engagement": "🤝",
+  "mobility": "🚲",
+  "green spaces": "🌳",
+  "mental health": "🧠",
+  "waste reduction": "♻️",
 };
+
+function getCoBenefitIcon(label: string): string {
+  const lower = label.toLowerCase();
+  return CO_BENEFIT_ICONS[lower] ?? "✅";
+}
 
 // ─── GPC sector mapping ─────────────────────────────────────────────────────
 
@@ -1635,7 +1641,7 @@ export function Recommendations({ params }: Props) {
                       gap: "8px", background: "white", border: "1px solid #E5E7EB",
                       borderRadius: "10px", padding: "16px 12px", textAlign: "center",
                     }}>
-                      <span style={{ fontSize: "28px", lineHeight: 1 }}>{CO_BENEFIT_ICONS[cb] ?? "✅"}</span>
+                      <span style={{ fontSize: "28px", lineHeight: 1 }}>{getCoBenefitIcon(cb)}</span>
                       <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{cb}</div>
                       <div style={{ fontSize: "11px", color: "#9CA3AF" }}>
                         {count} of {displayTop.length} top action{displayTop.length !== 1 ? "s" : ""}
