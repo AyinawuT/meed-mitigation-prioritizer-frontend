@@ -817,9 +817,12 @@ function TopPickCard({
       </div>
 
       {/* Description */}
-      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "14px", flex: 1 }}>
+      <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "14px" }}>
         {action.description.length > 110 ? action.description.slice(0, 110) + "…" : action.description}
       </div>
+
+      {/* Spacer — absorbs extra height so the bar row aligns across cards */}
+      <div style={{ flex: 1 }} />
 
       {/* Reduction bar */}
       <div style={{ marginBottom: "6px" }}>
