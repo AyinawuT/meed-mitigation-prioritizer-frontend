@@ -436,10 +436,10 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
   const medCount  = knownActions.filter(a => a.strength === "medium").length;
 
   return (
-    <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+    <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", position: "relative" }}>
       <button
         onClick={onToggle}
-        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", borderRadius: "10px 10px 0 0" }}
       >
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
