@@ -1,24 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
-import actionNames from "@/data/actionNames.json";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface ActionMeta { name: string; category: string; subcategory: string }
-const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
+type FeasibilityInputs = {
+  action?: { capital_intensity?: number; preparation_complexity?: number };
+  city?: { profile?: string };
+  finance?: { fund_access?: string; n_reachable_opportunities?: number };
+  evidence?: { n_existing_projects?: number };
+};
 
 type FeasibilityRow = {
   action_id: string;
+  action_name?: string;
+  sector: string | null;
   financial_feasibility: number;
   route: string | null;
   reason: string | null;
-  sector: string | null;
-  inputs?: Record<string, unknown> | null;
-  links?: Record<string, string> | null;
+  inputs?: FeasibilityInputs | null;
+  links?: { detail?: string; opportunities?: string; projects?: string } | null;
 };
 
 type Opportunity = {
@@ -26,249 +30,511 @@ type Opportunity = {
   name?: string;
   funder?: string;
   instrument?: string;
+  status?: string;
   sectors?: string[];
   description?: string;
   url?: string;
-  amount_usd?: number | null;
-  deadline?: string | null;
 };
 
 type Project = {
   id?: string;
   name?: string;
+  name_es?: string;
   description?: string;
   sector?: string;
   status?: string;
-  amount_usd?: number | null;
-  funder?: string;
+  cost_clp?: number | null;
+  channel?: string;
+  location?: string;
+  region?: string;
+  match_quality?: string;
+  fndr_cycle?: string | number;
+  sectorial_cycle?: string | number;
+  bip_url?: string;
   url?: string;
 };
 
 // ─── Route metadata ───────────────────────────────────────────────────────────
 
-const ROUTE_META: Record<string, { label: string; color: string; bg: string; description: string }> = {
-  grant_finance:   { label: "Grant Finance",   color: "#16A34A", bg: "#F0FDF4", description: "Non-repayable funds from governments or foundations, ideal for high-impact public benefit actions." },
-  debt_finance:    { label: "Debt Finance",    color: "#2563EB", bg: "#EFF6FF", description: "Loans and bonds from banks or capital markets, suitable for actions with predictable revenue streams." },
-  equity_finance:  { label: "Equity Finance",  color: "#7C3AED", bg: "#F5F3FF", description: "Investment in exchange for ownership, works best for commercially viable low-carbon ventures." },
-  blended_finance: { label: "Blended Finance", color: "#B45309", bg: "#FFFBEB", description: "Combines public grants with private investment to reduce risk and unlock larger capital flows." },
-  carbon_market:   { label: "Carbon Markets",  color: "#0D9488", bg: "#F0FDFA", description: "Revenue from selling verified carbon credits for measurable emissions reductions." },
-  mixed:           { label: "Mixed Routes",    color: "#6B7280", bg: "#F9FAFB", description: "Multiple financing mechanisms may apply; a tailored strategy is recommended." },
-};
+type RouteMeta = { label: string; prefix: string; color: string; bg: string; border: string; tagline: string };
 
-function routeMeta(route: string | null) {
-  if (!route) return { label: "Unknown", color: "#9CA3AF", bg: "#F9FAFB", description: "No financing route identified yet." };
-  return ROUTE_META[route] ?? { label: route.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()), color: "#6B7280", bg: "#F9FAFB", description: "" };
+const ROUTE_DEFS: RouteMeta[] = [
+  { label: "Self-deliverable",        prefix: "★", color: "#16A34A", bg: "#F0FDF4", border: "#BBF7D0", tagline: "Low-cost — the city can fund and run it alone." },
+  { label: "Needs co-finance",        prefix: "●", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A", tagline: "Cost exceeds the budget — outside funds can cover the gap." },
+  { label: "Needs finance & support", prefix: "●", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA", tagline: "High cost and complexity — needs funding plus outside expertise." },
+];
+
+function getRouteMeta(route: string | null): RouteMeta {
+  if (!route) return { label: "Unknown", prefix: "●", color: "#9CA3AF", bg: "#F9FAFB", border: "#E5E7EB", tagline: "" };
+  const k = route.toLowerCase().trim();
+  if (k === "self-deliverable") return ROUTE_DEFS[0];
+  if (k.includes("co-finance") || k === "needs external co-finance") return ROUTE_DEFS[1];
+  if (k.includes("pooling") || k.includes("ta /") || k.includes("support")) return ROUTE_DEFS[2];
+  return { label: route.replace(/\b\w/g, c => c.toUpperCase()), prefix: "●", color: "#6B7280", bg: "#F9FAFB", border: "#E5E7EB", tagline: "" };
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+function sectorLabel(s: string | null | undefined) {
+  if (!s) return "";
+  return s.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
+
 function scoreColor(v: number) {
   if (v >= 0.7) return "#16A34A";
-  if (v >= 0.4) return "#F59E0B";
+  if (v >= 0.4) return "#D97706";
   return "#9CA3AF";
 }
 
-function scorePct(v: number) { return `${Math.round(v * 100)}%`; }
+function numericToLevel(v: number | undefined): string | undefined {
+  if (v === undefined || v === null) return undefined;
+  if (v <= 0.33) return "low";
+  if (v <= 0.67) return "medium";
+  return "high";
+}
 
-function ScorePill({ value }: { value: number }) {
-  const color = scoreColor(value);
+function levelLabel(l: string | undefined) {
+  if (!l) return "—";
+  return l.charAt(0).toUpperCase() + l.slice(1);
+}
+
+function levelColor(l: string | undefined, dir: "needs" | "has") {
+  const s = l?.toLowerCase() ?? "";
+  if (dir === "needs") {
+    if (s === "low" || s === "lower") return "#16A34A";
+    if (s === "medium") return "#D97706";
+    return "#DC2626";
+  }
+  if (s === "high" || s === "higher") return "#16A34A";
+  if (s === "medium") return "#D97706";
+  return "#D97706";
+}
+
+function levelPct(l: string | undefined) {
+  const map: Record<string, number> = { low: 20, lower: 30, medium: 50, high: 80, higher: 95 };
+  return map[l?.toLowerCase() ?? ""] ?? 50;
+}
+
+// Map city profile string from API to display attributes
+function profileToAttrs(profile: string | undefined) {
+  const p = (profile ?? "").toLowerCase();
+  if (p.includes("delivery-ready") || p === "delivery-ready") {
+    return { label: "Delivery-ready city", fa: "lower", dc: "high", desc: (city: string) => `${city} relies more on central transfers than its own revenue, but has the staff and track record to run projects well once funded.` };
+  }
+  if (p.includes("financially strong") || p.includes("self-sufficient")) {
+    return { label: "Financially strong city", fa: "high", dc: "high", desc: (city: string) => `${city} generates strong local revenue and has the institutional capacity to plan and deliver most projects independently.` };
+  }
+  if (p.includes("revenue-strong")) {
+    return { label: "Revenue-strong city", fa: "high", dc: "lower", desc: (city: string) => `${city} generates significant local revenue but may need to build delivery capacity to implement more complex projects.` };
+  }
+  if (p.includes("capacity-rich") || p.includes("capacity rich")) {
+    return { label: "Capacity-rich city", fa: "lower", dc: "higher", desc: (city: string) => `${city} has strong institutional capacity but depends heavily on central transfers to fund project delivery.` };
+  }
+  return { label: profile ? `${profile} city` : "Transitioning city", fa: undefined, dc: undefined, desc: (city: string) => `${city} is building its financial and delivery capacity, and may need external support for larger-scale projects.` };
+}
+
+function formatClp(val: number | null | undefined) {
+  if (!val || val <= 0) return null;
+  if (val >= 1e9) return `CLP ${(val / 1e9).toFixed(1)}B`;
+  if (val >= 1e6) return `CLP ${(val / 1e6).toFixed(0)}M`;
+  if (val >= 1e3) return `CLP ${(val / 1e3).toFixed(0)}K`;
+  return `CLP ${Math.round(val).toLocaleString()}`;
+}
+
+// ─── Badge helpers ────────────────────────────────────────────────────────────
+
+function fundStatusStyle(s?: string) {
+  const l = s?.toLowerCase() ?? "";
+  if (l === "ongoing") return { bg: "#D1FAE5", color: "#065F46", label: s! };
+  if (l === "open") return { bg: "#DBEAFE", color: "#1D4ED8", label: s! };
+  if (l === "closed") return { bg: "#F3F4F6", color: "#6B7280", label: s! };
+  return s ? { bg: "#F3F4F6", color: "#6B7280", label: s } : null;
+}
+
+function instrumentStyle(s?: string) {
+  if (!s) return null;
+  const l = s.toLowerCase();
+  if (l.includes("technical") || l.includes(" ta")) return { bg: "#E0F2FE", color: "#0369A1", label: s };
+  if (l.includes("blend")) return { bg: "#F5F3FF", color: "#7C3AED", label: s };
+  if (l.includes("grant")) return { bg: "#DCFCE7", color: "#15803D", label: s };
+  if (l.includes("loan") || l.includes("debt")) return { bg: "#EFF6FF", color: "#2563EB", label: s };
+  return { bg: "#F3F4F6", color: "#6B7280", label: s };
+}
+
+function matchQualityStyle(mq?: string) {
+  const l = mq?.toLowerCase() ?? "";
+  if (l.includes("strong")) return { bg: "#D1FAE5", color: "#065F46" };
+  if (l.includes("goal")) return { bg: "#CCFBF1", color: "#0F766E" };
+  return { bg: "#DBEAFE", color: "#1D4ED8" };
+}
+
+function projectStatusStyle(s?: string) {
+  const l = s?.toLowerCase() ?? "";
+  if (l.includes("financ") || l.includes("funded")) return { bg: "#DBEAFE", color: "#1D4ED8" };
+  if (l.includes("execu") || l.includes("progress") || l.includes("ongoing")) return { bg: "#FEF3C7", color: "#D97706" };
+  return { bg: "#F3F4F6", color: "#6B7280" };
+}
+
+// ─── Empty state ──────────────────────────────────────────────────────────────
+
+function EmptyState({ title, body }: { title: string; body: string }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-      <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px", minWidth: "60px" }}>
-        <div style={{ background: color, width: scorePct(value), height: "6px", borderRadius: "4px" }} />
+    <div style={{ border: "1px solid #F3F4F6", borderRadius: "8px", padding: "32px 20px", textAlign: "center" }}>
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style={{ margin: "0 auto 10px", display: "block" }}>
+        <circle cx="14" cy="14" r="13" stroke="#D1D5DB" strokeWidth="1.5" />
+        <circle cx="14" cy="14" r="6" stroke="#D1D5DB" strokeWidth="1.5" />
+      </svg>
+      <div style={{ fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>{title}</div>
+      <div style={{ fontSize: "12px", color: "#9CA3AF", lineHeight: "1.6", maxWidth: "300px", margin: "0 auto" }}>{body}</div>
+    </div>
+  );
+}
+
+// ─── CityProfileCard ──────────────────────────────────────────────────────────
+
+function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
+  cityName: string; profileLabel: string; profileDesc: string;
+  fa?: string; dc?: string;
+}) {
+  return (
+    <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px 24px", marginBottom: "32px" }}>
+      <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "16px" }}>
+        {cityName}'s financial profile
       </div>
-      <span style={{ fontSize: "12px", fontWeight: "700", color, minWidth: "32px", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
-        {value.toFixed(2)}
-      </span>
+
+      {/* City type */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: "#1E3A8A", borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
+        <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
+          🏛️
+        </div>
+        <div>
+          <div style={{ fontSize: "13px", fontWeight: "700", color: "white", marginBottom: "4px" }}>{profileLabel}</div>
+          <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)", lineHeight: "1.55" }}>{profileDesc}</div>
+        </div>
+      </div>
+
+      {/* Factors */}
+      <div style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "4px" }}>
+        Four factors determine an action's financial route
+      </div>
+      <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px" }}>
+        Each action's cost and complexity are weighed against what {cityName} can fund and deliver.
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "16px" }}>
+        {/* Headers */}
+        <div style={{ padding: "8px 14px", background: "#F9FAFB", borderBottom: "1px solid #E5E7EB", borderRight: "1px solid #E5E7EB" }}>
+          <span style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>What the action needs</span>
+        </div>
+        <div style={{ padding: "8px 14px", background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+          <span style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>What {cityName} has</span>
+        </div>
+
+        {/* Row 1 */}
+        <div style={{ padding: "12px 14px", borderBottom: "1px solid #E5E7EB", borderRight: "1px solid #E5E7EB" }}>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px" }}>Capital intensity</div>
+          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per action</div>
+        </div>
+        <div style={{ padding: "12px 14px", borderBottom: "1px solid #E5E7EB" }}>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Financial autonomy</div>
+          {fa ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px" }}>
+                <div style={{ background: levelColor(fa, "has"), width: `${levelPct(fa)}%`, height: "6px", borderRadius: "4px" }} />
+              </div>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: levelColor(fa, "has"), minWidth: "46px" }}>{levelLabel(fa)}</span>
+            </div>
+          ) : (
+            <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per city</div>
+          )}
+        </div>
+
+        {/* Row 2 */}
+        <div style={{ padding: "12px 14px", borderRight: "1px solid #E5E7EB" }}>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px" }}>Preparation complexity</div>
+          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per action</div>
+        </div>
+        <div style={{ padding: "12px 14px" }}>
+          <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Delivery capacity</div>
+          {dc ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px" }}>
+                <div style={{ background: levelColor(dc, "has"), width: `${levelPct(dc)}%`, height: "6px", borderRadius: "4px" }} />
+              </div>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: levelColor(dc, "has"), minWidth: "46px" }}>{levelLabel(dc)}</span>
+            </div>
+          ) : (
+            <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per city</div>
+          )}
+        </div>
+      </div>
+
+      {/* What this means */}
+      <div style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
+        What this means for actions
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
+        {ROUTE_DEFS.map((r, i) => (
+          <div key={i} style={{ background: r.bg, border: `1px solid ${r.border}`, borderRadius: "8px", padding: "10px 12px" }}>
+            <div style={{ fontSize: "12px", fontWeight: "700", color: r.color, marginBottom: "4px" }}>{r.prefix} {r.label}</div>
+            <div style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.5" }}>{r.tagline}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-function RouteBadge({ route }: { route: string | null }) {
-  const m = routeMeta(route);
-  return (
-    <span style={{ fontSize: "11px", fontWeight: "600", color: m.color, background: m.bg, padding: "3px 9px", borderRadius: "20px", whiteSpace: "nowrap" }}>
-      {m.label}
-    </span>
-  );
-}
+// ─── Detail Pane ──────────────────────────────────────────────────────────────
 
-function SectionHead({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "10px" }}>
-      {children}
-    </div>
-  );
-}
-
-// ─── Detail Pane ─────────────────────────────────────────────────────────────
-
-function DetailPane({
-  row,
-  opportunities,
-  projects,
-  onClose,
-}: {
+function DetailPane({ row, cityName, opportunities, onClose }: {
   row: FeasibilityRow;
+  cityName: string;
   opportunities: Opportunity[];
-  projects: Project[];
   onClose: () => void;
 }) {
-  const meta = ACTION_NAMES[row.action_id];
-  const rm = routeMeta(row.route);
+  const rm = getRouteMeta(row.route);
+  const inp = row.inputs ?? {};
+  const ciLevel = numericToLevel(inp.action?.capital_intensity);
+  const pcLevel = numericToLevel(inp.action?.preparation_complexity);
+  const profAttrs = profileToAttrs(inp.city?.profile);
 
-  const matchedOpps = opportunities.filter(o => {
-    if (!o.sectors || o.sectors.length === 0) return true;
-    return o.sectors.some(s => s.toLowerCase().includes((row.sector ?? "").toLowerCase()));
-  }).slice(0, 4);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [projLoading, setProjLoading] = useState(true);
+  const [showAllOpps, setShowAllOpps] = useState(false);
+  const [showAllProj, setShowAllProj] = useState(false);
 
-  const matchedProjects = projects.filter(p => {
-    if (!p.sector) return true;
-    return p.sector.toLowerCase().includes((row.sector ?? "").toLowerCase());
-  }).slice(0, 4);
+  // Fetch projects for this specific action
+  useEffect(() => {
+    setProjLoading(true);
+    setProjects([]);
+    const relUrl = row.links?.projects;
+    if (!relUrl) { setProjLoading(false); return; }
+    fetch(`https://ccglobal.openearth.dev${relUrl}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(res => setProjects(res?.data ?? []))
+      .catch(() => {})
+      .finally(() => setProjLoading(false));
+  }, [row.action_id]);
+
+  // Opportunities: use sector link if available, else filter from pre-fetched list
+  const sectorWord = (row.sector ?? "").toLowerCase().split("_")[0];
+  const matchedOpps = useMemo(() => opportunities.filter(o => {
+    if (!o.sectors || o.sectors.length === 0) return false;
+    return o.sectors.some(s => s.toLowerCase().includes(sectorWord));
+  }), [opportunities, sectorWord]);
+
+  const visibleOpps = showAllOpps ? matchedOpps : matchedOpps.slice(0, 2);
+  const visibleProjs = showAllProj ? projects : projects.slice(0, 3);
 
   return (
     <>
-      <div
-        onClick={onClose}
-        style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.22)", zIndex: 40 }}
-      />
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.28)", zIndex: 40 }} />
       <div style={{
-        position: "fixed", top: 0, right: 0, bottom: 0, width: "440px",
+        position: "fixed", top: 0, right: 0, bottom: 0,
+        width: "min(560px, 56vw)",
         background: "white", zIndex: 50, overflowY: "auto",
-        boxShadow: "-4px 0 24px rgba(0,0,0,0.12)",
-        display: "flex", flexDirection: "column",
-        fontFamily: "Inter, system-ui, -apple-system, sans-serif",
-        animation: "slideIn 0.22s ease",
+        boxShadow: "-4px 0 32px rgba(0,0,0,0.14)",
+        fontFamily: "Inter, system-ui, sans-serif",
+        animation: "slideIn 0.2s ease",
       }}>
-        {/* Header */}
-        <div style={{ padding: "24px 28px", borderBottom: "1px solid #EBEBEB", flexShrink: 0 }}>
-          <button
-            onClick={onClose}
-            style={{ background: "none", border: "none", cursor: "pointer", color: "#001EA7", fontSize: "13px", fontWeight: "600", padding: 0, display: "flex", alignItems: "center", gap: "6px", marginBottom: "16px" }}
-          >
-            ← GO BACK
+        <div style={{ padding: "20px 28px 40px" }}>
+
+          {/* Close */}
+          <button onClick={onClose} style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: "600", color: "#374151", background: "none", border: "none", cursor: "pointer", padding: "0 0 16px 0" }}>
+            ← Close
           </button>
+
+          {/* Sector + title */}
           {row.sector && (
-            <div style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "4px" }}>
-              {row.sector}
+            <div style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "6px" }}>
+              {sectorLabel(row.sector)}
             </div>
           )}
-          <h2 style={{ fontSize: "17px", fontWeight: "700", color: "#111827", margin: "0 0 12px", lineHeight: "1.4" }}>
-            {meta?.name ?? row.action_id}
+          <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 16px", lineHeight: "1.3" }}>
+            {row.action_name ?? row.action_id}
           </h2>
-          <RouteBadge route={row.route} />
-        </div>
 
-        <div style={{ padding: "24px 28px", flexGrow: 1, overflowY: "auto" }}>
-
-          {/* Feasibility score */}
-          <div style={{ marginBottom: "22px" }}>
-            <SectionHead>Financial feasibility score</SectionHead>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "6px", height: "10px" }}>
-                <div style={{ background: scoreColor(row.financial_feasibility), width: scorePct(row.financial_feasibility), height: "10px", borderRadius: "6px" }} />
-              </div>
-              <span style={{ fontSize: "18px", fontWeight: "800", color: scoreColor(row.financial_feasibility), minWidth: "44px", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+          {/* Route card */}
+          <div style={{ background: rm.bg, border: `1px solid ${rm.border}`, borderRadius: "8px", padding: "10px 14px 12px", marginBottom: "24px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+              <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}>{rm.prefix} {rm.label}</span>
+              <span style={{ fontSize: "18px", fontWeight: "800", color: rm.color, fontVariantNumeric: "tabular-nums" }}>
                 {row.financial_feasibility.toFixed(2)}
               </span>
             </div>
+            <div style={{ fontSize: "12px", color: "#4B5563" }}>{row.reason ?? rm.tagline}</div>
           </div>
 
-          {/* Route & reason */}
-          <div style={{ marginBottom: "22px", background: rm.bg, border: `1px solid ${rm.color}22`, borderRadius: "10px", padding: "14px 16px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: rm.color, flexShrink: 0 }} />
-              <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}>{rm.label}</span>
+          {/* Factor breakdown */}
+          {(ciLevel || pcLevel || profAttrs.fa || profAttrs.dc) && (
+            <div style={{ marginBottom: "24px" }}>
+              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>
+                What determined this route
+              </div>
+
+              {(ciLevel || pcLevel) && (
+                <>
+                  <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>What the action needs</div>
+                  {ciLevel && (
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Capital intensity</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(ciLevel, "needs") }}>{levelLabel(ciLevel)}</span>
+                    </div>
+                  )}
+                  {pcLevel && (
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Preparation complexity</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(pcLevel, "needs") }}>{levelLabel(pcLevel)}</span>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {(profAttrs.fa || profAttrs.dc) && (
+                <>
+                  <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>What {cityName} has</div>
+                  {profAttrs.fa && (
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Financial autonomy</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.fa, "has") }}>{levelLabel(profAttrs.fa)}</span>
+                    </div>
+                  )}
+                  {profAttrs.dc && (
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>Delivery capacity</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.dc, "has") }}>{levelLabel(profAttrs.dc)}</span>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            <p style={{ fontSize: "12px", color: "#4B5563", lineHeight: "1.65", margin: "0 0 8px" }}>
-              {rm.description}
-            </p>
-            {row.reason && (
-              <p style={{ fontSize: "12px", color: "#374151", lineHeight: "1.65", margin: 0, fontStyle: "italic", borderTop: `1px solid ${rm.color}22`, paddingTop: "8px" }}>
-                {row.reason}
-              </p>
-            )}
-          </div>
+          )}
+
+          <div style={{ height: "1px", background: "#F3F4F6", margin: "0 0 20px" }} />
 
           {/* Fund access */}
-          <div style={{ marginBottom: "22px" }}>
-            <SectionHead>Fund access opportunities</SectionHead>
+          <div style={{ marginBottom: "24px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fund Access</div>
+              {matchedOpps.length > 0 && (
+                <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
+                  {inp.finance?.n_reachable_opportunities ?? matchedOpps.length} DIRECT
+                </div>
+              )}
+            </div>
+
             {matchedOpps.length === 0 ? (
-              <p style={{ fontSize: "12px", color: "#9CA3AF", margin: 0 }}>No matching opportunities found for this sector.</p>
+              <EmptyState
+                title="No matched funds yet"
+                body="No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added."
+              />
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {matchedOpps.map((opp, i) => (
-                  <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
-                    <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "4px" }}>
-                      {opp.name ?? "Funding Opportunity"}
-                    </div>
-                    {opp.funder && (
-                      <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>
-                        Funder: {opp.funder}
+              <>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  {visibleOpps.map((opp, i) => {
+                    const st = fundStatusStyle(opp.status);
+                    const instr = instrumentStyle(opp.instrument);
+                    return (
+                      <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
+                          <div style={{ fontSize: "13px", fontWeight: "600", color: "#0D9488" }}>{opp.name ?? "Funding opportunity"}</div>
+                          <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
+                            {st && <span style={{ fontSize: "10px", fontWeight: "600", color: st.color, background: st.bg, padding: "2px 6px", borderRadius: "4px" }}>{st.label}</span>}
+                            {instr && <span style={{ fontSize: "10px", fontWeight: "600", color: instr.color, background: instr.bg, padding: "2px 6px", borderRadius: "4px" }}>{instr.label}</span>}
+                          </div>
+                        </div>
+                        {opp.funder && <div style={{ fontSize: "11px", color: "#6B7280" }}>{opp.funder}</div>}
+                        {opp.description && (
+                          <p style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.55", margin: "4px 0 0" }}>
+                            {opp.description.length > 150 ? opp.description.slice(0, 150) + "…" : opp.description}
+                          </p>
+                        )}
                       </div>
-                    )}
-                    {opp.instrument && (
-                      <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>
-                        Instrument: {opp.instrument}
-                      </div>
-                    )}
-                    {opp.description && (
-                      <p style={{ fontSize: "12px", color: "#4B5563", lineHeight: "1.55", margin: "4px 0 0" }}>
-                        {opp.description.length > 180 ? opp.description.slice(0, 180) + "…" : opp.description}
-                      </p>
-                    )}
-                    {opp.url && (
-                      <a href={opp.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", color: "#001EA7", marginTop: "6px", display: "inline-block", fontWeight: "600" }}>
-                        Learn more →
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+                {matchedOpps.length > 2 && (
+                  <button onClick={() => setShowAllOpps(v => !v)}
+                    style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                    {showAllOpps ? "Show fewer funds" : `Show all ${matchedOpps.length} matched funds >`}
+                  </button>
+                )}
+              </>
             )}
           </div>
+
+          <div style={{ height: "1px", background: "#F3F4F6", margin: "0 0 20px" }} />
 
           {/* Matched projects */}
-          <div style={{ marginBottom: "12px" }}>
-            <SectionHead>Matched projects</SectionHead>
-            {matchedProjects.length === 0 ? (
-              <p style={{ fontSize: "12px", color: "#9CA3AF", margin: 0 }}>No matching projects found for this sector.</p>
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>Matched Projects</div>
+              {!projLoading && projects.length > 0 && (
+                <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
+                  {projects.length} TOTAL
+                </div>
+              )}
+            </div>
+
+            {projLoading ? (
+              <div style={{ padding: "16px", textAlign: "center", color: "#9CA3AF", fontSize: "12px" }}>Loading…</div>
+            ) : projects.length === 0 ? (
+              <EmptyState
+                title="No matched projects yet"
+                body="No catalogued projects in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added."
+              />
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {matchedProjects.map((proj, i) => (
-                  <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "4px" }}>
-                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>
-                        {proj.name ?? "Project"}
+              <>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {visibleProjs.map((proj, i) => {
+                    const mq = proj.match_quality ? matchQualityStyle(proj.match_quality) : null;
+                    const ps = proj.status ? projectStatusStyle(proj.status) : null;
+                    const cost = formatClp(proj.cost_clp);
+                    return (
+                      <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "2px" }}>
+                          <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.35" }}>{proj.name ?? "Project"}</div>
+                          <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
+                            {mq && proj.match_quality && <span style={{ fontSize: "10px", fontWeight: "600", color: mq.color, background: mq.bg, padding: "2px 6px", borderRadius: "4px" }}>{proj.match_quality}</span>}
+                            {ps && proj.status && <span style={{ fontSize: "10px", fontWeight: "600", color: ps.color, background: ps.bg, padding: "2px 6px", borderRadius: "4px" }}>{proj.status}</span>}
+                          </div>
+                        </div>
+                        {proj.name_es && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{proj.name_es}</div>}
+                        {(proj.location || proj.region) && (
+                          <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {[proj.location, proj.region].filter(Boolean).join(", ")}</div>
+                        )}
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
+                          {cost && <span>Cost: <strong style={{ color: "#374151" }}>{cost}</strong></span>}
+                          {proj.sector && <span>Sector: <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
+                          {proj.channel && <span>Channel: <strong style={{ color: "#374151" }}>{proj.channel}</strong></span>}
+                        </div>
+                        {(proj.fndr_cycle || proj.sectorial_cycle) && (
+                          <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "4px" }}>
+                            {proj.fndr_cycle ? `F.N.D.R. cycle ${proj.fndr_cycle}` : ""}
+                            {proj.fndr_cycle && proj.sectorial_cycle ? " | " : ""}
+                            {proj.sectorial_cycle ? `SECTORIAL cycle ${proj.sectorial_cycle}` : ""}
+                          </div>
+                        )}
+                        {proj.bip_url && (
+                          <a href={proj.bip_url} target="_blank" rel="noopener noreferrer"
+                            style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#6B7280", background: "#F3F4F6", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
+                            BIP/SNI register
+                          </a>
+                        )}
                       </div>
-                      {proj.status && (
-                        <span style={{ fontSize: "10px", color: "#6B7280", background: "#F3F4F6", padding: "2px 7px", borderRadius: "4px", flexShrink: 0, fontWeight: "600" }}>
-                          {proj.status}
-                        </span>
-                      )}
-                    </div>
-                    {proj.funder && (
-                      <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>
-                        {proj.funder}
-                      </div>
-                    )}
-                    {proj.description && (
-                      <p style={{ fontSize: "12px", color: "#4B5563", lineHeight: "1.55", margin: "4px 0 0" }}>
-                        {proj.description.length > 160 ? proj.description.slice(0, 160) + "…" : proj.description}
-                      </p>
-                    )}
-                    {proj.url && (
-                      <a href={proj.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", color: "#001EA7", marginTop: "6px", display: "inline-block", fontWeight: "600" }}>
-                        View project →
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+                {projects.length > 3 && (
+                  <button onClick={() => setShowAllProj(v => !v)}
+                    style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                    {showAllProj ? "Show fewer projects" : `Show all ${projects.length} matched projects >`}
+                  </button>
+                )}
+              </>
             )}
           </div>
-
         </div>
       </div>
       <style>{`@keyframes slideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }`}</style>
@@ -276,64 +542,75 @@ function DetailPane({
   );
 }
 
-// ─── Action row ───────────────────────────────────────────────────────────────
+// ─── Table row ────────────────────────────────────────────────────────────────
 
-function ActionRow({
-  row,
-  onSelect,
-}: {
-  row: FeasibilityRow;
-  onSelect: () => void;
-}) {
-  const meta = ACTION_NAMES[row.action_id];
-
+function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) {
+  const rm = getRouteMeta(row.route);
+  const fc = row.inputs?.finance?.n_reachable_opportunities ?? 0;
   return (
-    <div
-      onClick={onSelect}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 110px 160px 34px",
-        alignItems: "center",
-        gap: "12px",
-        padding: "13px 16px",
-        background: "white",
-        borderBottom: "1px solid #F3F4F6",
-        cursor: "pointer",
-        transition: "background 0.1s",
-      }}
+    <tr style={{ borderBottom: "1px solid #F3F4F6" }}
       onMouseEnter={e => (e.currentTarget.style.background = "#FAFAFA")}
-      onMouseLeave={e => (e.currentTarget.style.background = "white")}
-    >
-      <div>
-        <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "2px" }}>
-          {meta?.name ?? row.action_id}
-        </div>
-        {row.sector && (
-          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{row.sector}</div>
-        )}
-      </div>
-      <RouteBadge route={row.route} />
-      <ScorePill value={row.financial_feasibility} />
-      <span style={{ color: "#D1D5DB", fontSize: "16px" }}>›</span>
-    </div>
+      onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+      <td style={{ padding: "11px 16px", fontSize: "13px", fontWeight: "500", color: "#111827", lineHeight: "1.4", verticalAlign: "middle" }}>
+        {row.action_name ?? row.action_id}
+      </td>
+      <td style={{ padding: "11px 12px", fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap", verticalAlign: "middle" }}>
+        {sectorLabel(row.sector)}
+      </td>
+      <td style={{ padding: "11px 12px", verticalAlign: "middle" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "11px", fontWeight: "600", color: rm.color, background: rm.bg, border: `1px solid ${rm.border}`, padding: "3px 9px", borderRadius: "20px", whiteSpace: "nowrap" }}>
+          {rm.prefix} {rm.label}
+        </span>
+      </td>
+      <td style={{ padding: "11px 12px", fontSize: "13px", fontWeight: "700", color: scoreColor(row.financial_feasibility), textAlign: "right", fontVariantNumeric: "tabular-nums", verticalAlign: "middle" }}>
+        {row.financial_feasibility.toFixed(2)}
+      </td>
+      <td style={{ padding: "11px 12px", fontSize: "12px", verticalAlign: "middle" }}>
+        {fc > 0 ? <><strong style={{ color: "#374151" }}>{fc}</strong> <span style={{ color: "#9CA3AF" }}>direct</span></> : <span style={{ color: "#D1D5DB" }}>—</span>}
+      </td>
+      <td style={{ padding: "11px 16px", verticalAlign: "middle" }}>
+        <button onClick={onView} style={{ fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap" }}>
+          View ↗
+        </button>
+      </td>
+    </tr>
   );
 }
 
-// ─── Summary cards ────────────────────────────────────────────────────────────
+// ─── Pagination ───────────────────────────────────────────────────────────────
 
-function SummaryCard({ label, value, sub, color }: { label: string; value: string | number; sub?: string; color?: string }) {
+const PAGE_SIZE = 15;
+
+function Pagination({ total, page, onChange }: { total: number; page: number; onChange: (p: number) => void }) {
+  const pages = Math.ceil(total / PAGE_SIZE);
+  if (pages <= 1) return null;
+
+  const getPages = (): (number | "…")[] => {
+    if (pages <= 7) return Array.from({ length: pages }, (_, i) => i + 1);
+    if (page <= 4) return [1, 2, 3, 4, 5, "…", pages];
+    if (page >= pages - 3) return [1, "…", pages - 4, pages - 3, pages - 2, pages - 1, pages];
+    return [1, "…", page - 1, page, page + 1, "…", pages];
+  };
+
+  const base: React.CSSProperties = { fontSize: "12px", fontWeight: "600", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "5px 10px", minWidth: "32px", background: "none" };
+
   return (
-    <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "18px 20px" }}>
-      <div style={{ fontSize: "22px", fontWeight: "800", color: color ?? "#111827", fontVariantNumeric: "tabular-nums", marginBottom: "4px" }}>
-        {value}
-      </div>
-      <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{label}</div>
-      {sub && <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{sub}</div>}
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px", padding: "14px 0" }}>
+      <button onClick={() => onChange(page - 1)} disabled={page === 1}
+        style={{ ...base, color: page === 1 ? "#D1D5DB" : "#374151", cursor: page === 1 ? "default" : "pointer" }}>Prev</button>
+      {getPages().map((p, i) => (
+        <button key={i} onClick={() => typeof p === "number" && onChange(p)} disabled={p === "…"}
+          style={{ ...base, color: p === page ? "white" : p === "…" ? "#9CA3AF" : "#374151", background: p === page ? "#001EA7" : "none", border: p === page ? "1px solid #001EA7" : "1px solid #E5E7EB", cursor: p === "…" ? "default" : "pointer" }}>
+          {p}
+        </button>
+      ))}
+      <button onClick={() => onChange(page + 1)} disabled={page === pages}
+        style={{ ...base, color: page === pages ? "#D1D5DB" : "#374151", cursor: page === pages ? "default" : "pointer" }}>Next</button>
     </div>
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Main ─────────────────────────────────────────────────────────────────────
 
 interface Props { params: { locode: string } }
 
@@ -341,78 +618,65 @@ export function FinancialFeasibility({ params }: Props) {
   const [, navigate] = useLocation();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
-  const city: CityData | undefined = CITIES.find(
-    c => c.locode.toLowerCase() === locode.toLowerCase()
-  );
+  const city: CityData | undefined = CITIES.find(c => c.locode.toLowerCase() === locode.toLowerCase());
   const citySlug = urlLocode;
   const cityName = city?.name ?? locode;
   const countryCode = locode.slice(0, 2).toUpperCase();
 
   const [feasibility, setFeasibility] = useState<FeasibilityRow[]>([]);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<FeasibilityRow | null>(null);
   const [activeRoute, setActiveRoute] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setStepProgress(locode, "financial-feasibility", { visited: true });
-
-    const baseUrl = "https://ccglobal.openearth.dev";
-    const encodedLocode = encodeURIComponent(locode);
-
-    const feasUrl = `${baseUrl}/api/v1/cities/${encodedLocode}/climate-finance/feasibility?country_code=${countryCode}`;
-    const oppUrl  = `${baseUrl}/api/v1/climate-finance/opportunities?country_code=${countryCode}&limit=100&offset=0`;
-    const projUrl = `${baseUrl}/api/v1/climate-finance/projects?country_code=${countryCode}&limit=50&offset=0`;
+    const base = "https://ccglobal.openearth.dev";
+    const enc = encodeURIComponent(locode);
+    const feasUrl = `${base}/api/v1/cities/${enc}/climate-finance/feasibility?country_code=${countryCode}`;
+    const oppUrl  = `${base}/api/v1/climate-finance/opportunities?country_code=${countryCode}&limit=200&offset=0`;
 
     Promise.all([
       fetch(feasUrl).then(r => r.ok ? r.json() : null).catch(() => null),
       fetch(oppUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-      fetch(projUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-    ]).then(([feasRes, oppRes, projRes]) => {
+    ]).then(([feasRes, oppRes]) => {
       const rows: FeasibilityRow[] = (feasRes?.data ?? []).filter(
         (r: FeasibilityRow) => typeof r.financial_feasibility === "number"
       );
       rows.sort((a, b) => b.financial_feasibility - a.financial_feasibility);
       setFeasibility(rows);
       setOpportunities(oppRes?.data ?? []);
-      setProjects(projRes?.data ?? []);
-      if (rows.length > 0) {
-        setStepProgress(locode, "financial-feasibility", { visited: true, progress: 100, sub: `${rows.length} actions assessed` });
-      }
-    }).catch(() => {
-      setError("Could not load financial feasibility data. Please check your connection.");
-    }).finally(() => {
-      setLoading(false);
-    });
+      if (rows.length > 0) setStepProgress(locode, "financial-feasibility", { visited: true, progress: 100, sub: `${rows.length} actions assessed` });
+    }).catch(() => setError("Could not load financial feasibility data."))
+      .finally(() => setLoading(false));
   }, [locode, countryCode]);
 
-  const routes = Array.from(new Set(feasibility.map(r => r.route ?? "unknown"))).sort();
+  // City profile (from first row's inputs)
+  const cityProfileStr = feasibility[0]?.inputs?.city?.profile;
+  const profAttrs = profileToAttrs(cityProfileStr);
 
-  const filtered = activeRoute
-    ? feasibility.filter(r => (r.route ?? "unknown") === activeRoute)
-    : feasibility;
+  const routeCounts = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const r of feasibility) { const k = r.route ?? ""; if (k) m[k] = (m[k] ?? 0) + 1; }
+    return m;
+  }, [feasibility]);
 
-  const avgScore = feasibility.length > 0
-    ? feasibility.reduce((s, r) => s + r.financial_feasibility, 0) / feasibility.length
-    : 0;
+  const routes = useMemo(() => Array.from(new Set(feasibility.map(r => r.route ?? "").filter(Boolean))), [feasibility]);
 
-  const routeCounts: Record<string, number> = {};
-  for (const r of feasibility) {
-    const key = r.route ?? "unknown";
-    routeCounts[key] = (routeCounts[key] ?? 0) + 1;
-  }
-  const topRoute = Object.entries(routeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const filtered = activeRoute ? feasibility.filter(r => r.route === activeRoute) : feasibility;
 
-  const highCount = feasibility.filter(r => r.financial_feasibility >= 0.7).length;
+  useEffect(() => { setPage(1); }, [activeRoute]);
+
+  const pageRows = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   if (loading) {
     return (
       <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar cityName={cityName} />
         <StepBar activeStep={5} citySlug={citySlug} />
-        <div style={{ maxWidth: "900px", margin: "80px auto", padding: "0 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 48px", textAlign: "center" }}>
           <p style={{ color: "#6B7280" }}>Loading financial feasibility data…</p>
         </div>
       </div>
@@ -427,158 +691,124 @@ export function FinancialFeasibility({ params }: Props) {
       {selected && (
         <DetailPane
           row={selected}
+          cityName={cityName}
           opportunities={opportunities}
-          projects={projects}
           onClose={() => setSelected(null)}
         />
       )}
 
       {/* Page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>Cities</button>
             {" › "}
             <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>{cityName}</button>
-            {" › "}Financial feasibility
+            {" › "}Financial Feasibility
           </div>
-          <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
-            Financial feasibility — {cityName}
-          </h1>
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-            Climate finance routes and funding readiness for each candidate mitigation action.
+          <h1 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Financial Feasibility</h1>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, maxWidth: "720px", lineHeight: "1.65" }}>
+            For every action, the tool compares what the action needs (capital and preparation) against what {cityName} has (budget autonomy and delivery capacity) to estimate how realistically the city can finance and deliver it — and which funds could help close the gap.
           </p>
         </div>
       </div>
 
-      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "28px 48px 64px" }}>
-
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 48px 64px" }}>
         {error && (
           <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "10px", padding: "16px 20px", marginBottom: "24px", fontSize: "13px", color: "#DC2626" }}>
             {error}
           </div>
         )}
 
-        {/* Summary cards */}
+        {/* City profile */}
         {feasibility.length > 0 && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px", marginBottom: "28px" }}>
-            <SummaryCard label="Actions assessed" value={feasibility.length} sub="with climate finance data" />
-            <SummaryCard label="Average score" value={avgScore.toFixed(2)} sub="city-wide feasibility" color={scoreColor(avgScore)} />
-            <SummaryCard label="High readiness" value={highCount} sub="score ≥ 0.70" color="#16A34A" />
-            <SummaryCard
-              label="Primary route"
-              value={topRoute ? routeMeta(topRoute).label : "—"}
-              sub={topRoute ? `${routeCounts[topRoute]} actions` : ""}
-              color={topRoute ? routeMeta(topRoute).color : "#9CA3AF"}
-            />
-          </div>
+          <CityProfileCard
+            cityName={cityName}
+            profileLabel={profAttrs.label}
+            profileDesc={profAttrs.desc(cityName)}
+            fa={profAttrs.fa}
+            dc={profAttrs.dc}
+          />
         )}
 
-        {/* Route legend */}
-        {routes.length > 1 && (
-          <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "16px 20px", marginBottom: "20px" }}>
-            <div style={{ fontSize: "11px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "12px" }}>
-              Financing routes in this city
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {routes.map(route => {
-                const m = routeMeta(route);
-                const isActive = activeRoute === route;
-                const count = routeCounts[route] ?? 0;
-                return (
-                  <button
-                    key={route}
-                    onClick={() => setActiveRoute(isActive ? null : route)}
-                    style={{
-                      display: "flex", alignItems: "center", gap: "6px",
-                      background: isActive ? m.bg : "#F9FAFB",
-                      border: `1.5px solid ${isActive ? m.color : "#E5E7EB"}`,
-                      borderRadius: "20px", padding: "5px 12px",
-                      cursor: "pointer", transition: "all 0.1s",
-                    }}
-                  >
-                    <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: m.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: "12px", fontWeight: "600", color: isActive ? m.color : "#374151" }}>
-                      {m.label}
-                    </span>
-                    <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{count}</span>
-                  </button>
-                );
-              })}
-              {activeRoute && (
-                <button
-                  onClick={() => setActiveRoute(null)}
-                  style={{ fontSize: "11px", color: "#6B7280", background: "none", border: "1px solid #E5E7EB", borderRadius: "20px", padding: "5px 12px", cursor: "pointer" }}
-                >
-                  Clear filter ×
-                </button>
-              )}
-            </div>
-            {activeRoute && (
-              <p style={{ fontSize: "12px", color: "#6B7280", margin: "10px 0 0", lineHeight: "1.6" }}>
-                {routeMeta(activeRoute).description}
-              </p>
-            )}
-          </div>
-        )}
+        {/* Section */}
+        <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>
+          What's financially aligned — and what isn't
+        </h2>
+        <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px", lineHeight: "1.6" }}>
+          Filter by financial route to see what's feasible now versus what needs outside support, or narrow by sector. Click View for full reasoning per action.
+        </p>
 
-        {/* Action list */}
+        {/* Filter pills */}
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+          <button onClick={() => setActiveRoute(null)}
+            style={{ fontSize: "13px", fontWeight: "600", color: activeRoute === null ? "white" : "#374151", background: activeRoute === null ? "#111827" : "white", border: `1.5px solid ${activeRoute === null ? "#111827" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
+            All
+          </button>
+          {routes.map(route => {
+            const rm = getRouteMeta(route);
+            const isActive = activeRoute === route;
+            const cnt = routeCounts[route] ?? 0;
+            return (
+              <button key={route} onClick={() => setActiveRoute(isActive ? null : route)}
+                style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "13px", fontWeight: "600", color: isActive ? "white" : rm.color, background: isActive ? rm.color : rm.bg, border: `1.5px solid ${isActive ? rm.color : rm.border}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
+                <span>{rm.prefix}</span><span>{rm.label}</span><span style={{ opacity: 0.8 }}>{cnt}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "10px" }}>Sorted by score, highest first</div>
+
+        {/* Table */}
         {feasibility.length === 0 && !error ? (
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "40px 24px", textAlign: "center" }}>
-            <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>
-              No financial feasibility data is available for {cityName} yet.
-            </p>
-            <p style={{ fontSize: "13px", color: "#9CA3AF", margin: "8px 0 0" }}>
-              You can continue to the pre-flight check — feasibility data will be incorporated when available.
-            </p>
+            <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>No financial feasibility data is available for {cityName} yet.</p>
           </div>
         ) : (
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", overflow: "hidden" }}>
-            {/* Table header */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 110px 160px 34px",
-              gap: "12px",
-              padding: "10px 16px",
-              background: "#F9FAFB",
-              borderBottom: "1px solid #E5E7EB",
-            }}>
-              <span style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                Action {activeRoute ? `· ${routeMeta(activeRoute).label}` : `· ${filtered.length} shown`}
-              </span>
-              <span style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em" }}>Route</span>
-              <span style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em" }}>Feasibility score</span>
-              <span />
-            </div>
-
-            {filtered.length === 0 ? (
-              <div style={{ padding: "24px", textAlign: "center", color: "#9CA3AF", fontSize: "13px" }}>
-                No actions match the selected route.
-              </div>
-            ) : (
-              filtered.map((row, i) => (
-                <ActionRow key={`${row.action_id}-${i}`} row={row} onSelect={() => setSelected(row)} />
-              ))
-            )}
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+                  {(["Action", "Sector", "Route", "Score", "Fund Access", "Detail"] as const).map((h, i) => (
+                    <th key={h} style={{ padding: `10px ${i === 0 || i === 5 ? "16px" : "12px"}`, textAlign: i === 3 ? "right" : "left", fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 ? (
+                  <tr><td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#9CA3AF", fontSize: "13px" }}>No actions match the selected route.</td></tr>
+                ) : (
+                  pageRows.map((row, i) => (
+                    <TableRow key={`${row.action_id}-${i}`} row={row} onView={() => setSelected(row)} />
+                  ))
+                )}
+              </tbody>
+            </table>
+            <Pagination total={filtered.length} page={page} onChange={setPage} />
           </div>
         )}
 
-        {/* Footer navigation */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "28px" }}>
-          <button
-            onClick={() => navigate(`/city/${citySlug}/policy`)}
-            style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}
-          >
-            ← Back to policy alignment
+        {/* Score note */}
+        {feasibility.length > 0 && (
+          <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "8px", padding: "14px 18px", marginTop: "16px", fontSize: "12px", color: "#1D4ED8", lineHeight: "1.65" }}>
+            <strong>How this is calculated:</strong> Each score weighs the action's cost and complexity against {cityName}'s profile above, plus the funds catalogued for its sector. It estimates financing difficulty — not the odds of winning a specific fund.
+          </div>
+        )}
+
+        {/* Footer nav */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "32px" }}>
+          <button onClick={() => navigate(`/city/${citySlug}/policy`)}
+            style={{ background: "white", border: "1.5px solid #E5E7EB", color: "#374151", borderRadius: "100px", padding: "12px 24px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
+            Policy alignment
           </button>
-          <button
-            onClick={() => { confirmStep(locode, "financial-feasibility"); navigate(`/city/${citySlug}/preflight`); }}
-            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
-          >
-            Continue to pre-flight check →
+          <button onClick={() => { confirmStep(locode, "financial-feasibility"); navigate(`/city/${citySlug}/preflight`); }}
+            style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "100px", padding: "12px 32px", fontSize: "14px", fontWeight: "700", cursor: "pointer", textTransform: "uppercase", letterSpacing: "-0.01em" }}>
+            Pre-flight check
           </button>
         </div>
-
       </div>
     </div>
   );
