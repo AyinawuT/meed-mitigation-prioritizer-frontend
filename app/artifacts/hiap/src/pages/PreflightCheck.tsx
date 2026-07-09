@@ -420,7 +420,7 @@ export function PreflightCheck({ params }: Props) {
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar cityName={city.name} />
-      <StepBar activeStep={5} citySlug={citySlug} />
+      <StepBar activeStep={6} citySlug={citySlug} />
 
       {/* Header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>

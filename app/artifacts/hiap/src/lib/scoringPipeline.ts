@@ -50,6 +50,7 @@ export interface RankedAction {
   otherComponent: number;
   softLegalComponent: number;
   socioeconomicComponent: number;
+  financialFeasibilityComponent: number;
   timeframeComponent: number;
   legalPassed: boolean;
   legalFlag: boolean;
@@ -59,6 +60,8 @@ export interface RankedAction {
   matchedEmissions: number;
   explanation: string;
   priority: "high" | "medium" | "low";
+  financialFeasibilityRoute: string | null;
+  financialFeasibilityReason: string | null;
 }
 
 export interface DiscardedAction {

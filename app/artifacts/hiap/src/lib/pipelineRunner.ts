@@ -61,6 +61,15 @@ type EvidenceSummary = {
       score_present?: boolean;
       score_missing?: boolean;
     };
+    financial_feasibility?: {
+      component_score?: number;
+      component_source?: string;
+      score_present?: boolean;
+      score_missing?: boolean;
+      route?: string | null;
+      reason?: string | null;
+      sector?: string | null;
+    };
   };
 };
 
@@ -389,6 +398,9 @@ export function adaptApiResult(
       socioeconomicComponent: ev.feasibility?.mitigation_feasibility?.component_score
                            ?? ev.feasibility?.mitigation_feasibility_component_score
                            ?? 0,
+      financialFeasibilityComponent: ev.feasibility?.financial_feasibility?.component_score ?? 0,
+      financialFeasibilityRoute: ev.feasibility?.financial_feasibility?.route ?? null,
+      financialFeasibilityReason: ev.feasibility?.financial_feasibility?.reason ?? null,
       legalPassed: true,
       legalFlag:   legalData?.assessment_missing === true,
       legalData,

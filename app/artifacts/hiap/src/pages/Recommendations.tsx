@@ -256,8 +256,9 @@ function DetailPanel({
     ` · timeframe fit: ${action.timeframeComponent.toFixed(2)}`;
 
   const feasibilityDesc =
-    `Soft legal compliance: ${action.softLegalComponent.toFixed(2)}` +
-    ` · socioeconomic context: ${action.socioeconomicComponent.toFixed(2)}`;
+    `Legal verdict: ${action.softLegalComponent.toFixed(2)}` +
+    ` · mitigation feasibility: ${action.socioeconomicComponent.toFixed(2)}` +
+    ` · financial feasibility: ${action.financialFeasibilityComponent.toFixed(2)}`;
 
   return (
     <>
@@ -380,14 +381,22 @@ function DetailPanel({
                 {
                   label: "Legal verdict",
                   rawValue: action.softLegalComponent,
-                  weight: 0.5,
+                  weight: 0.34,
                   note: "Legal verdict score from regulatory assessment",
                 },
                 {
                   label: "Mitigation feasibility",
                   rawValue: action.socioeconomicComponent,
-                  weight: 0.5,
+                  weight: 0.33,
                   note: "City-specific mitigation feasibility score",
+                },
+                {
+                  label: "Financial feasibility",
+                  rawValue: action.financialFeasibilityComponent,
+                  weight: 0.33,
+                  note: action.financialFeasibilityComponent > 0
+                    ? `Route: ${(action.financialFeasibilityRoute ?? "—").replace(/_/g, " ")}`
+                    : "No financial feasibility score available (neutral 0.5 used)",
                 },
               ]}
             />
