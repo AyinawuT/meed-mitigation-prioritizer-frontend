@@ -386,7 +386,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 borderRadius: "6px", padding: "5px 12px",
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
-                <span>⚖</span>
+                <span>👥</span>
                 <span>MEED+ FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
               </div>
             </div>

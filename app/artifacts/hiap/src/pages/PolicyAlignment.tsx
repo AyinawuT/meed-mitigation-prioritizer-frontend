@@ -213,7 +213,7 @@ export function PolicyAlignment({ params }: Props) {
             borderRadius: "6px", padding: "5px 12px",
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
-            <span>⚖</span>
+            <span>📋</span>
             <span>MEED+ ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking</span>
           </div>
         </div>
