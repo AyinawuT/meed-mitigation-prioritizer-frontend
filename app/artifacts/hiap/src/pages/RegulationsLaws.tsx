@@ -568,7 +568,7 @@ export function RegulationsLaws({ params }: Props) {
           <button
             onClick={() => {
               confirmStep(locode, "regulations");
-              if (fromRecommendations) navigate(`/city/${citySlug}/recommendations`);
+              if (fromRecommendations) navigate(`/city/${citySlug}/recommendations?tab=context`);
               else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
               else navigate(`/city/${citySlug}/strategic`);
             }}

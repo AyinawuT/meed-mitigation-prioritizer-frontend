@@ -63,7 +63,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
 
   function handleConfirm() {
     confirmStep(locode, "emissions");
-    if (fromRecommendations) navigate(`/city/${citySlug}/recommendations`);
+    if (fromRecommendations) navigate(`/city/${citySlug}/recommendations?tab=context`);
     else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
     else navigate(`/city/${citySlug}/socioeconomic`);
   }

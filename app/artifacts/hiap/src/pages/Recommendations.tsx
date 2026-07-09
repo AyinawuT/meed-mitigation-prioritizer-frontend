@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { FiInbox } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
@@ -1273,8 +1273,11 @@ export function Recommendations({ params }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [selectedAction, setSelectedAction] = useState<RankedAction | null>(null);
 
-  // Tab state
-  const [activeTab, setActiveTab] = useState<"results" | "context">("results");
+  // Tab state — honour ?tab=context when returning from a detail page
+  const search = useSearch();
+  const [activeTab, setActiveTab] = useState<"results" | "context">(
+    search.includes("tab=context") ? "context" : "results"
+  );
   const [showFullRanking, setShowFullRanking] = useState(false);
   const rankingRef = useRef<HTMLDivElement>(null);
 
