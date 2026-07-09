@@ -803,9 +803,20 @@ export function FinancialFeasibility({ params }: Props) {
             <span style={{ color: "#374151" }}>Financial Feasibility</span>
           </div>
           <h1 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Financial Feasibility</h1>
-          <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, maxWidth: "720px", lineHeight: "1.65" }}>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px", maxWidth: "720px", lineHeight: "1.65" }}>
             For every action, the tool compares what the action needs (capital and preparation) against what {cityName} has (budget autonomy and delivery capacity) to estimate how realistically the city can finance and deliver it — and which funds could help close the gap.
           </p>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "6px",
+              background: "#F0FDF4", border: "1px solid #BBF7D0",
+              borderRadius: "6px", padding: "5px 12px",
+              fontSize: "11px", color: "#15803D", fontWeight: "600",
+            }}>
+              <span>💰</span>
+              <span>MEED+ FEASIBILITY: Financial feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
+            </div>
+          </div>
         </div>
       </div>
 
