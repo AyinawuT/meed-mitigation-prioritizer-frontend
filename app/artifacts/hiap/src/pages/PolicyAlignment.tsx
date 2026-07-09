@@ -362,9 +362,9 @@ function ColHeader({ label, tip, minWidth, align }: { label: string; tip: string
       {show && (
         <div style={{
           position: "absolute", bottom: "calc(100% + 6px)", [align === "right" ? "right" : "left"]: 0,
-          background: "#1F2937", color: "white", fontSize: "11px", lineHeight: "1.5",
+          background: "white", color: "#111827", fontSize: "11px", lineHeight: "1.5",
           borderRadius: "6px", padding: "8px 10px", width: "220px", zIndex: 100,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.18)", pointerEvents: "none",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.14)", border: "1px solid #E5E7EB", pointerEvents: "none",
         }}>
           {tip}
         </div>
