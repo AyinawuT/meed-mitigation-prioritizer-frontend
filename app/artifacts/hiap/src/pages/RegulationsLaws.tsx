@@ -351,7 +351,7 @@ export function RegulationsLaws({ params }: Props) {
       <Navbar cityName={cityName} />
       <StepBar activeStep={2} citySlug={citySlug} />
 
-      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 20px" }}>
         <div style={{ maxWidth: "840px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
@@ -364,29 +364,28 @@ export function RegulationsLaws({ params }: Props) {
             <span>›</span>
             <span style={{ color: "#374151" }}>Regulations &amp; Laws</span>
           </div>
+          <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
+            Regulations &amp; Laws
+          </h1>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px", lineHeight: "1.6" }}>
+            MEED+ HIAP has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
+          </p>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "6px",
+              background: "#F0FDF4", border: "1px solid #BBF7D0",
+              borderRadius: "6px", padding: "5px 12px",
+              fontSize: "11px", color: "#15803D", fontWeight: "600",
+            }}>
+              <span>⚖</span>
+              <span>MEED+ FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div style={{ maxWidth: "840px", margin: "0 auto", padding: "32px 24px", width: "100%" }}>
 
-        {/* Header */}
-        <div style={{ marginBottom: "28px" }}>
-          <h1 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
-            Regulations &amp; Laws
-          </h1>
-          <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6", maxWidth: "640px" }}>
-            MEED+ HIAP has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
-          </p>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: "6px",
-            background: "#F0FDF4", border: "1px solid #BBF7D0",
-            borderRadius: "6px", padding: "5px 12px",
-            fontSize: "11px", color: "#15803D", fontWeight: "600",
-          }}>
-            <span>⚖</span>
-            <span>MEED+ FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
-          </div>
-        </div>
 
         {/* Summary cards */}
         <div style={{ display: "flex", gap: "12px", marginBottom: "28px", flexWrap: "wrap" }}>
