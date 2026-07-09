@@ -853,6 +853,7 @@ export async function runPipeline(
     discarded,
     legalExcluded: [],
     legalFlagged: [],
+    validActionsCount: valid.length,
     totalCityEmissions: total,
     cityEmissionsByGpc: byRef,
     locode: req.locode,

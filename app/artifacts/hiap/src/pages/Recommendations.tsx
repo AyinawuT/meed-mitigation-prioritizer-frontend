@@ -1633,7 +1633,7 @@ export function Recommendations({ params }: Props) {
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>⚖️</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Legal context</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{ranked.length} included · {legalExcluded.length} excluded · {legalFlagged.length} flagged</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{result.validActionsCount ?? ranked.length} included · {legalExcluded.length} excluded · {legalFlagged.length} flagged</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
