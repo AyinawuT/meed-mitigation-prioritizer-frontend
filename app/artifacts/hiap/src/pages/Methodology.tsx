@@ -295,9 +295,11 @@ export function Methodology() {
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <Step n={1} title="Match action to your city's emissions">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                Each action is tagged with the GPC sectors it addresses (e.g. II.1.1 On-road transport, I.1.1 Residential buildings).
-                We look up how much your city emits in those exact sectors from your GPC inventory.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
+                Each action is tagged with the GPC sectors and subsectors it addresses using a <code>sector_number</code> +
+                <code>subsector_number[]</code> pair, forming subsector-level keys such as <code>I.1</code> (stationary energy, subsector 1)
+                or <code>II.1</code> (transportation, subsector 1). The pipeline looks up how much your city emits in those exact subsectors.
+                Full GPC reference numbers (e.g. <code>II.1.1</code>) are retained as reference data but do not drive the Impact join.
               </p>
             </Step>
             <Step n={2} title="Apply the impact strength multiplier">
@@ -308,16 +310,18 @@ export function Methodology() {
             </Step>
             <Step n={3} title="Calculate reduction share of total city emissions">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Divide the weighted matched emissions by your city's total emissions to get a 0–1 share.
-                An action addressing 38% of your city's transport emissions with a "high" impact rating scores 0.31 on reduction share.
+                The weighted matched emissions are divided by the city's total scoring emissions magnitude to get a 0–1 share.
+                AFOLU subsectors (<code>V.*</code>) contribute their absolute inventory value — so a carbon-removal entry of −50 contributes 50 to
+                both the numerator and denominator. Non-AFOLU subsectors contribute only when their inventory value is strictly positive.
               </p>
-              <CodeBlock>{"reduction_share = (matched_emissions × impact_multiplier) ÷\n                  total_city_emissions"}</CodeBlock>
+              <CodeBlock>{"reduction_share = (matched_subsector_emissions × impact_multiplier)\n                  ÷ total_scoring_emissions_magnitude\n\n// AFOLU V.* : use abs(emissions)\n// Others    : use emissions only when > 0"}</CodeBlock>
             </Step>
             <Step n={4} title="Combine with timeline score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
                 Actions that deliver results quickly receive a higher timeline score, rewarding near-term impact over long-term structural changes.
+                A missing or unknown timeline is treated as the neutral midpoint.
               </p>
-              <CodeBlock>{"impact_score = (0.80 × reduction_share) + (0.20 × timeline_score)"}</CodeBlock>
+              <CodeBlock>{"<5 years  → 1.0    5-10 years → 0.5    >10 years → 0.0    missing → 0.5\n\nimpact_score = (0.80 × reduction_share) + (0.20 × timeline_score)"}</CodeBlock>
             </Step>
           </div>
         </div>
@@ -343,11 +347,28 @@ export function Methodology() {
               </p>
               <CodeBlock>{"alignment_score = (0.75 × policy_support_score)\n               + (0.15 × sector_preference_match)\n               + (0.05 × cobenefit_preference_match)\n               + (0.05 × timeframe_preference_match)"}</CodeBlock>
             </Step>
-            <Step n={3} title="Apply your sector preferences">
+            <Step n={3} title="Apply sector preference">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                If your city has flagged transportation as a priority sector and an action is a transport action, it receives a 15% alignment boost
-                from the sector component. This directly reflects the strategic direction your city expressed during onboarding.
+                The pipeline maps each action's <code>sector_number</code> (I → stationary_energy, II → transportation, etc.)
+                and checks whether that sector appears in <code>cityStrategicPreferenceSectors[]</code>.
+                A match scores 1.0; no match scores 0.0. This contributes 15% of the alignment score.
               </p>
+            </Step>
+            <Step n={4} title="Match co-benefit preferences">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
+                For the city's selected co-benefit priorities (from <code>cityStrategicPreferenceCoBenefitKeys[]</code>),
+                the pipeline sums each action's <code>impact_numeric</code> for those keys (missing keys score 0), then normalises the
+                result from [−2n, +2n] to a 0–1 scale where n is the number of selected co-benefit keys.
+                When no co-benefit keys are selected, this component stays at the neutral midpoint of 0.5.
+              </p>
+              <CodeBlock>{"other_component = normalize(\n  sum(coBenefits[key].impact_numeric for key in selectedKeys),\n  min = len(selectedKeys) × −2,\n  max = len(selectedKeys) × +2\n)\n// no keys selected → 0.5 (neutral)"}</CodeBlock>
+            </Step>
+            <Step n={5} title="Match timeframe preference">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
+                The city's preferred implementation horizon (<code>cityStrategicPreferenceTimeframes[]</code>) is compared to the action's
+                <code>timelineForImplementation</code>. If the city selects multiple timeframes, the best match for that action is used.
+              </p>
+              <CodeBlock>{"action timeline → bucket:  <5yr → short   5-10yr → medium   >10yr → long\n\nexact match   → 1.0\nadjacent match → 0.5    (e.g. city=medium, action=short or long)\nfar mismatch  → 0.0    (e.g. city=short, action=long)\nmissing / no_preference → 0.5 (neutral)"}</CodeBlock>
             </Step>
           </div>
           <div style={{ marginTop: "16px" }}>
@@ -406,65 +427,30 @@ export function Methodology() {
             </Step>
             <Step n={2} title="Mitigation feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Each action has a set of rules that describe which city conditions make it more or less feasible. For example, an active mobility
-                action might have a rule: "high unemployment is constraining" (because residents may depend on vehicles for work).
-                We match your city's actual indicator values against these rules.
+                The pipeline reads each action's <code>action_score</code> (0–1) directly from the city-scoped
+                mitigation feasibility endpoint. This score reflects how feasible the action is given the city's
+                real conditions across multiple feasibility dimensions. The pipeline does not recompute it — it uses
+                the pre-calculated value as-is. If an action has no score row, or the row is missing <code>action_score</code>,
+                the component falls back to the neutral midpoint.
               </p>
-              <CodeBlock>{"bucket_score:  very_low=-2  low=-1  medium=0  high=+1  very_high=+2\ndirection:     supportive → keep sign    constraining → reverse sign\nnormalised:    (weighted_average + 2) ÷ 4  →  gives 0–1 range"}</CodeBlock>
+              <CodeBlock>{"mitigation_component = action_score       // 0–1 from mitigation feasibility endpoint\n// fallback: 0.5 if action_score is missing or endpoint returns 404"}</CodeBlock>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "8px 0 0", lineHeight: "1.6" }}>
+                Dimension-level detail (option family, mapping strength, breakdown, city rank) is retained as evidence and
+                visible on the action detail page, but only the top-level <code>action_score</code> enters the feasibility formula.
+              </p>
             </Step>
             <Step n={3} title="Financial feasibility score">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6" }}>
-                The financial feasibility score assesses whether a city can realistically finance and deliver an action,
-                given the action's cost and complexity requirements and the city's own financial and institutional capacity.
-                It draws on four inputs:
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "14px" }}>
-                {[
-                  ["Capital intensity", "How much money the action typically requires — from low-cost measures to large infrastructure investment"],
-                  ["Preparation complexity", "How much planning, technical design, and procurement capacity the action demands before implementation can begin"],
-                  ["City financial profile", "Composite of financial autonomy (share of budget raised locally vs. national transfers) and delivery capacity (qualified staff to plan and manage projects)"],
-                  ["Fund access", "Number of directly matched external funding opportunities available for the action's sector in Chile"],
-                ].map(([term, explanation]) => (
-                  <div key={term as string} style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                    <div style={{ flexShrink: 0, width: "6px", height: "6px", borderRadius: "50%", background: GREEN, marginTop: "7px" }} />
-                    <div>
-                      <span style={{ fontWeight: "600", fontSize: "13px", color: "#111827" }}>{term}</span>
-                      <span style={{ fontSize: "13px", color: "#6B7280" }}> — {explanation}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Each action is classified into a <strong>financial route</strong> based on its capital intensity, preparation complexity, and the city profile:
+                The pipeline reads each action's <code>financial_feasibility</code> (0–1) directly from the city-scoped
+                climate-finance feasibility endpoint. The score reflects the action's financing route, fund access, and
+                the city's financial and institutional capacity. Again, the pipeline uses the pre-calculated value — it does
+                not compute capital intensity or complexity itself. Missing rows fall back to the neutral midpoint.
               </p>
-              <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "12px" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
-                  <thead>
-                    <tr style={{ background: "#F9FAFB" }}>
-                      {["Route", "Score", "What it means"].map(h => (
-                        <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["Self-deliverable", "0.85", "City can implement with own budget and staff — low cost, low complexity"],
-                      ["Needs co-finance", "0.55", "Requires additional funding partners but city has sufficient institutional capacity"],
-                      ["Needs finance & support", "0.25", "Requires external financing and significant technical or institutional support"],
-                    ].map(([route, score, meaning], i) => (
-                      <tr key={route} style={{ borderBottom: i < 2 ? "1px solid #F3F4F6" : "none" }}>
-                        <td style={{ padding: "10px 14px", color: "#374151", fontWeight: "600" }}>{route}</td>
-                        <td style={{ padding: "10px 14px", color: GREEN, fontWeight: "700" }}>{score}</td>
-                        <td style={{ padding: "10px 14px", color: "#6B7280" }}>{meaning}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <CodeBlock>{"financial_component = financial_feasibility   // 0–1 from climate-finance endpoint\n// fallback: 0.5 if financial_feasibility is missing or endpoint returns 404"}</CodeBlock>
               <CalloutBox color="green">
-                The financial feasibility score contributes one third of the total feasibility score — it is a live input
-                to the pipeline, not a supplementary display. The Financial Feasibility page shows the full breakdown of
-                matched funds, comparable projects, and route reasoning for each action.
+                The financial feasibility score contributes one third of the total feasibility score — it is a live pipeline
+                input, not a supplementary display. The Financial Feasibility page shows the full breakdown of route reasoning,
+                matched funds, and comparable funded projects for each action.
               </CalloutBox>
             </Step>
 
