@@ -265,9 +265,10 @@ export function Methodology() {
               <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Default weight: 22%</p>
               <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>Is this action supported by existing plans and your city's stated priorities?</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <Subcomp pct="80%" title="Policy support score" desc="Signals from national NDC, PARCC, PACCC, and sector plans" color="purple" />
+                <Subcomp pct="75%" title="Policy support score" desc="Signals from national NDC, PARCC, PACCC, and sector plans" color="purple" />
                 <Subcomp pct="15%" title="Sector preference match" desc="Whether the action is in a sector your city has prioritised" color="purple" />
-                <Subcomp pct="5%" title="Strategic preference match" desc="Co-benefit overlap with your city's stated strategic priorities (planned)" color="purple" />
+                <Subcomp pct="5%" title="Co-benefit preference match" desc="How well the action's co-benefits align with your city's selected co-benefit priorities" color="purple" />
+                <Subcomp pct="5%" title="Timeframe preference match" desc="Whether the action's implementation horizon matches your city's preferred timeline" color="purple" />
               </div>
             </div>
             {/* Feasibility */}
@@ -277,9 +278,9 @@ export function Methodology() {
               <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Default weight: 23%</p>
               <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>Can your city realistically implement this action given its legal and socioeconomic context?</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <Subcomp pct="50%" title="Legal recommendation alignment" desc="Soft legal requirements (recommended/optional) scored by alignment status — aligns, no evidence, or not aligned" color="green" />
-                <Subcomp pct="50%" title="Mitigation feasibility" desc="City-specific mitigation feasibility score derived from socioeconomic and contextual factors" color="green" />
-                <Subcomp pct="—" title="Financial feasibility" desc="Supplementary — shown on the Financial Feasibility page but not yet included in the scoring formula" color="green" />
+                <Subcomp pct="34%" title="Legal verdict score" desc="Continuous 0–1 score from the legal assessment (verdictScore); blocked actions are removed before this step" color="green" />
+                <Subcomp pct="33%" title="Mitigation feasibility" desc="City-scoped mitigation feasibility score from the action mitigation feasibility endpoint" color="green" />
+                <Subcomp pct="33%" title="Financial feasibility" desc="City-scoped climate-finance feasibility score — route accessibility, fund access, and comparable funded projects" color="green" />
               </div>
             </div>
           </div>
@@ -340,7 +341,7 @@ export function Methodology() {
                 Each action receives a policy support score (0–1) based on how many plans support it, the strength of those signals
                 (national &gt; regional &gt; municipal), and the type of signal (binding target &gt; sector priority &gt; mention).
               </p>
-              <CodeBlock>{"alignment_score = (0.80 × policy_support_score)\n               + (0.15 × sector_preference_match)\n               + (0.05 × strategic_preference_match)"}</CodeBlock>
+              <CodeBlock>{"alignment_score = (0.75 × policy_support_score)\n               + (0.15 × sector_preference_match)\n               + (0.05 × cobenefit_preference_match)\n               + (0.05 × timeframe_preference_match)"}</CodeBlock>
             </Step>
             <Step n={3} title="Apply your sector preferences">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
@@ -351,7 +352,7 @@ export function Methodology() {
           </div>
           <div style={{ marginTop: "16px" }}>
             <CalloutBox color="blue">
-              The policy support score is the dominant alignment input at 80% weight. Actions supported by Chile's NDC and a regional PARCC
+              The policy support score is the dominant alignment input at 75% weight. Actions supported by Chile's NDC and a regional PARCC
               will score significantly higher than actions with no policy backing — even if the city has not explicitly prioritised that sector.
             </CalloutBox>
           </div>
@@ -365,44 +366,43 @@ export function Methodology() {
             The feasibility score answers: given your city's legal context and socioeconomic conditions, how ready is this city to implement this action?
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <Step n={1} title="Legal recommendation alignment">
+            <Step n={1} title="Legal verdict score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6" }}>
-                Beyond the hard filter (which removes blocked actions entirely — see Pre-scoring filters below), each action also
-                carries a set of <strong>recommended</strong> and <strong>optional</strong> legal requirements. These soft requirements
-                reflect good practice, authorisation pathways, or coordination steps that aren't strictly mandatory but affect
-                implementation ease. Each soft requirement is scored by its alignment status:
+                The Hard Filter (see Pre-scoring filters) removes any action whose <code>verdictCategory = blocked</code> before
+                scoring begins. For every action that survives, the legal assessment also provides a continuous <strong>verdictScore</strong> (0–1)
+                which feeds directly into the feasibility calculation as the legal component. A missing score falls back to the neutral value of 0.5.
               </p>
               <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "12px" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
                   <thead>
                     <tr style={{ background: "#F9FAFB" }}>
-                      {["Alignment status", "Score", "What it means"].map(h => (
+                      {["Verdict category", "Effect on scoring", "What it means"].map(h => (
                         <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
                     {[
-                      ["aligns", "1.0", "City's legal context meets this recommendation"],
-                      ["no_evidence", "0.5", "No data to confirm or deny alignment — treated as uncertain"],
-                      ["not_aligned", "0.0", "City's legal context does not satisfy this recommendation"],
-                    ].map(([status, score, meaning], i) => (
-                      <tr key={status} style={{ borderBottom: i < 2 ? "1px solid #F3F4F6" : "none" }}>
+                      ["blocked", "Action removed — never scored", "Hard Filter removes the action before scoring begins"],
+                      ["non-blocked", "verdictScore used directly", "The continuous 0–1 score from the legal assessment feeds the feasibility component"],
+                      ["missing", "Neutral 0.5 applied", "No legal row available — action is not penalised but scores at the midpoint"],
+                    ].map(([cat, effect, meaning], i) => (
+                      <tr key={cat} style={{ borderBottom: i < 2 ? "1px solid #F3F4F6" : "none" }}>
                         <td style={{ padding: "10px 14px" }}>
                           <span style={{
                             fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
-                            background: status === "aligns" ? "#F0FDF4" : status === "no_evidence" ? "#FFFBEB" : "#FEF2F2",
-                            color: status === "aligns" ? "#16A34A" : status === "no_evidence" ? "#D97706" : "#DC2626",
-                          }}>{status}</span>
+                            background: cat === "blocked" ? "#FEF2F2" : cat === "non-blocked" ? "#F0FDF4" : "#FFFBEB",
+                            color: cat === "blocked" ? "#DC2626" : cat === "non-blocked" ? "#16A34A" : "#D97706",
+                          }}>{cat}</span>
                         </td>
-                        <td style={{ padding: "10px 14px", color: "#374151", fontWeight: "600" }}>{score}</td>
+                        <td style={{ padding: "10px 14px", color: "#374151", fontWeight: "500" }}>{effect}</td>
                         <td style={{ padding: "10px 14px", color: "#6B7280" }}>{meaning}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <CodeBlock>{"soft_legal_component = average(score per recommended/optional requirement)\n// defaults to 0.0 if no soft requirements exist for the action"}</CodeBlock>
+              <CodeBlock>{"legal_component = verdictScore        // continuous 0–1 from legal assessment\n// fallback: 0.5 if verdictScore is missing"}</CodeBlock>
             </Step>
             <Step n={2} title="Mitigation feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
@@ -462,17 +462,18 @@ export function Methodology() {
                 </table>
               </div>
               <CalloutBox color="green">
-                Fund access boosts the score when direct financing opportunities are available for the action's sector.
-                The Financial Feasibility page lists all matched funds and comparable funded projects for each action.
+                The financial feasibility score contributes one third of the total feasibility score — it is a live input
+                to the pipeline, not a supplementary display. The Financial Feasibility page shows the full breakdown of
+                matched funds, comparable projects, and route reasoning for each action.
               </CalloutBox>
             </Step>
 
             <Step n={4} title="Combine components into a feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                The feasibility score is the equal-weighted average of the two components above. Financial feasibility
-                is assessed separately on the Financial Feasibility page and is not yet included in the scoring pipeline:
+                The feasibility score combines all three components. Missing components fall back to the neutral value of 0.5
+                so no action is unfairly penalised when data is unavailable:
               </p>
-              <CodeBlock>{"feasibility_score = (0.50 × soft_legal_component)\n                  + (0.50 × mitigation_feasibility)"}</CodeBlock>
+              <CodeBlock>{"feasibility_score = (0.34 × legal_verdict_score)\n                  + (0.33 × mitigation_feasibility_score)\n                  + (0.33 × financial_feasibility_score)\n\n// fallback for any missing component: use 0.5 (neutral midpoint)"}</CodeBlock>
             </Step>
           </div>
         </div>
