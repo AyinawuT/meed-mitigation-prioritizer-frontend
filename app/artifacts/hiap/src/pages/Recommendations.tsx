@@ -1293,9 +1293,9 @@ function ContextBreakdownTab({
               How well ranked actions are backed by existing national policy frameworks.
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-              {statCard("Avg. national alignment", displayScore, "across all assessed actions")}
-              {statCard("Strongly backed actions", String(strongBacking), "score above 75%")}
-              {statCard("Moderate backing", String(moderateBacking), "score 50–75%")}
+              {statCard("Avg. national alignment", displayScore, `city-wide · all assessed actions`)}
+              {statCard("Strongly backed", String(strongBacking), `of ${ranked.length} ranked actions · score above 75%`)}
+              {statCard("Moderate backing", String(moderateBacking), `of ${ranked.length} ranked actions · score 50–75%`)}
             </div>
             {viewLink("View policy alignment", `/city/${citySlug}/policy?from=recommendations`)}
           </div>
