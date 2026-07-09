@@ -4,8 +4,10 @@ import { FiInbox } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
-import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
+import { getEmissionsData } from "@/lib/cityInventory";
 import actionsRaw from "@/data/actions.json";
+import mockRequest from "@/data/prioritizerRequestMock.json";
 import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
 
@@ -1114,10 +1116,17 @@ function ContextBreakdownTab({
       .catch(() => {});
   }, [locode]);
 
-  // Top GPC sector by emissions
-  const sectorEmissions = result.cityEmissionsByGpc ?? {};
+  // Top GPC sector — use result if populated, else derive from mock data (stale cache fallback)
+  const mockEmissions = (mockRequest as { requestData: { cityDataList: Array<{ cityEmissionsData: { inventoryYear?: number; gpcData: Record<string, unknown> } }> } }).requestData.cityDataList[0].cityEmissionsData;
+  const sectorEmissions = Object.keys(result.cityEmissionsByGpc ?? {}).length > 0
+    ? result.cityEmissionsByGpc
+    : deriveEmissions(mockEmissions.gpcData as Parameters<typeof deriveEmissions>[0]).byRef;
   const topGpcEntry = Object.entries(sectorEmissions).sort(([, a], [, b]) => b - a)[0];
   const topGpcSector = topGpcEntry ? gpcSectorName([topGpcEntry[0]]) : "—";
+
+  // Inventory year — use result if set, else fall back to local emissions data
+  const localInventoryYear = getEmissionsData(locode)?.year ?? mockEmissions.inventoryYear ?? undefined;
+  const inventoryYearDisplay = result.inventoryYear ? String(result.inventoryYear) : localInventoryYear ? String(localInventoryYear) : "—";
 
   // Socioeconomic indicators
   const indicatorCount = cityAttrs ? Object.values(cityAttrs).filter(
@@ -1164,7 +1173,7 @@ function ContextBreakdownTab({
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
           {statCard("Total emissions", `${(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e`)}
           {statCard("Top sector", topGpcSector)}
-          {statCard("Inventory year", result.inventoryYear ? String(result.inventoryYear) : "—")}
+          {statCard("Inventory year", inventoryYearDisplay)}
         </div>
         {viewLink("View emissions data", `/city/${citySlug}/emissions?from=recommendations`)}
       </div>
@@ -1251,6 +1260,33 @@ function ContextBreakdownTab({
         )}
         {viewLink("View full financial analysis", `/city/${citySlug}/financial-feasibility?from=recommendations`)}
       </div>
+
+      {divider}
+
+      {/* Policy Alignment */}
+      {(() => {
+        const ranked = result.ranked;
+        const withBacking = ranked.filter(a => a.policyComponent >= 0.5).length;
+        const strongBacking = ranked.filter(a => a.policyComponent >= 0.75).length;
+        const noData = ranked.filter(a => a.policyComponent === 0).length;
+        const avgPolicy = ranked.length > 0
+          ? ranked.reduce((s, a) => s + a.policyComponent, 0) / ranked.length
+          : 0;
+        return (
+          <div>
+            {sectionHead("📋", "Policy Alignment")}
+            <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
+              How well ranked actions are backed by existing national or local policy frameworks.
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
+              {statCard("Policy-supported actions", String(withBacking), `of ${ranked.length} ranked actions have backing`)}
+              {statCard("Strong policy support", String(strongBacking), "score ≥ 0.75")}
+              {statCard("Avg. alignment score", `${(avgPolicy * 100).toFixed(0)}%`, noData > 0 ? `${noData} actions lack policy data` : "across all ranked actions")}
+            </div>
+            {viewLink("View policy alignment", `/city/${citySlug}/policy?from=recommendations`)}
+          </div>
+        );
+      })()}
     </div>
   );
 }

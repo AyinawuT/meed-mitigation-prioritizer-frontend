@@ -131,6 +131,7 @@ export function PolicyAlignment({ params }: Props) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city: CityData | undefined = CITIES.find(
@@ -334,11 +335,11 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Footer actions */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "24px" }}>
-          <button onClick={() => navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
-            {fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
+          <button onClick={() => navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
+            {fromRecommendations ? "← Back to context breakdown" : fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
           </button>
-          <button onClick={() => { confirmStep(locode, "policy"); navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`); }} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
-            {fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
+          <button onClick={() => { confirmStep(locode, "policy"); navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`); }} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
+            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
           </button>
         </div>
       </div>

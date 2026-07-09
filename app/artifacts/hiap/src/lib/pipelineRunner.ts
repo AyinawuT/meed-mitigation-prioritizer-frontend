@@ -16,7 +16,7 @@ import {
   type PrioritizerApiCityResult,
 } from "@/lib/hiapApi";
 import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
-import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
 
 // ─── Internal types matching the API response shape ───────────────────────────
 
@@ -431,7 +431,8 @@ export function adaptApiResult(
     legalExcluded,
     legalFlagged,
     totalCityEmissions,
-    cityEmissionsByGpc: {},
+    cityEmissionsByGpc: deriveEmissions(emissionsData.gpcData as Parameters<typeof deriveEmissions>[0]).byRef,
+    inventoryYear: emissionsData.inventoryYear ?? undefined,
     locode: apiResult.locode,
     topN,
     validActionsCount,
