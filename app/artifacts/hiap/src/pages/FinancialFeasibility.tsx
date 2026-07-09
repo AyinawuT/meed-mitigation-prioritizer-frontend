@@ -27,32 +27,40 @@ type FeasibilityRow = {
 };
 
 type Opportunity = {
-  id?: string;
-  name?: string;
-  funder?: string;
+  opportunity_name?: string;
+  funder_name?: string;
+  funder_level?: string;
   instrument?: string;
   status?: string;
-  sectors?: string[];
-  description?: string;
-  url?: string;
+  gpc_sectors?: string[];
+  eligible_actor?: string[];
+  source_url?: string;
+  amount?: number | null;
+  amount_currency?: string | null;
+  amount_note?: string | null;
+  notes?: string;
 };
 
+type FundingSource = {
+  cycle?: string | number;
+  amount?: number | null;
+  amount_unit?: string;
+  funder_name?: string;
+};
+
+type ActionMatch = { action_id: string; confidence?: string };
+
 type Project = {
-  id?: string;
-  name?: string;
-  name_es?: string;
-  description?: string;
+  project_name?: string;
+  project_name_i18n?: { en?: string; es?: string };
   sector?: string;
-  status?: string;
-  cost_clp?: number | null;
-  channel?: string;
-  location?: string;
-  region?: string;
-  match_quality?: string;
-  fndr_cycle?: string | number;
-  sectorial_cycle?: string | number;
-  bip_url?: string;
-  url?: string;
+  jurisdiction?: string;
+  lifecycle_stage?: string;
+  funding_channel?: string;
+  cost_total?: number | null;
+  amount_unit?: string;
+  funding_sources?: FundingSource[];
+  action_matches?: ActionMatch[];
 };
 
 // ─── Route metadata ───────────────────────────────────────────────────────────
@@ -134,23 +142,30 @@ function profileToAttrs(profile: string | undefined) {
   return { label: profile ? `${profile} city` : "Transitioning city", fa: undefined, dc: undefined, desc: (city: string) => `${city} is building its financial and delivery capacity, and may need external support for larger-scale projects.` };
 }
 
-function formatClp(val: number | null | undefined) {
+// cost_total is in CLP millions per the API (amount_unit: "CLP_millions")
+function formatClpMillions(val: number | null | undefined) {
   if (!val || val <= 0) return null;
-  if (val >= 1e9) return `CLP ${(val / 1e9).toFixed(1)}B`;
-  if (val >= 1e6) return `CLP ${(val / 1e6).toFixed(0)}M`;
-  if (val >= 1e3) return `CLP ${(val / 1e3).toFixed(0)}K`;
-  return `CLP ${Math.round(val).toLocaleString()}`;
+  if (val >= 1_000_000) return `CLP ${(val / 1_000_000).toFixed(1)}T`;
+  if (val >= 1_000) return `CLP ${(val / 1_000).toFixed(1)}B`;
+  return `CLP ${Math.round(val)}M`;
+}
+
+function confidenceStyle(c?: string) {
+  const l = c?.toLowerCase() ?? "";
+  if (l.includes("strong")) return { bg: "#D1FAE5", color: "#065F46", label: "Strong match" };
+  if (l.includes("goal")) return { bg: "#CCFBF1", color: "#0F766E", label: "Goal aligned" };
+  return { bg: "#DBEAFE", color: "#1D4ED8", label: "Matched" };
+}
+
+function lifecycleStyle(s?: string) {
+  const l = s?.toLowerCase() ?? "";
+  if (l.includes("execut") || l.includes("progress") || l.includes("ongoing")) return { bg: "#FEF3C7", color: "#D97706" };
+  if (l.includes("complet") || l.includes("finish")) return { bg: "#DCFCE7", color: "#15803D" };
+  if (l.includes("plan") || l.includes("formul")) return { bg: "#DBEAFE", color: "#1D4ED8" };
+  return { bg: "#F3F4F6", color: "#6B7280" };
 }
 
 // ─── Badge helpers ────────────────────────────────────────────────────────────
-
-function fundStatusStyle(s?: string) {
-  const l = s?.toLowerCase() ?? "";
-  if (l === "ongoing") return { bg: "#D1FAE5", color: "#065F46", label: s! };
-  if (l === "open") return { bg: "#DBEAFE", color: "#1D4ED8", label: s! };
-  if (l === "closed") return { bg: "#F3F4F6", color: "#6B7280", label: s! };
-  return s ? { bg: "#F3F4F6", color: "#6B7280", label: s } : null;
-}
 
 function instrumentStyle(s?: string) {
   if (!s) return null;
@@ -160,20 +175,6 @@ function instrumentStyle(s?: string) {
   if (l.includes("grant")) return { bg: "#DCFCE7", color: "#15803D", label: s };
   if (l.includes("loan") || l.includes("debt")) return { bg: "#EFF6FF", color: "#2563EB", label: s };
   return { bg: "#F3F4F6", color: "#6B7280", label: s };
-}
-
-function matchQualityStyle(mq?: string) {
-  const l = mq?.toLowerCase() ?? "";
-  if (l.includes("strong")) return { bg: "#D1FAE5", color: "#065F46" };
-  if (l.includes("goal")) return { bg: "#CCFBF1", color: "#0F766E" };
-  return { bg: "#DBEAFE", color: "#1D4ED8" };
-}
-
-function projectStatusStyle(s?: string) {
-  const l = s?.toLowerCase() ?? "";
-  if (l.includes("financ") || l.includes("funded")) return { bg: "#DBEAFE", color: "#1D4ED8" };
-  if (l.includes("execu") || l.includes("progress") || l.includes("ongoing")) return { bg: "#FEF3C7", color: "#D97706" };
-  return { bg: "#F3F4F6", color: "#6B7280" };
 }
 
 // ─── InfoTooltip ──────────────────────────────────────────────────────────────
@@ -374,12 +375,11 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
       .finally(() => setProjLoading(false));
   }, [row.action_id]);
 
-  // Opportunities: use sector link if available, else filter from pre-fetched list
-  const sectorWord = (row.sector ?? "").toLowerCase().split("_")[0];
-  const matchedOpps = useMemo(() => opportunities.filter(o => {
-    if (!o.sectors || o.sectors.length === 0) return false;
-    return o.sectors.some(s => s.toLowerCase().includes(sectorWord));
-  }), [opportunities, sectorWord]);
+  // Opportunities: filter pre-fetched list by exact gpc_sectors match
+  const actionSector = (row.sector ?? "").toLowerCase();
+  const matchedOpps = useMemo(() => opportunities.filter(o =>
+    (o.gpc_sectors ?? []).some(s => s.toLowerCase() === actionSector)
+  ), [opportunities, actionSector]);
 
   const visibleOpps = showAllOpps ? matchedOpps : matchedOpps.slice(0, 2);
   const visibleProjs = showAllProj ? projects : projects.slice(0, 3);
@@ -502,22 +502,33 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
               <>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   {visibleOpps.map((opp, i) => {
-                    const st = fundStatusStyle(opp.status);
-                    const instr = instrumentStyle(opp.instrument);
+                    const statusColor = opp.status === "ongoing" ? { bg: "#D1FAE5", color: "#065F46" }
+                      : opp.status === "open" ? { bg: "#DBEAFE", color: "#1D4ED8" }
+                      : { bg: "#F3F4F6", color: "#6B7280" };
+                    const instrColor = instrumentStyle(opp.instrument);
+                    const snippet = opp.amount_note ?? opp.notes ?? "";
                     return (
                       <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
-                          <div style={{ fontSize: "13px", fontWeight: "600", color: "#0D9488" }}>{opp.name ?? "Funding opportunity"}</div>
+                          <div style={{ fontSize: "13px", fontWeight: "600", color: "#0D9488", lineHeight: "1.35" }}>
+                            {opp.opportunity_name ?? "Funding opportunity"}
+                          </div>
                           <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-                            {st && <span style={{ fontSize: "10px", fontWeight: "600", color: st.color, background: st.bg, padding: "2px 6px", borderRadius: "4px" }}>{st.label}</span>}
-                            {instr && <span style={{ fontSize: "10px", fontWeight: "600", color: instr.color, background: instr.bg, padding: "2px 6px", borderRadius: "4px" }}>{instr.label}</span>}
+                            {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{opp.status}</span>}
+                            {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{opp.instrument}</span>}
                           </div>
                         </div>
-                        {opp.funder && <div style={{ fontSize: "11px", color: "#6B7280" }}>{opp.funder}</div>}
-                        {opp.description && (
-                          <p style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.55", margin: "4px 0 0" }}>
-                            {opp.description.length > 150 ? opp.description.slice(0, 150) + "…" : opp.description}
+                        {opp.funder_name && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: snippet ? "4px" : 0 }}>{opp.funder_name}</div>}
+                        {snippet && (
+                          <p style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.55", margin: "0" }}>
+                            {snippet.length > 160 ? snippet.slice(0, 160) + "…" : snippet}
                           </p>
+                        )}
+                        {opp.source_url && (
+                          <a href={opp.source_url} target="_blank" rel="noopener noreferrer"
+                            style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#6B7280", background: "#F3F4F6", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
+                            View fund ↗
+                          </a>
                         )}
                       </div>
                     );
@@ -557,40 +568,35 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
               <>
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {visibleProjs.map((proj, i) => {
-                    const mq = proj.match_quality ? matchQualityStyle(proj.match_quality) : null;
-                    const ps = proj.status ? projectStatusStyle(proj.status) : null;
-                    const cost = formatClp(proj.cost_clp);
+                    const topMatch = proj.action_matches?.[0];
+                    const conf = topMatch ? confidenceStyle(topMatch.confidence) : null;
+                    const lc = lifecycleStyle(proj.lifecycle_stage);
+                    const cost = formatClpMillions(proj.cost_total);
+                    const nameEs = proj.project_name_i18n?.es;
+                    const funder = proj.funding_sources?.[0]?.funder_name;
                     return (
                       <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "2px" }}>
-                          <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.35" }}>{proj.name ?? "Project"}</div>
+                          <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.35" }}>
+                            {proj.project_name ?? "Project"}
+                          </div>
                           <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-                            {mq && proj.match_quality && <span style={{ fontSize: "10px", fontWeight: "600", color: mq.color, background: mq.bg, padding: "2px 6px", borderRadius: "4px" }}>{proj.match_quality}</span>}
-                            {ps && proj.status && <span style={{ fontSize: "10px", fontWeight: "600", color: ps.color, background: ps.bg, padding: "2px 6px", borderRadius: "4px" }}>{proj.status}</span>}
+                            {conf && <span style={{ fontSize: "10px", fontWeight: "600", color: conf.color, background: conf.bg, padding: "2px 6px", borderRadius: "4px" }}>{conf.label}</span>}
+                            {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{proj.lifecycle_stage.replace(/-/g, " ")}</span>}
                           </div>
                         </div>
-                        {proj.name_es && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{proj.name_es}</div>}
-                        {(proj.location || proj.region) && (
-                          <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {[proj.location, proj.region].filter(Boolean).join(", ")}</div>
+                        {nameEs && nameEs !== proj.project_name && (
+                          <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{nameEs}</div>
                         )}
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
+                        {proj.jurisdiction && (
+                          <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {proj.jurisdiction}</div>
+                        )}
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
                           {cost && <span>Cost: <strong style={{ color: "#374151" }}>{cost}</strong></span>}
                           {proj.sector && <span>Sector: <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
-                          {proj.channel && <span>Channel: <strong style={{ color: "#374151" }}>{proj.channel}</strong></span>}
+                          {proj.funding_channel && <span>Channel: <strong style={{ color: "#374151" }}>{proj.funding_channel}</strong></span>}
+                          {funder && <span>Funder: <strong style={{ color: "#374151" }}>{funder}</strong></span>}
                         </div>
-                        {(proj.fndr_cycle || proj.sectorial_cycle) && (
-                          <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "4px" }}>
-                            {proj.fndr_cycle ? `F.N.D.R. cycle ${proj.fndr_cycle}` : ""}
-                            {proj.fndr_cycle && proj.sectorial_cycle ? " | " : ""}
-                            {proj.sectorial_cycle ? `SECTORIAL cycle ${proj.sectorial_cycle}` : ""}
-                          </div>
-                        )}
-                        {proj.bip_url && (
-                          <a href={proj.bip_url} target="_blank" rel="noopener noreferrer"
-                            style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#6B7280", background: "#F3F4F6", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
-                            BIP/SNI register
-                          </a>
-                        )}
                       </div>
                     );
                   })}
