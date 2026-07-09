@@ -249,7 +249,7 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
       </div>
 
       {/* City type */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: "#1E3A8A", borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: profileLabel.toLowerCase().includes("delivery-ready") ? "#16A34A" : "#1E3A8A", borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
         <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
           🏛️
         </div>
