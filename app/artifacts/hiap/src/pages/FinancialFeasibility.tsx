@@ -126,20 +126,21 @@ function levelPct(l: string | undefined) {
 
 // Map city profile string from API to display attributes
 function profileToAttrs(profile: string | undefined) {
-  const p = (profile ?? "").toLowerCase();
+  // Normalise: lowercase + replace underscores with hyphens so "delivery_ready" == "delivery-ready"
+  const p = (profile ?? "").toLowerCase().replace(/_/g, "-");
   if (p.includes("delivery-ready") || p === "delivery-ready") {
-    return { label: "Delivery-ready city", fa: "lower", dc: "high", desc: (city: string) => `${city} relies more on central transfers than its own revenue, but has the staff and track record to run projects well once funded.` };
+    return { type: "delivery-ready" as const, label: "Delivery-ready city", fa: "lower", dc: "high", desc: (city: string) => `${city} relies more on central transfers than its own revenue, but has the staff and track record to run projects well once funded.` };
   }
-  if (p.includes("financially strong") || p.includes("self-sufficient")) {
-    return { label: "Financially strong city", fa: "high", dc: "high", desc: (city: string) => `${city} generates strong local revenue and has the institutional capacity to plan and deliver most projects independently.` };
+  if (p.includes("financially-strong") || p.includes("self-sufficient")) {
+    return { type: "financially-strong" as const, label: "Financially strong city", fa: "high", dc: "high", desc: (city: string) => `${city} generates strong local revenue and has the institutional capacity to plan and deliver most projects independently.` };
   }
   if (p.includes("revenue-strong")) {
-    return { label: "Revenue-strong city", fa: "high", dc: "lower", desc: (city: string) => `${city} generates significant local revenue but may need to build delivery capacity to implement more complex projects.` };
+    return { type: "revenue-strong" as const, label: "Revenue-strong city", fa: "high", dc: "lower", desc: (city: string) => `${city} generates significant local revenue but may need to build delivery capacity to implement more complex projects.` };
   }
-  if (p.includes("capacity-rich") || p.includes("capacity rich")) {
-    return { label: "Capacity-rich city", fa: "lower", dc: "higher", desc: (city: string) => `${city} has strong institutional capacity but depends heavily on central transfers to fund project delivery.` };
+  if (p.includes("capacity-rich")) {
+    return { type: "capacity-rich" as const, label: "Capacity-rich city", fa: "lower", dc: "higher", desc: (city: string) => `${city} has strong institutional capacity but depends heavily on central transfers to fund project delivery.` };
   }
-  return { label: profile ? `${profile} city` : "Transitioning city", fa: undefined, dc: undefined, desc: (city: string) => `${city} is building its financial and delivery capacity, and may need external support for larger-scale projects.` };
+  return { type: "other" as const, label: profile ? `${profile} city` : "Transitioning city", fa: undefined, dc: undefined, desc: (city: string) => `${city} is building its financial and delivery capacity, and may need external support for larger-scale projects.` };
 }
 
 // cost_total is in CLP millions per the API (amount_unit: "CLP_millions")
@@ -238,10 +239,16 @@ function EmptyState({ title, body }: { title: string; body: string }) {
 
 // ─── CityProfileCard ──────────────────────────────────────────────────────────
 
-function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
+function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa, dc }: {
   cityName: string; profileLabel: string; profileDesc: string;
-  fa?: string; dc?: string;
+  profileType?: string; fa?: string; dc?: string;
 }) {
+  const isDeliveryReady = profileType === "delivery-ready";
+  const bg       = isDeliveryReady ? "#F0FDF4" : "#EFF6FF";
+  const iconBg   = isDeliveryReady ? "#DCFCE7" : "#DBEAFE";
+  const titleColor = isDeliveryReady ? "#15803D" : "#1D4ED8";
+  const descColor  = isDeliveryReady ? "#166534" : "#1E40AF";
+
   return (
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px 24px", marginBottom: "32px" }}>
       <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "16px" }}>
@@ -249,24 +256,15 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, fa, dc }: {
       </div>
 
       {/* City type */}
-      {(() => {
-        const isDeliveryReady = profileLabel.toLowerCase().includes("delivery-ready");
-        const bg    = isDeliveryReady ? "#F0FDF4" : "#EFF6FF";
-        const iconBg = isDeliveryReady ? "#DCFCE7" : "#DBEAFE";
-        const titleColor = isDeliveryReady ? "#15803D" : "#1D4ED8";
-        const descColor  = isDeliveryReady ? "#166534" : "#1E40AF";
-        return (
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: bg, borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
-            <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
-              🏛️
-            </div>
-            <div>
-              <div style={{ fontSize: "13px", fontWeight: "700", color: titleColor, marginBottom: "4px" }}>{profileLabel}</div>
-              <div style={{ fontSize: "12px", color: descColor, lineHeight: "1.55" }}>{profileDesc}</div>
-            </div>
-          </div>
-        );
-      })()}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: bg, borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
+        <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
+          🏛️
+        </div>
+        <div>
+          <div style={{ fontSize: "13px", fontWeight: "700", color: titleColor, marginBottom: "4px" }}>{profileLabel}</div>
+          <div style={{ fontSize: "12px", color: descColor, lineHeight: "1.55" }}>{profileDesc}</div>
+        </div>
+      </div>
 
       {/* Factors */}
       <div style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "4px" }}>
@@ -819,6 +817,7 @@ export function FinancialFeasibility({ params }: Props) {
             cityName={cityName}
             profileLabel={profAttrs.label}
             profileDesc={profAttrs.desc(cityName)}
+            profileType={profAttrs.type}
             fa={profAttrs.fa}
             dc={profAttrs.dc}
           />
@@ -853,7 +852,7 @@ export function FinancialFeasibility({ params }: Props) {
             <select
               value={activeSector ?? ""}
               onChange={e => setActiveSector(e.target.value || null)}
-              style={{ marginLeft: "auto", fontSize: "13px", fontWeight: "600", color: activeSector ? "#001EA7" : "#374151", background: activeSector ? "#EEF2FF" : "white", border: `1.5px solid ${activeSector ? "#001EA7" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none", paddingRight: "28px", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center" }}
+              style={{ marginLeft: "auto", fontSize: "13px", fontWeight: "600", color: activeSector ? "#001EA7" : "#374151", backgroundColor: activeSector ? "#EEF2FF" : "white", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center", border: `1.5px solid ${activeSector ? "#001EA7" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 28px 5px 14px", cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none" }}
             >
               <option value="">All sectors</option>
               {sectors.map(s => (
