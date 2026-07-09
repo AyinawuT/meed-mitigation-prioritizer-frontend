@@ -224,7 +224,7 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Data source note */}
         <div style={{ marginBottom: "16px", padding: "10px 14px", background: "#F5F7FF", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "11px", color: "#4338CA" }}>
-          Policy signals sourced from {nationalPlans.length} national and {regionalPlans.length} regional plans for <strong>{dataSource.locode}</strong> · Scores reflect signal strength across {Object.keys(perActionScores).length} candidate actions
+          Policy signals sourced from {nationalPlans.length} national and {regionalPlans.length} regional plans for <strong>{city.name}</strong> · {Object.keys(perActionScores).length} candidate actions checked for policy backing
         </div>
 
         {/* Score cards */}
@@ -407,8 +407,9 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
   plan: Plan; open: boolean; onToggle: () => void;
   perActionScores: Record<string, ActionScore>;
 }) {
-  const highCount = plan.actions.filter(a => a.strength === "high").length;
-  const medCount  = plan.actions.filter(a => a.strength === "medium").length;
+  const knownActions = plan.actions.filter(a => !!ACTION_NAMES[a.id]);
+  const highCount = knownActions.filter(a => a.strength === "high").length;
+  const medCount  = knownActions.filter(a => a.strength === "medium").length;
 
   return (
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
@@ -430,7 +431,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
             )}
           </div>
           <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>
-            {plan.horizon ? `Horizon: ${plan.horizon} · ` : ""}{plan.actions.length} action{plan.actions.length !== 1 ? "s" : ""} matched
+            {plan.horizon ? `Horizon: ${plan.horizon} · ` : ""}{knownActions.length} action{knownActions.length !== 1 ? "s" : ""} matched
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "16px", flexShrink: 0 }}>
