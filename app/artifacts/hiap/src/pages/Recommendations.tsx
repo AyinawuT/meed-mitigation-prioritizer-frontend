@@ -646,40 +646,41 @@ function DetailPanel({
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {visibleOpps.map((opp, i) => {
-                  const inst = instrumentStyle(opp.instrument);
+                  const instrColor = instrumentStyle(opp.instrument);
+                  const statusColor = opp.status === "ongoing" ? { bg: "#D1FAE5", color: "#065F46" }
+                    : opp.status === "open" ? { bg: "#DBEAFE", color: "#1D4ED8" }
+                    : { bg: "#F3F4F6", color: "#6B7280" };
+                  const snippet = opp.amount_note ?? (opp as Record<string, unknown>).notes as string ?? "";
                   return (
                     <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "4px" }}>
-                        <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", lineHeight: "1.35" }}>
-                          {opp.opportunity_name ?? "Unnamed opportunity"}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
+                        <div style={{ fontSize: "13px", fontWeight: "600", color: "#0D9488", lineHeight: "1.35" }}>
+                          {opp.opportunity_name ?? "Funding opportunity"}
                         </div>
-                        {inst && (
-                          <span style={{ fontSize: "10px", fontWeight: "600", color: inst.color, background: inst.bg, padding: "2px 7px", borderRadius: "4px", whiteSpace: "nowrap", flexShrink: 0 }}>
-                            {inst.label}
-                          </span>
-                        )}
+                        <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
+                          {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{opp.status}</span>}
+                          {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{opp.instrument}</span>}
+                        </div>
                       </div>
-                      {opp.funder_name && <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "4px" }}>{opp.funder_name}</div>}
-                      {opp.amount != null && (
-                        <div style={{ fontSize: "12px", color: "#374151", fontWeight: "600" }}>
-                          {opp.amount_currency ?? ""} {opp.amount.toLocaleString()}{opp.amount_note ? ` (${opp.amount_note})` : ""}
-                        </div>
+                      {opp.funder_name && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: snippet ? "4px" : 0 }}>{opp.funder_name}</div>}
+                      {snippet && (
+                        <p style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.55", margin: "0" }}>
+                          {snippet.length > 160 ? snippet.slice(0, 160) + "…" : snippet}
+                        </p>
                       )}
-                      {opp.status && <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "4px" }}>{opp.status}</div>}
                       {opp.source_url && (
-                        <a href={opp.source_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", textDecoration: "none", marginTop: "6px", display: "inline-block" }}>
-                          View opportunity →
+                        <a href={opp.source_url} target="_blank" rel="noopener noreferrer"
+                          style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#6B7280", background: "#F3F4F6", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
+                          View fund ↗
                         </a>
                       )}
                     </div>
                   );
                 })}
                 {matchedOpps.length > 2 && (
-                  <button
-                    onClick={() => setShowAllOpps(v => !v)}
-                    style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: "4px 0", textAlign: "left" }}
-                  >
-                    {showAllOpps ? "Show fewer opportunities" : `Show all ${matchedOpps.length} opportunities >`}
+                  <button onClick={() => setShowAllOpps(v => !v)}
+                    style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                    {showAllOpps ? "Show fewer funds" : `Show all ${matchedOpps.length} matched funds >`}
                   </button>
                 )}
               </div>
@@ -713,39 +714,43 @@ function DetailPanel({
                 body="No catalogued projects in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added."
               />
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {visibleProjs.map((proj, i) => {
-                  const name = proj.project_name_i18n?.es ?? proj.project_name_i18n?.en ?? proj.project_name ?? "Unnamed project";
+                  const topMatch = proj.action_matches?.[0];
+                  const conf = topMatch ? confidenceStyle(topMatch.confidence) : null;
                   const lc = lifecycleStyle(proj.lifecycle_stage);
-                  const conf = proj.action_matches?.[0]?.confidence;
-                  const cs = confidenceStyle(conf);
                   const cost = formatClpMillions(proj.cost_total);
+                  const nameEs = proj.project_name_i18n?.es;
+                  const funder = proj.funding_sources?.[0]?.funder_name;
                   return (
                     <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "6px" }}>
-                        <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", lineHeight: "1.35" }}>{name}</div>
-                        <span style={{ fontSize: "10px", fontWeight: "700", color: cs.color, background: cs.bg, padding: "2px 7px", borderRadius: "4px", whiteSpace: "nowrap", flexShrink: 0 }}>
-                          {cs.label}
-                        </span>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "2px" }}>
+                        <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.35" }}>
+                          {proj.project_name ?? "Project"}
+                        </div>
+                        <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
+                          {conf && <span style={{ fontSize: "10px", fontWeight: "600", color: conf.color, background: conf.bg, padding: "2px 6px", borderRadius: "4px" }}>{conf.label}</span>}
+                          {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{proj.lifecycle_stage.replace(/-/g, " ")}</span>}
+                        </div>
                       </div>
-                      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
-                        {proj.lifecycle_stage && (
-                          <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 7px", borderRadius: "4px" }}>
-                            {proj.lifecycle_stage}
-                          </span>
-                        )}
-                        {proj.sector && <span style={{ fontSize: "11px", color: "#6B7280" }}>{proj.sector}</span>}
-                        {proj.jurisdiction && <span style={{ fontSize: "11px", color: "#9CA3AF" }}>· {proj.jurisdiction}</span>}
+                      {nameEs && nameEs !== proj.project_name && (
+                        <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{nameEs}</div>
+                      )}
+                      {proj.jurisdiction && (
+                        <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {proj.jurisdiction}</div>
+                      )}
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
+                        {cost && <span>Cost: <strong style={{ color: "#374151" }}>{cost}</strong></span>}
+                        {proj.sector && <span>Sector: <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
+                        {proj.funding_channel && <span>Channel: <strong style={{ color: "#374151" }}>{proj.funding_channel}</strong></span>}
+                        {funder && <span>Funder: <strong style={{ color: "#374151" }}>{funder}</strong></span>}
                       </div>
-                      {cost && <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginTop: "6px" }}>{cost}</div>}
                     </div>
                   );
                 })}
                 {projects.length > 3 && (
-                  <button
-                    onClick={() => setShowAllProj(v => !v)}
-                    style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: "4px 0", textAlign: "left" }}
-                  >
+                  <button onClick={() => setShowAllProj(v => !v)}
+                    style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
                     {showAllProj ? "Show fewer projects" : `Show all ${projects.length} matched projects >`}
                   </button>
                 )}
