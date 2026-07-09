@@ -174,8 +174,12 @@ function scoreImpact(action: ActionRecord, cityEmissions: Record<string, number>
 function scoreAlignment(action: ActionRecord, sectors: string[]) {
   const policyComponent = allData.policyMap.get(action.actionId) ?? 0.0;
   const sectorComponent = sectors.length > 0 && gpcMatchesSectors(action.emissions?.gpc_reference_number ?? [], sectors) ? 1.0 : 0.0;
+  // co-benefit and timeframe components: stub data has no cityStrategicPreferenceCoBenefitKeys
+  // or timelineForImplementation matching, so both default to neutral 0.5 per spec
+  const cobenefitComponent = 0.5;
+  const timeframeComponent = 0.5;
   return {
-    alignmentScore: 0.8 * policyComponent + 0.15 * sectorComponent + 0.05 * 0,
+    alignmentScore: 0.75 * policyComponent + 0.15 * sectorComponent + 0.05 * cobenefitComponent + 0.05 * timeframeComponent,
     policyComponent,
     sectorComponent,
   };

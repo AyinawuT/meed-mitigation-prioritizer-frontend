@@ -484,21 +484,12 @@ function scoreFeasibility(
   mitigationFeasibilityMap?: Map<string, number>,
   financialFeasibilityMap?: Map<string, FinancialFeasibilityEntry>
 ): { feasibilityScore: number; softLegalComponent: number; socioeconomicComponent: number; financialFeasibilityComponent: number; financialFeasibilityRoute: string | null; financialFeasibilityReason: string | null } {
-  // Soft legal
-  const reqs = legalMap.get(action.actionId) ?? [];
-  const softReqs = reqs.filter(
-    (r) => r.strength === "recommended" || r.strength === "optional"
-  );
-
-  let softLegalComponent = 0.0;
-  if (softReqs.length > 0) {
-    const scores = softReqs.map((r) => {
-      if (r.alignment_status === "aligns") return 1.0;
-      if (r.alignment_status === "not_aligned") return 0.0;
-      return 0.5; // no_evidence
-    });
-    softLegalComponent = scores.reduce((a, b) => a + b, 0) / scores.length;
-  }
+  // Legal verdict component.
+  // Production pipeline uses verdictScore (0–1) directly from the legal assessment API.
+  // Local action data does not carry verdictScore, so this client-side fallback uses the
+  // neutral midpoint 0.5 for all actions — identical to the production pipeline's own
+  // fallback for actions with a missing legal row.
+  const softLegalComponent = 0.5;
 
   // Mitigation feasibility component:
   // Use the pre-fetched action_score from the live API when available; fall back
@@ -629,17 +620,16 @@ function buildExplanation(p: {
     feasibilityScore >= 0.25 ? "low" : "very low";
 
   const legalPhrase =
-    softLegalComponent === 0      ? "no soft legal requirements on record" :
-    softLegalComponent >= 0.75    ? "strong soft-legal coverage" :
-    softLegalComponent >= 0.5     ? "partial soft-legal coverage" :
-                                    "sparse soft-legal coverage";
+    softLegalComponent >= 0.75 ? "a strong legal verdict" :
+    softLegalComponent >= 0.5  ? "a neutral legal verdict" :
+                                  "a restrictive legal verdict";
 
-  const socioPhrase =
-    socioeconomicComponent >= 0.65 ? "favorable socioeconomic conditions" :
-    socioeconomicComponent >= 0.45 ? "mixed socioeconomic conditions" :
-                                     "challenging socioeconomic conditions for this action type";
+  const mitigationPhrase =
+    socioeconomicComponent >= 0.65 ? "favorable mitigation feasibility" :
+    socioeconomicComponent >= 0.45 ? "moderate mitigation feasibility" :
+                                     "low mitigation feasibility for this action type";
 
-  const s3 = `Feasibility is ${feasWord} (${feasibilityScore.toFixed(2)}) due to ${legalPhrase} and ${socioPhrase}.`;
+  const s3 = `Feasibility is ${feasWord} (${feasibilityScore.toFixed(2)}) due to ${legalPhrase} and ${mitigationPhrase}.`;
 
   // ── Sentence 4: Trade-off ─────────────────────────────────────────────────
   const weighted = [
