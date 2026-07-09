@@ -1589,8 +1589,13 @@ export function Recommendations({ params }: Props) {
 
             {/* City context used for this ranking */}
             <div style={{ marginBottom: "28px" }}>
-              <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "12px" }}>
-                City context used for this ranking
+              <div style={{ marginBottom: "12px" }}>
+                <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
+                  City context used for this ranking
+                </div>
+                <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
+                  The data behind every score. Click any card to see the full breakdown.
+                </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px" }}>
                 {/* Emissions profile */}
