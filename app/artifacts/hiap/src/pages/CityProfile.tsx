@@ -62,7 +62,7 @@ const SECTION_DEFS: SectionDef[] = [
   },
   {
     id: "financial-feasibility",
-    priority: "LOW",
+    priority: "HIGH",
     title: "Financial Feasibility",
     desc: "Financing routes and fund access for each action, based on the city's budget profile.",
     progressKey: "financial-feasibility",
