@@ -783,7 +783,7 @@ function TopPickCard({
 
   return (
     <div style={{
-      background: "white", border: `1.5px solid ${isPicked ? "#001EA7" : "#E5E7EB"}`,
+      background: isPicked ? "#EEF2FF" : "white", border: `1.5px solid ${isPicked ? "#001EA7" : "#E5E7EB"}`,
       borderRadius: "14px", padding: "18px 20px",
       boxShadow: isPicked ? "0 0 0 3px rgba(0,30,167,0.08)" : "0 1px 6px rgba(0,0,0,0.05)",
       display: "flex", flexDirection: "column", position: "relative",
