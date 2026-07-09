@@ -1272,9 +1272,8 @@ function ContextBreakdownTab({
       {/* Policy Alignment */}
       {(() => {
         const ranked = result.ranked;
-        const withBacking = ranked.filter(a => a.policyComponent >= 0.5).length;
         const strongBacking = ranked.filter(a => a.policyComponent >= 0.75).length;
-        const noData = ranked.filter(a => a.policyComponent === 0).length;
+        const moderateBacking = ranked.filter(a => a.policyComponent >= 0.5 && a.policyComponent < 0.75).length;
         const avgPolicy = ranked.length > 0
           ? ranked.reduce((s, a) => s + a.policyComponent, 0) / ranked.length
           : 0;
@@ -1282,12 +1281,12 @@ function ContextBreakdownTab({
           <div>
             {sectionHead("📋", "Policy Alignment")}
             <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
-              How well ranked actions are backed by existing national or local policy frameworks.
+              How well ranked actions are backed by existing national policy frameworks.
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-              {statCard("Policy-supported actions", String(withBacking), `of ${ranked.length} ranked actions have backing`)}
-              {statCard("Strong policy support", String(strongBacking), "score ≥ 0.75")}
-              {statCard("Avg. alignment score", `${(avgPolicy * 100).toFixed(0)}%`, noData > 0 ? `${noData} actions lack policy data` : "across all ranked actions")}
+              {statCard("Avg. national alignment", `${(avgPolicy * 100).toFixed(0)}%`, `across all ${ranked.length} ranked actions`)}
+              {statCard("Strongly backed actions", String(strongBacking), "score above 75%")}
+              {statCard("Moderate backing", String(moderateBacking), "score 50–75%")}
             </div>
             {viewLink("View policy alignment", `/city/${citySlug}/policy?from=recommendations`)}
           </div>
