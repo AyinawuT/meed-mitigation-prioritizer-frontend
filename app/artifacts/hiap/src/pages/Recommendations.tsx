@@ -1336,6 +1336,19 @@ export function Recommendations({ params }: Props) {
   const [feasibilityRows, setFeasibilityRows] = useState<FeasibilityRow[]>([]);
   const [natPolicyScore, setNatPolicyScore] = useState<number | null>(null);
   const [policyScoresByAction, setPolicyScoresByAction] = useState<Record<string, number>>({});
+  const [indicatorCount, setIndicatorCount] = useState<number | null>(null);
+  useEffect(() => {
+    fetch(`https://ccglobal.openearth.dev/api/v0/city_attributes/${encodeURIComponent(locode)}`)
+      .then(r => r.json())
+      .then((json: { city?: Record<string, { attribute_value?: number }> }) => {
+        if (json.city) {
+          setIndicatorCount(Object.values(json.city).filter(
+            f => typeof f === "object" && f !== null && "attribute_value" in f
+          ).length);
+        }
+      })
+      .catch(() => {});
+  }, [locode]);
 
   // Read scoring weights from localStorage
   const effectiveWeights = (() => {
@@ -1653,7 +1666,7 @@ export function Recommendations({ params }: Props) {
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>🌍</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Emissions profile</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{(totalCityEmissions / 1_000_000).toFixed(1)} Mt CO₂e total · {Object.keys(result.cityEmissionsByGpc ?? {}).length} sectors</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{(totalCityEmissions / 1_000_000).toFixed(1)} Mt CO₂e total · {new Set(Object.keys(result.cityEmissionsByGpc ?? {}).map(k => k.split('.')[0])).size} sectors</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
@@ -1666,7 +1679,7 @@ export function Recommendations({ params }: Props) {
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>👥</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Socioeconomic indicators</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>20 indicators loaded</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{indicatorCount !== null ? `${indicatorCount} indicators loaded` : "Loading…"}</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
