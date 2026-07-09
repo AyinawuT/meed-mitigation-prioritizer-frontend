@@ -280,7 +280,7 @@ export function Methodology() {
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 <Subcomp pct="33%" title="Legal verdict" desc="Municipal authority and legal restrictions assessment — ownership and restrictions dimensions combined into a single component score" color="green" />
                 <Subcomp pct="33%" title="Mitigation feasibility" desc="City-specific mitigation feasibility score derived from socioeconomic and contextual factors" color="green" />
-                <Subcomp pct="33%" title="Financial feasibility" desc="Availability of financing routes and comparable funded projects — currently in development" color="green" />
+                <Subcomp pct="33%" title="Financial feasibility" desc="Availability of financing routes, fund access, and comparable funded projects — assessed via the Financial Feasibility page" color="green" />
               </div>
             </div>
           </div>
@@ -417,7 +417,62 @@ export function Methodology() {
               </p>
               <CodeBlock>{"bucket_score:  very_low=-2  low=-1  medium=0  high=+1  very_high=+2\ndirection:     supportive → keep sign    constraining → reverse sign\nnormalised:    (weighted_average + 2) ÷ 4  →  gives 0–1 range"}</CodeBlock>
             </Step>
-            <Step n={3} title="Combine components into a feasibility score">
+            <Step n={3} title="Financial feasibility score">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6" }}>
+                The financial feasibility score assesses whether a city can realistically finance and deliver an action,
+                given the action's cost and complexity requirements and the city's own financial and institutional capacity.
+                It draws on four inputs:
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "14px" }}>
+                {[
+                  ["Capital intensity", "How much money the action typically requires — from low-cost measures to large infrastructure investment"],
+                  ["Preparation complexity", "How much planning, technical design, and procurement capacity the action demands before implementation can begin"],
+                  ["City financial profile", "Composite of financial autonomy (share of budget raised locally vs. national transfers) and delivery capacity (qualified staff to plan and manage projects)"],
+                  ["Fund access", "Number of directly matched external funding opportunities available for the action's sector in Chile"],
+                ].map(([term, explanation]) => (
+                  <div key={term as string} style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+                    <div style={{ flexShrink: 0, width: "6px", height: "6px", borderRadius: "50%", background: GREEN, marginTop: "7px" }} />
+                    <div>
+                      <span style={{ fontWeight: "600", fontSize: "13px", color: "#111827" }}>{term}</span>
+                      <span style={{ fontSize: "13px", color: "#6B7280" }}> — {explanation}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
+                Each action is classified into a <strong>financial route</strong> based on its capital intensity, preparation complexity, and the city profile:
+              </p>
+              <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "12px" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+                  <thead>
+                    <tr style={{ background: "#F9FAFB" }}>
+                      {["Route", "Score", "What it means"].map(h => (
+                        <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["Self-deliverable", "0.85", "City can implement with own budget and staff — low cost, low complexity"],
+                      ["Needs co-finance", "0.55", "Requires additional funding partners but city has sufficient institutional capacity"],
+                      ["Needs finance & support", "0.25", "Requires external financing and significant technical or institutional support"],
+                    ].map(([route, score, meaning], i) => (
+                      <tr key={route} style={{ borderBottom: i < 2 ? "1px solid #F3F4F6" : "none" }}>
+                        <td style={{ padding: "10px 14px", color: "#374151", fontWeight: "600" }}>{route}</td>
+                        <td style={{ padding: "10px 14px", color: GREEN, fontWeight: "700" }}>{score}</td>
+                        <td style={{ padding: "10px 14px", color: "#6B7280" }}>{meaning}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <CalloutBox color="green">
+                Fund access boosts the score when direct financing opportunities are available for the action's sector.
+                The Financial Feasibility page lists all matched funds and comparable funded projects for each action.
+              </CalloutBox>
+            </Step>
+
+            <Step n={4} title="Combine components into a feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
                 The feasibility score is built from three components: legal verdict, mitigation feasibility, and financial feasibility.
                 When financial feasibility data is available for an action (financing route and fund access), all three components are weighted equally.
