@@ -72,17 +72,6 @@ export function StepBar({ activeStep, citySlug }: StepBarProps) {
           >
             {isDone && <span style={{ color: "inherit", fontSize: "11px" }}>✓</span>}
             <span>{i + 1}. {step}</span>
-            {(i === 4 || i === 5) && (
-              <span style={{
-                fontSize: "10px",
-                color: "#6B7280",
-                background: "#F3F4F6",
-                borderRadius: "4px",
-                padding: "1px 5px",
-              }}>
-                optional
-              </span>
-            )}
           </div>
         );
       })}
