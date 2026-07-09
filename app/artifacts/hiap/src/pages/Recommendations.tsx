@@ -1560,9 +1560,9 @@ export function Recommendations({ params }: Props) {
 
             {/* Top co-benefits section */}
             {topCoBenefits.length > 0 && (
-              <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px 24px", marginBottom: "28px" }}>
-                <div style={{ marginBottom: "16px" }}>
-                  <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
+              <div style={{ marginBottom: "28px" }}>
+                <div style={{ marginBottom: "12px" }}>
+                  <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
                     Top co-benefits across these actions
                   </div>
                   <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
