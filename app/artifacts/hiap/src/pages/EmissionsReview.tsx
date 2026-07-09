@@ -240,7 +240,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
               boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromRecommendations ? "Save & return to recommendations →" : fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
+            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
           </button>
         </div>
       </div>

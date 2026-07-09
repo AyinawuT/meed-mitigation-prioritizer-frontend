@@ -932,7 +932,7 @@ export function FinancialFeasibility({ params }: Props) {
               navigate(fromRecommendations ? `/city/${citySlug}/recommendations` : `/city/${citySlug}/preflight`);
             }}
             style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}>
-            {fromRecommendations ? "Save & return to recommendations →" : "Pre-flight check →"}
+            {fromRecommendations ? "Save & return to context breakdown →" : "Pre-flight check →"}
           </button>
         </div>
       </div>
