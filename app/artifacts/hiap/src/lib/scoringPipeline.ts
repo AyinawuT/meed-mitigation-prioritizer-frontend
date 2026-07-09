@@ -180,6 +180,26 @@ async function fetchMitigationFeasibilityMap(locode: string): Promise<Map<string
   return map;
 }
 
+export type FinancialFeasibilityEntry = { score: number; route: string | null; reason: string | null };
+
+// Fetch live financial feasibility scores from the climate-finance API; returns empty map on any error
+export async function fetchFinancialFeasibilityMap(locode: string): Promise<Map<string, FinancialFeasibilityEntry>> {
+  const map = new Map<string, FinancialFeasibilityEntry>();
+  try {
+    const countryCode = locode.slice(0, 2).toUpperCase();
+    const url = `https://ccglobal.openearth.dev/api/v1/cities/${encodeURIComponent(locode)}/climate-finance/feasibility?country_code=${countryCode}`;
+    const res = await fetch(url);
+    if (!res.ok) return map;
+    const data = await res.json() as { data?: Array<{ action_id: string; financial_feasibility: number; route: string | null; reason: string | null }> };
+    for (const row of data.data ?? []) {
+      if (typeof row.financial_feasibility === "number") {
+        map.set(row.action_id, { score: row.financial_feasibility, route: row.route ?? null, reason: row.reason ?? null });
+      }
+    }
+  } catch { /* fall through — financial feasibility excluded from score */ }
+  return map;
+}
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const IMPACT_MULTIPLIER: Record<string, number> = {
@@ -460,8 +480,9 @@ function scoreAlignment(
 function scoreFeasibility(
   action: ActionRecord,
   cityIndicators: CityIndicators,
-  mitigationFeasibilityMap?: Map<string, number>
-): { feasibilityScore: number; softLegalComponent: number; socioeconomicComponent: number } {
+  mitigationFeasibilityMap?: Map<string, number>,
+  financialFeasibilityMap?: Map<string, FinancialFeasibilityEntry>
+): { feasibilityScore: number; softLegalComponent: number; socioeconomicComponent: number; financialFeasibilityComponent: number; financialFeasibilityRoute: string | null; financialFeasibilityReason: string | null } {
   // Soft legal
   const reqs = legalMap.get(action.actionId) ?? [];
   const softReqs = reqs.filter(
@@ -508,10 +529,19 @@ function scoreFeasibility(
     }
   }
 
-  const feasibilityScore =
-    0.5 * softLegalComponent + 0.5 * socioeconomicComponent;
+  // Financial feasibility component from the climate-finance API
+  const ffEntry = financialFeasibilityMap?.get(action.actionId);
+  const financialFeasibilityComponent = ffEntry?.score ?? 0;
+  const financialFeasibilityRoute = ffEntry?.route ?? null;
+  const financialFeasibilityReason = ffEntry?.reason ?? null;
 
-  return { feasibilityScore, softLegalComponent, socioeconomicComponent };
+  // Use 3-way formula when financial feasibility data is available for this action;
+  // fall back to 2-way (legal + socioeconomic) when it isn't.
+  const feasibilityScore = financialFeasibilityComponent > 0
+    ? (1 / 3) * softLegalComponent + (1 / 3) * socioeconomicComponent + (1 / 3) * financialFeasibilityComponent
+    : 0.5 * softLegalComponent + 0.5 * socioeconomicComponent;
+
+  return { feasibilityScore, softLegalComponent, socioeconomicComponent, financialFeasibilityComponent, financialFeasibilityRoute, financialFeasibilityReason };
 }
 
 // ─── Step 6: Narrative explanation ────────────────────────────────────────────
@@ -681,10 +711,11 @@ export async function runPipeline(
 
   const { byRef, total } = deriveEmissions(req.cityEmissionsData.gpcData);
 
-  // Fetch live policy scores + mitigation feasibility scores in parallel
-  const [policyMap, mitigationFeasibilityMap] = await Promise.all([
+  // Fetch live policy scores, mitigation feasibility, and financial feasibility in parallel
+  const [policyMap, mitigationFeasibilityMap, financialFeasibilityMap] = await Promise.all([
     fetchPolicyMap(req.locode),
     fetchMitigationFeasibilityMap(req.locode),
+    fetchFinancialFeasibilityMap(req.locode),
   ]);
 
   const { valid, discarded, flagged } = hardFilter(actions);
@@ -703,8 +734,8 @@ export async function runPipeline(
       scoreImpact(action, byRef, total);
     const { alignmentScore, policyComponent, sectorComponent, otherComponent, timeframeComponent } =
       scoreAlignment(action, sectors, coBenefitDimensions, timeframes, policyMap);
-    const { feasibilityScore, softLegalComponent, socioeconomicComponent } =
-      scoreFeasibility(action, cityIndicators, mitigationFeasibilityMap);
+    const { feasibilityScore, softLegalComponent, socioeconomicComponent, financialFeasibilityComponent, financialFeasibilityRoute, financialFeasibilityReason } =
+      scoreFeasibility(action, cityIndicators, mitigationFeasibilityMap, financialFeasibilityMap);
 
     const finalScore =
       impactScore * normWeights.impact +
@@ -725,6 +756,9 @@ export async function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
+      financialFeasibilityComponent,
+      financialFeasibilityRoute,
+      financialFeasibilityReason,
       timeframeComponent,
       matchedEmissions,
       legalFlag: flagged.has(action.actionId),
@@ -752,6 +786,9 @@ export async function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
+      financialFeasibilityComponent,
+      financialFeasibilityRoute,
+      financialFeasibilityReason,
       timeframeComponent,
       matchedEmissions,
       legalFlag,
@@ -794,6 +831,9 @@ export async function runPipeline(
       otherComponent,
       softLegalComponent,
       socioeconomicComponent,
+      financialFeasibilityComponent,
+      financialFeasibilityRoute,
+      financialFeasibilityReason,
       timeframeComponent,
       legalPassed: true,
       legalFlag,

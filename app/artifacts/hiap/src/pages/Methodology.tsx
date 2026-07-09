@@ -420,10 +420,10 @@ export function Methodology() {
             <Step n={3} title="Combine components into a feasibility score">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
                 The feasibility score is built from three components: legal verdict, mitigation feasibility, and financial feasibility.
-                Financial feasibility (financing routes and comparable funded projects) is currently in development.
-                The active formula uses the two live components weighted equally:
+                When financial feasibility data is available for an action (financing route and fund access), all three components are weighted equally.
+                A two-component fallback applies for actions with no financial feasibility score:
               </p>
-              <CodeBlock>{"feasibility_score = (0.50 × legal_verdict) + (0.50 × mitigation_feasibility)\n\n// Target formula (once financial feasibility is live):\nfeasibility_score = (0.33 × legal_verdict) + (0.33 × mitigation_feasibility) + (0.33 × financial_feasibility)"}</CodeBlock>
+              <CodeBlock>{"// Full 3-component formula (used when financial feasibility data is available):\nfeasibility_score = (0.33 × legal_verdict) + (0.33 × mitigation_feasibility) + (0.33 × financial_feasibility)\n\n// 2-component fallback (used for actions with no financial feasibility score):\nfeasibility_score = (0.50 × legal_verdict) + (0.50 × mitigation_feasibility)"}</CodeBlock>
             </Step>
           </div>
         </div>
