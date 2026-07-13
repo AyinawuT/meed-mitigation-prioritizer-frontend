@@ -1717,19 +1717,6 @@ export function Recommendations({ params }: Props) {
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
-                {/* Full ranking */}
-                <button
-                  onClick={handleBrowseFullRanking}
-                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
-                  onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
-                  onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
-                >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>📊</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Full ranking</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{ranked.length} actions ranked</div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
-                </button>
-
                 {/* Policy alignment */}
                 <button
                   onClick={() => setActiveTab("context")}
@@ -1742,6 +1729,19 @@ export function Recommendations({ params }: Props) {
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
                     {natPolicyScore !== null ? `${Math.round(natPolicyScore * 100)}% national alignment` : "Loading…"}
                   </div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                </button>
+
+                {/* Full ranking */}
+                <button
+                  onClick={handleBrowseFullRanking}
+                  style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "border-color 0.1s", display: "flex", flexDirection: "column" }}
+                  onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
+                  onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
+                >
+                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>📊</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Full ranking</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{ranked.length} actions ranked</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
               </div>
