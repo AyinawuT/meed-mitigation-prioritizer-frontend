@@ -286,6 +286,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -346,7 +347,9 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
 
   function handleConfirm() {
     confirmStep(locode, "socioeconomic");
-    navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/regulations`);
+    if (fromRecommendations) navigate(`/city/${citySlug}/recommendations?tab=context`);
+    else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
+    else navigate(`/city/${citySlug}/regulations`);
   }
 
   return (
@@ -386,7 +389,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 borderRadius: "6px", padding: "5px 12px",
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
-                <span>⚖</span>
+                <span>👥</span>
                 <span>MEED+ FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
               </div>
             </div>
@@ -562,7 +565,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
+            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
           </button>
         </div>
       </div>

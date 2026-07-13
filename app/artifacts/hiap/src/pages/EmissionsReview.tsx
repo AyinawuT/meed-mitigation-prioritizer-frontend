@@ -22,6 +22,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
 
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -62,7 +63,9 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
 
   function handleConfirm() {
     confirmStep(locode, "emissions");
-    navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/socioeconomic`);
+    if (fromRecommendations) navigate(`/city/${citySlug}/recommendations?tab=context`);
+    else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
+    else navigate(`/city/${citySlug}/socioeconomic`);
   }
 
   return (
@@ -237,7 +240,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
               boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
+            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Socioeconomic context →"}
           </button>
         </div>
       </div>

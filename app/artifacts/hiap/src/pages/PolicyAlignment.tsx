@@ -131,6 +131,7 @@ export function PolicyAlignment({ params }: Props) {
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city: CityData | undefined = CITIES.find(
@@ -213,7 +214,7 @@ export function PolicyAlignment({ params }: Props) {
             borderRadius: "6px", padding: "5px 12px",
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
-            <span>⚖</span>
+            <span>📋</span>
             <span>MEED+ ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking</span>
           </div>
         </div>
@@ -223,7 +224,7 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Data source note */}
         <div style={{ marginBottom: "16px", padding: "10px 14px", background: "#F5F7FF", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "11px", color: "#4338CA" }}>
-          Policy signals sourced from {nationalPlans.length} national and {regionalPlans.length} regional plans for <strong>{dataSource.locode}</strong> · Scores reflect signal strength across {Object.keys(perActionScores).length} candidate actions
+          Policy signals sourced from {nationalPlans.length} national and {regionalPlans.length} regional plans for <strong>{city.name}</strong> · {Object.keys(perActionScores).length} candidate actions checked for policy backing
         </div>
 
         {/* Score cards */}
@@ -334,11 +335,11 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Footer actions */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "24px" }}>
-          <button onClick={() => navigate(`/city/${citySlug}/preflight`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
-            {fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
+          <button onClick={() => navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
+            {fromRecommendations ? "← Back to context breakdown" : fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
           </button>
-          <button onClick={() => { confirmStep(locode, "policy"); navigate(`/city/${citySlug}/preflight`); }} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
-            {fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
+          <button onClick={() => { confirmStep(locode, "policy"); navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`); }} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
+            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
           </button>
         </div>
       </div>
@@ -347,6 +348,30 @@ export function PolicyAlignment({ params }: Props) {
 }
 
 /* ── Sub-components ── */
+
+function ColHeader({ label, tip, minWidth, align }: { label: string; tip: string; minWidth: string; align?: "right" }) {
+  const [show, setShow] = useState(false);
+  return (
+    <span style={{ position: "relative", flexShrink: 0, minWidth, textAlign: align ?? "left", display: "inline-flex", alignItems: "center", gap: "3px", justifyContent: align === "right" ? "flex-end" : "flex-start" }}>
+      <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>{label}</span>
+      <button
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        style={{ background: "none", border: "none", padding: 0, cursor: "default", color: "#C4C9D4", fontSize: "10px", lineHeight: 1, flexShrink: 0 }}
+      >ⓘ</button>
+      {show && (
+        <div style={{
+          position: "absolute", bottom: "calc(100% + 6px)", [align === "right" ? "right" : "left"]: 0,
+          background: "white", color: "#374151", fontSize: "11px", lineHeight: "1.5",
+          borderRadius: "6px", padding: "8px 10px", width: "220px", zIndex: 100,
+          boxShadow: "0 4px 16px rgba(0,0,0,0.14)", border: "1px solid #E5E7EB", pointerEvents: "none",
+        }}>
+          {tip}
+        </div>
+      )}
+    </span>
+  );
+}
 
 function Breadcrumb({ items }: { items: { label: string; onClick?: () => void }[] }) {
   return (
@@ -406,14 +431,15 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
   plan: Plan; open: boolean; onToggle: () => void;
   perActionScores: Record<string, ActionScore>;
 }) {
-  const highCount = plan.actions.filter(a => a.strength === "high").length;
-  const medCount  = plan.actions.filter(a => a.strength === "medium").length;
+  const knownActions = plan.actions.filter(a => !!ACTION_NAMES[a.id]);
+  const highCount = knownActions.filter(a => a.strength === "high").length;
+  const medCount  = knownActions.filter(a => a.strength === "medium").length;
 
   return (
-    <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+    <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", position: "relative" }}>
       <button
         onClick={onToggle}
-        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", borderRadius: "10px 10px 0 0" }}
       >
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -429,7 +455,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
             )}
           </div>
           <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>
-            {plan.horizon ? `Horizon: ${plan.horizon} · ` : ""}{plan.actions.length} action{plan.actions.length !== 1 ? "s" : ""} matched
+            {plan.horizon ? `Horizon: ${plan.horizon} · ` : ""}{knownActions.length} action{knownActions.length !== 1 ? "s" : ""} matched
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "16px", flexShrink: 0 }}>
@@ -449,9 +475,9 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
           <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingBottom: "6px", borderBottom: "1px solid #F3F4F6" }}>
             <span style={{ width: "8px", flexShrink: 0 }} />
             <span style={{ fontSize: "10px", color: "#9CA3AF", flex: 1, fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Action</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Signal type</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "110px", textAlign: "right", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Policy support</span>
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flexShrink: 0, minWidth: "56px", textAlign: "right", fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Strength</span>
+            <ColHeader label="Signal type" tip="The kind of policy backing found — e.g. a direct mandate (Policy action), budget allocation (Funding), institutional responsibility (Governance), inclusion in a sector strategy (Sector plan), or a link to an emissions target." minWidth="80px" />
+            <ColHeader label="Policy support" tip="How explicitly this plan covers the action, from 0% (no mention) to 100% (full, direct mandate). Scores above 75% are considered strong." minWidth="110px" align="right" />
+            <ColHeader label="Strength" tip="Overall signal quality: Strong = explicit, high-confidence coverage · Moderate = indirect or partial reference · Weak = incidental mention." minWidth="56px" align="right" />
           </div>
           {plan.actions.map(a => {
             const meta = ACTION_NAMES[a.id];
@@ -480,9 +506,6 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
               </div>
             );
           })}
-          <div style={{ marginTop: "4px", fontSize: "10px", color: "#C0C0C0", paddingTop: "6px", borderTop: "1px solid #F9F9F9" }}>
-            Policy support score: how well this plan's provisions explicitly cover the action (0% = no coverage · 100% = full explicit coverage)
-          </div>
         </div>
       )}
     </div>

@@ -7,6 +7,7 @@ import { SocioeconomicContext } from "@/pages/SocioeconomicContext";
 import { RegulationsLaws } from "@/pages/RegulationsLaws";
 import { StrategicPreferences } from "@/pages/StrategicPreferences";
 import { PolicyAlignment } from "@/pages/PolicyAlignment";
+import { FinancialFeasibility } from "@/pages/FinancialFeasibility";
 import { PreflightCheck } from "@/pages/PreflightCheck";
 import { Processing } from "@/pages/Processing";
 import { Recommendations } from "@/pages/Recommendations";
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/city/:locode/regulations" component={RegulationsLaws} />
       <Route path="/city/:locode/strategic" component={StrategicPreferences} />
       <Route path="/city/:locode/policy" component={PolicyAlignment} />
+      <Route path="/city/:locode/financial-feasibility" component={FinancialFeasibility} />
       <Route path="/city/:locode/preflight" component={PreflightCheck} />
       <Route path="/city/:locode/processing" component={Processing} />
       <Route path="/city/:locode/recommendations" component={Recommendations} />

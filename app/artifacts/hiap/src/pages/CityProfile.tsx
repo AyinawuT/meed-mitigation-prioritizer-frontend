@@ -8,11 +8,12 @@ import { useCityAttributes } from "@/hooks/use-city-attributes";
 import { useLanguage } from "@/lib/i18n";
 
 const STEP_ROUTES: Record<string, string> = {
-  emissions:     "emissions",
-  socioeconomic: "socioeconomic",
-  regulations:   "regulations",
-  preferences:   "strategic",
-  policy:        "policy",
+  emissions:              "emissions",
+  socioeconomic:          "socioeconomic",
+  regulations:            "regulations",
+  preferences:            "strategic",
+  policy:                 "policy",
+  "financial-feasibility": "financial-feasibility",
 };
 
 interface SectionDef {
@@ -58,6 +59,13 @@ const SECTION_DEFS: SectionDef[] = [
     title: "Policy Alignment",
     desc: "Optional: align recommendations with national, regional and local climate frameworks.",
     progressKey: "policy",
+  },
+  {
+    id: "financial-feasibility",
+    priority: "HIGH",
+    title: "Financial Feasibility",
+    desc: "Financing routes and fund access for each action, based on the city's budget profile.",
+    progressKey: "financial-feasibility",
   },
 ];
 

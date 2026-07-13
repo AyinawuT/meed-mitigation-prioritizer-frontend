@@ -274,6 +274,7 @@ export function RegulationsLaws({ params }: Props) {
   const citySlug = city ? city.locode.replace(" ", "-") : urlLocode;
   const cityName = city?.name ?? locode;
   const fromPreflight = search.includes("from=preflight");
+  const fromRecommendations = search.includes("from=recommendations");
 
   const [result, setResult] = useState<PipelineResult | null>(null);
   const [sectorFilter, setSectorFilter] = useState("all");
@@ -313,7 +314,7 @@ export function RegulationsLaws({ params }: Props) {
   useEffect(() => {
     if (!result) return;
     const excl = result.legalExcluded?.length ?? 0;
-    const incl = result.ranked?.length ?? 0;
+    const incl = result.validActionsCount ?? result.ranked?.length ?? 0;
     const sub = excl > 0
       ? `${excl} excluded · ${incl} included`
       : `${incl} actions included`;
@@ -351,26 +352,41 @@ export function RegulationsLaws({ params }: Props) {
       <Navbar cityName={cityName} />
       <StepBar activeStep={2} citySlug={citySlug} />
 
-      <div style={{ maxWidth: "840px", margin: "0 auto", padding: "32px 24px", width: "100%" }}>
-
-        {/* Header */}
-        <div style={{ marginBottom: "28px" }}>
-          <h1 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
+      <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 20px" }}>
+        <div style={{ maxWidth: "840px", margin: "0 auto" }}>
+          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
+              Cities
+            </button>
+            <span>›</span>
+            <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
+              {cityName}
+            </button>
+            <span>›</span>
+            <span style={{ color: "#374151" }}>Regulations &amp; Laws</span>
+          </div>
+          <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
             Regulations &amp; Laws
           </h1>
-          <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6", maxWidth: "640px" }}>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px", lineHeight: "1.6" }}>
             MEED+ HIAP has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
           </p>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: "6px",
-            background: "#F0FDF4", border: "1px solid #BBF7D0",
-            borderRadius: "6px", padding: "5px 12px",
-            fontSize: "11px", color: "#15803D", fontWeight: "600",
-          }}>
-            <span>⚖</span>
-            <span>MEED+ FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "6px",
+              background: "#F0FDF4", border: "1px solid #BBF7D0",
+              borderRadius: "6px", padding: "5px 12px",
+              fontSize: "11px", color: "#15803D", fontWeight: "600",
+            }}>
+              <span>⚖</span>
+              <span>MEED+ FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div style={{ maxWidth: "840px", margin: "0 auto", padding: "32px 24px", width: "100%" }}>
+
 
         {/* Summary cards */}
         <div style={{ display: "flex", gap: "12px", marginBottom: "28px", flexWrap: "wrap" }}>
@@ -552,7 +568,9 @@ export function RegulationsLaws({ params }: Props) {
           <button
             onClick={() => {
               confirmStep(locode, "regulations");
-              navigate(fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/strategic`);
+              if (fromRecommendations) navigate(`/city/${citySlug}/recommendations?tab=context`);
+              else if (fromPreflight) navigate(`/city/${citySlug}/preflight`);
+              else navigate(`/city/${citySlug}/strategic`);
             }}
             style={{
               background: "#16A34A", color: "white", border: "none",
@@ -560,7 +578,7 @@ export function RegulationsLaws({ params }: Props) {
               cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
+            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
           </button>
         </div>
       </div>

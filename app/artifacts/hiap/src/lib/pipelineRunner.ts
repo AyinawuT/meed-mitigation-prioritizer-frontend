@@ -16,7 +16,7 @@ import {
   type PrioritizerApiCityResult,
 } from "@/lib/hiapApi";
 import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
-import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
 
 // ─── Internal types matching the API response shape ───────────────────────────
 
@@ -60,6 +60,15 @@ type EvidenceSummary = {
       component_source?: string;
       score_present?: boolean;
       score_missing?: boolean;
+    };
+    financial_feasibility?: {
+      component_score?: number;
+      component_source?: string;
+      score_present?: boolean;
+      score_missing?: boolean;
+      route?: string | null;
+      reason?: string | null;
+      sector?: string | null;
     };
   };
 };
@@ -389,6 +398,9 @@ export function adaptApiResult(
       socioeconomicComponent: ev.feasibility?.mitigation_feasibility?.component_score
                            ?? ev.feasibility?.mitigation_feasibility_component_score
                            ?? 0,
+      financialFeasibilityComponent: ev.feasibility?.financial_feasibility?.component_score ?? 0,
+      financialFeasibilityRoute: ev.feasibility?.financial_feasibility?.route ?? null,
+      financialFeasibilityReason: ev.feasibility?.financial_feasibility?.reason ?? null,
       legalPassed: true,
       legalFlag:   legalData?.assessment_missing === true,
       legalData,
@@ -404,6 +416,14 @@ export function adaptApiResult(
 
   const counts = apiResult.metadata?.counts as Record<string, number> | undefined;
 
+  // validActionsCount: prefer API-supplied value; fall back to deriving it from
+  // LOCAL_ACTION_MAP minus hard-blocked actions (legalExcluded contains only
+  // verdict="blocked" entries — flagged/conditional ones are in legalFlagged and
+  // are still included in the ranking).
+  const validActionsCount =
+    counts?.valid_actions ??
+    (LOCAL_ACTION_MAP.size - legalExcluded.length);
+
   return {
     schemaVersion: PIPELINE_RESULT_SCHEMA_VERSION,
     ranked,
@@ -411,12 +431,19 @@ export function adaptApiResult(
     legalExcluded,
     legalFlagged,
     totalCityEmissions,
-    cityEmissionsByGpc: {},
+    cityEmissionsByGpc: deriveEmissions(emissionsData.gpcData as Parameters<typeof deriveEmissions>[0]).byRef,
+    inventoryYear: emissionsData.inventoryYear ?? undefined,
     locode: apiResult.locode,
     topN,
-    validActionsCount: counts?.valid_actions,
+    validActionsCount,
   };
 }
+
+// Note: financial feasibility scoring is now handled entirely by the backend
+// (0.34 × legal + 0.33 × mitigation + 0.33 × financial, neutral 0.5 fallback
+// for missing components). The evidence fields financialFeasibilityComponent,
+// financialFeasibilityRoute, and financialFeasibilityReason are already read
+// directly from evidence_summary.feasibility.financial_feasibility in adaptApiResult.
 
 // ─── Main exported runner ─────────────────────────────────────────────────────
 
@@ -430,13 +457,19 @@ export async function runPipelineForCity(
 ): Promise<PipelineResult> {
   const { topN = 20, createExplanations = false } = options;
   const cityInput = buildCityInput(locode);
+
   const [apiResult] = await callPrioritize({
     cityDataList: [cityInput],
     topN,
     createExplanations,
     requestedLanguages: ["en"],
   });
+
+  // Backend computes the full 3-way feasibility score (legal + mitigation + financial)
+  // and returns all component evidence in evidence_summary.feasibility — no client-side
+  // re-computation needed.
   const result = adaptApiResult(apiResult, cityInput.cityEmissionsData, topN);
+
   localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
   return result;
 }
