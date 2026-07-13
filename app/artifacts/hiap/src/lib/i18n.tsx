@@ -60,8 +60,8 @@ const ES: Record<string, string> = {
   "Search by city name to find your city's profile.":
     "Busca por nombre de ciudad para encontrar el perfil de tu ciudad.",
   "Complete your profile": "Completa tu perfil",
-  "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, and strategic preferences.":
-    "Revisa y confirma los datos de emisiones, contexto socioeconómico, regulaciones y leyes, alineación de políticas y preferencias estratégicas.",
+  "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, financial feasibility, and strategic preferences.":
+    "Revisa y confirma los datos de emisiones, contexto socioeconómico, regulaciones y leyes, alineación de políticas, viabilidad financiera y preferencias estratégicas.",
   "Generate recommendations": "Generar recomendaciones",
   "Run MEED+ HIAP's scoring pipeline across over 100 mitigation actions ranked for your city.":
     "Ejecuta el pipeline de puntuación de MEED+ HIAP a través de más de 100 acciones de mitigación clasificadas para tu ciudad.",

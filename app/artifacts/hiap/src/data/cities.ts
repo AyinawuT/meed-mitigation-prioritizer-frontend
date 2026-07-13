@@ -5226,7 +5226,7 @@ export const HOW_STEPS = [
   {
     n: "2",
     title: "Complete your profile",
-    desc: "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, and strategic preferences.",
+    desc: "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, financial feasibility, and strategic preferences.",
   },
   {
     n: "3",
