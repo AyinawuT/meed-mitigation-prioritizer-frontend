@@ -18,8 +18,8 @@ function CodeBlock({ children }: { children: string }) {
       color: "#374151",
       lineHeight: "1.7",
       marginTop: "12px",
-      whiteSpace: "pre",
-      overflowX: "auto",
+      whiteSpace: "pre-wrap",
+      wordBreak: "break-word",
     }}>
       {children}
     </div>
@@ -163,7 +163,7 @@ export function Methodology() {
             HOW MEED+ HIAP WORKS
           </div>
           <h1 style={{ fontSize: "36px", fontWeight: "700", color: "#111827", margin: "0 0 16px", lineHeight: "1.2" }}>
-            The prioritisation methodology
+            The prioritization methodology
           </h1>
           <p style={{ fontSize: "16px", color: "#4B5563", margin: 0, lineHeight: "1.7", maxWidth: "680px" }}>
             MEED+ HIAP ranks climate mitigation actions for your city using a three-pillar scoring model.
@@ -240,8 +240,7 @@ export function Methodology() {
               </div>
             </div>
             <p style={{ fontSize: "13px", color: "#93C5FD", margin: "20px 0 0", lineHeight: "1.6" }}>
-              Default weights shown. Your city can adjust these on the Strategic Preferences page — for example,
-              increasing feasibility weight if near-term deliverability is a priority. Weights must always sum to 1.0.
+              These are the default weights. You can adjust them on the Pre-flight page, weights always sum to 100%.
             </p>
           </div>
 
@@ -254,8 +253,8 @@ export function Methodology() {
               <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Default weight: 55%</p>
               <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>How much of your city's emissions could this action address, and how quickly?</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <Subcomp pct="80%" title="Reduction share" desc="Matched GPC sector emissions × impact strength ÷ total city emissions" color="blue" />
-                <Subcomp pct="20%" title="Timeline score" desc="How quickly results can be delivered (<5 yr = 1.0, 5–10 yr = 0.5, >10 yr = 0.0)" color="blue" />
+                <Subcomp pct="80%" title="Reduction share" desc="Matched emissions weighted by evidence strength, as a share of total city emissions" color="blue" />
+                <Subcomp pct="20%" title="Timeline score" desc="How quickly results can be delivered — faster delivery scores higher" color="blue" />
               </div>
             </div>
             {/* Alignment */}
@@ -266,8 +265,8 @@ export function Methodology() {
               <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>Is this action supported by existing plans and your city's stated priorities?</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 <Subcomp pct="75%" title="Policy support score" desc="Signals from national NDC, PARCC, PACCC, and sector plans" color="purple" />
-                <Subcomp pct="15%" title="Sector preference match" desc="Whether the action is in a sector your city has prioritised" color="purple" />
-                <Subcomp pct="5%" title="Co-benefit preference match" desc="How well the action's co-benefits align with your city's selected co-benefit priorities" color="purple" />
+                <Subcomp pct="15%" title="Sector preference match" desc="Whether the action is in a sector your city has prioritized" color="purple" />
+                <Subcomp pct="5%" title="Co-benefit preference match" desc="How well the action's co-benefits align with your city's selected priorities" color="purple" />
                 <Subcomp pct="5%" title="Timeframe preference match" desc="Whether the action's implementation horizon matches your city's preferred timeline" color="purple" />
               </div>
             </div>
@@ -276,11 +275,11 @@ export function Methodology() {
               <PillarBadge label="Feasibility" color="green" />
               <h3 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", margin: "10px 0 4px" }}>Implementation readiness</h3>
               <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Default weight: 23%</p>
-              <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>Can your city realistically implement this action given its legal and socioeconomic context?</p>
+              <p style={{ fontSize: "13px", color: "#4B5563", margin: "0 0 16px" }}>Can your city realistically implement this action given its legal and financial context?</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <Subcomp pct="34%" title="Legal verdict score" desc="Continuous 0–1 score from the legal assessment (verdictScore); blocked actions are removed before this step" color="green" />
-                <Subcomp pct="33%" title="Mitigation feasibility" desc="City-scoped mitigation feasibility score from the action mitigation feasibility endpoint" color="green" />
-                <Subcomp pct="33%" title="Financial feasibility" desc="City-scoped climate-finance feasibility score — route accessibility, fund access, and comparable funded projects" color="green" />
+                <Subcomp pct="34%" title="Legal readiness" desc="Continuous score from the legal assessment — blocked actions are removed before this step" color="green" />
+                <Subcomp pct="33%" title="Mitigation feasibility" desc="Pre-calculated score reflecting how feasible the action is given your city's real conditions" color="green" />
+                <Subcomp pct="33%" title="Financial feasibility" desc="Pre-calculated score reflecting how realistically your city can finance and deliver the action" color="green" />
               </div>
             </div>
           </div>
@@ -291,37 +290,35 @@ export function Methodology() {
           <SectionHeading id="impact-h">Pillar 1 — Impact in detail</SectionHeading>
           <Divider />
           <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 20px", lineHeight: "1.7" }}>
-            The impact score answers: if this action were fully implemented, how much of this city's emissions would it address?
+            The impact score measures two things: how large a share of your city's total emissions this action could realistically reduce,
+            and how quickly it could deliver results. Actions targeting large emission sources with strong evidence of effectiveness score
+            highest. Actions that can be implemented quickly get an additional boost.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <Step n={1} title="Match action to your city's emissions">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Each action is tagged with the GPC sectors and subsectors it addresses using a <code>sector_number</code> +
-                <code>subsector_number[]</code> pair, forming subsector-level keys such as <code>I.1</code> (stationary energy, subsector 1)
-                or <code>II.1</code> (transportation, subsector 1). The pipeline looks up how much your city emits in those exact subsectors.
-                Full GPC reference numbers (e.g. <code>II.1.1</code>) are retained as reference data but do not drive the Impact join.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                The tool matches each action to the parts of your city's emissions inventory it could address. The matched
+                emissions are weighted by an evidence-based strength rating to estimate realistic reduction potential.
               </p>
             </Step>
             <Step n={2} title="Apply the impact strength multiplier">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Each action has an evidence-based impact rating. This scales the matched emissions to reflect realistic reduction potential.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 10px", lineHeight: "1.6" }}>
+                Each action has an evidence-based impact rating. This scales the matched emissions to reflect realistic reduction potential:
               </p>
-              <CodeBlock>{"very_low → 0.2    low → 0.4    medium → 0.6    high → 0.8    very_high → 1.0"}</CodeBlock>
+              <CodeBlock>{"Very high → 1.0   |   High → 0.8   |   Medium → 0.6   |   Low → 0.4   |   Very low → 0.2"}</CodeBlock>
             </Step>
             <Step n={3} title="Calculate reduction share of total city emissions">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                The weighted matched emissions are divided by the city's total scoring emissions magnitude to get a 0–1 share.
-                AFOLU subsectors (<code>V.*</code>) contribute their absolute inventory value — so a carbon-removal entry of −50 contributes 50 to
-                both the numerator and denominator. Non-AFOLU subsectors contribute only when their inventory value is strictly positive.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                The weighted matched emissions are divided by your city's total emissions to produce a share between 0 and 1.
+                For AFOLU actions (forestry and land use), carbon removal entries count as positive contributions to both the
+                numerator and denominator.
               </p>
-              <CodeBlock>{"reduction_share = (matched_subsector_emissions × impact_multiplier)\n                  ÷ total_scoring_emissions_magnitude\n\n// AFOLU V.* : use abs(emissions)\n// Others    : use emissions only when > 0"}</CodeBlock>
             </Step>
             <Step n={4} title="Combine with timeline score">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Actions that deliver results quickly receive a higher timeline score, rewarding near-term impact over long-term structural changes.
-                A missing or unknown timeline is treated as the neutral midpoint.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 10px", lineHeight: "1.6" }}>
+                Actions that deliver results faster score higher. A missing or unknown timeline is treated as neutral:
               </p>
-              <CodeBlock>{"<5 years  → 1.0    5-10 years → 0.5    >10 years → 0.0    missing → 0.5\n\nimpact_score = (0.80 × reduction_share) + (0.20 × timeline_score)"}</CodeBlock>
+              <CodeBlock>{"Less than 5 years    → 1.0\n5 to 10 years        → 0.5\nMore than 10 years   → 0.0\nMissing or unknown   → 0.5 (neutral)\n\nImpact score = (0.80 × reduction share) + (0.20 × timeline score)"}</CodeBlock>
             </Step>
           </div>
         </div>
@@ -331,50 +328,49 @@ export function Methodology() {
           <SectionHeading id="alignment-h">Pillar 2 — Alignment in detail</SectionHeading>
           <Divider />
           <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 20px", lineHeight: "1.7" }}>
-            The alignment score answers: is this action already supported by the plans and priorities that govern your city?
+            The alignment score measures how well each action fits into the policy landscape your city operates in and the priorities
+            your city has declared. Actions backed by multiple levels of government policy and matching your city's own preferences
+            score highest.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <Step n={1} title="Load policy signals for your city">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                We extract signals from Chile's NDC, the relevant PARCC (regional climate action plan), your municipal PACCC where available,
-                and sector-specific policy documents. Each signal indicates whether a plan supports, mentions, or requires a type of action.
+                The tool checks whether each action is backed by Chile's national climate commitments (NDC), the regional climate
+                plan (PARCC), your municipality's own climate plan (PACCC) where available, and sector-specific policy documents.
+                Signals are weighted by level — national carries more weight than regional, which carries more than municipal.
+                Binding targets carry more weight than sector priorities, which carry more than general mentions.
               </p>
             </Step>
             <Step n={2} title="Score policy support per action">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                Each action receives a policy support score (0–1) based on how many plans support it, the strength of those signals
-                (national &gt; regional &gt; municipal), and the type of signal (binding target &gt; sector priority &gt; mention).
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 10px", lineHeight: "1.6" }}>
+                Each action receives a policy support score (0–1) based on how many plans support it and the strength of those
+                signals. Policy support is the dominant alignment input at 75% weight. The full alignment formula:
               </p>
-              <CodeBlock>{"alignment_score = (0.75 × policy_support_score)\n               + (0.15 × sector_preference_match)\n               + (0.05 × cobenefit_preference_match)\n               + (0.05 × timeframe_preference_match)"}</CodeBlock>
+              <CodeBlock>{"Alignment score = (0.75 × policy support)\n              + (0.15 × sector match)\n              + (0.05 × co-benefit match)\n              + (0.05 × timeframe match)"}</CodeBlock>
             </Step>
             <Step n={3} title="Apply sector preference">
               <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
-                The pipeline maps each action's <code>sector_number</code> (I → stationary_energy, II → transportation, etc.)
-                and checks whether that sector appears in <code>cityStrategicPreferenceSectors[]</code>.
+                Whether the action falls in a sector your city selected as a priority on the Strategic Preferences page.
                 A match scores 1.0; no match scores 0.0. This contributes 15% of the alignment score.
               </p>
             </Step>
             <Step n={4} title="Match co-benefit preferences">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                For the city's selected co-benefit priorities (from <code>cityStrategicPreferenceCoBenefitKeys[]</code>),
-                the pipeline sums each action's <code>impact_numeric</code> for those keys (missing keys score 0), then normalises the
-                result from [−2n, +2n] to a 0–1 scale where n is the number of selected co-benefit keys.
-                When no co-benefit keys are selected, this component stays at the neutral midpoint of 0.5.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                How well the action's co-benefits align with the priorities your city selected. If your city selected no
+                co-benefit priorities, this component defaults to neutral (0.5).
               </p>
-              <CodeBlock>{"other_component = normalize(\n  sum(coBenefits[key].impact_numeric for key in selectedKeys),\n  min = len(selectedKeys) × −2,\n  max = len(selectedKeys) × +2\n)\n// no keys selected → 0.5 (neutral)"}</CodeBlock>
             </Step>
             <Step n={5} title="Match timeframe preference">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                The city's preferred implementation horizon (<code>cityStrategicPreferenceTimeframes[]</code>) is compared to the action's
-                <code>timelineForImplementation</code>. If the city selects multiple timeframes, the best match for that action is used.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 10px", lineHeight: "1.6" }}>
+                Whether the action's timeline matches your city's preferred implementation horizon:
               </p>
-              <CodeBlock>{"action timeline → bucket:  <5yr → short   5-10yr → medium   >10yr → long\n\nexact match   → 1.0\nadjacent match → 0.5    (e.g. city=medium, action=short or long)\nfar mismatch  → 0.0    (e.g. city=short, action=long)\nmissing / no_preference → 0.5 (neutral)"}</CodeBlock>
+              <CodeBlock>{"Exact match                              → 1.0\nAdjacent match (e.g. medium vs short)    → 0.5\nFar mismatch (e.g. short vs long)        → 0.0\nNo preference set or timeline missing    → 0.5 (neutral)"}</CodeBlock>
             </Step>
           </div>
           <div style={{ marginTop: "16px" }}>
             <CalloutBox color="blue">
-              The policy support score is the dominant alignment input at 75% weight. Actions supported by Chile's NDC and a regional PARCC
-              will score significantly higher than actions with no policy backing — even if the city has not explicitly prioritised that sector.
+              Policy support is the dominant input at 75% weight. An action backed by Chile's NDC and a regional plan will score
+              significantly higher than one with no policy backing — even if your city hasn't explicitly prioritized that sector.
             </CalloutBox>
           </div>
         </div>
@@ -384,82 +380,43 @@ export function Methodology() {
           <SectionHeading id="feasibility-h">Pillar 3 — Feasibility in detail</SectionHeading>
           <Divider />
           <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 20px", lineHeight: "1.7" }}>
-            The feasibility score answers: given your city's legal context and socioeconomic conditions, how ready is this city to implement this action?
+            The feasibility score measures how ready your city is to actually deliver an action — combining its legal standing,
+            how feasible it is given real local conditions, and how realistically it can be financed. Actions where the city has
+            clear authority, strong local conditions, and accessible funding score highest.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <Step n={1} title="Legal verdict score">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 12px", lineHeight: "1.6" }}>
-                The Hard Filter (see Pre-scoring filters) removes any action whose <code>verdictCategory = blocked</code> before
-                scoring begins. For every action that survives, the legal assessment also provides a continuous <strong>verdictScore</strong> (0–1)
-                which feeds directly into the feasibility calculation as the legal component. A missing score falls back to the neutral value of 0.5.
+            <Step n={1} title="Legal readiness">
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                Each action is assessed against Chilean municipal law. The assessment produces a continuous score between 0 and 1
+                based on two dimensions — <strong>ownership</strong> (does the municipality have the legal authority?) and{" "}
+                <strong>restrictions</strong> (are there legal barriers?). Actions where the municipality clearly has authority and
+                faces no restrictions score close to 1.0. Actions where authority is shared or conditional score lower but remain
+                in the ranking, flagged for your review. Actions where the municipality has no legal authority are removed from the
+                ranking entirely before scoring begins. If the legal assessment is missing for an action, the component defaults to
+                neutral (0.5).
               </p>
-              <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "12px" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
-                  <thead>
-                    <tr style={{ background: "#F9FAFB" }}>
-                      {["Verdict category", "Effect on scoring", "What it means"].map(h => (
-                        <th key={h} style={{ padding: "10px 14px", textAlign: "left", color: "#6B7280", fontWeight: "500", borderBottom: "1px solid #E5E7EB" }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["blocked", "Action removed — never scored", "Hard Filter removes the action before scoring begins"],
-                      ["non-blocked", "verdictScore used directly", "The continuous 0–1 score from the legal assessment feeds the feasibility component"],
-                      ["missing", "Neutral 0.5 applied", "No legal row available — action is not penalised but scores at the midpoint"],
-                    ].map(([cat, effect, meaning], i) => (
-                      <tr key={cat} style={{ borderBottom: i < 2 ? "1px solid #F3F4F6" : "none" }}>
-                        <td style={{ padding: "10px 14px" }}>
-                          <span style={{
-                            fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
-                            background: cat === "blocked" ? "#FEF2F2" : cat === "non-blocked" ? "#F0FDF4" : "#FFFBEB",
-                            color: cat === "blocked" ? "#DC2626" : cat === "non-blocked" ? "#16A34A" : "#D97706",
-                          }}>{cat}</span>
-                        </td>
-                        <td style={{ padding: "10px 14px", color: "#374151", fontWeight: "500" }}>{effect}</td>
-                        <td style={{ padding: "10px 14px", color: "#6B7280" }}>{meaning}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <CodeBlock>{"legal_component = verdictScore        // continuous 0–1 from legal assessment\n// fallback: 0.5 if verdictScore is missing"}</CodeBlock>
             </Step>
             <Step n={2} title="Mitigation feasibility score">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                The pipeline reads each action's <code>action_score</code> (0–1) directly from the city-scoped
-                mitigation feasibility endpoint. This score reflects how feasible the action is given the city's
-                real conditions across multiple feasibility dimensions. The pipeline does not recompute it — it uses
-                the pre-calculated value as-is. If an action has no score row, or the row is missing <code>action_score</code>,
-                the component falls back to the neutral midpoint.
-              </p>
-              <CodeBlock>{"mitigation_component = action_score       // 0–1 from mitigation feasibility endpoint\n// fallback: 0.5 if action_score is missing or endpoint returns 404"}</CodeBlock>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "8px 0 0", lineHeight: "1.6" }}>
-                Dimension-level detail (option family, mapping strength, breakdown, city rank) is retained as evidence and
-                visible on the action detail page, but only the top-level <code>action_score</code> enters the feasibility formula.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                A pre-calculated score reflecting how feasible the action is given your city's real conditions — including
+                socioeconomic factors, local capacity, and the characteristics of the action. This score is produced by a
+                dedicated assessment and used directly in the formula. If missing, it defaults to neutral (0.5).
               </p>
             </Step>
             <Step n={3} title="Financial feasibility score">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                The pipeline reads each action's <code>financial_feasibility</code> (0–1) directly from the city-scoped
-                climate-finance feasibility endpoint. The score reflects the action's financing route, fund access, and
-                the city's financial and institutional capacity. Again, the pipeline uses the pre-calculated value — it does
-                not compute capital intensity or complexity itself. Missing rows fall back to the neutral midpoint.
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: 0, lineHeight: "1.6" }}>
+                A pre-calculated score reflecting how realistically your city can finance and deliver the action — based on the
+                action's cost and complexity, your city's budget profile and delivery capacity, and the availability of matching
+                funds. The Financial Feasibility page shows the full reasoning, matched funds, and comparable funded projects for
+                each action. If missing, it defaults to neutral (0.5).
               </p>
-              <CodeBlock>{"financial_component = financial_feasibility   // 0–1 from climate-finance endpoint\n// fallback: 0.5 if financial_feasibility is missing or endpoint returns 404"}</CodeBlock>
-              <CalloutBox color="green">
-                The financial feasibility score contributes one third of the total feasibility score — it is a live pipeline
-                input, not a supplementary display. The Financial Feasibility page shows the full breakdown of route reasoning,
-                matched funds, and comparable funded projects for each action.
-              </CalloutBox>
             </Step>
-
             <Step n={4} title="Combine components into a feasibility score">
-              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 4px", lineHeight: "1.6" }}>
-                The feasibility score combines all three components. Missing components fall back to the neutral value of 0.5
-                so no action is unfairly penalised when data is unavailable:
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 10px", lineHeight: "1.6" }}>
+                When any component is missing, the tool uses 0.5 as a neutral fallback so no action is unfairly penalized due
+                to incomplete data:
               </p>
-              <CodeBlock>{"feasibility_score = (0.34 × legal_verdict_score)\n                  + (0.33 × mitigation_feasibility_score)\n                  + (0.33 × financial_feasibility_score)\n\n// fallback for any missing component: use 0.5 (neutral midpoint)"}</CodeBlock>
+              <CodeBlock>{"Feasibility score = (0.34 × legal score)\n                  + (0.33 × mitigation feasibility)\n                  + (0.33 × financial feasibility)"}</CodeBlock>
             </Step>
           </div>
         </div>
@@ -469,20 +426,19 @@ export function Methodology() {
           <SectionHeading id="pre-scoring-filters-h">Pre-scoring filters</SectionHeading>
           <Divider />
           <p style={{ fontSize: "15px", color: "#4B5563", margin: "0 0 24px", lineHeight: "1.7" }}>
-            Before any scoring happens, two types of filter can remove actions from the ranking entirely.
-            Neither is a score penalty — removed actions receive no score at all.
+            Before scoring begins, two types of filter can remove actions from the ranking entirely.
+            Removed actions receive no score and are listed transparently so you can review and adjust if needed.
           </p>
 
           {/* Sub-section A: Legal hard filter */}
           <div style={{ marginBottom: "28px" }}>
             <div style={{ fontSize: "13px", fontWeight: "700", color: "#374151", letterSpacing: "0.04em", marginBottom: "10px", textTransform: "uppercase" }}>
-              A — Legal eligibility (hard filter)
+              A — Legal filter (automatic)
             </div>
             <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
-              The system automatically assesses every action against the municipal legal context for your city, evaluating two
-              dimensions — <strong>ownership</strong> (legal authority) and <strong>restrictions</strong> (legal constraints).
+              The tool automatically checks every action against your city's municipal legal context across two dimensions:{" "}
+              <strong>ownership</strong> (legal authority) and <strong>restrictions</strong> (legal constraints).
               If either dimension returns a <strong>blocked</strong> verdict, the action is removed before scoring begins.
-              This is objective and automatic; the city has no input into this filter.
             </p>
             <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "14px" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
@@ -495,12 +451,12 @@ export function Methodology() {
                 </thead>
                 <tbody>
                   {[
-                    ["Ownership", "blocked", "#FEE2E2", "#991B1B", "Municipality lacks legal authority — action removed"],
-                    ["Ownership", "conditional", "#FFFBEB", "#D97706", "Shared or partial authority — scores at reduced rate, flagged"],
-                    ["Ownership", "enabled", "#F0FDF4", "#16A34A", "Full municipal authority — scores at full rate"],
-                    ["Restrictions", "blocked", "#FEE2E2", "#991B1B", "Hard legal restriction — action removed"],
-                    ["Restrictions", "conditional", "#FFFBEB", "#D97706", "Soft restrictions or authorisation needed — scores at reduced rate"],
-                    ["Restrictions", "enabled", "#F0FDF4", "#16A34A", "No restrictions identified — scores at full rate"],
+                    ["Ownership", "blocked", "#FEE2E2", "#991B1B", "Municipality lacks legal authority — action removed before scoring"],
+                    ["Ownership", "conditional", "#FFFBEB", "#D97706", "Shared or partial authority — action scores at reduced rate, flagged"],
+                    ["Ownership", "enabled", "#F0FDF4", "#16A34A", "Full municipal authority — action scores normally"],
+                    ["Restrictions", "blocked", "#FEE2E2", "#991B1B", "Hard legal restriction — action removed before scoring"],
+                    ["Restrictions", "conditional", "#FFFBEB", "#D97706", "Soft restrictions or authorization needed — scores at reduced rate"],
+                    ["Restrictions", "enabled", "#F0FDF4", "#16A34A", "No restrictions identified — action scores normally"],
                   ].map(([dimension, verdict, bg, color, effect], i) => (
                     <tr key={i} style={{ borderBottom: "1px solid #F3F4F6" }}>
                       <td style={{ padding: "10px 14px", color: "#374151", fontWeight: i % 3 === 0 ? "600" : "400" }}>{i % 3 === 0 ? dimension : ""}</td>
@@ -514,31 +470,29 @@ export function Methodology() {
               </table>
             </div>
             <CalloutBox color="blue">
-              If the assessment is missing for an action (no evidence found), the action is <strong>not blocked</strong> — it passes
-              with a conditional flag for the city to review. Only a confirmed <strong>blocked</strong> verdict on either dimension
-              causes removal.
+              If the legal assessment is missing for an action, it is not removed. It passes with a conditional flag for your
+              review. Only a confirmed <strong>blocked</strong> verdict on either dimension causes removal.
             </CalloutBox>
           </div>
 
           {/* Sub-section B: City preference exclusions */}
           <div>
             <div style={{ fontSize: "13px", fontWeight: "700", color: "#374151", letterSpacing: "0.04em", marginBottom: "10px", textTransform: "uppercase" }}>
-              B — City preference exclusions
+              B — City preference exclusions (your choice)
             </div>
             <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
-              Cities can also instruct MEED+ HIAP to remove specific types of actions based on political, operational, or
-              mandate-based decisions. Unlike the legal hard filter, this is a deliberate choice by the city — an excluded
-              action may be perfectly legal and could score very highly if re-included.
+              On the Strategic Preferences page, you can instruct the tool to remove specific types of actions based on your
+              city's political, operational, or mandate-based decisions. For example:{" "}
+              <em>"Do not include actions that significantly increase household costs for vulnerable communities"</em> or{" "}
+              <em>"Exclude any actions that require new fossil fuel infrastructure."</em>
             </p>
             <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 14px", lineHeight: "1.6" }}>
-              On the Strategic Preferences page, cities describe in plain language which action types to exclude — for
-              example: <em>"Do not include actions that significantly increase household costs for vulnerable communities"</em> or{" "}
-              <em>"Exclude any actions that require new fossil fuel infrastructure."</em> These instructions are matched against
-              the action library before scoring begins.
+              Unlike the legal filter, this is a deliberate choice by your city. An excluded action may be perfectly legal and
+              could score very highly if re-included. Use preference exclusions for genuine constraints, not to filter by
+              expected score.
             </p>
             <CalloutBox color="amber">
-              Cities should use preference exclusions for genuine mandate or political constraints, not to filter by expected score.
-              Removed actions are listed transparently in the results so the city can review and adjust if needed.
+              Removed actions are listed transparently in your results so you can review and adjust if needed.
             </CalloutBox>
           </div>
         </div>
@@ -551,8 +505,8 @@ export function Methodology() {
             {[
               {
                 letter: "H", bg: "#DCFCE7", color: GREEN,
-                title: "High impact score, low feasibility score",
-                desc: "The action addresses a large share of your city's emissions but faces legal or socioeconomic headwinds. These are high-value actions worth investing in — but they may require policy or capacity groundwork first.",
+                title: "High impact score, lower feasibility score",
+                desc: "The action addresses a large share of your city's emissions but faces legal or financial headwinds. These are high-value actions worth investing in — but they may require policy groundwork or external funding to unlock first.",
               },
               {
                 letter: "A", bg: "#EDE9FE", color: PURPLE,
@@ -561,8 +515,8 @@ export function Methodology() {
               },
               {
                 letter: "W", bg: "#FEF9C3", color: "#92400E",
-                title: "Adjusting weights changes the ranking",
-                desc: "If your city prioritises near-term deliverability over maximum emission reduction, increase the feasibility weight. If political alignment matters most, increase the alignment weight. The ranking will update immediately to reflect your city's priorities.",
+                title: "Adjusting the weights",
+                desc: "If near-term deliverability matters more to your city right now, increase the feasibility weight on the Strategic Preferences page. If political alignment matters most, increase the alignment weight. The ranking updates immediately to reflect your city's priorities.",
               },
             ].map(({ letter, bg, color, title, desc }) => (
               <div key={letter} style={{ border: "1px solid #E5E7EB", borderRadius: "10px", padding: "20px 24px", display: "flex", gap: "16px", background: "#FFFFFF" }}>
