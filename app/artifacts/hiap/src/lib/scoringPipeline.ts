@@ -523,10 +523,10 @@ function scoreFeasibility(
 
   // Financial feasibility component from the climate-finance API.
   // Missing rows default to neutral 0.5 (same rule as legal and mitigation feasibility).
-  const ffEntry = financialFeasibilityMap?.get(action.actionId);
-  const financialFeasibilityComponent = ffEntry != null ? ffEntry.score : 0.5;
-  const financialFeasibilityRoute = ffEntry?.route ?? null;
-  const financialFeasibilityReason = ffEntry?.reason ?? null;
+  const financialFeasibilityEntry = financialFeasibilityMap?.get(action.actionId);
+  const financialFeasibilityComponent = financialFeasibilityEntry != null ? financialFeasibilityEntry.score : 0.5;
+  const financialFeasibilityRoute = financialFeasibilityEntry?.route ?? null;
+  const financialFeasibilityReason = financialFeasibilityEntry?.reason ?? null;
 
   // Always 3-way formula per spec: 0.34 × legal + 0.33 × mitigation + 0.33 × financial.
   // Each component defaults to neutral 0.5 when data is missing.
