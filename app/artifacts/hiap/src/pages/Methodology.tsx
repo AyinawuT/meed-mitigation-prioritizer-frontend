@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 const BLUE = "#3B82F6";
 const PURPLE = "#8B5CF6";
@@ -153,6 +154,7 @@ export function Methodology() {
   ];
 
   return (
+    <>
     <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar />
 
@@ -534,5 +536,7 @@ export function Methodology() {
 
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

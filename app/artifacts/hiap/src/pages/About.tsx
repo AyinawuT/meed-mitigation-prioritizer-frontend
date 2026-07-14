@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { useEffect } from "react";
 
 const NAVY = "#001EA7";
@@ -8,6 +9,7 @@ export function About() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
+    <>
     <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
       <Navbar />
 
@@ -213,5 +215,7 @@ export function About() {
 
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
