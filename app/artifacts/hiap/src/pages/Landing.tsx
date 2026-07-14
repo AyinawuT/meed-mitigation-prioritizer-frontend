@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { CITIES_WITH_INVENTORY, HOW_STEPS, searchCities, type CityData } from "@/data/cities";
 import { getStepProgress } from "@/lib/stepProgress";
 import { getFormattedTotalEmissions, getInventoryYear } from "@/lib/cityInventory";
@@ -395,23 +396,7 @@ export function Landing() {
 
       </div>
 
-      {/* Footer */}
-      <div style={{ background: "#001EA7", padding: "20px 64px", textAlign: "center" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <div style={{ background: "#16A34A", borderRadius: "5px", width: "24px", height: "24px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "700", color: "white" }}>
-              M+
-            </div>
-            <span style={{ color: "#93C5FD", fontSize: "13px" }}>MEED+ · HIAP</span>
-          </div>
-          <span style={{ color: "#3B5FA0", fontSize: "12px" }}>
-            High Impact Action Prioritizer — Climate Solutions for Chilean Cities
-          </span>
-          <span style={{ color: "#93C5FD", fontSize: "12px", opacity: 0.7 }}>
-            By Open Earth Foundation &amp; Sustainability Solutions Group
-          </span>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
