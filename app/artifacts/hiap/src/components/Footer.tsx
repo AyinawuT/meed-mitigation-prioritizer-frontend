@@ -27,7 +27,8 @@ export function Footer() {
 
         {/* MIDDLE ZONE — builders (prominent) */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+          {/* Logo row — fixed 64px height so caption aligns with right zone */}
+          <div style={{ height: "64px", display: "flex", alignItems: "center", gap: "24px" }}>
             {/* OEF logo — white via CSS filter, same height as SSG */}
             <img
               src="/oef-logo.svg"
@@ -54,17 +55,20 @@ export function Footer() {
         </div>
 
         {/* RIGHT ZONE — funder (secondary) */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", flexShrink: 0 }}>
-          {/* CORFO logo — visually smaller than SSG to reflect funder role */}
-          <img
-            src="/corfo-white.png"
-            alt="Proyecto apoyado por CORFO"
-            style={{
-              height: "48px",
-              mixBlendMode: "screen",
-              flexShrink: 0,
-            }}
-          />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+          {/* Logo container — same 64px height as middle zone so captions align */}
+          {/* CORFO stays at 48px (visually smaller than SSG per brand guidelines) */}
+          <div style={{ height: "64px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <img
+              src="/corfo-white.png"
+              alt="Proyecto apoyado por CORFO"
+              style={{
+                height: "48px",
+                mixBlendMode: "screen",
+                flexShrink: 0,
+              }}
+            />
+          </div>
           <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", textAlign: "center", maxWidth: "190px", lineHeight: "1.5" }}>
             Funded by the Crea y Valida programme,{" "}
             Comité InnovaChile de Corfo
