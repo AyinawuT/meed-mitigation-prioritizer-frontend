@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 const NAVY = "#001EA7";
 const GREEN = "#16A34A";
+const CORFO_BLUE = "#1A6EB5";
 
 export function About() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -63,22 +64,12 @@ export function About() {
 
             {/* Open Earth Foundation */}
             <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "28px 32px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "16px" }}>
-                <div style={{
-                  background: GREEN,
-                  borderRadius: "8px",
-                  width: "40px",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "13px",
-                  fontWeight: "700",
-                  color: "white",
-                  flexShrink: 0,
-                }}>
-                  OEF
-                </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "16px" }}>
+                <img
+                  src="/oef-logo-dark.svg"
+                  alt="Open Earth Foundation"
+                  style={{ height: "36px", flexShrink: 0 }}
+                />
                 <div>
                   <div style={{ fontSize: "17px", fontWeight: "700", color: "#111827" }}>Open Earth Foundation</div>
                   <div style={{ fontSize: "13px", color: "#6B7280", marginTop: "2px" }}>Tool development &amp; methodology</div>
@@ -106,26 +97,21 @@ export function About() {
 
             {/* SSG */}
             <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "28px 32px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "16px" }}>
-                <div style={{
-                  background: NAVY,
-                  borderRadius: "8px",
-                  width: "40px",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "13px",
-                  fontWeight: "700",
-                  color: "white",
-                  flexShrink: 0,
-                }}>
-                  SSG
-                </div>
-                <div>
-                  <div style={{ fontSize: "17px", fontWeight: "700", color: "#111827" }}>Sustainability Solutions Group</div>
-                  <div style={{ fontSize: "13px", color: "#6B7280", marginTop: "2px" }}>City data &amp; local expertise</div>
-                </div>
+              {/*
+                SSG guidelines: do not place logomark next to any text label.
+                Minimum 64px height. Clearspace = 25% of own size (16px at 64px height).
+                Logo stands alone — name and role are below it.
+              */}
+              <div style={{ marginBottom: "20px" }}>
+                <img
+                  src="/ssg-logomark-black.png"
+                  alt="Sustainability Solutions Group"
+                  style={{ height: "64px", display: "block", padding: "0 16px 0 0" }}
+                />
+              </div>
+              <div style={{ marginBottom: "16px" }}>
+                <div style={{ fontSize: "17px", fontWeight: "700", color: "#111827" }}>Sustainability Solutions Group</div>
+                <div style={{ fontSize: "13px", color: "#6B7280", marginTop: "2px" }}>City data &amp; local expertise</div>
               </div>
               <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
                 The Sustainability Solutions Group (SSG) is a sustainability consultancy with deep expertise
@@ -149,6 +135,43 @@ export function About() {
               </a>
             </div>
 
+            {/* CORFO */}
+            <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "28px 32px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "16px" }}>
+                {/*
+                  CORFO guidelines: clearspace = height of letter O on all sides (~14px at this size).
+                  Do not alter proportions or colors.
+                */}
+                <img
+                  src="/corfo-color-transparent.png"
+                  alt="CORFO"
+                  style={{ height: "48px", flexShrink: 0, padding: "6px 6px" }}
+                />
+                <div>
+                  <div style={{ fontSize: "17px", fontWeight: "700", color: "#111827" }}>Corporación de Fomento de la Producción</div>
+                  <div style={{ fontSize: "13px", color: "#6B7280", marginTop: "2px" }}>Project funding</div>
+                </div>
+              </div>
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
+                CORFO is Chile's national agency for entrepreneurship, innovation, and productivity, working to
+                strengthen Chile's capacity for economic and technological development. CORFO funds projects that
+                generate public value and build Chile's innovation ecosystem.
+              </p>
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 16px", lineHeight: "1.7" }}>
+                MEED+ HIAP is funded by CORFO through its Crea y Valida programme, part of the Comité InnovaChile.
+                Crea y Valida supports the development and validation of innovative solutions with high potential
+                for social and economic impact.
+              </p>
+              <a
+                href="https://www.corfo.cl"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "13px", color: CORFO_BLUE, fontWeight: "600", textDecoration: "none" }}
+              >
+                Visit corfo.cl ↗
+              </a>
+            </div>
+
           </div>
         </div>
 
@@ -159,7 +182,7 @@ export function About() {
           </h2>
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", margin: "0 0 20px" }} />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
               {
                 step: "1",
@@ -175,6 +198,11 @@ export function About() {
                 step: "3",
                 title: "Cities act on results",
                 desc: "City planners use MEED+ HIAP to review ranked actions, explore score breakdowns, adjust strategic weights, and identify the highest-impact actions to carry forward into planning and implementation.",
+              },
+              {
+                step: "4",
+                title: "CORFO enables the project",
+                desc: "The MEED+ Chile project is funded by CORFO through its Crea y Valida programme, part of the Comité InnovaChile, which supports the development and validation of innovative solutions with high potential for social and economic impact in Chile.",
               },
             ].map(({ step, title, desc }) => (
               <div key={step} style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "20px" }}>
@@ -209,7 +237,7 @@ export function About() {
             MEED+ HIAP is part of a broader initiative by the Open Earth Foundation to support
             evidence-based climate action planning in cities. The MEED+ Chile project is a pilot that applies
             this approach specifically to the Chilean context, with the goal of expanding to further countries
-            and municipalities.
+            and municipalities. This work is made possible by funding from CORFO through its Crea y Valida programme.
           </div>
         </div>
 
