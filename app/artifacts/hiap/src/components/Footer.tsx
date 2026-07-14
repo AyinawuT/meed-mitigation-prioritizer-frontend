@@ -66,7 +66,8 @@ export function Footer() {
             }}
           />
           <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", textAlign: "center", maxWidth: "190px", lineHeight: "1.5" }}>
-            Financiado por el programa Crea y Valida del Comité InnovaChile de Corfo
+            Funded by the Crea y Valida programme,{" "}
+            Comité InnovaChile de Corfo
           </div>
         </div>
 
