@@ -1,4 +1,23 @@
-import zalRaw from "@/data/inventories/CL-ZAL.json";
+import antRaw from "@/data/inventories/CL-ANT.json";
+import canRaw from "@/data/inventories/CL-CAN.json";
+import conRaw from "@/data/inventories/CL-CON.json";
+import fruRaw from "@/data/inventories/CL-FRU.json";
+import lagRaw from "@/data/inventories/CL-LAG.json";
+import lapRaw from "@/data/inventories/CL-LAP.json";
+import maiRaw from "@/data/inventories/CL-MAI.json";
+import paiRaw from "@/data/inventories/CL-PAI.json";
+import panRaw from "@/data/inventories/CL-PAN.json";
+import penRaw from "@/data/inventories/CL-PEN.json";
+import proRaw from "@/data/inventories/CL-PRO.json";
+import puaRaw from "@/data/inventories/CL-PUA.json";
+import pueRaw from "@/data/inventories/CL-PUE.json";
+import quiRaw from "@/data/inventories/CL-QUI.json";
+import renRaw from "@/data/inventories/CL-REN.json";
+import sagRaw from "@/data/inventories/CL-SAG.json";
+import sanRaw from "@/data/inventories/CL-SAN.json";
+import temRaw from "@/data/inventories/CL-TEM.json";
+import valRaw from "@/data/inventories/CL-VAL.json";
+import vpaRaw from "@/data/inventories/CL-VPA.json";
 
 // ─── CityCatalyst JSON types ──────────────────────────────────────────────────
 
@@ -124,10 +143,30 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
 
 // ─── Registry ─────────────────────────────────────────────────────────────────
 // To add a new city: drop its CityCatalyst JSON into src/data/inventories/,
-// import it here, and add an entry to INVENTORY_REGISTRY keyed by LOCODE.
+// import it here, and add an entry to INVENTORY_REGISTRY keyed by the city's
+// locode as it appears in cities.ts (which may differ from the JSON's city.locode).
 
 const INVENTORY_REGISTRY: Record<string, CityCatalystInventory> = {
-  "CL ZAL": zalRaw as CityCatalystInventory,
+  "CL ANT": antRaw as CityCatalystInventory,  // Antofagasta
+  "CL CAN": canRaw as CityCatalystInventory,  // Canela
+  "CL CCP": conRaw as CityCatalystInventory,  // Concepción
+  "CL FRT": fruRaw as CityCatalystInventory,  // Frutillar
+  "CL RNC": lagRaw as CityCatalystInventory,  // Lago Ranco
+  "CL13112": lapRaw as CityCatalystInventory, // La Pintana
+  "CL MAI": maiRaw as CityCatalystInventory,  // Maipú
+  "CL PAO": paiRaw as CityCatalystInventory,  // Paillaco
+  "CL PAN": panRaw as CityCatalystInventory,  // Panguipulli
+  "CL PEN": penRaw as CityCatalystInventory,  // Peñalolén
+  "CL PRO": proRaw as CityCatalystInventory,  // Providencia
+  "CL PTA": puaRaw as CityCatalystInventory,  // Puente Alto
+  "CL PMC": pueRaw as CityCatalystInventory,  // Puerto Montt
+  "CL QUI": quiRaw as CityCatalystInventory,  // Quilicura
+  "CL REN": renRaw as CityCatalystInventory,  // Renca
+  "CL SCL": sagRaw as CityCatalystInventory,  // Santiago
+  "CL SNI": sanRaw as CityCatalystInventory,  // San Nicolás
+  "CL ZCO": temRaw as CityCatalystInventory,  // Temuco
+  "CL ZAL": valRaw as CityCatalystInventory,  // Valdivia
+  "CL VAP": vpaRaw as CityCatalystInventory,  // Valparaíso
 };
 
 // ─── Public API ───────────────────────────────────────────────────────────────

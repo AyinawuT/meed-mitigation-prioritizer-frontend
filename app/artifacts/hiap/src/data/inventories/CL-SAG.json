@@ -1,0 +1,1383 @@
+{
+  "data": {
+    "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+    "inventoryName": "Santiago - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "25c003fc-8110-47af-a0b7-e09a8abc8272",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.665249Z",
+    "created": "2026-07-15T12:58:06.665368Z",
+    "last_updated": "2026-07-15T12:58:06.665487Z",
+    "city": {
+      "cityId": "25c003fc-8110-47af-a0b7-e09a8abc8272",
+      "locode": "CL SAG",
+      "name": "Santiago",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "757b7189-fe2a-4dee-9fa2-89f5857d7e69",
+      "created": "2026-07-15T12:58:06.665608Z",
+      "last_updated": "2026-07-15T12:58:06.665728Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "93e2f0c9-1e0a-4fa2-9308-adc10204cb6f",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "127003",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "66ee5dab-4f5b-4a43-9b5e-99f0ee8a588c",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.650750Z",
+        "last_updated": "2026-07-15T12:58:06.650865Z",
+        "activityValues": [
+          {
+            "id": "3bee8ee3-a507-4774-b375-e2016ccb48dc",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "127003",
+            "co2eqYears": 100,
+            "inventoryValueId": "b3774721-903d-42cc-937c-9df96831147a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.650973Z",
+            "last_updated": "2026-07-15T12:58:06.651127Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "a8a4fbd6-975a-43c0-93c1-fb10f21772cd",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "160846",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "05ab6b49-04cf-4c64-9874-cdbd13db266e",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.651271Z",
+        "last_updated": "2026-07-15T12:58:06.651390Z",
+        "activityValues": [
+          {
+            "id": "48af1608-f70c-4327-8c5e-9edd475a0526",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "160846",
+            "co2eqYears": 100,
+            "inventoryValueId": "ad63fa52-dec6-4708-b860-dfbc2152598f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.651508Z",
+            "last_updated": "2026-07-15T12:58:06.651621Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "bdbf578c-318e-456e-a258-4bdd7a7be052",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9168",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "c85b05bf-17a2-4d6b-b8af-6d30a7834c58",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.651753Z",
+        "last_updated": "2026-07-15T12:58:06.651891Z",
+        "activityValues": [
+          {
+            "id": "68c5217c-f85c-4869-905b-5f177fe568e4",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "9168",
+            "co2eqYears": 100,
+            "inventoryValueId": "0e1bf84b-8616-4a9f-aaf8-d9faf6b84ea6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.652004Z",
+            "last_updated": "2026-07-15T12:58:06.652120Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "b38462e4-0123-41a7-b616-6a03f113ff22",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "142461",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "88fc3b22-31c9-412a-aa76-65da1dd5cdf4",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.652234Z",
+        "last_updated": "2026-07-15T12:58:06.652343Z",
+        "activityValues": [
+          {
+            "id": "b2bf653b-9576-4426-9c2e-f648e281f8cf",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "142461",
+            "co2eqYears": 100,
+            "inventoryValueId": "5f943aef-ec93-4a0e-a261-6cefbccef6ea",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.652453Z",
+            "last_updated": "2026-07-15T12:58:06.652560Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "f9a0a82d-53bc-428c-a777-b5a6df26f147",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "429404",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "4df155fa-5725-4a54-b775-ec3c1ee439fe",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.652674Z",
+        "last_updated": "2026-07-15T12:58:06.652806Z",
+        "activityValues": [
+          {
+            "id": "c1679c18-ea4a-4754-aacc-91319202777a",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "429404",
+            "co2eqYears": 100,
+            "inventoryValueId": "fa6dbbc2-9ccf-4255-b664-e758b9effd10",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.652981Z",
+            "last_updated": "2026-07-15T12:58:06.653094Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "75667341-86dc-4148-ab40-171ede78e70d",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "24476",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "1d7f5871-c38c-43fc-acd8-c2a0c98c87e6",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.653232Z",
+        "last_updated": "2026-07-15T12:58:06.653357Z",
+        "activityValues": [
+          {
+            "id": "f18abe45-3ea4-46e1-aa81-41207b58679d",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "24476",
+            "co2eqYears": 100,
+            "inventoryValueId": "5c732d66-4de0-458a-b94f-c2237ce93770",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.653480Z",
+            "last_updated": "2026-07-15T12:58:06.653605Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "9f0439ee-43e4-4875-b10a-5904bf7dfe2f",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "194306",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "beee3aef-6c5c-4d7e-948d-f7ad5469091e",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.653735Z",
+        "last_updated": "2026-07-15T12:58:06.653883Z",
+        "activityValues": [
+          {
+            "id": "54bd4b08-610e-4bfd-92d4-1cf91f3d6170",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "194306",
+            "co2eqYears": 100,
+            "inventoryValueId": "760b7fbd-8a7b-44db-ace6-6bd43215941e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.654056Z",
+            "last_updated": "2026-07-15T12:58:06.654179Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "245e84f1-4b9a-4c6b-8e7e-ecc9c604b688",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "189087",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "93f81363-a32f-4f9b-930c-d5dfb9f1fc1b",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.654308Z",
+        "last_updated": "2026-07-15T12:58:06.654421Z",
+        "activityValues": [
+          {
+            "id": "e8ac68ec-0295-4f54-8bd2-18791c810e83",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "189087",
+            "co2eqYears": 100,
+            "inventoryValueId": "2e8baeaf-8267-473e-975b-b65fbaf1b413",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.654532Z",
+            "last_updated": "2026-07-15T12:58:06.654637Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "d1f1cfd4-4b37-4b88-8275-0e5baccfbfc6",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "10778",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "99b3087c-9260-4e16-8535-f29790ef1487",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.654748Z",
+        "last_updated": "2026-07-15T12:58:06.654853Z",
+        "activityValues": [
+          {
+            "id": "d14aa961-af38-47cc-8a8e-08eb7c588ec6",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "10778",
+            "co2eqYears": 100,
+            "inventoryValueId": "db3aea9a-51c9-42ea-9281-e7bfc923fc44",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.654963Z",
+            "last_updated": "2026-07-15T12:58:06.655067Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "0d1e2447-aafd-4f2f-a2c3-b72e733918c4",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "733816",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "5378e5db-2be2-44f8-bc97-8ddc52a60226",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.655179Z",
+        "last_updated": "2026-07-15T12:58:06.655284Z",
+        "activityValues": [
+          {
+            "id": "3976c247-2430-4c2d-8254-153456c6187a",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "733816",
+            "co2eqYears": 100,
+            "inventoryValueId": "5edf2c78-bf02-4e38-80c6-2eb21f7a857b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.655391Z",
+            "last_updated": "2026-07-15T12:58:06.655496Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "5ad6fec2-2b77-4722-abc6-1cd24e174734",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20800",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "5cbc020d-af7d-4fe8-8dee-da347bf25a55",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.655607Z",
+        "last_updated": "2026-07-15T12:58:06.655712Z",
+        "activityValues": [
+          {
+            "id": "3c6014d5-da84-4e16-871a-e9e2b26af60b",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "20800",
+            "co2eqYears": 100,
+            "inventoryValueId": "5dc6e43b-84db-4100-8a96-f8e68d43ce76",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.655819Z",
+            "last_updated": "2026-07-15T12:58:06.655924Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "6f95cf5a-65d5-40ba-971f-fb436e365cd8",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1185",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "9c9013ea-7589-407f-8b1a-f98b22d922ad",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.656037Z",
+        "last_updated": "2026-07-15T12:58:06.656142Z",
+        "activityValues": [
+          {
+            "id": "bb742c10-ddb0-40b0-8870-c997aaaf7962",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "1185",
+            "co2eqYears": 100,
+            "inventoryValueId": "8be262b6-7625-4e6d-811b-38c78cdaa146",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.656259Z",
+            "last_updated": "2026-07-15T12:58:06.656375Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "7786af63-923a-4fb9-99e7-338ca9a97370",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3324",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "4c2eb92f-7a71-40d1-8b4d-8a3e718d4641",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.656491Z",
+        "last_updated": "2026-07-15T12:58:06.656598Z",
+        "activityValues": [
+          {
+            "id": "d29162b3-10b1-4640-90b4-35712138f03d",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "3324",
+            "co2eqYears": 100,
+            "inventoryValueId": "72688f72-aff2-45da-80c3-854bd4bef9f7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.656709Z",
+            "last_updated": "2026-07-15T12:58:06.656814Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "1037dd92-17c1-442e-84b0-e7dd636dbd39",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2407",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "16ccb9f6-69c0-4040-af95-05321dad2531",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.656925Z",
+        "last_updated": "2026-07-15T12:58:06.657030Z",
+        "activityValues": [
+          {
+            "id": "b4aef409-173d-489f-b488-9ea7d12f84d3",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "2407",
+            "co2eqYears": 100,
+            "inventoryValueId": "9ac62ea7-3f86-4511-87e4-a894c968c578",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.657138Z",
+            "last_updated": "2026-07-15T12:58:06.657243Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "612f64ac-2f9a-4823-9991-70dea996f88a",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "137",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "c5772e32-1415-453b-9b1b-f943ccfed6c6",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.657354Z",
+        "last_updated": "2026-07-15T12:58:06.657458Z",
+        "activityValues": [
+          {
+            "id": "5e83edd1-af77-4277-9314-244cac5c9190",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "137",
+            "co2eqYears": 100,
+            "inventoryValueId": "c68c905d-efc8-473f-9044-e0a92388489d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.657566Z",
+            "last_updated": "2026-07-15T12:58:06.657674Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "b071b5e9-fb6d-4a43-9093-02da9cd4a178",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "456645",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "dd759451-0089-4c4c-ba24-8817cf29ec5e",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.657785Z",
+        "last_updated": "2026-07-15T12:58:06.657889Z",
+        "activityValues": [
+          {
+            "id": "56cf095e-c357-4b64-9373-9c9b9f1554d0",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "456645",
+            "co2eqYears": 100,
+            "inventoryValueId": "7315d0e9-dc4f-4a28-bad1-095b2b0ac427",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.657997Z",
+            "last_updated": "2026-07-15T12:58:06.658102Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "c92abb92-b68d-423e-a936-f8c825e70ffb",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9193",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "cc2e6ca3-4a8e-4d8f-8045-cdfd69583db9",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.658212Z",
+        "last_updated": "2026-07-15T12:58:06.658322Z",
+        "activityValues": [
+          {
+            "id": "bcdc7bbf-a332-4e96-bfbe-1ac295f3fe0f",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "9193",
+            "co2eqYears": 100,
+            "inventoryValueId": "e8ea7ab7-9ce7-44c3-ae22-66e18d28d2d9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.658437Z",
+            "last_updated": "2026-07-15T12:58:06.658549Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "073465a7-462d-41b9-9951-9efe3d7a1473",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "57",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "8fbedf04-3dfa-4cd4-8f34-f39e73d329ac",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.658679Z",
+        "last_updated": "2026-07-15T12:58:06.658796Z",
+        "activityValues": [
+          {
+            "id": "b851cc2c-f4cd-46e2-b66d-4389b65f9e87",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "57",
+            "co2eqYears": 100,
+            "inventoryValueId": "9caadf4d-7e7a-4e04-b084-2d0f892a8ce9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.658917Z",
+            "last_updated": "2026-07-15T12:58:06.659034Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "0cf072cc-ab5e-48ae-a6b8-eb07e776334e",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "12336",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "9200fb5f-a156-41ee-8acf-54cd3ffd4888",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.659156Z",
+        "last_updated": "2026-07-15T12:58:06.659271Z",
+        "activityValues": [
+          {
+            "id": "cc982b6a-f1e1-494f-a8b4-72b6383947a7",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "12336",
+            "co2eqYears": 100,
+            "inventoryValueId": "d1766987-3d8b-4402-abd1-6cac20f431fa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.659388Z",
+            "last_updated": "2026-07-15T12:58:06.659514Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "c0b9bad7-2342-4a0d-a2ee-5c2eefd4a667",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "241210",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "9983fa7a-d1e8-40f0-a465-fc8a84bdeef3",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.659637Z",
+        "last_updated": "2026-07-15T12:58:06.659753Z",
+        "activityValues": [
+          {
+            "id": "b81db944-0685-4f0a-ac81-8004c07d33c6",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "241210",
+            "co2eqYears": 100,
+            "inventoryValueId": "b639fef3-45d0-4395-a77f-6352d4543d52",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.659868Z",
+            "last_updated": "2026-07-15T12:58:06.659980Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "8f2221a1-b1e0-49f5-9ace-92baf04b5d6f",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "23099",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "8439a3a1-ad7b-4343-8d95-2ffb1274e32f",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.660098Z",
+        "last_updated": "2026-07-15T12:58:06.660214Z",
+        "activityValues": [
+          {
+            "id": "0bcaa44a-ac12-415a-b3d8-e2a599d72fcf",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "23099",
+            "co2eqYears": 100,
+            "inventoryValueId": "7dff9d3a-7e3f-4413-a2ef-549fe6e36ad6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.660330Z",
+            "last_updated": "2026-07-15T12:58:06.660445Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "2b1bfbe4-3d9c-4d39-8508-7ec5a53e3803",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "224000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "8d305149-16ff-42b5-abad-1b83f511e8d4",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.660563Z",
+        "last_updated": "2026-07-15T12:58:06.660676Z",
+        "activityValues": [
+          {
+            "id": "d801c147-68b0-4404-bd62-613896ff98d1",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "224000",
+            "co2eqYears": 100,
+            "inventoryValueId": "abff312c-c281-4ccb-9923-b9814e63674f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.660792Z",
+            "last_updated": "2026-07-15T12:58:06.660917Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "29a6e078-951e-4c9e-957f-6c3c54ef016a",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2898",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "065039e6-4f05-44a9-a6ad-cfb3e44c836b",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.661037Z",
+        "last_updated": "2026-07-15T12:58:06.661149Z",
+        "activityValues": [
+          {
+            "id": "669a90d2-501c-4132-a43a-bac56e07a56b",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "2898",
+            "co2eqYears": 100,
+            "inventoryValueId": "e10ad23a-5438-46ef-aa1d-dc18701d01a8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.661267Z",
+            "last_updated": "2026-07-15T12:58:06.661379Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "26ec38e9-23dc-47a1-b819-f6e2521ee094",
+        "gpcReferenceNumber": "III.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "12",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "incineration-and-open-burning-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+        "subCategoryId": "14d9a83b-d2df-4533-ab3f-b6284f34a904",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.661497Z",
+        "last_updated": "2026-07-15T12:58:06.661609Z",
+        "activityValues": [
+          {
+            "id": "2724154e-af09-4c98-98b4-3579c13214f4",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Incineration and open burning"
+            },
+            "co2eq": "12",
+            "co2eqYears": 100,
+            "inventoryValueId": "eec8f470-4dc5-4788-ac2c-940d71309914",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.661725Z",
+            "last_updated": "2026-07-15T12:58:06.661837Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+          "subsectorName": "Incineration and open burning"
+        }
+      },
+      {
+        "id": "2b160986-c927-4805-8551-66d032c3eadc",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "d65632a0-6337-4323-9504-4fa1bfb198f3",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.661955Z",
+        "last_updated": "2026-07-15T12:58:06.662067Z",
+        "activityValues": [
+          {
+            "id": "4748f2d9-e437-493c-a0f1-e4375eeca203",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "27548060-1411-41a4-b66c-cd38a22269c6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.662182Z",
+            "last_updated": "2026-07-15T12:58:06.662302Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "254c5337-b472-4e52-9b07-299604e70189",
+        "gpcReferenceNumber": "III.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "95000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "cafe8131-fae5-43b6-8168-3b0feff640af",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.662430Z",
+        "last_updated": "2026-07-15T12:58:06.662548Z",
+        "activityValues": [
+          {
+            "id": "02602800-a627-4116-b482-1ee3a48b8fe2",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "95000",
+            "co2eqYears": 100,
+            "inventoryValueId": "3dfcfd9c-56bf-4b82-9073-2e7fcf32aa80",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.662664Z",
+            "last_updated": "2026-07-15T12:58:06.662776Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "d1fa0643-e6d0-4e70-b17f-f4fdccadde1f",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "25814",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "84b8b555-4e44-4de3-a592-0778e754f0a4",
+        "subCategoryId": "b94644cf-bb65-4079-bbee-d77c94f10142",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.663070Z",
+        "last_updated": "2026-07-15T12:58:06.663232Z",
+        "activityValues": [
+          {
+            "id": "2604cecc-16ef-49f9-b37c-a0b6052e8435",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "25814",
+            "co2eqYears": 100,
+            "inventoryValueId": "b3a502bf-f194-4a5c-9592-9153af079eb1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.663359Z",
+            "last_updated": "2026-07-15T12:58:06.663467Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "84b8b555-4e44-4de3-a592-0778e754f0a4",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "2d1b0b6c-9f40-4423-afa1-0d3534ce58e9",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "211207",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c74115b3-3266-431d-9a55-4c37a6602dc9",
+        "subCategoryId": "ad8ed407-5930-40fa-b450-b75b62932bbe",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.663593Z",
+        "last_updated": "2026-07-15T12:58:06.663716Z",
+        "activityValues": [
+          {
+            "id": "6e70077b-262a-49d3-ad84-85e33d80ef8a",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "211207",
+            "co2eqYears": 100,
+            "inventoryValueId": "cf473247-d0ed-4e00-b5ed-f73d400abe1b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.663837Z",
+            "last_updated": "2026-07-15T12:58:06.664044Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c74115b3-3266-431d-9a55-4c37a6602dc9",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "0d462975-30ce-4dcb-8dbc-184daf8854db",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "49",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "455b52a8-d3f6-4f15-a5a0-baf79de7f67c",
+        "subCategoryId": "4bf51642-d4af-4c81-99da-9e07f74a45e7",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.664205Z",
+        "last_updated": "2026-07-15T12:58:06.664332Z",
+        "activityValues": [
+          {
+            "id": "499a0d5b-3961-47e3-9a97-07e727edc927",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "49",
+            "co2eqYears": 100,
+            "inventoryValueId": "c55b6b30-19c2-4ee5-a540-abc18ed4b5f2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.664482Z",
+            "last_updated": "2026-07-15T12:58:06.664621Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "455b52a8-d3f6-4f15-a5a0-baf79de7f67c",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "59f42526-65af-4e3d-a1eb-23993e1a8e33",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "71",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "f66ba1ea-8344-4f19-9d85-cd684373ef3e",
+        "subCategoryId": "a5579d09-6422-4088-9414-0a52eca732fa",
+        "inventoryId": "fa583c66-fc83-4f59-bfcc-4aa52dd34047",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.664754Z",
+        "last_updated": "2026-07-15T12:58:06.664876Z",
+        "activityValues": [
+          {
+            "id": "8b5de748-ce23-4b59-833a-2802784c4e4b",
+            "activityData": {
+              "data-source": "inventory-CHL-13101-Santiago-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "71",
+            "co2eqYears": 100,
+            "inventoryValueId": "12245f45-7a93-4dac-ae09-0d7cbb803fc2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13101-Santiago-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.665011Z",
+            "last_updated": "2026-07-15T12:58:06.665130Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "f66ba1ea-8344-4f19-9d85-cd684373ef3e",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

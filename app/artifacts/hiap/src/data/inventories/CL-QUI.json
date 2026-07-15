@@ -1,0 +1,1428 @@
+{
+  "data": {
+    "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+    "inventoryName": "Quilicura - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "8aa84ab4-099a-4f4a-8e00-bdf619a1fdff",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.752721Z",
+    "created": "2026-07-15T12:58:06.752833Z",
+    "last_updated": "2026-07-15T12:58:06.752945Z",
+    "city": {
+      "cityId": "8aa84ab4-099a-4f4a-8e00-bdf619a1fdff",
+      "locode": "CL QUI",
+      "name": "Quilicura",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "ed7a80d8-0c85-41f2-b09b-fccdc400b293",
+      "created": "2026-07-15T12:58:06.753060Z",
+      "last_updated": "2026-07-15T12:58:06.753174Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "8daf77b6-7f0b-47d0-923b-d1e1d72d4227",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "59525",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "bfc0bcbe-b8f6-4c64-80eb-51231f1e92ad",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.737647Z",
+        "last_updated": "2026-07-15T12:58:06.737850Z",
+        "activityValues": [
+          {
+            "id": "062bfcf1-598e-4719-aaaa-bd064f43d5e4",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "59525",
+            "co2eqYears": 100,
+            "inventoryValueId": "f8c73f2b-b180-4eee-af09-ccd91052a7f6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.737983Z",
+            "last_updated": "2026-07-15T12:58:06.738102Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "9e21c504-23a2-4ad0-be29-039acd6f0b0b",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "51206",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "9816f9bd-ea75-411c-a116-8a1e890f3de6",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.738227Z",
+        "last_updated": "2026-07-15T12:58:06.738336Z",
+        "activityValues": [
+          {
+            "id": "be0ce5de-636b-4d8a-b4f8-accb46734dad",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "51206",
+            "co2eqYears": 100,
+            "inventoryValueId": "aa9bbb14-7036-457f-b9fe-c91749f251c1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.738452Z",
+            "last_updated": "2026-07-15T12:58:06.738578Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "31c31dd6-47a2-49c3-bce5-9b0359f886f0",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2918",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "3b4f2523-aff3-4475-aa09-eada53702a3f",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.738696Z",
+        "last_updated": "2026-07-15T12:58:06.738804Z",
+        "activityValues": [
+          {
+            "id": "2f28a215-2719-4e11-9b65-606e37b3969e",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "2918",
+            "co2eqYears": 100,
+            "inventoryValueId": "7997521d-a5e1-4fec-8a71-cc4de46b635d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.738918Z",
+            "last_updated": "2026-07-15T12:58:06.739026Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "67dbfe1e-1e25-4f2e-bc28-158a92e4cfaf",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "23141",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "5c21336e-d854-4995-83ac-d8333a1f3013",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.739168Z",
+        "last_updated": "2026-07-15T12:58:06.739288Z",
+        "activityValues": [
+          {
+            "id": "4b64784f-eff7-46a7-b8e5-c758714cca5b",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "23141",
+            "co2eqYears": 100,
+            "inventoryValueId": "4f87faba-d7b1-4d69-a4f0-9555578bf3d9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.739409Z",
+            "last_updated": "2026-07-15T12:58:06.739523Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "566834f3-425c-4e74-8698-ce119e3c2e0e",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "69753",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "c98c9f2a-1896-41c2-beac-3ac228c789fd",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.739654Z",
+        "last_updated": "2026-07-15T12:58:06.739800Z",
+        "activityValues": [
+          {
+            "id": "c506a3a7-fe90-47f3-b1ba-c278bf8f2e20",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "69753",
+            "co2eqYears": 100,
+            "inventoryValueId": "fe8cd488-b14f-495d-b840-f56cda7c270b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.739920Z",
+            "last_updated": "2026-07-15T12:58:06.740051Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "b17673f9-32f5-4b35-ab6d-b37a39efec27",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3975",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "3a9ebbce-1d97-44ed-9670-ba6aa94e451e",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.740182Z",
+        "last_updated": "2026-07-15T12:58:06.740306Z",
+        "activityValues": [
+          {
+            "id": "72564e2f-8b38-4ccb-b629-5c51800ec782",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "3975",
+            "co2eqYears": 100,
+            "inventoryValueId": "2111cc93-58ee-4f7c-8799-a283e73a6861",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.740432Z",
+            "last_updated": "2026-07-15T12:58:06.740550Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "c787dcda-70dc-4412-83ac-6220696ed7c8",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "115694",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "b3bff259-8503-4343-bc11-a650dcea1fa0",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.740682Z",
+        "last_updated": "2026-07-15T12:58:06.740799Z",
+        "activityValues": [
+          {
+            "id": "f941f2bf-c166-434c-8213-17673ad289ac",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "115694",
+            "co2eqYears": 100,
+            "inventoryValueId": "ba575058-da8c-4ded-b377-151268b3d743",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.740914Z",
+            "last_updated": "2026-07-15T12:58:06.741022Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "cab3c3ac-a2c6-4d2a-9cac-af713dcefaad",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "112587",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "d3d13b79-05a3-452a-aa22-5367b9d81fcc",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.741138Z",
+        "last_updated": "2026-07-15T12:58:06.741273Z",
+        "activityValues": [
+          {
+            "id": "a2eba1e3-e57b-47b1-91c2-c78e6bf36f69",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "112587",
+            "co2eqYears": 100,
+            "inventoryValueId": "1d53c764-e731-42bf-a762-9fb0b636dea1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.741451Z",
+            "last_updated": "2026-07-15T12:58:06.741582Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "c51c88eb-3cf3-444b-8030-5152cbe832aa",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6417",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "60f7e374-cc49-49e8-a727-a50ec26520c7",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.741727Z",
+        "last_updated": "2026-07-15T12:58:06.741855Z",
+        "activityValues": [
+          {
+            "id": "923a62f2-89c2-4a8f-b52c-dd88d360ceed",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "6417",
+            "co2eqYears": 100,
+            "inventoryValueId": "6809c179-5e63-47bd-ba7a-ceaa9fe0677f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.741973Z",
+            "last_updated": "2026-07-15T12:58:06.742082Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "e0f961dc-3213-46ef-8108-bcb5d723e0c8",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "997813",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "71c61102-5d28-4423-8331-3ec21aff8274",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.742200Z",
+        "last_updated": "2026-07-15T12:58:06.742310Z",
+        "activityValues": [
+          {
+            "id": "73144c98-7b17-4a10-a297-8d1162113f19",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "997813",
+            "co2eqYears": 100,
+            "inventoryValueId": "5e6a55d8-e80c-44e5-88dd-938c2fe44283",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.742423Z",
+            "last_updated": "2026-07-15T12:58:06.742531Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "90a48d71-5c4a-4f6e-bba6-b31275327b74",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "28283",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "c29be9e4-c02b-488f-876a-7b98915772ea",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.742647Z",
+        "last_updated": "2026-07-15T12:58:06.742808Z",
+        "activityValues": [
+          {
+            "id": "abcc56b4-6d7c-4508-ac41-7b3c02a75b38",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "28283",
+            "co2eqYears": 100,
+            "inventoryValueId": "32da5a4c-4a8e-4c05-8533-a2025589eda3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.742935Z",
+            "last_updated": "2026-07-15T12:58:06.743089Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "7454139f-9f20-45aa-b984-bc569285f9c2",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1612",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "2dddb501-10f5-4124-b655-c40b36c1a7d2",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.743224Z",
+        "last_updated": "2026-07-15T12:58:06.743346Z",
+        "activityValues": [
+          {
+            "id": "bee52dcc-23dd-457f-8eb6-d8e7fe0e876e",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "1612",
+            "co2eqYears": 100,
+            "inventoryValueId": "f7fee315-d930-4448-9d62-11a51c27ddd5",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.743469Z",
+            "last_updated": "2026-07-15T12:58:06.743578Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "50e40ec2-74b4-4b48-9042-c152bea942ec",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "254",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "0a4cde69-21c9-4cf0-a97a-1a89fbedbe1b",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.743693Z",
+        "last_updated": "2026-07-15T12:58:06.743800Z",
+        "activityValues": [
+          {
+            "id": "d445ccd9-992b-46fb-986a-66d240eef48b",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "254",
+            "co2eqYears": 100,
+            "inventoryValueId": "e5d48453-e634-4866-878b-689f417dc53b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.743910Z",
+            "last_updated": "2026-07-15T12:58:06.744017Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "74788fcc-9fd9-4f1c-ad0d-84d1e45577e2",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "184",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "cb048706-3038-45e0-800d-ffbd76bb94d3",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.744130Z",
+        "last_updated": "2026-07-15T12:58:06.744238Z",
+        "activityValues": [
+          {
+            "id": "ebc8ffc5-fb9f-47ad-9042-0a7def8d3064",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "184",
+            "co2eqYears": 100,
+            "inventoryValueId": "c9a0534a-8443-45a7-b6e8-c2eec308c662",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.744356Z",
+            "last_updated": "2026-07-15T12:58:06.744469Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "6a7c152b-8c7f-428b-8185-ff4775c084e2",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "10",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "a0b999d9-fe9b-4af1-b2a2-4a1601e82f95",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.744590Z",
+        "last_updated": "2026-07-15T12:58:06.744707Z",
+        "activityValues": [
+          {
+            "id": "7653d5c0-aace-4758-b05e-dbe85c370618",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "10",
+            "co2eqYears": 100,
+            "inventoryValueId": "665bbcc8-51c4-4da8-8689-9538adf48967",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.744824Z",
+            "last_updated": "2026-07-15T12:58:06.744933Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "0851a0f0-3472-4a05-a730-a24ba9000782",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "264347",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "be91199a-b00d-4d75-a7fe-e1c9c1ed1558",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.745058Z",
+        "last_updated": "2026-07-15T12:58:06.745165Z",
+        "activityValues": [
+          {
+            "id": "914f9650-e5f8-4b9f-aaef-a2480b838563",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "264347",
+            "co2eqYears": 100,
+            "inventoryValueId": "8ee8c552-095a-4eb1-8fb1-8fee82ff33bb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.745276Z",
+            "last_updated": "2026-07-15T12:58:06.745394Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "0224c391-e3b1-42c8-a1a6-475ec8fc6836",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "651",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "507e2672-6a13-4dd8-b7d4-7bf98cc8b865",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.745518Z",
+        "last_updated": "2026-07-15T12:58:06.745632Z",
+        "activityValues": [
+          {
+            "id": "256272bc-91ec-4196-896b-a45117cad998",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "651",
+            "co2eqYears": 100,
+            "inventoryValueId": "9a8b675d-d599-4dbc-ab17-1c0929fcc536",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.745750Z",
+            "last_updated": "2026-07-15T12:58:06.745875Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "2dccd52e-f7eb-44e6-b49f-d519598a3244",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "685",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "0e21e553-5c83-4e64-b6c9-3b1a44c657b4",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.746000Z",
+        "last_updated": "2026-07-15T12:58:06.746114Z",
+        "activityValues": [
+          {
+            "id": "e9cb06ba-1cff-4594-bf8a-abb7c56ce321",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "685",
+            "co2eqYears": 100,
+            "inventoryValueId": "1d3c1e15-cfa9-4f36-9998-be7322a60551",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.746233Z",
+            "last_updated": "2026-07-15T12:58:06.746347Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "3905fe02-3ae7-436e-b341-740f204eb20d",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4512",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "c0de4b4f-03b1-4632-921e-baae6c5cb6a5",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.746469Z",
+        "last_updated": "2026-07-15T12:58:06.746583Z",
+        "activityValues": [
+          {
+            "id": "2570d2c0-c196-4313-a203-d56c44816390",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "4512",
+            "co2eqYears": 100,
+            "inventoryValueId": "8bbe730f-4116-430b-99f8-e081aae479da",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.746707Z",
+            "last_updated": "2026-07-15T12:58:06.746835Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "bcf4351e-eec8-4fea-afb4-47dbe630fcba",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4504",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "79816ad3-c7be-42df-a686-ad758b5182d1",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.746959Z",
+        "last_updated": "2026-07-15T12:58:06.747074Z",
+        "activityValues": [
+          {
+            "id": "c08dd864-ed2d-4663-9616-b7965586d8aa",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "4504",
+            "co2eqYears": 100,
+            "inventoryValueId": "89329056-4dff-40f9-8c37-50794656aa34",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.747191Z",
+            "last_updated": "2026-07-15T12:58:06.747312Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "5470ac82-93c6-4579-b7a8-0e08c4f59db5",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9962",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "f4113931-2c5d-4080-9a3f-a04c9cc2416b",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.747433Z",
+        "last_updated": "2026-07-15T12:58:06.747550Z",
+        "activityValues": [
+          {
+            "id": "603a8fa9-18b8-4e64-9586-1a4b8ceae6cc",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "9962",
+            "co2eqYears": 100,
+            "inventoryValueId": "ff4d050c-7953-4d88-ab6e-c12926c747d1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.747674Z",
+            "last_updated": "2026-07-15T12:58:06.747796Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "1016419a-f29e-4fbd-83dc-567eff5da4e5",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "13000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "e2223047-6daf-458a-8509-6cf34b7c6cc1",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.747920Z",
+        "last_updated": "2026-07-15T12:58:06.748044Z",
+        "activityValues": [
+          {
+            "id": "b29c9b74-eefa-4e6f-b634-b56122319a0b",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "13000",
+            "co2eqYears": 100,
+            "inventoryValueId": "2f59e363-4db7-4423-9e10-0d6c36e4f160",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.748163Z",
+            "last_updated": "2026-07-15T12:58:06.748282Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "4ce089da-3b62-47c9-a55a-863bc1ec7d63",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "405000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "dd23a868-e64c-4f82-bc38-1c4fc323635b",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.748409Z",
+        "last_updated": "2026-07-15T12:58:06.748531Z",
+        "activityValues": [
+          {
+            "id": "4353df44-9c5b-46bc-a1f2-cf42d7f7c723",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "405000",
+            "co2eqYears": 100,
+            "inventoryValueId": "1413a630-bacb-4740-bba3-3dedc1a07ef0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.748651Z",
+            "last_updated": "2026-07-15T12:58:06.748766Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "1977edcb-03a3-41b0-8144-9c3e7628b919",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3507",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "76592a4c-14cc-4bd9-9e1a-9374fd675b99",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.748894Z",
+        "last_updated": "2026-07-15T12:58:06.749014Z",
+        "activityValues": [
+          {
+            "id": "5829ef88-b7d0-4faf-ba02-ac492db60988",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "3507",
+            "co2eqYears": 100,
+            "inventoryValueId": "f0814e2e-a6fa-49e0-9df2-6e7ead2220f7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.749136Z",
+            "last_updated": "2026-07-15T12:58:06.749271Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "92dbf542-d613-45be-9345-a1bc7183c7d6",
+        "gpcReferenceNumber": "III.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "incineration-and-open-burning-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+        "subCategoryId": "53be484d-ee1f-4010-b5cb-36d2b5b5c2d5",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.749405Z",
+        "last_updated": "2026-07-15T12:58:06.749531Z",
+        "activityValues": [
+          {
+            "id": "04e65789-adc0-44e4-b8ff-23578fbe4377",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Incineration and open burning"
+            },
+            "co2eq": "1",
+            "co2eqYears": 100,
+            "inventoryValueId": "ce442ab8-c0a0-4d94-b903-677249edadf1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.749649Z",
+            "last_updated": "2026-07-15T12:58:06.749765Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+          "subsectorName": "Incineration and open burning"
+        }
+      },
+      {
+        "id": "ff2ae17c-21e4-424b-bc6e-e6353a8b5787",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "49000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "c4bd50a6-ca1c-4792-aa85-e6ce41e3ff26",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.749886Z",
+        "last_updated": "2026-07-15T12:58:06.750010Z",
+        "activityValues": [
+          {
+            "id": "b1b5b6cb-f672-462a-a6af-5339b9d1b203",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "49000",
+            "co2eqYears": 100,
+            "inventoryValueId": "0b553c4f-9fa9-4dda-ac04-a203a4e1aee2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.750147Z",
+            "last_updated": "2026-07-15T12:58:06.750262Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "49ed14d2-c86c-4fc4-a8f5-54961791e704",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "33598",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "34f74a36-23e3-4bf7-a8d0-8b01fa0e63ba",
+        "subCategoryId": "df2b0c26-8400-488b-8bea-d70041e6f818",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.750381Z",
+        "last_updated": "2026-07-15T12:58:06.750493Z",
+        "activityValues": [
+          {
+            "id": "bb125b34-6ed1-43a9-a9e9-5f501ce2a590",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "33598",
+            "co2eqYears": 100,
+            "inventoryValueId": "4b44bdd4-fca1-4eec-9871-0c1c7fc986bc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.750609Z",
+            "last_updated": "2026-07-15T12:58:06.750721Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "34f74a36-23e3-4bf7-a8d0-8b01fa0e63ba",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "05266e4c-2353-4b21-9a57-617f8efed193",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "136567",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a09dfc31-af75-4bef-bafe-71e77af44207",
+        "subCategoryId": "482470a6-ed47-45c5-9313-3a7e61fddba7",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.750842Z",
+        "last_updated": "2026-07-15T12:58:06.750958Z",
+        "activityValues": [
+          {
+            "id": "15095ce4-4ae2-459f-80d2-37a885a34eba",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "136567",
+            "co2eqYears": 100,
+            "inventoryValueId": "cc7e9e1f-b4e6-4996-9753-d52b1b66398f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.751073Z",
+            "last_updated": "2026-07-15T12:58:06.751186Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a09dfc31-af75-4bef-bafe-71e77af44207",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "326650f0-ee7f-454b-ae89-b0d2cf5594f9",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "584",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "c788cb46-8c5d-487a-b8f4-46ba878cd713",
+        "subCategoryId": "a02eb6bc-8196-4afa-ac3b-ffddb331fa70",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.751326Z",
+        "last_updated": "2026-07-15T12:58:06.751445Z",
+        "activityValues": [
+          {
+            "id": "bb9fc827-17e0-440b-9b33-b2d172a4c7a6",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "584",
+            "co2eqYears": 100,
+            "inventoryValueId": "2883a464-fddf-4618-925a-c49bcef70a2c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.751561Z",
+            "last_updated": "2026-07-15T12:58:06.751675Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c788cb46-8c5d-487a-b8f4-46ba878cd713",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "cf6c4c2f-011e-4277-9dc5-0a80de4b9ca0",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3844",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "bea0a0f5-94ed-413e-a683-0ce82ed444df",
+        "subCategoryId": "2fa1fe25-94b7-4774-8d85-66fd32dfbf2e",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.751795Z",
+        "last_updated": "2026-07-15T12:58:06.751907Z",
+        "activityValues": [
+          {
+            "id": "a8086236-9940-4f34-b11d-e40b567d351c",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "3844",
+            "co2eqYears": 100,
+            "inventoryValueId": "9285917d-53a2-47fa-afb0-fa8e0cfac5f4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.752023Z",
+            "last_updated": "2026-07-15T12:58:06.752135Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "bea0a0f5-94ed-413e-a683-0ce82ed444df",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "c4c59d95-c600-487a-b15a-5e9095c0fe16",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1107",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "09dcda1e-00dc-42a2-a380-c87511f70704",
+        "subCategoryId": "1bd9e848-6dcc-4196-8282-fa955c9f37a6",
+        "inventoryId": "199bd730-12c9-409c-aac3-bef35afe7df5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.752253Z",
+        "last_updated": "2026-07-15T12:58:06.752366Z",
+        "activityValues": [
+          {
+            "id": "ddc8197e-ba11-40c9-a31d-b3d473f6148c",
+            "activityData": {
+              "data-source": "inventory-CHL-13125-Quilicura-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "1107",
+            "co2eqYears": 100,
+            "inventoryValueId": "a45c84bd-df21-4daf-9db2-a93df45b7dc0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13125-Quilicura-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.752489Z",
+            "last_updated": "2026-07-15T12:58:06.752603Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "09dcda1e-00dc-42a2-a380-c87511f70704",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

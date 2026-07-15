@@ -1,0 +1,1113 @@
+{
+  "data": {
+    "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+    "inventoryName": "San Nicol\u00e1s - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "d5ff8ade-a868-4015-ae27-e9f5fa7b7908",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.849188Z",
+    "created": "2026-07-15T12:58:06.849300Z",
+    "last_updated": "2026-07-15T12:58:06.849421Z",
+    "city": {
+      "cityId": "d5ff8ade-a868-4015-ae27-e9f5fa7b7908",
+      "locode": "CL SAN",
+      "name": "San Nicol\u00e1s",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "b6243a05-43cd-4839-be08-dcb2d2d21dc1",
+      "created": "2026-07-15T12:58:06.849537Z",
+      "last_updated": "2026-07-15T12:58:06.849655Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "b202ddfc-adbb-4c7d-b5c6-3b1ea166c6be",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3252",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "fe65a143-2d23-4bcd-980c-9ed57fdfbc7a",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.838194Z",
+        "last_updated": "2026-07-15T12:58:06.838322Z",
+        "activityValues": [
+          {
+            "id": "ccc4fdc4-4f4c-4c17-a481-0752c77a7872",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "3252",
+            "co2eqYears": 100,
+            "inventoryValueId": "c7415172-8b4b-480d-9b35-2a501780758c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.838461Z",
+            "last_updated": "2026-07-15T12:58:06.838571Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "4e1a0c44-1810-42e4-ad92-5acb45fb454d",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3167",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "dfe02912-b5b1-49fc-afa9-d45be5529e8d",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.838691Z",
+        "last_updated": "2026-07-15T12:58:06.838802Z",
+        "activityValues": [
+          {
+            "id": "b077edab-481b-4ee6-b355-c0d7995b9b6f",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "3167",
+            "co2eqYears": 100,
+            "inventoryValueId": "f4ada7d0-bd0d-4d05-bf21-42a4980e8eef",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.838913Z",
+            "last_updated": "2026-07-15T12:58:06.839021Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "5c7c09c1-e087-4be3-ab95-cf6b63f6be62",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "180",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "a701666f-9661-4adf-a3ec-7c5155b242b3",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.839140Z",
+        "last_updated": "2026-07-15T12:58:06.839282Z",
+        "activityValues": [
+          {
+            "id": "2322268b-ec7b-402f-95a4-981071e7fe51",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "180",
+            "co2eqYears": 100,
+            "inventoryValueId": "0afd57b5-e09d-4515-a84f-06903de5a58c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.839407Z",
+            "last_updated": "2026-07-15T12:58:06.839531Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "a115a2fe-e9e5-4293-8e3c-5ca838279996",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "842",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "e07d2647-a9a1-4fa5-b736-103e60b870c5",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.839662Z",
+        "last_updated": "2026-07-15T12:58:06.839781Z",
+        "activityValues": [
+          {
+            "id": "cbc129e8-9f5e-4880-bd47-dd64b739b910",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "842",
+            "co2eqYears": 100,
+            "inventoryValueId": "0931c0aa-7c7c-41aa-9d34-81c6f36285d7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.839901Z",
+            "last_updated": "2026-07-15T12:58:06.840035Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "28686bb0-6c76-4630-9ec6-e8549a5315f2",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "267",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "2fe1ac89-888b-4e5f-a78e-fc5a7f526cee",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.840163Z",
+        "last_updated": "2026-07-15T12:58:06.840271Z",
+        "activityValues": [
+          {
+            "id": "ef461fb3-6911-40ed-b61b-150afedaa29c",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "267",
+            "co2eqYears": 100,
+            "inventoryValueId": "89ed669d-96cd-4df5-ada9-7a2d49f5ab8d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.840378Z",
+            "last_updated": "2026-07-15T12:58:06.840486Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "9ab99181-40e2-435c-93fb-0f68a3b55a10",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "15",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "150cc192-a4d0-4dbb-89dc-537c1ae4b352",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.840601Z",
+        "last_updated": "2026-07-15T12:58:06.840726Z",
+        "activityValues": [
+          {
+            "id": "15a92050-48de-4ac8-9c8b-82c854f84f9d",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "15",
+            "co2eqYears": 100,
+            "inventoryValueId": "5e69c122-2440-4062-b553-8f847949fe72",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.840851Z",
+            "last_updated": "2026-07-15T12:58:06.840957Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "2be82c4d-2de3-445b-8312-a8026928bd76",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5828",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "20f8d46b-b38b-4d88-a9a3-9f2ebcc11d6f",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.841068Z",
+        "last_updated": "2026-07-15T12:58:06.841173Z",
+        "activityValues": [
+          {
+            "id": "45ef10c8-4afd-4afc-afca-92ad7c4d1a20",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "5828",
+            "co2eqYears": 100,
+            "inventoryValueId": "b2102e59-9759-4b51-a451-99fa3d17ec5d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.841282Z",
+            "last_updated": "2026-07-15T12:58:06.841389Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "9dd54e78-30a9-4c2e-a887-33043bc050e6",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4382",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "e84d6633-c348-4629-8961-1860d26ed3bb",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.841500Z",
+        "last_updated": "2026-07-15T12:58:06.841607Z",
+        "activityValues": [
+          {
+            "id": "f8b5c8a7-03b6-477f-8e8d-de4ecd4c529f",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "4382",
+            "co2eqYears": 100,
+            "inventoryValueId": "dfd6962f-87ea-4ee1-b5ea-0a4cd0bce44d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.841723Z",
+            "last_updated": "2026-07-15T12:58:06.841836Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "43795556-63fb-41e7-8c7d-27001acf987a",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "249",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "e0617786-789b-49d7-b038-986394a27f43",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.841955Z",
+        "last_updated": "2026-07-15T12:58:06.842068Z",
+        "activityValues": [
+          {
+            "id": "64d108a5-8c36-40cc-8410-23681f27b73e",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "249",
+            "co2eqYears": 100,
+            "inventoryValueId": "e89dee8b-d0d2-4752-a5c5-5b0215a18499",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.842184Z",
+            "last_updated": "2026-07-15T12:58:06.842297Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "f9183516-1268-490e-bce2-4bdefb1f2ac2",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "41",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "31bf3759-d27f-4b4e-ab9f-7789231aa1c8",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.842415Z",
+        "last_updated": "2026-07-15T12:58:06.842528Z",
+        "activityValues": [
+          {
+            "id": "bbe4d2a5-925a-4d14-8efa-aec64b6609ae",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "41",
+            "co2eqYears": 100,
+            "inventoryValueId": "ff42ee53-4b36-4a06-90f7-ff8ff6c4a3a7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.842645Z",
+            "last_updated": "2026-07-15T12:58:06.842795Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "8c1c71fd-bc84-4cbd-a571-674cd0632ec4",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "30",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "19fe1829-64f2-46b4-9270-277094f33f07",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.843025Z",
+        "last_updated": "2026-07-15T12:58:06.843136Z",
+        "activityValues": [
+          {
+            "id": "39e4f439-dc9e-4359-aed5-6065abfea238",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "30",
+            "co2eqYears": 100,
+            "inventoryValueId": "1c16a189-1a59-4694-a963-ea74d8026f73",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.843249Z",
+            "last_updated": "2026-07-15T12:58:06.843357Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "851afb21-a53a-465c-998a-459f6e2c8a2f",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "3eee029a-fbd6-44c2-96e5-e0288fa23e20",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.843468Z",
+        "last_updated": "2026-07-15T12:58:06.843574Z",
+        "activityValues": [
+          {
+            "id": "5cd32923-a55c-4f7d-880c-0948e7565e1c",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1",
+            "co2eqYears": 100,
+            "inventoryValueId": "c1edd83c-93f4-48ae-ac8e-5c9ac632f272",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.843681Z",
+            "last_updated": "2026-07-15T12:58:06.843785Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "c5834540-97c7-456e-a612-3d5c217f9461",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "58472",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "69bffb6e-c207-4e87-8972-1df3ec93951f",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.843895Z",
+        "last_updated": "2026-07-15T12:58:06.844003Z",
+        "activityValues": [
+          {
+            "id": "fbec767a-58e1-408a-bb75-d3f541221a83",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "58472",
+            "co2eqYears": 100,
+            "inventoryValueId": "f588866c-ab37-4d9f-87db-1a5f44fbd60e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.844111Z",
+            "last_updated": "2026-07-15T12:58:06.844215Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "b90119a0-dac3-4220-8c4f-1a99b0370953",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "36",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "1fead230-d4cd-4d50-9b8d-7b9c12466cde",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.844327Z",
+        "last_updated": "2026-07-15T12:58:06.844433Z",
+        "activityValues": [
+          {
+            "id": "9e478d72-c1e4-4b84-b81a-af6899125a31",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "36",
+            "co2eqYears": 100,
+            "inventoryValueId": "eb1d6558-d810-4ad8-8102-ba9e076af0dd",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.844542Z",
+            "last_updated": "2026-07-15T12:58:06.844648Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "278a70b5-4e4b-415b-84cc-7ef9f5286356",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "32",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "addd7b4b-8920-4129-b6de-ed87e1c23c70",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.844765Z",
+        "last_updated": "2026-07-15T12:58:06.844869Z",
+        "activityValues": [
+          {
+            "id": "a2d5ab0e-d871-438b-bd51-8dae11fc8c46",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "32",
+            "co2eqYears": 100,
+            "inventoryValueId": "3987687a-16b2-4bbc-a3fb-1d3af551818b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.844977Z",
+            "last_updated": "2026-07-15T12:58:06.845091Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "0a447a5c-2db7-4d8d-a31f-9adf22d84235",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1258",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "8e45750f-b53b-4301-94d6-f51d46c87b7a",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.845204Z",
+        "last_updated": "2026-07-15T12:58:06.845308Z",
+        "activityValues": [
+          {
+            "id": "73b32cc5-efba-4658-9fba-6be2ecb4d555",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "1258",
+            "co2eqYears": 100,
+            "inventoryValueId": "9bd76719-cb83-4c71-a8b4-e9190e33fdb8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.845415Z",
+            "last_updated": "2026-07-15T12:58:06.845519Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "8ff5defa-6f09-4056-811c-bb288a1b4a90",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "e0389ec2-ed03-4f29-91e5-231b8c987ff3",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.845632Z",
+        "last_updated": "2026-07-15T12:58:06.845737Z",
+        "activityValues": [
+          {
+            "id": "79e8d4a6-f4a0-4e64-88e0-6b1ab460eb63",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "8000",
+            "co2eqYears": 100,
+            "inventoryValueId": "55d43f5d-ce61-4572-9509-ed22fe67e820",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.845845Z",
+            "last_updated": "2026-07-15T12:58:06.845949Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "bba21d06-e5f7-4970-9d1b-766d8e795e35",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "6dcd94c9-3eba-4c78-bc39-8ec3a7c37125",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.846063Z",
+        "last_updated": "2026-07-15T12:58:06.846167Z",
+        "activityValues": [
+          {
+            "id": "be1a0a8f-8713-4ec0-940a-01fcd6c70460",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "5ecc0c16-b286-4c6f-a9a0-589ab7c8590b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.846274Z",
+            "last_updated": "2026-07-15T12:58:06.846379Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "54060312-b1b0-4434-9193-9d40c47d8765",
+        "gpcReferenceNumber": "III.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "7dc307ae-ead7-48b9-a32b-69c5b1be2ced",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.846491Z",
+        "last_updated": "2026-07-15T12:58:06.846596Z",
+        "activityValues": [
+          {
+            "id": "c20f24b9-f4df-4925-8cc1-18e7a620268b",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "49aa7016-851d-4632-b1e0-6f681c96fd8c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.846706Z",
+            "last_updated": "2026-07-15T12:58:06.846810Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "a8b0807a-8d9b-4189-83ba-3ea140727843",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "b3385220-7988-4e81-87d7-ebc1d718d946",
+        "subCategoryId": "14086de5-31a8-4be9-b46c-d646e84742e8",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.846921Z",
+        "last_updated": "2026-07-15T12:58:06.847026Z",
+        "activityValues": [
+          {
+            "id": "4b36390d-1ba4-4742-be83-56ab791f1d37",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "5",
+            "co2eqYears": 100,
+            "inventoryValueId": "5e2cf2f6-94e9-4dce-9a45-9206bf24d043",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.847133Z",
+            "last_updated": "2026-07-15T12:58:06.847239Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "b3385220-7988-4e81-87d7-ebc1d718d946",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "5c6622d9-5014-4802-bea9-ff8115af5ca1",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1755",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "408765e7-bb7a-40b3-afc8-af1b8b1dd8c2",
+        "subCategoryId": "63670972-ef3a-447a-a017-414fefcaf183",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.847352Z",
+        "last_updated": "2026-07-15T12:58:06.847457Z",
+        "activityValues": [
+          {
+            "id": "e718e61a-f805-43d1-aada-49aac2b5862b",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "1755",
+            "co2eqYears": 100,
+            "inventoryValueId": "8889d17e-720e-45d3-abd4-4ae55b899937",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.847563Z",
+            "last_updated": "2026-07-15T12:58:06.847668Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "408765e7-bb7a-40b3-afc8-af1b8b1dd8c2",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "fa0f1a23-25a6-430e-9cb3-a4d9abba3c91",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "15192",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "d14fa42a-2062-4ed9-a493-da2364b96fda",
+        "subCategoryId": "678ccf9d-2b3a-4adf-88ec-590748849ec9",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.847785Z",
+        "last_updated": "2026-07-15T12:58:06.847896Z",
+        "activityValues": [
+          {
+            "id": "f7ad89c0-4cf8-4613-bf09-6d4814033f99",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "15192",
+            "co2eqYears": 100,
+            "inventoryValueId": "2330687f-8759-4111-a131-c4608dcce5e1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.848015Z",
+            "last_updated": "2026-07-15T12:58:06.848127Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "d14fa42a-2062-4ed9-a493-da2364b96fda",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "66d69bd7-d0dc-4fc5-9c84-af7d7019dcba",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-30426",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "588bf0b1-8ea3-43dc-b619-a4ceb3627171",
+        "subCategoryId": "949d9324-8ab4-46c2-8ad3-c3ee4abb22ba",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.848245Z",
+        "last_updated": "2026-07-15T12:58:06.848357Z",
+        "activityValues": [
+          {
+            "id": "f41af484-dd42-4427-bc7f-5dbbab4d8456",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-30426",
+            "co2eqYears": 100,
+            "inventoryValueId": "4239dc88-f002-4dc5-84ff-995bb37dbb58",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.848473Z",
+            "last_updated": "2026-07-15T12:58:06.848595Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "588bf0b1-8ea3-43dc-b619-a4ceb3627171",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "6d36dccc-416f-48b7-83cf-a8b39acdb1ef",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "18233",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "aaa3d6b4-b579-4cca-8ffd-469ae39fe438",
+        "subCategoryId": "eedde7f1-1d16-46f0-ae47-40b3a07cc42b",
+        "inventoryId": "b3a31325-64a9-40f0-9a57-19f5ec78d582",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.848718Z",
+        "last_updated": "2026-07-15T12:58:06.848846Z",
+        "activityValues": [
+          {
+            "id": "29d649fc-a66d-4d31-8ded-c4207fd955a5",
+            "activityData": {
+              "data-source": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "18233",
+            "co2eqYears": 100,
+            "inventoryValueId": "8ed1682b-7fbf-45bb-9b35-8fc98a55a22b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-16305-San-Nicol\u00e1s-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.848965Z",
+            "last_updated": "2026-07-15T12:58:06.849076Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "aaa3d6b4-b579-4cca-8ffd-469ae39fe438",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1473 @@
+{
+  "data": {
+    "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+    "inventoryName": "Antofagasta - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "feaab637-f955-414f-91ee-61925a44b858",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.559246Z",
+    "created": "2026-07-15T12:58:06.559350Z",
+    "last_updated": "2026-07-15T12:58:06.559459Z",
+    "city": {
+      "cityId": "feaab637-f955-414f-91ee-61925a44b858",
+      "locode": "CL ANT",
+      "name": "Antofagasta",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "a317db27-dcd5-4bdf-9fb8-17ce82963084",
+      "created": "2026-07-15T12:58:06.559585Z",
+      "last_updated": "2026-07-15T12:58:06.559718Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "04e264d2-da1e-4133-90ae-1cbd63660106",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "69792",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "3f6e1cd2-4b93-4add-953e-ca9ccbb04dd3",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.544735Z",
+        "last_updated": "2026-07-15T12:58:06.544945Z",
+        "activityValues": [
+          {
+            "id": "137e2564-470d-4dbc-88f5-5e3b8328e1e6",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "69792",
+            "co2eqYears": 100,
+            "inventoryValueId": "144e6026-36ce-4593-8f45-1730790bc022",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.545068Z",
+            "last_updated": "2026-07-15T12:58:06.545188Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "bed51191-c811-40b0-b6cf-2bd82272f9a6",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "91219",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "95947f04-9b0a-4ff2-ba41-da543a72076c",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.545334Z",
+        "last_updated": "2026-07-15T12:58:06.545454Z",
+        "activityValues": [
+          {
+            "id": "c11d31ff-9cbe-494d-a1f8-8435481971c5",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "91219",
+            "co2eqYears": 100,
+            "inventoryValueId": "799f797f-6753-4919-b41f-3dde937591b9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.545576Z",
+            "last_updated": "2026-07-15T12:58:06.545687Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "e527ac97-451b-4c46-be9e-86a8613e6e4c",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5199",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "64aacd68-22fd-4a83-bae8-ed334ec6c63f",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.545812Z",
+        "last_updated": "2026-07-15T12:58:06.545928Z",
+        "activityValues": [
+          {
+            "id": "b997eebc-ccf7-41e9-be1d-ccc14c5d7ad6",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "5199",
+            "co2eqYears": 100,
+            "inventoryValueId": "7eb593b6-cb30-4045-b443-a154dd5b7ebf",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.546041Z",
+            "last_updated": "2026-07-15T12:58:06.546149Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "5ceb35c6-cbab-4cc7-85c3-40b2bf08e04e",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "97089",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "01e9164d-923f-4b16-b5c2-035f29ca8aaa",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.546263Z",
+        "last_updated": "2026-07-15T12:58:06.546375Z",
+        "activityValues": [
+          {
+            "id": "e0f82304-70e6-45f9-ad7c-fe5361650452",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "97089",
+            "co2eqYears": 100,
+            "inventoryValueId": "568aa166-c667-40d8-b7ef-8ffa473077df",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.546489Z",
+            "last_updated": "2026-07-15T12:58:06.546596Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "65b43c58-5c28-4658-9ea6-d7c5673cf9ba",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "64915",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "8bcf607f-5d89-47b6-a721-b1e2313056cc",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.546710Z",
+        "last_updated": "2026-07-15T12:58:06.546818Z",
+        "activityValues": [
+          {
+            "id": "eb961c9c-be5c-4a7f-8232-730ca46802eb",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "64915",
+            "co2eqYears": 100,
+            "inventoryValueId": "53a67007-37ca-4665-be3a-29de512d3c4e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.546929Z",
+            "last_updated": "2026-07-15T12:58:06.547037Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "9f07f2d2-b667-4417-be12-71ce8d185023",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3700",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "55eb9d92-4d82-46cb-babd-4ad282c1942e",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.547151Z",
+        "last_updated": "2026-07-15T12:58:06.547258Z",
+        "activityValues": [
+          {
+            "id": "32ba2115-165d-4d8e-9838-69d51512d611",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "3700",
+            "co2eqYears": 100,
+            "inventoryValueId": "193f0b88-fe51-4454-a125-43ee7bbc7f89",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.547368Z",
+            "last_updated": "2026-07-15T12:58:06.547476Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "ca72296a-a4e2-4e49-885a-59fc2459471c",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4535449",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "c7742854-2f00-4c5c-9c7f-df42c28f1b6a",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.547590Z",
+        "last_updated": "2026-07-15T12:58:06.547697Z",
+        "activityValues": [
+          {
+            "id": "49f84a30-f33f-4099-8467-b3b3d067dddd",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "4535449",
+            "co2eqYears": 100,
+            "inventoryValueId": "e777cd7b-fe5b-480a-8f41-ae0c896e5c3e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.547808Z",
+            "last_updated": "2026-07-15T12:58:06.547915Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "02115a50-e333-4604-a6b4-0deb62aa2628",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3862936",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "eaa76fbf-ed74-47a8-b118-f86813b581b7",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.548029Z",
+        "last_updated": "2026-07-15T12:58:06.548137Z",
+        "activityValues": [
+          {
+            "id": "948d3504-9d55-484c-9cb6-04031024a851",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "3862936",
+            "co2eqYears": 100,
+            "inventoryValueId": "5deab554-6e13-4084-8695-966560a1eac1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.548251Z",
+            "last_updated": "2026-07-15T12:58:06.548358Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "6ff68a35-d4c6-4fa0-9349-19d4c0ca4f68",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "220187",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "bc68a5be-8c33-4bee-b63e-63a3ba27ac7e",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.548472Z",
+        "last_updated": "2026-07-15T12:58:06.548579Z",
+        "activityValues": [
+          {
+            "id": "caa1f380-5481-4730-995d-e430f78eecc5",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "220187",
+            "co2eqYears": 100,
+            "inventoryValueId": "0d8ff11d-a7c3-4803-81f0-c86706f8db88",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.548690Z",
+            "last_updated": "2026-07-15T12:58:06.548797Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "968470c5-de32-4e33-bc27-be81514af422",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8868912",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "9d9839cf-2d5c-499d-844b-d26ae5cf1cc2",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.548910Z",
+        "last_updated": "2026-07-15T12:58:06.549017Z",
+        "activityValues": [
+          {
+            "id": "1be305cc-d23a-44a2-a94e-a4085548994d",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "8868912",
+            "co2eqYears": 100,
+            "inventoryValueId": "5becd028-355f-42d1-b964-317ae7a51a33",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.549131Z",
+            "last_updated": "2026-07-15T12:58:06.549238Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "3e57d270-a9e6-4af3-b55b-10b6ca2a3aba",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "210577",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "d0686005-6b85-4181-a50d-8068c704f53e",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.549351Z",
+        "last_updated": "2026-07-15T12:58:06.549458Z",
+        "activityValues": [
+          {
+            "id": "fbfbfc36-7d98-49d4-949c-fb1bcf5dae60",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "210577",
+            "co2eqYears": 100,
+            "inventoryValueId": "1c1576d4-7974-4c8c-a22d-513441a1aa97",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.549568Z",
+            "last_updated": "2026-07-15T12:58:06.549676Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "b3a6187f-6fae-411c-80bc-983d45b72b3f",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "12002",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "6c48e7ea-f4a2-4e73-bfcd-8ad6667027e4",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.549788Z",
+        "last_updated": "2026-07-15T12:58:06.549896Z",
+        "activityValues": [
+          {
+            "id": "376b7b42-a3ce-4e87-aeee-13a8bb721c91",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "12002",
+            "co2eqYears": 100,
+            "inventoryValueId": "f46a2bc2-c0af-480b-89fe-db4285094682",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.550006Z",
+            "last_updated": "2026-07-15T12:58:06.550121Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "c4993552-c565-4118-bf7f-7b1528c5d244",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20670",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "94e4725e-52bf-4467-b0bf-76cb1a5d3c3a",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.550245Z",
+        "last_updated": "2026-07-15T12:58:06.550373Z",
+        "activityValues": [
+          {
+            "id": "743da8c9-7813-4e3e-9a3a-1be06e0a5cb2",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "20670",
+            "co2eqYears": 100,
+            "inventoryValueId": "5889fdcb-62f2-4c4e-ba7a-0d857409529d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.550495Z",
+            "last_updated": "2026-07-15T12:58:06.550604Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "a9373b0d-8b9c-48d1-a315-fd7210a133bf",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "33",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "7708e9d6-961d-43c4-a9b7-bdea23679b28",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.550714Z",
+        "last_updated": "2026-07-15T12:58:06.550819Z",
+        "activityValues": [
+          {
+            "id": "ea1e6dc4-6d39-4d1e-a607-aa257840033d",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "33",
+            "co2eqYears": 100,
+            "inventoryValueId": "45a2b0ca-c821-45f0-888f-dc3fdb08e238",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.550926Z",
+            "last_updated": "2026-07-15T12:58:06.551080Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "0635e210-bdd8-4caf-a366-c1d8530cfcea",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "d017f4cb-3c69-4904-8461-3763e4ed83d9",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.551377Z",
+        "last_updated": "2026-07-15T12:58:06.551507Z",
+        "activityValues": [
+          {
+            "id": "882b749e-6f93-4927-90ef-37b02c4eeadf",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1",
+            "co2eqYears": 100,
+            "inventoryValueId": "7433c3a3-5142-4c7a-b49b-93761b6020af",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.551624Z",
+            "last_updated": "2026-07-15T12:58:06.551738Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "ebe17d74-ae80-4381-92a8-d8803c5eee13",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "796670",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "24b7e180-ddb0-482d-844f-17965ed3e814",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.551854Z",
+        "last_updated": "2026-07-15T12:58:06.551962Z",
+        "activityValues": [
+          {
+            "id": "dc25f602-fbb8-47b4-9f62-e28b8c6efcfa",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "796670",
+            "co2eqYears": 100,
+            "inventoryValueId": "a40c1be9-a4da-475c-96b3-103c042f1e47",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.552073Z",
+            "last_updated": "2026-07-15T12:58:06.552178Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "d5b2a53d-00a5-4f8c-8ebc-c6a1525aac2f",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "502",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "cc720110-fb1a-4d5c-a49c-eeaa6e5c860e",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.552297Z",
+        "last_updated": "2026-07-15T12:58:06.552402Z",
+        "activityValues": [
+          {
+            "id": "af0d545a-5d8a-4af7-b4ec-a90942b37a73",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "502",
+            "co2eqYears": 100,
+            "inventoryValueId": "861a087f-07f4-4587-8735-a50427e537ad",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.552510Z",
+            "last_updated": "2026-07-15T12:58:06.552614Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "2f2ad448-7da7-4965-84f4-7fe4419a9c2d",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "46536",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "12908e21-8181-43f4-83fc-6810ec9d00f8",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.552733Z",
+        "last_updated": "2026-07-15T12:58:06.552853Z",
+        "activityValues": [
+          {
+            "id": "fdc5d0d2-fd40-48fd-932b-dd92ab00cb2f",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "46536",
+            "co2eqYears": 100,
+            "inventoryValueId": "755a07f6-825a-433c-b0f2-f15daefac967",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.552971Z",
+            "last_updated": "2026-07-15T12:58:06.553079Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "4fc85c9b-84d0-4b30-96a6-b1b28c0e15f4",
+        "gpcReferenceNumber": "II.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3158",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "waterborne-navigation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ab32c321-e9e1-31b3-9dde-f93ade472219",
+        "subCategoryId": "75b0de25-bb87-4fb4-8428-6abea4341fb0",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.553197Z",
+        "last_updated": "2026-07-15T12:58:06.553302Z",
+        "activityValues": [
+          {
+            "id": "7e56a3a2-da56-4524-b77a-48f5e21c19e2",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Waterborne navigation"
+            },
+            "co2eq": "3158",
+            "co2eqYears": 100,
+            "inventoryValueId": "3c7acd71-0d88-4f29-a389-122882d782cb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.553410Z",
+            "last_updated": "2026-07-15T12:58:06.553515Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ab32c321-e9e1-31b3-9dde-f93ade472219",
+          "subsectorName": "Waterborne navigation"
+        }
+      },
+      {
+        "id": "253ac436-8089-4f55-bfc9-ce5213e5190d",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "113691",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "2ad1158e-7a64-41f2-bafd-b94ceb0694b7",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.553629Z",
+        "last_updated": "2026-07-15T12:58:06.553734Z",
+        "activityValues": [
+          {
+            "id": "1369dbf2-f67c-4178-9f91-002edf3faabc",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "113691",
+            "co2eqYears": 100,
+            "inventoryValueId": "b4ddf2ad-8d0a-4ead-a83a-0243cc525788",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.553841Z",
+            "last_updated": "2026-07-15T12:58:06.553946Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "1acaa38f-72fb-4fbc-b4f2-495cc31b03bc",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "21985",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "772c8a53-2672-4bc2-b5fc-89942ddac060",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.554055Z",
+        "last_updated": "2026-07-15T12:58:06.554161Z",
+        "activityValues": [
+          {
+            "id": "6ca61b6d-0a0a-4cdd-bbd9-7facb79a7f50",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "21985",
+            "co2eqYears": 100,
+            "inventoryValueId": "c5d6e383-fde7-477a-912f-9271bd0ef9e6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.554268Z",
+            "last_updated": "2026-07-15T12:58:06.554373Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "c6b12f05-f100-4c11-bd81-c313f331fb5c",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "610000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "d3df65e0-b885-4ece-bd9d-015fd7619706",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.554486Z",
+        "last_updated": "2026-07-15T12:58:06.554591Z",
+        "activityValues": [
+          {
+            "id": "6ff9e069-e847-4d91-963d-c890ccd735a2",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "610000",
+            "co2eqYears": 100,
+            "inventoryValueId": "ab3cecb2-3d0c-4d20-9282-a0db0d3f3d53",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.554705Z",
+            "last_updated": "2026-07-15T12:58:06.554809Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "8708ae07-6b16-4916-9eb8-b5b672d26c7d",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "5d4927ef-a2fd-4c32-a7b7-f53bf48dcc6a",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.554920Z",
+        "last_updated": "2026-07-15T12:58:06.555025Z",
+        "activityValues": [
+          {
+            "id": "b23fe1fb-fd8f-430a-88bc-c798f075ef2c",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "2000",
+            "co2eqYears": 100,
+            "inventoryValueId": "e94a7890-c866-4762-b3e5-acb11b100165",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.555136Z",
+            "last_updated": "2026-07-15T12:58:06.555241Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "7650e60c-5d79-4882-a21f-1bd81b457887",
+        "gpcReferenceNumber": "III.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "10",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "7ac04710-5b89-4c85-b46c-308cac9837e9",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.555352Z",
+        "last_updated": "2026-07-15T12:58:06.555457Z",
+        "activityValues": [
+          {
+            "id": "3cf45a1b-70ba-4bd5-9ddf-f93df1c2dc46",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "10",
+            "co2eqYears": 100,
+            "inventoryValueId": "866c26a3-7d65-4a39-8111-8f222f5a4cb2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.555572Z",
+            "last_updated": "2026-07-15T12:58:06.555676Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "88accbae-9993-4616-ac5f-c5d8f89ea1e8",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "0",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "3737d2d1-203f-4551-b55f-db1420b4308c",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.555787Z",
+        "last_updated": "2026-07-15T12:58:06.555894Z",
+        "activityValues": [
+          {
+            "id": "f5d2b4c3-54ec-4a02-99af-b571a653e4cf",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "0",
+            "co2eqYears": 100,
+            "inventoryValueId": "d634e194-df75-43c1-ab34-8914f333b28e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.556001Z",
+            "last_updated": "2026-07-15T12:58:06.556105Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "3b8b2b2d-57bc-476b-aa47-5da6a5ed587f",
+        "gpcReferenceNumber": "III.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "154",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "incineration-and-open-burning-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+        "subCategoryId": "c71f9e93-9f8d-48fd-ace5-c5e8aab93737",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.556216Z",
+        "last_updated": "2026-07-15T12:58:06.556323Z",
+        "activityValues": [
+          {
+            "id": "19a7f660-64d6-4685-a020-611a4463c4f1",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Incineration and open burning"
+            },
+            "co2eq": "154",
+            "co2eqYears": 100,
+            "inventoryValueId": "a8264e0f-8f61-4f57-a2f7-2a484c7ba2f1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.556431Z",
+            "last_updated": "2026-07-15T12:58:06.556536Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+          "subsectorName": "Incineration and open burning"
+        }
+      },
+      {
+        "id": "5de284e0-0b47-460d-a2f1-c32a432cf317",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "56000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "3c891009-129b-49cc-b957-d97e0d9fa8e0",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.556646Z",
+        "last_updated": "2026-07-15T12:58:06.556750Z",
+        "activityValues": [
+          {
+            "id": "3ca9ef58-e3d9-4749-847e-d7b7de3da4ef",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "56000",
+            "co2eqYears": 100,
+            "inventoryValueId": "b6985432-e44d-421d-b045-f42c1b2a2aa8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.556857Z",
+            "last_updated": "2026-07-15T12:58:06.556972Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "f1625ceb-3d5f-4ae7-9f33-9391b79d6666",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "366282",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "dca0118e-e6e8-4a43-8962-27933d568886",
+        "subCategoryId": "215f5f76-b57e-4764-8fc9-2cd42b3353e2",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.557086Z",
+        "last_updated": "2026-07-15T12:58:06.557189Z",
+        "activityValues": [
+          {
+            "id": "8e1ca8e1-3daa-4311-a170-867f2e4ad271",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "366282",
+            "co2eqYears": 100,
+            "inventoryValueId": "f3633d26-c49d-4818-9661-845b67bb1eaa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.557297Z",
+            "last_updated": "2026-07-15T12:58:06.557401Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "dca0118e-e6e8-4a43-8962-27933d568886",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "fe2b2681-3f0f-48e4-aef8-be3cccce021c",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "113147",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "2fbfa87b-f06c-4f23-b54a-9284083803ee",
+        "subCategoryId": "bf3465d6-9f14-4eb4-b6e1-b6f63f0862a6",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.557511Z",
+        "last_updated": "2026-07-15T12:58:06.557615Z",
+        "activityValues": [
+          {
+            "id": "80ef98f3-361e-4030-b477-7a8be56cbb31",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "113147",
+            "co2eqYears": 100,
+            "inventoryValueId": "2353a445-1cfd-471f-af57-257c6866a7d4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.557724Z",
+            "last_updated": "2026-07-15T12:58:06.557828Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "2fbfa87b-f06c-4f23-b54a-9284083803ee",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "eaed1a11-5922-4df8-8dc4-1b0a8c9be9b1",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "234",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "f38a95d4-ba23-4dc4-870b-d75d8d5c29ac",
+        "subCategoryId": "f2f512bb-69de-4d9f-9e75-b5d6da660f76",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.557938Z",
+        "last_updated": "2026-07-15T12:58:06.558043Z",
+        "activityValues": [
+          {
+            "id": "91f9ea58-6b90-4efd-a2e8-f3a14922ad57",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "234",
+            "co2eqYears": 100,
+            "inventoryValueId": "0aa2839d-bc33-4d6a-ba27-38cc90287141",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.558154Z",
+            "last_updated": "2026-07-15T12:58:06.558258Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "f38a95d4-ba23-4dc4-870b-d75d8d5c29ac",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "d0c71097-1160-4de3-b0b2-d27f5a811eae",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "0",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "aea012e2-6442-458d-986a-c8bea6166039",
+        "subCategoryId": "c641f431-747a-4296-8061-6c43d0df973c",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.558370Z",
+        "last_updated": "2026-07-15T12:58:06.558503Z",
+        "activityValues": [
+          {
+            "id": "6b0d2796-d4f5-4af7-903d-c0e9e87f8381",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "0",
+            "co2eqYears": 100,
+            "inventoryValueId": "6f6befdf-29a0-4ba9-bda6-648008e57eff",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.558611Z",
+            "last_updated": "2026-07-15T12:58:06.558715Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "aea012e2-6442-458d-986a-c8bea6166039",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "d25de047-63ea-426f-a1e9-9d0f38afc1bf",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "8f26ea8a-6570-48cf-837f-2e1af6e3d793",
+        "subCategoryId": "b7e858ac-ea22-49ce-833a-7da1780a248e",
+        "inventoryId": "28444be4-1879-436e-b663-6c2fbb6245d3",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.558825Z",
+        "last_updated": "2026-07-15T12:58:06.558930Z",
+        "activityValues": [
+          {
+            "id": "8f9871b6-da26-4a7d-9d68-4356bb555a95",
+            "activityData": {
+              "data-source": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "3",
+            "co2eqYears": 100,
+            "inventoryValueId": "16638df8-1d32-4e3c-81d2-fc9bf4c77b93",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-02101-Antofagasta-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.559037Z",
+            "last_updated": "2026-07-15T12:58:06.559142Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8f26ea8a-6570-48cf-837f-2e1af6e3d793",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

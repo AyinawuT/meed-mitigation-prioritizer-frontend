@@ -1,0 +1,1428 @@
+{
+  "data": {
+    "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+    "inventoryName": "Concepci\u00f3n - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "7da24243-f65a-45a3-9c1e-acf8920ea73b",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.604795Z",
+    "created": "2026-07-15T12:58:06.604900Z",
+    "last_updated": "2026-07-15T12:58:06.605003Z",
+    "city": {
+      "cityId": "7da24243-f65a-45a3-9c1e-acf8920ea73b",
+      "locode": "CL CON",
+      "name": "Concepci\u00f3n",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "b159969e-6254-4b7a-91c6-d9ece91cff81",
+      "created": "2026-07-15T12:58:06.605109Z",
+      "last_updated": "2026-07-15T12:58:06.605214Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "330f1134-aad6-4971-b0db-2c7392a0ddc3",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "51034",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "e9257454-e576-4b01-8c8f-5d9f49124f77",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.590232Z",
+        "last_updated": "2026-07-15T12:58:06.590390Z",
+        "activityValues": [
+          {
+            "id": "e785849c-dac3-4a01-9956-ad752df983b3",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "51034",
+            "co2eqYears": 100,
+            "inventoryValueId": "76ba0f35-e272-48c8-b598-dd945b7c0f7f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.590603Z",
+            "last_updated": "2026-07-15T12:58:06.590736Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "48b23bef-4a8e-4845-beda-7e8517e685a4",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "70735",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "fbe19806-6ee1-4e71-a4d9-03474aafea40",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.590868Z",
+        "last_updated": "2026-07-15T12:58:06.590994Z",
+        "activityValues": [
+          {
+            "id": "2b24700e-c08f-4e57-82e5-9a9cc24098b3",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "70735",
+            "co2eqYears": 100,
+            "inventoryValueId": "a27865ae-d81e-49a4-8369-4a0378eb258e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.591115Z",
+            "last_updated": "2026-07-15T12:58:06.591229Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "7834d8f9-295d-4733-9f15-1da52f58ded4",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4031",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "aa4f0220-0be4-48d6-ad94-0031561651cd",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.591348Z",
+        "last_updated": "2026-07-15T12:58:06.591458Z",
+        "activityValues": [
+          {
+            "id": "6bc90bcf-0025-4e12-b26c-4872ef6c9d56",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "4031",
+            "co2eqYears": 100,
+            "inventoryValueId": "90e05214-f1fb-4f30-875b-3fca16854397",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.591585Z",
+            "last_updated": "2026-07-15T12:58:06.591691Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "9c5d3ff7-24e3-48bf-b28a-0522aaa17a07",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "97800",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "6ad8d91f-5300-42d5-88bf-716924928e27",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.591805Z",
+        "last_updated": "2026-07-15T12:58:06.591911Z",
+        "activityValues": [
+          {
+            "id": "8a9a9090-f977-47b2-9556-3b67559dd8a7",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "97800",
+            "co2eqYears": 100,
+            "inventoryValueId": "f4419b4a-1582-457a-96bf-724b549b118f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.592021Z",
+            "last_updated": "2026-07-15T12:58:06.592126Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "34c2106d-ac72-4581-92c8-1507ce1a9e6c",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "118861",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "35d0483c-8a85-4879-b80b-e81d69a10b69",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.592237Z",
+        "last_updated": "2026-07-15T12:58:06.592344Z",
+        "activityValues": [
+          {
+            "id": "165e057b-787e-4c88-ac47-3b6eaac0968c",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "118861",
+            "co2eqYears": 100,
+            "inventoryValueId": "40acaa90-923e-4a57-957b-38541aa7a3ce",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.592452Z",
+            "last_updated": "2026-07-15T12:58:06.592558Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "26460e22-a593-41f9-84b1-5acdc881d97c",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6775",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "74b03d78-de5a-4dfa-93f8-3e9e4dd5a4e4",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.592671Z",
+        "last_updated": "2026-07-15T12:58:06.592780Z",
+        "activityValues": [
+          {
+            "id": "40b43243-7f19-481c-ad57-283e9f6a4d07",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "6775",
+            "co2eqYears": 100,
+            "inventoryValueId": "650a4b6c-6a62-4678-93dc-a5671fa6d077",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.592890Z",
+            "last_updated": "2026-07-15T12:58:06.592995Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "97cf3e1c-f37a-47fa-84ce-aaa254fcfdbd",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "329569",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "b9cb3ed9-d5a0-4b87-8ae8-3e3e00a3fa07",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.593107Z",
+        "last_updated": "2026-07-15T12:58:06.593214Z",
+        "activityValues": [
+          {
+            "id": "10351a2d-8054-4f7b-98df-8c56aaf5938c",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "329569",
+            "co2eqYears": 100,
+            "inventoryValueId": "638661d9-b415-4b29-aff5-ef9710d7023f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.593326Z",
+            "last_updated": "2026-07-15T12:58:06.593431Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "6cfc1f88-0766-46ce-b47c-53868d4f583a",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "325589",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "f85fc78c-3da4-45d4-aece-d9f9d1dc6f5c",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.593543Z",
+        "last_updated": "2026-07-15T12:58:06.593652Z",
+        "activityValues": [
+          {
+            "id": "7d53e68e-9729-4685-9549-cd4973699c93",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "325589",
+            "co2eqYears": 100,
+            "inventoryValueId": "e6b90651-6123-4ec3-811c-831ec3c212ee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.593762Z",
+            "last_updated": "2026-07-15T12:58:06.593867Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "375cd9f0-c48b-4d3d-a7ba-63ac28647968",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "18558",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "de97b597-2543-44e2-945e-fe00393ab550",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.593981Z",
+        "last_updated": "2026-07-15T12:58:06.594087Z",
+        "activityValues": [
+          {
+            "id": "c62bd876-0608-4c7a-af62-ef863b1a9e1c",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "18558",
+            "co2eqYears": 100,
+            "inventoryValueId": "1b63136b-510c-4699-9987-05c639334e8f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.594199Z",
+            "last_updated": "2026-07-15T12:58:06.594305Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "9233edbc-c7b7-47ca-bdac-20f6b8743765",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "567439",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "89cff4c0-db28-474c-8883-10efb6eba656",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.594463Z",
+        "last_updated": "2026-07-15T12:58:06.594590Z",
+        "activityValues": [
+          {
+            "id": "bc9ecdbc-9951-4434-ae9e-d517f0f5f799",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "567439",
+            "co2eqYears": 100,
+            "inventoryValueId": "1d37fb67-3671-4f56-b68c-bb90c1f435a6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.594778Z",
+            "last_updated": "2026-07-15T12:58:06.594950Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "d7eec56f-65f8-498d-bd9f-ba5cbf14b1fb",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "7923",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "b81734a1-be3b-4d88-a72b-6202c3fb378d",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.595100Z",
+        "last_updated": "2026-07-15T12:58:06.595237Z",
+        "activityValues": [
+          {
+            "id": "c2c8aeb5-3efd-4f1e-ac7f-d0ccef1dcfc8",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "7923",
+            "co2eqYears": 100,
+            "inventoryValueId": "342393af-99d0-4712-a84a-2a20867df833",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.595369Z",
+            "last_updated": "2026-07-15T12:58:06.595489Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "2b1dde9a-c449-4c7f-a651-077df2a76a07",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "451",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "783c51fb-d5f1-4405-8ccd-d7ab86c86da8",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.595620Z",
+        "last_updated": "2026-07-15T12:58:06.595732Z",
+        "activityValues": [
+          {
+            "id": "6dc2488f-b719-4f37-b5d9-ca7f465907ef",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "451",
+            "co2eqYears": 100,
+            "inventoryValueId": "bd835a58-abc0-466d-8478-bf841acd91e8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.595843Z",
+            "last_updated": "2026-07-15T12:58:06.595975Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "1f5d4988-d146-435f-ab36-20c2a12881fe",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20449",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "232b32ea-5c95-48f5-95c6-c07da702916e",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.596100Z",
+        "last_updated": "2026-07-15T12:58:06.596220Z",
+        "activityValues": [
+          {
+            "id": "3b780ffb-ce7c-4b9d-9a8a-776662bba43f",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "20449",
+            "co2eqYears": 100,
+            "inventoryValueId": "7eda2c26-e582-4d2e-bce7-cde1f8b1ac39",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.596342Z",
+            "last_updated": "2026-07-15T12:58:06.596469Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "a6ce5744-b260-48d8-b396-655a03441ef4",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4534",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "9ed011cc-8a23-4d97-a175-61497a48895d",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.596596Z",
+        "last_updated": "2026-07-15T12:58:06.596724Z",
+        "activityValues": [
+          {
+            "id": "30e66e3b-68d1-4347-8125-944d390eb707",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "4534",
+            "co2eqYears": 100,
+            "inventoryValueId": "625a5208-e122-4885-b46c-38a0c8d2a79d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.596853Z",
+            "last_updated": "2026-07-15T12:58:06.596973Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "79be1056-b680-4b1e-bb58-cb6a7ee7cbbb",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "258",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "5b5fbbae-6af7-4d6e-9927-554d171a2417",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.597099Z",
+        "last_updated": "2026-07-15T12:58:06.597219Z",
+        "activityValues": [
+          {
+            "id": "b13fe3bb-7492-40e7-91c8-9f4d01ff9614",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "258",
+            "co2eqYears": 100,
+            "inventoryValueId": "4df9e97e-0c9a-4646-b4bf-b8305dc55126",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.597339Z",
+            "last_updated": "2026-07-15T12:58:06.597457Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "d3a4b09c-eb66-4c2e-8095-0855dce7df0e",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "313523",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "c9385473-98b5-4822-b546-d9836b5320ed",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.597585Z",
+        "last_updated": "2026-07-15T12:58:06.597702Z",
+        "activityValues": [
+          {
+            "id": "e11a4933-46f7-467c-86c1-552704b1f03f",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "313523",
+            "co2eqYears": 100,
+            "inventoryValueId": "1eed8e0e-2fe1-44bf-9855-aa27d9e16474",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.597810Z",
+            "last_updated": "2026-07-15T12:58:06.597915Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "f2f48b95-618f-410d-be00-f14a5a09e8c8",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "969",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "b02b750f-5ed1-4b90-8890-76dcd3e3a357",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.598029Z",
+        "last_updated": "2026-07-15T12:58:06.598134Z",
+        "activityValues": [
+          {
+            "id": "34962ff6-1ca3-4b79-994c-949557529a20",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "969",
+            "co2eqYears": 100,
+            "inventoryValueId": "66031bfb-b403-44cc-b2c8-68ec030fa543",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.598242Z",
+            "last_updated": "2026-07-15T12:58:06.598347Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "0bceccfa-0500-42a0-a879-8e03713b8cfe",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "230",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "61a14c27-ecde-4fa5-a02c-d386ec14a0cf",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.598463Z",
+        "last_updated": "2026-07-15T12:58:06.598568Z",
+        "activityValues": [
+          {
+            "id": "fca05af9-cb62-4b63-a261-caecb275e909",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "230",
+            "co2eqYears": 100,
+            "inventoryValueId": "27d13f03-5968-48a6-b895-578647739e1d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.598675Z",
+            "last_updated": "2026-07-15T12:58:06.598780Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "6d62a5cf-2480-47ac-a71e-d961f75bf139",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "229",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "1015b7b5-e3f3-40d1-96d5-ee3ccd3de1f0",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.598892Z",
+        "last_updated": "2026-07-15T12:58:06.598997Z",
+        "activityValues": [
+          {
+            "id": "0460895b-1a28-4610-864e-128d737a3dc8",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "229",
+            "co2eqYears": 100,
+            "inventoryValueId": "542d51f6-80b5-4672-adbd-825fecae0b7e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.599112Z",
+            "last_updated": "2026-07-15T12:58:06.599225Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "bbbe68d7-b201-41cd-99ae-63f89f621252",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "15212",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "08f1a727-ebca-4491-a87a-e8261b9b638a",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.599347Z",
+        "last_updated": "2026-07-15T12:58:06.599458Z",
+        "activityValues": [
+          {
+            "id": "cb7de1ea-fa78-4c21-a80a-db4afc2b7ba2",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "15212",
+            "co2eqYears": 100,
+            "inventoryValueId": "6b05b59d-a3a4-46e0-ad57-d6e0d82224dc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.599583Z",
+            "last_updated": "2026-07-15T12:58:06.599702Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "01c69d5a-fcf3-49bf-99ec-0c262df97056",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "22701",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "d3ab432a-8b3d-4b17-b37c-80e2515e40da",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.599828Z",
+        "last_updated": "2026-07-15T12:58:06.599946Z",
+        "activityValues": [
+          {
+            "id": "e1e8673f-9260-4c75-ab82-ace3201033ba",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "22701",
+            "co2eqYears": 100,
+            "inventoryValueId": "24e33317-98b2-4751-bcbe-03bc082a78fc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.600064Z",
+            "last_updated": "2026-07-15T12:58:06.600195Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "6a4f34e0-1025-408a-9605-fe68c1f630e8",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "212000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "82dc1098-296d-4a01-a65c-0d0a1bc95964",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.600385Z",
+        "last_updated": "2026-07-15T12:58:06.600505Z",
+        "activityValues": [
+          {
+            "id": "f4d9c6ec-11d8-4245-aa9f-ec6979985e4d",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "212000",
+            "co2eqYears": 100,
+            "inventoryValueId": "5a72b1ef-9114-430e-8ed0-294ffececd74",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.600617Z",
+            "last_updated": "2026-07-15T12:58:06.600724Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "42869305-aecc-4353-a715-f92838cdf06f",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "14000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "96d7c917-4e22-4aca-a591-25143bf24b02",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.600836Z",
+        "last_updated": "2026-07-15T12:58:06.600942Z",
+        "activityValues": [
+          {
+            "id": "5dbf1744-ddd3-4f48-9f13-9aa1a971f3b2",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "14000",
+            "co2eqYears": 100,
+            "inventoryValueId": "7ee29670-cc51-48aa-9da9-d05fc818379a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.601050Z",
+            "last_updated": "2026-07-15T12:58:06.601161Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "571a2cd3-6570-46ab-be92-c4bfc9b2dec1",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "43",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "1f7a67ad-0c36-4d4e-a9c6-81fd4a7bcfe7",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.601282Z",
+        "last_updated": "2026-07-15T12:58:06.601393Z",
+        "activityValues": [
+          {
+            "id": "fdef1388-91d0-42c2-9233-a83bcb1bdad0",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "43",
+            "co2eqYears": 100,
+            "inventoryValueId": "57782b21-46d3-49f4-b615-325532ad287e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.601505Z",
+            "last_updated": "2026-07-15T12:58:06.601613Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "07c57f17-1c4c-4f75-bdb3-60a560b311e8",
+        "gpcReferenceNumber": "III.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "75",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "incineration-and-open-burning-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+        "subCategoryId": "ab31cd9b-6a9d-4131-bc78-0f7acf28dbb0",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.601728Z",
+        "last_updated": "2026-07-15T12:58:06.601836Z",
+        "activityValues": [
+          {
+            "id": "5b81a2f0-06cb-4316-a86a-dc21d568ccd3",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Incineration and open burning"
+            },
+            "co2eq": "75",
+            "co2eqYears": 100,
+            "inventoryValueId": "3bc56300-7636-4c48-ad2e-913452d50d87",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.601947Z",
+            "last_updated": "2026-07-15T12:58:06.602051Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+          "subsectorName": "Incineration and open burning"
+        }
+      },
+      {
+        "id": "2557bb23-fb72-4576-b545-6aae1c2a82cb",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "36000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "57206f2f-6446-4fcd-be47-b3e418654085",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.602164Z",
+        "last_updated": "2026-07-15T12:58:06.602270Z",
+        "activityValues": [
+          {
+            "id": "c7766490-575c-4ecc-b9da-e6874f88a509",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "36000",
+            "co2eqYears": 100,
+            "inventoryValueId": "16a45cc0-293f-4f57-b483-b71295319950",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.602378Z",
+            "last_updated": "2026-07-15T12:58:06.602482Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "7a9b2550-5108-4ac1-8cd5-c5929c1f22f8",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "106080",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "57116cc4-4495-45b9-93e5-4ae023447083",
+        "subCategoryId": "b6a971d2-9e26-49b2-81e1-f625a8423335",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.602593Z",
+        "last_updated": "2026-07-15T12:58:06.602702Z",
+        "activityValues": [
+          {
+            "id": "842f94db-15ea-4094-9fd2-f4e302235618",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "106080",
+            "co2eqYears": 100,
+            "inventoryValueId": "1382517c-062b-4ba3-82da-c85adb7e6a19",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.602813Z",
+            "last_updated": "2026-07-15T12:58:06.602918Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "57116cc4-4495-45b9-93e5-4ae023447083",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "8d1f0191-7760-4d50-952f-266d9dc8d385",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "110225",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "52699c07-4717-47f9-8156-25beac0436bb",
+        "subCategoryId": "ea04311b-cfb2-4121-988f-0f4d742c72c7",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.603028Z",
+        "last_updated": "2026-07-15T12:58:06.603133Z",
+        "activityValues": [
+          {
+            "id": "069d1593-eed4-443f-903d-5e72c4af27a8",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "110225",
+            "co2eqYears": 100,
+            "inventoryValueId": "b689a492-f235-4ddf-8a25-ac3645fe2790",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.603241Z",
+            "last_updated": "2026-07-15T12:58:06.603346Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "52699c07-4717-47f9-8156-25beac0436bb",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "d54f3b10-8376-4492-a0f2-5f91f9184bc7",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "419",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "86415511-f9dd-48c2-be87-383b86a1f2a0",
+        "subCategoryId": "b555eda5-7c93-446c-a686-293f5d1848ca",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.603456Z",
+        "last_updated": "2026-07-15T12:58:06.603565Z",
+        "activityValues": [
+          {
+            "id": "a6e6286d-897d-42b5-abff-40c10a228e91",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "419",
+            "co2eqYears": 100,
+            "inventoryValueId": "8e203e2e-2ed3-489d-a563-bece18e59063",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.603675Z",
+            "last_updated": "2026-07-15T12:58:06.603780Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "86415511-f9dd-48c2-be87-383b86a1f2a0",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "574da8c6-da1f-42dd-8175-7a34702afb03",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-28126",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "4358bd83-ff9b-4c54-b5ad-be7690376bb6",
+        "subCategoryId": "0e94d276-afe8-4b2e-9e42-4cf6f13531ce",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.603891Z",
+        "last_updated": "2026-07-15T12:58:06.603997Z",
+        "activityValues": [
+          {
+            "id": "f2ccfb0f-6419-45af-a558-0fb20386f2c6",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-28126",
+            "co2eqYears": 100,
+            "inventoryValueId": "a68f986c-206e-4f2b-978b-a34bc2d4d6d2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.604115Z",
+            "last_updated": "2026-07-15T12:58:06.604219Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4358bd83-ff9b-4c54-b5ad-be7690376bb6",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "b9fccb78-caa2-4595-9c3e-09f7191225cb",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "951",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "7fe5dd59-3c84-49dd-82c0-f6013f2cacde",
+        "subCategoryId": "c028a282-ccf7-43f5-b503-e907e6b6a8b8",
+        "inventoryId": "759c4119-1358-4847-983d-2c6232deb198",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.604330Z",
+        "last_updated": "2026-07-15T12:58:06.604456Z",
+        "activityValues": [
+          {
+            "id": "7f71f7c6-fa17-474b-8cd7-7c8b8eb814ce",
+            "activityData": {
+              "data-source": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "951",
+            "co2eqYears": 100,
+            "inventoryValueId": "a57cd88d-9556-4dd9-818f-50d7f54ffcd6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-08101-Concepci\u00f3n-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.604576Z",
+            "last_updated": "2026-07-15T12:58:06.604680Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "7fe5dd59-3c84-49dd-82c0-f6013f2cacde",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

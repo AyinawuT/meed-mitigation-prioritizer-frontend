@@ -1,0 +1,1248 @@
+{
+  "data": {
+    "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+    "inventoryName": "Providencia - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "7769fb72-7c38-4a2e-8f26-f2f124b48206",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.735502Z",
+    "created": "2026-07-15T12:58:06.735615Z",
+    "last_updated": "2026-07-15T12:58:06.735726Z",
+    "city": {
+      "cityId": "7769fb72-7c38-4a2e-8f26-f2f124b48206",
+      "locode": "CL PRO",
+      "name": "Providencia",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "c588735f-c50c-43f5-93e3-7ab5b863d65e",
+      "created": "2026-07-15T12:58:06.735840Z",
+      "last_updated": "2026-07-15T12:58:06.735952Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "deeb4d02-9d18-4530-a873-530ff7e5fb19",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "41673",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "8693f7ee-0f5b-4cd7-ba11-cf3388c7a4c2",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.722452Z",
+        "last_updated": "2026-07-15T12:58:06.722597Z",
+        "activityValues": [
+          {
+            "id": "2803e535-b22f-4846-84ca-1b89482cfefb",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "41673",
+            "co2eqYears": 100,
+            "inventoryValueId": "6de102bc-5e43-447f-ae13-fbba9a34e7db",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.722729Z",
+            "last_updated": "2026-07-15T12:58:06.722854Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "f1646f01-6f83-4cc4-b538-73cdb7e6cb3e",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "71956",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "53acaa35-4e63-4fe6-bc78-30929f2e333b",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.722984Z",
+        "last_updated": "2026-07-15T12:58:06.723105Z",
+        "activityValues": [
+          {
+            "id": "3051fb18-fba0-4569-821a-ba747167bc98",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "71956",
+            "co2eqYears": 100,
+            "inventoryValueId": "1a65c029-bcfb-40b1-9514-43b561ccc28d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.723233Z",
+            "last_updated": "2026-07-15T12:58:06.723360Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "4acc8075-cc21-4af6-8396-de22d660921d",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4101",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "f186b690-792b-4e52-8cfa-c453790dbc39",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.723525Z",
+        "last_updated": "2026-07-15T12:58:06.723647Z",
+        "activityValues": [
+          {
+            "id": "58cd00d3-6cb1-42a0-a374-02efd0521f41",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "4101",
+            "co2eqYears": 100,
+            "inventoryValueId": "b2263f2c-5aa8-473a-97a8-c3cb5da8d10c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.723772Z",
+            "last_updated": "2026-07-15T12:58:06.723895Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "4a231c17-b995-424e-85b9-cfba398ad995",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "106147",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "bde580e4-814d-4b2b-9f1a-bec4e4997bee",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.724021Z",
+        "last_updated": "2026-07-15T12:58:06.724140Z",
+        "activityValues": [
+          {
+            "id": "86d1a6dc-fcb4-4aa2-bac1-979ff8b7f6af",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "106147",
+            "co2eqYears": 100,
+            "inventoryValueId": "d2813971-c039-4554-b6c7-fe4f8070fcad",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.724263Z",
+            "last_updated": "2026-07-15T12:58:06.724381Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "5994dfeb-dd62-4cd8-a2a1-f8b893411291",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "319945",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "033dd848-c005-4fbd-9abd-bcad5b5574f1",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.724507Z",
+        "last_updated": "2026-07-15T12:58:06.724625Z",
+        "activityValues": [
+          {
+            "id": "c7ba92c2-46a0-49a1-93f4-122fed021dc9",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "319945",
+            "co2eqYears": 100,
+            "inventoryValueId": "ea7e3d33-0dd6-4657-8ae1-64039f47ccfa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.724747Z",
+            "last_updated": "2026-07-15T12:58:06.724866Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "d00c3ff4-a3a4-441a-82a9-7b6171c7d01c",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "18236",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "bb38d344-9b7b-4029-9fa7-94ad3e9eed17",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.724994Z",
+        "last_updated": "2026-07-15T12:58:06.725118Z",
+        "activityValues": [
+          {
+            "id": "5d36f29a-9d38-49fe-aa46-2759e4afeb62",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "18236",
+            "co2eqYears": 100,
+            "inventoryValueId": "0290d158-19b2-480f-814f-0068c9456e49",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.725242Z",
+            "last_updated": "2026-07-15T12:58:06.725366Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "77a032fb-4855-450a-b264-a54b4bd4a46b",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "323638",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "ca96b1f5-f900-4a6c-9359-1dcb0b6f38bb",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.725494Z",
+        "last_updated": "2026-07-15T12:58:06.725651Z",
+        "activityValues": [
+          {
+            "id": "fc790516-1084-4873-8d16-2c007f9e4b16",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "323638",
+            "co2eqYears": 100,
+            "inventoryValueId": "bda1457d-78f0-40df-a361-0f522ffa6338",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.725789Z",
+            "last_updated": "2026-07-15T12:58:06.725911Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "acbbf7f0-7f23-4f55-b2ab-4a49f69d08d8",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "314946",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "9c550dcc-7fde-4a21-b7a7-5482ee7462b1",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.726041Z",
+        "last_updated": "2026-07-15T12:58:06.726193Z",
+        "activityValues": [
+          {
+            "id": "e1f73ea5-a66d-4eda-ab0f-f9c735d8251b",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "314946",
+            "co2eqYears": 100,
+            "inventoryValueId": "836f5352-cd40-40b4-afad-aee1853ecaee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.726422Z",
+            "last_updated": "2026-07-15T12:58:06.726544Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "c5d0d336-e274-4fbd-9964-3256879018ea",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "17951",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "562d719c-bda9-420f-aeb2-4cce3393c12b",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.726667Z",
+        "last_updated": "2026-07-15T12:58:06.726779Z",
+        "activityValues": [
+          {
+            "id": "48621396-a1fb-44e7-aa0f-c397b36cfc1a",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "17951",
+            "co2eqYears": 100,
+            "inventoryValueId": "ab4a3d3c-fdc4-43f9-8e53-f82e5bca2f97",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.726890Z",
+            "last_updated": "2026-07-15T12:58:06.727002Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "dcd0791d-77f4-4f95-b164-0c1082e91754",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "322628",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "e05ea10e-16a4-4cc0-9561-e63773c51d81",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.727114Z",
+        "last_updated": "2026-07-15T12:58:06.727219Z",
+        "activityValues": [
+          {
+            "id": "ebb9117c-769d-4ae2-b4f9-8495974d7ce1",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "322628",
+            "co2eqYears": 100,
+            "inventoryValueId": "b435b425-592a-4ca0-b603-48ab0eb605ea",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.727331Z",
+            "last_updated": "2026-07-15T12:58:06.727445Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "eca69202-7c36-4877-a7ca-1ee7aabff0fb",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9145",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "57a6cfd8-b0ce-4fca-a2a7-c57773bcb0c2",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.727565Z",
+        "last_updated": "2026-07-15T12:58:06.727681Z",
+        "activityValues": [
+          {
+            "id": "3fb3f0c7-26eb-4012-93f1-5efe4f525842",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "9145",
+            "co2eqYears": 100,
+            "inventoryValueId": "c8367710-6896-49f2-b910-5c581866a7f7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.727796Z",
+            "last_updated": "2026-07-15T12:58:06.727910Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "45a3f7ee-edf6-4409-841f-ab82051e8f30",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "521",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "9d9ca8b4-8947-4fee-8bec-a612c9050d17",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.728029Z",
+        "last_updated": "2026-07-15T12:58:06.728141Z",
+        "activityValues": [
+          {
+            "id": "908984a0-5c04-4e14-b04b-7192c9669c7e",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "521",
+            "co2eqYears": 100,
+            "inventoryValueId": "69241dd7-7a91-4281-9a8c-81c6410b8489",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.728271Z",
+            "last_updated": "2026-07-15T12:58:06.728382Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "e19f1ad7-a54b-40ca-858c-64e9bd8ca761",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2976",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "61a649e6-3fba-46b6-b26f-ecc60d89c2e6",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.728500Z",
+        "last_updated": "2026-07-15T12:58:06.728613Z",
+        "activityValues": [
+          {
+            "id": "4ff8d0a9-4e90-4b2a-8944-64778855a775",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "2976",
+            "co2eqYears": 100,
+            "inventoryValueId": "ca4cf7d3-b3a4-479e-bc71-aa9077aed4b8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.728728Z",
+            "last_updated": "2026-07-15T12:58:06.728840Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "8dc78e11-34dc-47c4-b51b-aa293e0de6b2",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2155",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "6b2b7b6d-58a4-4fa8-8c25-66d3300b22fc",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.728962Z",
+        "last_updated": "2026-07-15T12:58:06.729074Z",
+        "activityValues": [
+          {
+            "id": "8de66366-b04a-4525-a2b7-8332a55950cb",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "2155",
+            "co2eqYears": 100,
+            "inventoryValueId": "2053a1cb-d921-4b78-a281-74c063d1659e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.729189Z",
+            "last_updated": "2026-07-15T12:58:06.729300Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "95a2c706-fc32-4932-a963-691faf043948",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "122",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "59392b46-4778-4887-9483-ed00e755a46b",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.729422Z",
+        "last_updated": "2026-07-15T12:58:06.729535Z",
+        "activityValues": [
+          {
+            "id": "ce359b72-1516-48b8-aa2f-6908d4a96661",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "122",
+            "co2eqYears": 100,
+            "inventoryValueId": "16736c43-e64a-41c5-8e50-ed8870268b43",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.729650Z",
+            "last_updated": "2026-07-15T12:58:06.729762Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "60fd85ab-306f-43c3-86f5-072cc1447994",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "295091",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "7779d491-d671-4ea7-a5b3-f1dc25959da5",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.729880Z",
+        "last_updated": "2026-07-15T12:58:06.729992Z",
+        "activityValues": [
+          {
+            "id": "1ec93a02-9db8-44dc-b468-9b10a9ec3797",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "295091",
+            "co2eqYears": 100,
+            "inventoryValueId": "4677ab2d-995f-49cc-bf9b-6126fd9880e7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.730111Z",
+            "last_updated": "2026-07-15T12:58:06.730222Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "5a9ae728-063c-444e-a137-e54237bbe895",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6588",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "d64eed44-5be5-4964-ac0e-d4f0be557b4e",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.730340Z",
+        "last_updated": "2026-07-15T12:58:06.730452Z",
+        "activityValues": [
+          {
+            "id": "b2b2d3d3-fed4-4211-806e-db28dbb73683",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "6588",
+            "co2eqYears": 100,
+            "inventoryValueId": "b90d3ef6-b12d-46a6-a2e3-17f8122d1d0a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.730568Z",
+            "last_updated": "2026-07-15T12:58:06.730680Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "4db6988f-3593-4f90-a5f2-62a971f87a40",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6251",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "ad00628d-4784-4661-9efa-7e7ab7be3a95",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.730797Z",
+        "last_updated": "2026-07-15T12:58:06.730910Z",
+        "activityValues": [
+          {
+            "id": "7369feae-971b-42bb-8f8a-5556de07a37f",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "6251",
+            "co2eqYears": 100,
+            "inventoryValueId": "0e7b6885-815e-45dc-b246-5f456f9acfd3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.731025Z",
+            "last_updated": "2026-07-15T12:58:06.731137Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "e5695e67-5bc6-4cd5-81f9-e7fb76a73d6a",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1465",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "b92a6915-ef15-4336-96c2-aade6c125d89",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.731255Z",
+        "last_updated": "2026-07-15T12:58:06.731371Z",
+        "activityValues": [
+          {
+            "id": "4907e0c8-2d03-4e34-a032-d3c0f0b03d19",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "1465",
+            "co2eqYears": 100,
+            "inventoryValueId": "06de92c6-62ec-46f7-84a5-4f1cc7c89c19",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.731486Z",
+            "last_updated": "2026-07-15T12:58:06.731598Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "4ac76674-4e05-4ede-82d2-5b8e8acfcdd8",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "37797",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "d7658813-414f-4515-a02e-aac422256428",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.731716Z",
+        "last_updated": "2026-07-15T12:58:06.731829Z",
+        "activityValues": [
+          {
+            "id": "1670b113-951c-4d02-b17b-aac249bff996",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "37797",
+            "co2eqYears": 100,
+            "inventoryValueId": "53f60136-36ce-4efe-90db-03959d414655",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.731948Z",
+            "last_updated": "2026-07-15T12:58:06.732063Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "e83ce6ee-790f-4577-8311-8d942bc522ba",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "159000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "98c99db3-10be-4d3b-b89f-e1fbfd502ff2",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.732181Z",
+        "last_updated": "2026-07-15T12:58:06.732294Z",
+        "activityValues": [
+          {
+            "id": "3a9637be-69ea-42ee-93fc-ae9d40238214",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "159000",
+            "co2eqYears": 100,
+            "inventoryValueId": "6f8c761d-584f-425c-9d9b-3e17faa5c37e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.732411Z",
+            "last_updated": "2026-07-15T12:58:06.732537Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "cc08e3e5-a2bc-4fe5-ac24-e6f10d0a1d1b",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "253",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "c237f232-e986-4327-938e-146bd0885598",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.732666Z",
+        "last_updated": "2026-07-15T12:58:06.732778Z",
+        "activityValues": [
+          {
+            "id": "170123b4-cfca-4db1-9ae3-7e18e097bca2",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "253",
+            "co2eqYears": 100,
+            "inventoryValueId": "ad827ac9-7062-4aa8-a85f-9d2ef1eaa4a4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.732894Z",
+            "last_updated": "2026-07-15T12:58:06.733006Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "a3ef50d2-df07-4d97-a8bc-e2e579625814",
+        "gpcReferenceNumber": "III.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "29000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "8f0a362d-732a-461a-9750-f9afe19e10e0",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.733129Z",
+        "last_updated": "2026-07-15T12:58:06.733246Z",
+        "activityValues": [
+          {
+            "id": "36e6dbd6-a071-4bfa-94e9-7ed827d96a39",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "29000",
+            "co2eqYears": 100,
+            "inventoryValueId": "afefc2c0-49f0-45d8-bf41-81d4a60b45ea",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.733362Z",
+            "last_updated": "2026-07-15T12:58:06.733476Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "b271ca08-8652-47e0-b592-2d14b7c68ee7",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "21144",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "d1630b4a-735c-4c7b-a9dc-4d1629eca2e9",
+        "subCategoryId": "ff2f3d27-3c28-4509-a03f-d9d581fb2e06",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.733608Z",
+        "last_updated": "2026-07-15T12:58:06.733739Z",
+        "activityValues": [
+          {
+            "id": "27fd0a19-8e09-4033-89ac-6f2653008f36",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "21144",
+            "co2eqYears": 100,
+            "inventoryValueId": "e7a3b1a7-d298-4bdb-9dce-5d09c2d90d7b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.733856Z",
+            "last_updated": "2026-07-15T12:58:06.733982Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "d1630b4a-735c-4c7b-a9dc-4d1629eca2e9",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "4ae533b9-d6ad-47c5-ade0-7ed0fb869733",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "202540",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a6921a68-5023-4bfc-83d7-13086e2625cd",
+        "subCategoryId": "84db47bf-e123-4ee0-8cf0-0b14d28081b0",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.734103Z",
+        "last_updated": "2026-07-15T12:58:06.734217Z",
+        "activityValues": [
+          {
+            "id": "07755b25-7c86-4ac8-9164-b5f459c3e1b9",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "202540",
+            "co2eqYears": 100,
+            "inventoryValueId": "fa491500-0d8d-4d67-ab8c-959b75726d2e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.734336Z",
+            "last_updated": "2026-07-15T12:58:06.734450Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a6921a68-5023-4bfc-83d7-13086e2625cd",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "a7dad0d1-ae31-44e4-8a10-c64e1f282098",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "14",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "66c120f6-10b5-477a-ba50-959e8f2a1090",
+        "subCategoryId": "edb3fd5a-bf09-42b7-8ca4-d73ef09fa822",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.734573Z",
+        "last_updated": "2026-07-15T12:58:06.734688Z",
+        "activityValues": [
+          {
+            "id": "c713d2cc-e75f-48ae-87cb-b2ffb331500a",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "14",
+            "co2eqYears": 100,
+            "inventoryValueId": "0e2a31d3-5010-41d7-a1fd-94991f160507",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.734804Z",
+            "last_updated": "2026-07-15T12:58:06.734918Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "66c120f6-10b5-477a-ba50-959e8f2a1090",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "19710af6-e70b-4a88-96ba-ca7a7f4f7aa3",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "f5ba8711-5264-4414-824e-f13b95f49566",
+        "subCategoryId": "b189e87d-2001-429f-bc13-06b5b4a6735f",
+        "inventoryId": "412f38ec-7354-4eb6-8734-eaf24590bbbb",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.735045Z",
+        "last_updated": "2026-07-15T12:58:06.735159Z",
+        "activityValues": [
+          {
+            "id": "fa0f1ccc-1b9f-4f1b-a1b1-5066000a8424",
+            "activityData": {
+              "data-source": "inventory-CHL-13123-Providencia-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "3",
+            "co2eqYears": 100,
+            "inventoryValueId": "414cbcd4-c072-4709-aecf-db5aaaa78fb2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13123-Providencia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.735275Z",
+            "last_updated": "2026-07-15T12:58:06.735388Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "f5ba8711-5264-4414-824e-f13b95f49566",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

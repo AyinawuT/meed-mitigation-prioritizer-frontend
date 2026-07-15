@@ -1,0 +1,1068 @@
+{
+  "data": {
+    "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+    "inventoryName": "Lago Ranco - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "88fde9e1-6fb1-4e48-b26b-9ae2d3c7e69a",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.836583Z",
+    "created": "2026-07-15T12:58:06.836687Z",
+    "last_updated": "2026-07-15T12:58:06.836793Z",
+    "city": {
+      "cityId": "88fde9e1-6fb1-4e48-b26b-9ae2d3c7e69a",
+      "locode": "CL LAG",
+      "name": "Lago Ranco",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "82d5c064-85bf-482e-b718-80c0883b1266",
+      "created": "2026-07-15T12:58:06.836909Z",
+      "last_updated": "2026-07-15T12:58:06.837019Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "ba10e2e8-e4cc-4744-8c8a-31b6e120e7aa",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2502",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "63a867ff-e5d2-4b2d-98b9-aba1df81da9b",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.825935Z",
+        "last_updated": "2026-07-15T12:58:06.826095Z",
+        "activityValues": [
+          {
+            "id": "47abe895-03ff-440b-b546-edbe1ae101ab",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "2502",
+            "co2eqYears": 100,
+            "inventoryValueId": "38e4b8f2-ef3a-478e-a0ec-611c29e52f5a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.826240Z",
+            "last_updated": "2026-07-15T12:58:06.826401Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "4a52835b-38c4-4c02-8942-a0d0d24bf3c5",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2661",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "a642988b-c418-4d8d-9900-5db4e1bef0af",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.826530Z",
+        "last_updated": "2026-07-15T12:58:06.826638Z",
+        "activityValues": [
+          {
+            "id": "bbb013af-d3b0-40e2-b4dc-ffc61b41d610",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "2661",
+            "co2eqYears": 100,
+            "inventoryValueId": "4127bc5b-24b4-4e6a-8af1-5a8e76f60a39",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.826753Z",
+            "last_updated": "2026-07-15T12:58:06.826857Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "56677ea2-8aba-43c7-ac07-c32d90572f49",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "151",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "0f05868f-fdc9-447d-a3df-e7ae1df32eba",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.826970Z",
+        "last_updated": "2026-07-15T12:58:06.827085Z",
+        "activityValues": [
+          {
+            "id": "d614eeba-2480-4fcc-a729-3b0aa0735977",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "151",
+            "co2eqYears": 100,
+            "inventoryValueId": "75363c6b-670f-4828-8149-9cd7336191bc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.827209Z",
+            "last_updated": "2026-07-15T12:58:06.827315Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "0c2c976c-1821-473d-a2d3-4d881b608e03",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1261",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "b021400d-5833-42d4-8a07-1ac9dada7d7f",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.827429Z",
+        "last_updated": "2026-07-15T12:58:06.827534Z",
+        "activityValues": [
+          {
+            "id": "6cab8568-6b2b-4e07-a7cd-600501ecd6f9",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "1261",
+            "co2eqYears": 100,
+            "inventoryValueId": "4e9e0189-01fb-4e2a-b795-60d442358018",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.827642Z",
+            "last_updated": "2026-07-15T12:58:06.827747Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "1ffa4abc-c1e4-491b-b069-3c1dcfb085a6",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "759",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "49d76236-a123-4c71-8456-a30c96c64e1f",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.827858Z",
+        "last_updated": "2026-07-15T12:58:06.827966Z",
+        "activityValues": [
+          {
+            "id": "7deedabd-ea5d-42e4-8d4b-416273abe6fc",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "759",
+            "co2eqYears": 100,
+            "inventoryValueId": "905ae7ee-e2b2-45f9-a91d-9ab588702498",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.828074Z",
+            "last_updated": "2026-07-15T12:58:06.828181Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "aecedebd-7e91-419d-a251-ec6a2648aaf7",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "43",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "4cb5a96f-6809-4dca-b2e3-371ca8a22a2f",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.828302Z",
+        "last_updated": "2026-07-15T12:58:06.828424Z",
+        "activityValues": [
+          {
+            "id": "a258a237-c431-44e1-9085-365ae86448f2",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "43",
+            "co2eqYears": 100,
+            "inventoryValueId": "8318cbe9-0a98-47cd-ba45-a4ef83ae2a9d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.828533Z",
+            "last_updated": "2026-07-15T12:58:06.828638Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "29bd0218-ac75-4c79-8ccf-5856d2c59371",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1883",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "a18bd608-6b44-4101-a8b3-e4bef3c36d7c",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.828757Z",
+        "last_updated": "2026-07-15T12:58:06.828867Z",
+        "activityValues": [
+          {
+            "id": "6d451ca4-887a-40cc-92fa-f86d9ab0fbf3",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "1883",
+            "co2eqYears": 100,
+            "inventoryValueId": "a1439f7f-43f7-4ef9-9814-fe6977f63fd0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.828978Z",
+            "last_updated": "2026-07-15T12:58:06.829084Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "359c6129-5db3-491e-92e9-bce442847e21",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1836",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "6aad1398-6527-42fc-8f5d-bd6dcf6f678e",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.829197Z",
+        "last_updated": "2026-07-15T12:58:06.829303Z",
+        "activityValues": [
+          {
+            "id": "c093126a-b025-4265-a211-4f0dc1794815",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "1836",
+            "co2eqYears": 100,
+            "inventoryValueId": "cc98dd4f-9fbf-4922-9670-76d3aaf4680c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.829410Z",
+            "last_updated": "2026-07-15T12:58:06.829515Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "d5efa120-9f49-491a-8fb8-04ecc62df14d",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "104",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "19d18f43-3eb0-4e1d-a5c2-718b4c740ebc",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.829629Z",
+        "last_updated": "2026-07-15T12:58:06.829734Z",
+        "activityValues": [
+          {
+            "id": "a49f1dc5-4fca-4786-b86f-5268e1db8727",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "104",
+            "co2eqYears": 100,
+            "inventoryValueId": "f43e859c-7f18-40e5-8fe7-b30824591747",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.829842Z",
+            "last_updated": "2026-07-15T12:58:06.829947Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "a85be1aa-f606-4218-9dbd-00678aca4036",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1067",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "522cf890-7526-4575-8903-3253435d7f8c",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.830060Z",
+        "last_updated": "2026-07-15T12:58:06.830165Z",
+        "activityValues": [
+          {
+            "id": "638e36b9-29c0-4e10-9bbf-27e565328519",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "1067",
+            "co2eqYears": 100,
+            "inventoryValueId": "6701423e-caf3-4076-9392-542f88f63495",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.830272Z",
+            "last_updated": "2026-07-15T12:58:06.830377Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "afbcccc8-5861-4b99-936b-69940dfac90c",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1169",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "0ab284f1-7291-4ba4-9a76-d602ba8d5738",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.830493Z",
+        "last_updated": "2026-07-15T12:58:06.830598Z",
+        "activityValues": [
+          {
+            "id": "b00f35f7-bfa4-420b-abc4-99726adfcd6f",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1169",
+            "co2eqYears": 100,
+            "inventoryValueId": "38b48b09-34b0-44e3-a564-5fe7ec826182",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.830706Z",
+            "last_updated": "2026-07-15T12:58:06.830825Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "126e847d-6cdd-499f-9ef6-a2a7a6875d4e",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "884",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "a1c7ec58-07e5-4c7f-b758-f7832909297c",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.830952Z",
+        "last_updated": "2026-07-15T12:58:06.831057Z",
+        "activityValues": [
+          {
+            "id": "974f0012-178f-4a2c-8add-6e55dca08e63",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "884",
+            "co2eqYears": 100,
+            "inventoryValueId": "b7f8a64e-20d5-41b1-acf7-99f16eebe44d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.831168Z",
+            "last_updated": "2026-07-15T12:58:06.831273Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "9efbd4f5-c98c-4759-82db-e54a269adbdb",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "50",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "61803968-ec5c-49d2-88c7-c6d70a23d851",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.831384Z",
+        "last_updated": "2026-07-15T12:58:06.831489Z",
+        "activityValues": [
+          {
+            "id": "9b343907-3b63-4404-a1d2-d5d4d64455e7",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "50",
+            "co2eqYears": 100,
+            "inventoryValueId": "0b06804e-aa22-416e-a64d-ecbabfafbc6a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.831597Z",
+            "last_updated": "2026-07-15T12:58:06.831702Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "3df56fd9-7b66-4883-9ef9-a9ebe9bb7e2f",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "97876",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "ac697c75-cb2b-4ebb-b2ed-8a6a6f3ea1cb",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.831822Z",
+        "last_updated": "2026-07-15T12:58:06.831935Z",
+        "activityValues": [
+          {
+            "id": "adf24189-8173-413a-ab9e-640525a4b786",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "97876",
+            "co2eqYears": 100,
+            "inventoryValueId": "210f320a-9daf-4198-a852-bcaa8d7e63b4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.832051Z",
+            "last_updated": "2026-07-15T12:58:06.832164Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "e265ead9-31c5-4ec7-b167-bf1604f133e8",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "468",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "3614a766-0416-4fde-83de-a799091dc03e",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.832286Z",
+        "last_updated": "2026-07-15T12:58:06.832399Z",
+        "activityValues": [
+          {
+            "id": "558334f8-ad34-4504-ae00-28b6af83d047",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "468",
+            "co2eqYears": 100,
+            "inventoryValueId": "4a575229-62f2-4b80-a117-7fc988e194f9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.832519Z",
+            "last_updated": "2026-07-15T12:58:06.832632Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "f3e64425-537a-45cb-8734-dd6cccd155d6",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "72cf2098-a58e-4999-baf9-4c684a8297ad",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.832754Z",
+        "last_updated": "2026-07-15T12:58:06.832867Z",
+        "activityValues": [
+          {
+            "id": "d6e2195d-a099-41be-8e95-6587810cfe8c",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "5000",
+            "co2eqYears": 100,
+            "inventoryValueId": "6cbab2e4-0aab-41fe-b0d5-124b856a72d0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.832983Z",
+            "last_updated": "2026-07-15T12:58:06.833098Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "fb0aa52f-d0c2-4994-a556-7ef8fbe80755",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "221",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "9163f8d7-3420-4a9c-9be9-ddbaff4af7a6",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.833219Z",
+        "last_updated": "2026-07-15T12:58:06.833332Z",
+        "activityValues": [
+          {
+            "id": "d242545b-8fa0-4020-aea1-3c384f726219",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "221",
+            "co2eqYears": 100,
+            "inventoryValueId": "e4a1aecb-ac05-4aef-a2fc-dce54bab39da",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.833448Z",
+            "last_updated": "2026-07-15T12:58:06.833561Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "5b37f190-2f0f-4014-ad8e-34cb55bd390e",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "c6f0cff3-4bc9-415a-af0e-056181f6ebc5",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.833683Z",
+        "last_updated": "2026-07-15T12:58:06.833796Z",
+        "activityValues": [
+          {
+            "id": "347b486d-3679-49dc-aaae-db0cdd2381cc",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "461c4d25-25ba-4ce9-889a-54d850ddf4b6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.833915Z",
+            "last_updated": "2026-07-15T12:58:06.834027Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "fec56d0f-80d5-43c6-9166-1e54348fd595",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "58",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "682cd83a-4202-4471-a9e2-67fc7cc9beb5",
+        "subCategoryId": "4f43ffd9-0af3-486c-9a6e-f65a90989b5c",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.834152Z",
+        "last_updated": "2026-07-15T12:58:06.834266Z",
+        "activityValues": [
+          {
+            "id": "10d35c76-741b-4473-9733-aa53b2044af0",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "58",
+            "co2eqYears": 100,
+            "inventoryValueId": "c49bee90-698f-4c30-b118-aa0dcace4694",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.834382Z",
+            "last_updated": "2026-07-15T12:58:06.834495Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "682cd83a-4202-4471-a9e2-67fc7cc9beb5",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "34c58eab-4ebc-4766-967e-8c68e2703ce2",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "754",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "06143a5d-3e9e-4429-907e-916a11a60402",
+        "subCategoryId": "fde0e34c-6aa5-4ec5-90d0-a39eab6eb64f",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.834615Z",
+        "last_updated": "2026-07-15T12:58:06.834729Z",
+        "activityValues": [
+          {
+            "id": "fc9dac34-6a63-44b8-8897-4cf0e54acbd6",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "754",
+            "co2eqYears": 100,
+            "inventoryValueId": "bde0a9de-2da0-487c-bcaf-651541d84412",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.834848Z",
+            "last_updated": "2026-07-15T12:58:06.834962Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "06143a5d-3e9e-4429-907e-916a11a60402",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "dead74ef-6ccc-4aa1-8cf6-14388e83363f",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "37477",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "404b1df1-99b0-4c23-91ac-35502b48abf2",
+        "subCategoryId": "5b853ca5-6b71-4441-bcaa-c9745d0bf0d4",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.835083Z",
+        "last_updated": "2026-07-15T12:58:06.835200Z",
+        "activityValues": [
+          {
+            "id": "2e58e96b-ef59-4837-98b9-b2575fc3b1b6",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "37477",
+            "co2eqYears": 100,
+            "inventoryValueId": "8d0b2954-7b57-43f5-a896-5be886a1c882",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.835316Z",
+            "last_updated": "2026-07-15T12:58:06.835429Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "404b1df1-99b0-4c23-91ac-35502b48abf2",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "eba46f61-e0f5-4a72-90c4-3778888cd655",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-276264",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "f3cde16b-7605-45a1-bbe5-2539f1d70456",
+        "subCategoryId": "b928b100-eeec-4b4c-b31c-0fef66eda197",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.835551Z",
+        "last_updated": "2026-07-15T12:58:06.835664Z",
+        "activityValues": [
+          {
+            "id": "6e143be2-ad95-4fd2-891c-19cabb21aa6f",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-276264",
+            "co2eqYears": 100,
+            "inventoryValueId": "40cb45a5-9732-420b-be8f-51d5991565aa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.835783Z",
+            "last_updated": "2026-07-15T12:58:06.835896Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "f3cde16b-7605-45a1-bbe5-2539f1d70456",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "05b5c9a2-28e0-493c-b647-bca4f4173497",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "15726",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "0b70f7db-1afc-45e5-99ca-5f77e853257b",
+        "subCategoryId": "d60b9363-257c-4dbb-8650-f1fab35e58c8",
+        "inventoryId": "9233df50-4ec1-4dfc-b3f3-8d0f80fda774",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.836015Z",
+        "last_updated": "2026-07-15T12:58:06.836158Z",
+        "activityValues": [
+          {
+            "id": "f57b425e-f3e6-431f-9b9b-dd5eef43e29a",
+            "activityData": {
+              "data-source": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "15726",
+            "co2eqYears": 100,
+            "inventoryValueId": "75674da4-cd9f-48cb-a7e2-aa46d5134c67",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14203-Lago-Ranco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.836339Z",
+            "last_updated": "2026-07-15T12:58:06.836469Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0b70f7db-1afc-45e5-99ca-5f77e853257b",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

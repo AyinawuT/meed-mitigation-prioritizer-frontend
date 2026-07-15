@@ -1,0 +1,1113 @@
+{
+  "data": {
+    "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+    "inventoryName": "Paillaco - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "e73d3c97-023a-4a27-bf9d-f78e49987e81",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.811367Z",
+    "created": "2026-07-15T12:58:06.811487Z",
+    "last_updated": "2026-07-15T12:58:06.811593Z",
+    "city": {
+      "cityId": "e73d3c97-023a-4a27-bf9d-f78e49987e81",
+      "locode": "CL PAI",
+      "name": "Paillaco",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "4c428ce6-d8a1-49de-a392-050bceba470a",
+      "created": "2026-07-15T12:58:06.811709Z",
+      "last_updated": "2026-07-15T12:58:06.811819Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "9552f043-0786-4157-9f5d-06344af08971",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4438",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "52616d1b-f5b3-4f23-a0e9-5f6d9cad6569",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.800169Z",
+        "last_updated": "2026-07-15T12:58:06.800304Z",
+        "activityValues": [
+          {
+            "id": "ac4925c2-3a1c-4cbe-9d76-774340e4a5bb",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "4438",
+            "co2eqYears": 100,
+            "inventoryValueId": "ce8ef403-fc8b-4633-a01b-ccd65e088999",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.800433Z",
+            "last_updated": "2026-07-15T12:58:06.800551Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "2dd236c2-e623-44f4-9f1f-41427a092173",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4935",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "f35e1aa8-521d-479f-92ce-17080658000e",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.800669Z",
+        "last_updated": "2026-07-15T12:58:06.800775Z",
+        "activityValues": [
+          {
+            "id": "fc390186-24f4-4e24-b25f-97584e42604e",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "4935",
+            "co2eqYears": 100,
+            "inventoryValueId": "d44f4011-c234-4b91-94d9-bc6446a8967f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.800884Z",
+            "last_updated": "2026-07-15T12:58:06.800989Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "a01070a5-9c00-4b8b-aa95-53cc6dcf210a",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "281",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "9d5fef52-db73-431d-9b5e-6af312b886e4",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.801127Z",
+        "last_updated": "2026-07-15T12:58:06.801284Z",
+        "activityValues": [
+          {
+            "id": "80f08e95-57e2-4a2e-b793-37b3ed3e71d9",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "281",
+            "co2eqYears": 100,
+            "inventoryValueId": "4f13d5db-cb8d-4e46-b8cd-b0810697d3ff",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.801500Z",
+            "last_updated": "2026-07-15T12:58:06.801609Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "d2712fa0-06d3-426a-9cc0-936c313285f1",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3871",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "657cbc07-011b-4132-997a-180fde14678b",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.801723Z",
+        "last_updated": "2026-07-15T12:58:06.801829Z",
+        "activityValues": [
+          {
+            "id": "47c16427-cabe-4fec-88dd-4fa8640a5335",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "3871",
+            "co2eqYears": 100,
+            "inventoryValueId": "51611ce0-d3e9-45e8-9237-728cdae52312",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.801938Z",
+            "last_updated": "2026-07-15T12:58:06.802049Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "6568a1ee-942c-475a-92ee-de288fbd6753",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2329",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "523ea8ce-3aab-47cf-a3e8-ba97093743c5",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.802163Z",
+        "last_updated": "2026-07-15T12:58:06.802270Z",
+        "activityValues": [
+          {
+            "id": "ca481cb4-4389-4485-b90d-34ccfdc305b3",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "2329",
+            "co2eqYears": 100,
+            "inventoryValueId": "a55f7929-a28d-4137-8d66-3b19d7766add",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.802384Z",
+            "last_updated": "2026-07-15T12:58:06.802492Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "0418cbfe-6f0d-48ea-9766-ea1db2cf11d1",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "132",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "d517f207-fa6b-424c-861e-cb5b308a7ef5",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.802604Z",
+        "last_updated": "2026-07-15T12:58:06.802711Z",
+        "activityValues": [
+          {
+            "id": "8b8f0927-66c2-4fc1-98b3-ceab155e8af2",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "132",
+            "co2eqYears": 100,
+            "inventoryValueId": "c27ec8fb-23e5-488e-b86b-f0ebbc830aef",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.802822Z",
+            "last_updated": "2026-07-15T12:58:06.802927Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "4f4df84b-04b9-4cd2-b1d8-99ea1e86e3b1",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6935",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "d535eda6-ab87-4180-b167-2f55e89729c6",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.803042Z",
+        "last_updated": "2026-07-15T12:58:06.803149Z",
+        "activityValues": [
+          {
+            "id": "8fa41ff5-9de1-407b-8a4d-81d4976024d7",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "6935",
+            "co2eqYears": 100,
+            "inventoryValueId": "68aeae79-978f-4fbe-8cfc-9448213264cc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.803256Z",
+            "last_updated": "2026-07-15T12:58:06.803361Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "5de4a800-9442-4dad-bd5e-aa46ea44fb9b",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6765",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "4ccad5dd-0f49-43d3-91b5-36ec5c95ede1",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.803475Z",
+        "last_updated": "2026-07-15T12:58:06.803580Z",
+        "activityValues": [
+          {
+            "id": "3baf6635-fde1-4d31-89a1-a6c7821cac4f",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "6765",
+            "co2eqYears": 100,
+            "inventoryValueId": "229b8ce0-078d-4d2c-b44e-1baedf81b425",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.803692Z",
+            "last_updated": "2026-07-15T12:58:06.803798Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "44755f00-f43b-42f0-b3e4-ac74797822d2",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "385",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "9e7e230b-126a-4d44-8fdc-987cf329a7df",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.803908Z",
+        "last_updated": "2026-07-15T12:58:06.804014Z",
+        "activityValues": [
+          {
+            "id": "43453ca4-f43b-44ec-a36c-58668ff5b761",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "385",
+            "co2eqYears": 100,
+            "inventoryValueId": "a697fbfe-c4ad-476d-bec3-630452d28f22",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.804125Z",
+            "last_updated": "2026-07-15T12:58:06.804233Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "949e9e64-34b7-44c2-93e6-940b17084833",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1067",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "3c922a3b-a91e-42d8-bae7-5a6fa49e1750",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.804345Z",
+        "last_updated": "2026-07-15T12:58:06.804450Z",
+        "activityValues": [
+          {
+            "id": "28e6ce8d-638c-4e03-9d49-71606de28a42",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "1067",
+            "co2eqYears": 100,
+            "inventoryValueId": "23d1a6aa-6632-4d4e-8271-b447d118270a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.804560Z",
+            "last_updated": "2026-07-15T12:58:06.804665Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "e1386952-086b-46c1-8ecb-ebefec98efd5",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2667",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "b8240810-9c45-4a2f-8ff7-2af741ed0d8e",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.804775Z",
+        "last_updated": "2026-07-15T12:58:06.804881Z",
+        "activityValues": [
+          {
+            "id": "91de27c6-afb3-4084-a94d-1c6ecda50060",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "2667",
+            "co2eqYears": 100,
+            "inventoryValueId": "948473c8-c324-4f39-8870-df7f6fb5a868",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.804989Z",
+            "last_updated": "2026-07-15T12:58:06.805100Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "7ae74968-517b-4067-a945-67213e0f050d",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2018",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "9ab225b5-64bd-4464-8dde-8ae4cfe72d3d",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.805212Z",
+        "last_updated": "2026-07-15T12:58:06.805317Z",
+        "activityValues": [
+          {
+            "id": "2e8b6ecb-c103-4748-94af-44ec6b73b3e5",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "2018",
+            "co2eqYears": 100,
+            "inventoryValueId": "dcda022e-df70-4d4b-aae1-2ddcc9c3e044",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.805427Z",
+            "last_updated": "2026-07-15T12:58:06.805533Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "c37e3bee-570a-4bc4-b9a7-38e21b022443",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "115",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "d4388b00-9225-41a6-8efa-eb739df76cd1",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.805643Z",
+        "last_updated": "2026-07-15T12:58:06.805749Z",
+        "activityValues": [
+          {
+            "id": "8394b5a7-af65-4389-927b-984247a9a926",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "115",
+            "co2eqYears": 100,
+            "inventoryValueId": "f6554c0a-9bb9-4853-adad-9d6b66b3f0cb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.805860Z",
+            "last_updated": "2026-07-15T12:58:06.805966Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "0149d484-df0e-465c-82ce-db67c7449933",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "37182",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "9b1c0fd7-8ae9-4ef4-8cdf-0e5644525c12",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.806077Z",
+        "last_updated": "2026-07-15T12:58:06.806183Z",
+        "activityValues": [
+          {
+            "id": "cf50156f-5c83-4135-9fd4-605ecc995dd4",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "37182",
+            "co2eqYears": 100,
+            "inventoryValueId": "77ae4d82-d985-411f-a54b-8c9900167f58",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.806298Z",
+            "last_updated": "2026-07-15T12:58:06.806412Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "7fcb7d4e-50e6-4081-9009-44fdf99b6046",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "135",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "857005c7-bf58-41de-8f8f-c17333628990",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.806533Z",
+        "last_updated": "2026-07-15T12:58:06.806647Z",
+        "activityValues": [
+          {
+            "id": "3b21189e-baec-494f-a119-b367a583902a",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "135",
+            "co2eqYears": 100,
+            "inventoryValueId": "8ff3b4e6-95cc-47bf-b3c9-77b13a2fd2ee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.806763Z",
+            "last_updated": "2026-07-15T12:58:06.806876Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "084609f9-9f05-44ed-83be-9a3ab04d53e0",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1132",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "4d496d49-477e-460f-a3dc-3473ad95b290",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.806995Z",
+        "last_updated": "2026-07-15T12:58:06.807109Z",
+        "activityValues": [
+          {
+            "id": "202bc6fe-9e9f-4f80-98e1-7a3d9dea43d3",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "1132",
+            "co2eqYears": 100,
+            "inventoryValueId": "0798e5fb-8ede-4b6b-8065-bb40dc21e17c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.807225Z",
+            "last_updated": "2026-07-15T12:58:06.807338Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "1d4c8bd4-1766-4a8c-a85a-aa6a6dd2ecbd",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "d2134d4c-f3fc-4c9d-ac13-9aad672dd8ad",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.807457Z",
+        "last_updated": "2026-07-15T12:58:06.807570Z",
+        "activityValues": [
+          {
+            "id": "df5e0d89-ff11-458a-9cbc-df2f326ef813",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "3000",
+            "co2eqYears": 100,
+            "inventoryValueId": "8c2ee1f1-34a5-46c0-8ddf-c39342d9b162",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.807686Z",
+            "last_updated": "2026-07-15T12:58:06.807799Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "5d4bfb05-cc95-4edb-8760-d37b0d082f3e",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "13",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "e595227b-7f10-4bf3-81cf-7d7aa1c0a03a",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.807918Z",
+        "last_updated": "2026-07-15T12:58:06.808032Z",
+        "activityValues": [
+          {
+            "id": "1c528adc-0d9e-4562-91d2-872ec9d4b6eb",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "13",
+            "co2eqYears": 100,
+            "inventoryValueId": "2a79f252-fc4f-4930-a4d2-17f12835a612",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.808148Z",
+            "last_updated": "2026-07-15T12:58:06.808261Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "2828fe6a-ce3d-48ef-92cb-c5744ef81b49",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "81a5d926-576b-4b26-a016-5ebce0acd5b2",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.808380Z",
+        "last_updated": "2026-07-15T12:58:06.808493Z",
+        "activityValues": [
+          {
+            "id": "ac741dc9-d799-44f7-b30a-09bafaef22a6",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "2000",
+            "co2eqYears": 100,
+            "inventoryValueId": "f67f0289-8bbd-4e9d-84bd-7e7424db55c9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.808610Z",
+            "last_updated": "2026-07-15T12:58:06.808723Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "61bf57b4-25c0-4785-b688-adbf4fe88a80",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1104",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "b97d87ab-0202-44e9-a26c-63a1a4edd615",
+        "subCategoryId": "c1b15a71-0d8e-42c6-b69e-2ab892090135",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.808842Z",
+        "last_updated": "2026-07-15T12:58:06.808955Z",
+        "activityValues": [
+          {
+            "id": "a480d59f-ec97-4e0f-a003-650f10fe21f4",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "1104",
+            "co2eqYears": 100,
+            "inventoryValueId": "06bed2d0-cd5c-46ec-8145-0b52e3f7903b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.809073Z",
+            "last_updated": "2026-07-15T12:58:06.809205Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "b97d87ab-0202-44e9-a26c-63a1a4edd615",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "c5e2c24b-c216-4570-87ec-e43d02b624d3",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5667",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4cda6cb8-fe80-4f36-8cdf-4c22e8948794",
+        "subCategoryId": "d05b1af2-714e-42b9-bf33-b9f6656d6576",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.809326Z",
+        "last_updated": "2026-07-15T12:58:06.809449Z",
+        "activityValues": [
+          {
+            "id": "5b5a1e78-011d-4465-9c7f-aec5ab38a87f",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "5667",
+            "co2eqYears": 100,
+            "inventoryValueId": "6dcea6ae-ec77-4427-a50e-4a75ac8a59c0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.809572Z",
+            "last_updated": "2026-07-15T12:58:06.809689Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4cda6cb8-fe80-4f36-8cdf-4c22e8948794",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "8610b911-00d5-450a-9395-b4a490a6db2b",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "92131",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "cb8bc9c0-9f35-4cc5-a6de-11f13e16735f",
+        "subCategoryId": "88c31447-b533-4f69-8173-e0c55d89f0f9",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.809818Z",
+        "last_updated": "2026-07-15T12:58:06.809947Z",
+        "activityValues": [
+          {
+            "id": "593f68ba-d1d5-49d9-b7b0-4b67ca930a3b",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "92131",
+            "co2eqYears": 100,
+            "inventoryValueId": "e2d74c2f-e493-41f9-b97e-bcc1b40cafeb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.810073Z",
+            "last_updated": "2026-07-15T12:58:06.810194Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "cb8bc9c0-9f35-4cc5-a6de-11f13e16735f",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "ba192b96-cce2-4371-af0d-bf01542e743c",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-172324",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "a9f2d8e3-0ccb-48f9-bcbd-10db714e15bc",
+        "subCategoryId": "39803362-5fbd-4343-8d0a-21740df92c6e",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.810323Z",
+        "last_updated": "2026-07-15T12:58:06.810439Z",
+        "activityValues": [
+          {
+            "id": "4dffaf2e-a831-4cd4-888a-b77ed19ea932",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-172324",
+            "co2eqYears": 100,
+            "inventoryValueId": "1335d744-fd5a-4e47-a3df-364a88cd196a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.810558Z",
+            "last_updated": "2026-07-15T12:58:06.810682Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a9f2d8e3-0ccb-48f9-bcbd-10db714e15bc",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "54cf9db9-e281-40f6-94ee-357eb9d5551e",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "36839",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "e480cac6-7109-45e7-8a50-5f1943840b72",
+        "subCategoryId": "6b7f741e-23b3-45a4-8f10-73b8b7798ca1",
+        "inventoryId": "7b40fa10-2ca1-48cc-b2eb-619364c502a5",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.810809Z",
+        "last_updated": "2026-07-15T12:58:06.810926Z",
+        "activityValues": [
+          {
+            "id": "b93cc617-0ffb-456e-baa6-5bab96a6f807",
+            "activityData": {
+              "data-source": "inventory-CHL-14107-Paillaco-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "36839",
+            "co2eqYears": 100,
+            "inventoryValueId": "93aa2d9e-7f7b-4b92-9b1a-0a3e9b00dd3b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14107-Paillaco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.811045Z",
+            "last_updated": "2026-07-15T12:58:06.811165Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e480cac6-7109-45e7-8a50-5f1943840b72",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

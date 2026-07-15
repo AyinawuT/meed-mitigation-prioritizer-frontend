@@ -1,0 +1,1383 @@
+{
+  "data": {
+    "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+    "inventoryName": "Puerto Montt - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "e0cb0729-21aa-43cc-b07c-12baa9b7d0c2",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.637432Z",
+    "created": "2026-07-15T12:58:06.637544Z",
+    "last_updated": "2026-07-15T12:58:06.637656Z",
+    "city": {
+      "cityId": "e0cb0729-21aa-43cc-b07c-12baa9b7d0c2",
+      "locode": "CL PUE",
+      "name": "Puerto Montt",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "9d8886cf-7617-45a1-a5ee-558b8bdf02fe",
+      "created": "2026-07-15T12:58:06.637773Z",
+      "last_updated": "2026-07-15T12:58:06.637885Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "34773160-a0ce-4ddb-bfb2-124b2d6ea74a",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "59107",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "219e0cdb-397d-4dea-b078-4b013b118bd8",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.623443Z",
+        "last_updated": "2026-07-15T12:58:06.623605Z",
+        "activityValues": [
+          {
+            "id": "7197a0e7-4286-4497-b8b4-6267bf0e73bf",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "59107",
+            "co2eqYears": 100,
+            "inventoryValueId": "1fdc5de2-3617-4e91-b92f-5a1ced101931",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.623798Z",
+            "last_updated": "2026-07-15T12:58:06.623911Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "dce9f30e-d9bb-476e-a984-2992d5e6c235",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "70585",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "3afdf6a4-e5b2-4443-842c-c75c14e3b3da",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.624026Z",
+        "last_updated": "2026-07-15T12:58:06.624132Z",
+        "activityValues": [
+          {
+            "id": "67b2c704-67ff-4995-a43a-1e18b1dfe686",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "70585",
+            "co2eqYears": 100,
+            "inventoryValueId": "0f29e9a4-bdee-4c93-970a-4d5c5fc6c9e8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.624243Z",
+            "last_updated": "2026-07-15T12:58:06.624348Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "2bb96158-c9b6-4b7c-9543-db8336a7dac7",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4023",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "837b0a10-fdc8-44d0-a6af-21b0f93d48da",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.624458Z",
+        "last_updated": "2026-07-15T12:58:06.624563Z",
+        "activityValues": [
+          {
+            "id": "ff1e84ba-fa34-4d94-b7d0-75281c7bcb8d",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "4023",
+            "co2eqYears": 100,
+            "inventoryValueId": "8b02e4ba-8ee5-40ae-87d2-5025df4bb825",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.624670Z",
+            "last_updated": "2026-07-15T12:58:06.624775Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "75dd68b2-98e9-4d7f-a864-b3e77205bd56",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "89774",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "38e6cee1-d12f-40e5-a3c3-b637fa080b39",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.624885Z",
+        "last_updated": "2026-07-15T12:58:06.624995Z",
+        "activityValues": [
+          {
+            "id": "1fa98263-ea9d-4bf3-8e5e-d57afc83f8a0",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "89774",
+            "co2eqYears": 100,
+            "inventoryValueId": "0919928e-e549-4fbd-b0cc-7bf71b64663d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.625107Z",
+            "last_updated": "2026-07-15T12:58:06.625211Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "9c926be9-d69e-4e7f-b599-4e920acb47e3",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "91648",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "e2858203-9434-4545-9e8c-4c8d1f0d4b2b",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.625324Z",
+        "last_updated": "2026-07-15T12:58:06.625429Z",
+        "activityValues": [
+          {
+            "id": "17571ddf-9952-44a5-b61f-cd53ff9bd459",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "91648",
+            "co2eqYears": 100,
+            "inventoryValueId": "df4003e0-9b4b-497a-94b8-f2f58a0d2b78",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.625546Z",
+            "last_updated": "2026-07-15T12:58:06.625655Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "6999f5d3-c9c2-48e5-8df4-5c36b3f60827",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5223",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "64a80bcf-4cb6-4c4e-b20d-281a269c034f",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.625769Z",
+        "last_updated": "2026-07-15T12:58:06.625873Z",
+        "activityValues": [
+          {
+            "id": "62d50574-ecc9-4e36-b797-ef13bbe604f6",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "5223",
+            "co2eqYears": 100,
+            "inventoryValueId": "da16650b-f10c-4b6c-94dc-25f79268f786",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.625981Z",
+            "last_updated": "2026-07-15T12:58:06.626094Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "93bc97d6-89a0-4042-ae72-a16f6c2bc9b7",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "174195",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "257aa1b0-1988-420d-ae03-067602867441",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.626225Z",
+        "last_updated": "2026-07-15T12:58:06.626345Z",
+        "activityValues": [
+          {
+            "id": "47099670-e592-4523-9a86-74b4a293c462",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "174195",
+            "co2eqYears": 100,
+            "inventoryValueId": "c7b79090-d017-465e-a7ff-25e39b421fb6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.626468Z",
+            "last_updated": "2026-07-15T12:58:06.626584Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "26dd3d0c-6d2c-4063-aef9-88466ef1f678",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "187367",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "def8be66-4f10-4534-b51c-a83c21ac7535",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.626716Z",
+        "last_updated": "2026-07-15T12:58:06.626834Z",
+        "activityValues": [
+          {
+            "id": "e7be2aa5-09f1-43cc-a8cf-8217b8a5b5b3",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "187367",
+            "co2eqYears": 100,
+            "inventoryValueId": "9b563a14-8ac0-4ed4-82aa-c50d31785aea",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.626954Z",
+            "last_updated": "2026-07-15T12:58:06.627062Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "5c672a2a-2dd8-42bf-b8fb-57763329afd9",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "10679",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "e2696b64-25a6-47d8-ad8b-dca32cda0dfd",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.627172Z",
+        "last_updated": "2026-07-15T12:58:06.627277Z",
+        "activityValues": [
+          {
+            "id": "35b2c632-3d8e-404e-af62-e64cdf8c2c8f",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "10679",
+            "co2eqYears": 100,
+            "inventoryValueId": "5d37b628-4ee4-43a5-8505-c9424bda809c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.627387Z",
+            "last_updated": "2026-07-15T12:58:06.627491Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "7bcb38ee-5c06-4260-9c9b-8d0f3f16b11c",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4572",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "4905898e-c6cf-446a-8eae-dab0a7675ea7",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.627614Z",
+        "last_updated": "2026-07-15T12:58:06.627725Z",
+        "activityValues": [
+          {
+            "id": "22aac10a-9c76-4aa8-adab-6151ba7c152e",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "4572",
+            "co2eqYears": 100,
+            "inventoryValueId": "a0c96fdc-00a2-414b-a9fe-07de08bb6c79",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.627832Z",
+            "last_updated": "2026-07-15T12:58:06.627936Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "9f31d1f2-fb46-4730-8264-c9e1354fbb4c",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "7",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "a81da278-692d-4caa-8deb-3f2574e8604a",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.628047Z",
+        "last_updated": "2026-07-15T12:58:06.628151Z",
+        "activityValues": [
+          {
+            "id": "15b2af76-5fec-4bfe-8156-d686a486fb29",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "7",
+            "co2eqYears": 100,
+            "inventoryValueId": "d98427ad-3414-4693-b86b-be26024cf8f7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.628259Z",
+            "last_updated": "2026-07-15T12:58:06.628363Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "a947dcde-551f-4882-bbcc-d93ba0c0be81",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "0",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "06fa4077-77a4-483b-84e9-ff6a5aeacdbb",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.628473Z",
+        "last_updated": "2026-07-15T12:58:06.628578Z",
+        "activityValues": [
+          {
+            "id": "4c1b3dbd-97c6-4a9f-9225-4236bb3230ec",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "0",
+            "co2eqYears": 100,
+            "inventoryValueId": "ea062406-36e0-4d75-b036-e683b96480ae",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.628685Z",
+            "last_updated": "2026-07-15T12:58:06.628789Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "4e56515e-50c1-44ca-9b58-59b2ab0888ef",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "99241",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "cb48b317-b581-444f-8e44-f43b2fbc6721",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.628900Z",
+        "last_updated": "2026-07-15T12:58:06.629009Z",
+        "activityValues": [
+          {
+            "id": "82fd9ee2-6cd9-4907-b732-4526a389db00",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "99241",
+            "co2eqYears": 100,
+            "inventoryValueId": "132da670-68b8-4af7-9559-54173151121e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.629127Z",
+            "last_updated": "2026-07-15T12:58:06.629249Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "380b439b-80c6-4ea9-9a86-60f76db3f83a",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20437",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "d7679118-3238-4382-a5d0-ce682d9239cb",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.629377Z",
+        "last_updated": "2026-07-15T12:58:06.629490Z",
+        "activityValues": [
+          {
+            "id": "a576fe5f-a7d5-4bd9-b892-8f63c4d8cfd1",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "20437",
+            "co2eqYears": 100,
+            "inventoryValueId": "99603f4f-8a16-47fe-b18e-1d1e4b481837",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.629599Z",
+            "last_updated": "2026-07-15T12:58:06.629706Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "86f7485c-d2e9-4907-bcb2-bdb1502b0eb6",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1164",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "62900b46-cd3c-45e2-ae75-b45218ca90b5",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.629819Z",
+        "last_updated": "2026-07-15T12:58:06.629924Z",
+        "activityValues": [
+          {
+            "id": "6180a1a5-8d0d-4273-935b-ca66a54028ed",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1164",
+            "co2eqYears": 100,
+            "inventoryValueId": "decfb79e-da60-46de-b085-65f0bf2a27f7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.630032Z",
+            "last_updated": "2026-07-15T12:58:06.630136Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "d1ab9965-e5cb-45b4-9495-b0da9f3f171c",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "495234",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "d51ebdce-8b3d-4a40-9131-63e783414a72",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.630246Z",
+        "last_updated": "2026-07-15T12:58:06.630359Z",
+        "activityValues": [
+          {
+            "id": "b8f3a17e-5480-42ae-b956-306b5835ccbc",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "495234",
+            "co2eqYears": 100,
+            "inventoryValueId": "093cdd8f-c4e6-4076-b875-68f1dd60abd9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.630474Z",
+            "last_updated": "2026-07-15T12:58:06.630586Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "1e303c9e-fa15-40e5-97c8-1532609644dd",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "718",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "f57433c5-38e7-4374-b70b-43eb38bcd451",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.630704Z",
+        "last_updated": "2026-07-15T12:58:06.630816Z",
+        "activityValues": [
+          {
+            "id": "4af5036e-11b8-4da4-acf6-c6e43189da15",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "718",
+            "co2eqYears": 100,
+            "inventoryValueId": "c73b583f-1d0f-45e6-bafa-51d4746edea0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.630931Z",
+            "last_updated": "2026-07-15T12:58:06.631043Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "1ed34bd2-00d3-489d-8047-4711fed51d43",
+        "gpcReferenceNumber": "II.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "132781",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "waterborne-navigation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ab32c321-e9e1-31b3-9dde-f93ade472219",
+        "subCategoryId": "809b1d6f-4603-4cef-8f77-f3f1e92a247a",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.631165Z",
+        "last_updated": "2026-07-15T12:58:06.631277Z",
+        "activityValues": [
+          {
+            "id": "569f564e-8d42-4667-ae81-2408155cc9f6",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Waterborne navigation"
+            },
+            "co2eq": "132781",
+            "co2eqYears": 100,
+            "inventoryValueId": "cf49edc0-a7ea-42ac-b0ce-98aee81e680b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.631391Z",
+            "last_updated": "2026-07-15T12:58:06.631503Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ab32c321-e9e1-31b3-9dde-f93ade472219",
+          "subsectorName": "Waterborne navigation"
+        }
+      },
+      {
+        "id": "18591111-e664-4d69-aa7e-fac143a76f51",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "106220",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "2b490716-7571-40cc-979d-322a7fbc737f",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.631621Z",
+        "last_updated": "2026-07-15T12:58:06.631733Z",
+        "activityValues": [
+          {
+            "id": "b41c7539-3c6e-436d-b2a3-4753c07e447a",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "106220",
+            "co2eqYears": 100,
+            "inventoryValueId": "34d85fac-6489-431f-8b98-d871a38125b3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.631848Z",
+            "last_updated": "2026-07-15T12:58:06.631959Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "82266f19-b396-43e7-a1f7-9c6e046a8c3a",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "24249",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "a78654b2-a48a-475f-8ad0-126c184645e1",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.632077Z",
+        "last_updated": "2026-07-15T12:58:06.632189Z",
+        "activityValues": [
+          {
+            "id": "9209828f-1a35-4b23-8b8a-bdd69ee6eb0c",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "24249",
+            "co2eqYears": 100,
+            "inventoryValueId": "9374c659-444b-4843-83c6-61b6e9462174",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.632304Z",
+            "last_updated": "2026-07-15T12:58:06.632417Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "2d699e20-21a3-49c7-92e9-ffad3dce6d46",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "48093d24-84fb-46b6-ab83-76656a9b71a2",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.632535Z",
+        "last_updated": "2026-07-15T12:58:06.632647Z",
+        "activityValues": [
+          {
+            "id": "fca844a1-3593-442a-aeb2-07dec959f557",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "05286b2e-1a4f-41e5-bc3c-f2eb68b14244",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.632762Z",
+            "last_updated": "2026-07-15T12:58:06.632874Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "9912849a-2f69-4b21-9fbb-d460c9ec9d1c",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "296000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "530585c6-06c6-494d-9bde-1647be742568",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.632991Z",
+        "last_updated": "2026-07-15T12:58:06.633103Z",
+        "activityValues": [
+          {
+            "id": "172e2c79-76b3-45e6-a234-c8e6046b5493",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "296000",
+            "co2eqYears": 100,
+            "inventoryValueId": "7896336d-2fbb-4d38-a5ca-070ce76cef39",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.633219Z",
+            "last_updated": "2026-07-15T12:58:06.633334Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "786069af-6a79-4f2d-905b-1573121e81a0",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3143",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "4d5480d9-f193-4180-a93f-5e10347085f6",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.633457Z",
+        "last_updated": "2026-07-15T12:58:06.633578Z",
+        "activityValues": [
+          {
+            "id": "3263f316-27c4-4fff-947f-641c41ffedfd",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "3143",
+            "co2eqYears": 100,
+            "inventoryValueId": "7f6c5ced-3ea2-4971-bb2b-4341affc163f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.633828Z",
+            "last_updated": "2026-07-15T12:58:06.633991Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "d73a8332-717f-4a6b-bba2-8267731cfa91",
+        "gpcReferenceNumber": "III.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "237",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "incineration-and-open-burning-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+        "subCategoryId": "b091fbfc-e491-47c5-b8b9-ea2a3dc23c41",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.634143Z",
+        "last_updated": "2026-07-15T12:58:06.634271Z",
+        "activityValues": [
+          {
+            "id": "54be3617-378c-4f33-89f1-e24cae5763f7",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Incineration and open burning"
+            },
+            "co2eq": "237",
+            "co2eqYears": 100,
+            "inventoryValueId": "ba0d817f-2b45-43ab-9b3d-3587b2fd189b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.634392Z",
+            "last_updated": "2026-07-15T12:58:06.634606Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0ed16605-c76a-3c07-892d-4383a7618943",
+          "subsectorName": "Incineration and open burning"
+        }
+      },
+      {
+        "id": "ed3b7407-9e19-494b-bf5e-b1da52047196",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "41000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "63c7c80d-0cba-498e-8f40-0d1ffe47b817",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.634755Z",
+        "last_updated": "2026-07-15T12:58:06.634864Z",
+        "activityValues": [
+          {
+            "id": "ce494d06-2eda-428e-a39b-9038cffa3ba0",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "41000",
+            "co2eqYears": 100,
+            "inventoryValueId": "d2fffb4a-37d6-40b0-8db1-e4424737a63d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.634975Z",
+            "last_updated": "2026-07-15T12:58:06.635085Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "048e33b0-a34a-4838-b2fe-61a03da17b59",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3472",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "59a8529b-c7c8-4a47-abed-7650446acb4a",
+        "subCategoryId": "dc42732c-d6f9-4bf3-ba44-dcd337704ee6",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.635222Z",
+        "last_updated": "2026-07-15T12:58:06.635329Z",
+        "activityValues": [
+          {
+            "id": "683891d5-af50-4604-9f46-a1d2c294951c",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "3472",
+            "co2eqYears": 100,
+            "inventoryValueId": "a27f83e7-a1df-483c-b4bb-79a815a03f65",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.635442Z",
+            "last_updated": "2026-07-15T12:58:06.635548Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "59a8529b-c7c8-4a47-abed-7650446acb4a",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "a2c00f70-c63c-4833-95cb-2420cf93a9e7",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "246866",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "b630f66f-a9bf-43a7-9fb1-d805594a0d63",
+        "subCategoryId": "5453bf07-1779-4ce9-94a4-0d38845ea2e9",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.635661Z",
+        "last_updated": "2026-07-15T12:58:06.635768Z",
+        "activityValues": [
+          {
+            "id": "aaa035b0-5822-4efb-9ae8-47b7cebf3658",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "246866",
+            "co2eqYears": 100,
+            "inventoryValueId": "36a2dcbf-4729-4fd4-b191-8c53bb9dde25",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.635876Z",
+            "last_updated": "2026-07-15T12:58:06.635981Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "b630f66f-a9bf-43a7-9fb1-d805594a0d63",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "2dd833f0-a6e9-46a9-9778-5f3bcb96de96",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "36409",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "8841955b-8c9c-44bd-82a2-54c14082d3e5",
+        "subCategoryId": "cfb41134-ab02-46bd-9f1f-7de3a923c3c1",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.636098Z",
+        "last_updated": "2026-07-15T12:58:06.636203Z",
+        "activityValues": [
+          {
+            "id": "331986d8-2d3d-476b-ae65-08d498ea7cad",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "36409",
+            "co2eqYears": 100,
+            "inventoryValueId": "db33b683-bc35-43ce-9f3f-e3e1390bfc1e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.636311Z",
+            "last_updated": "2026-07-15T12:58:06.636415Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8841955b-8c9c-44bd-82a2-54c14082d3e5",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "a2d08a0f-d618-47df-baa9-94a16e1c0adc",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-354956",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "f082cf61-e2a8-4e49-a76a-0dff55bcd44a",
+        "subCategoryId": "cb938e8a-4ba1-4bad-bf00-4e0585b36a5d",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.636533Z",
+        "last_updated": "2026-07-15T12:58:06.636638Z",
+        "activityValues": [
+          {
+            "id": "4961da3a-e441-4ac7-b280-4c07e330ff9f",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-354956",
+            "co2eqYears": 100,
+            "inventoryValueId": "5e1d6511-c7ac-4809-b319-d278be61383b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.636746Z",
+            "last_updated": "2026-07-15T12:58:06.636858Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "f082cf61-e2a8-4e49-a76a-0dff55bcd44a",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "c7f93771-acca-412c-8875-c6178d01ff02",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "12142",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "8a5f9784-0c94-4051-ab69-5fbf74ce2bbe",
+        "subCategoryId": "f54e0f09-bb64-4c32-aab4-470157f7a5a8",
+        "inventoryId": "142c630c-eebb-4092-a3bb-028bd1aeb7b6",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.636977Z",
+        "last_updated": "2026-07-15T12:58:06.637089Z",
+        "activityValues": [
+          {
+            "id": "fc9717bc-1775-4043-adf8-09bd59dfad0d",
+            "activityData": {
+              "data-source": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "12142",
+            "co2eqYears": 100,
+            "inventoryValueId": "7de25502-6e9d-4757-bf01-32501d4c1ea1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10101-Puerto-Montt-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.637207Z",
+            "last_updated": "2026-07-15T12:58:06.637319Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8a5f9784-0c94-4051-ab69-5fbf74ce2bbe",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}
