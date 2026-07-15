@@ -11,7 +11,8 @@
   },
   "private": true,
   "workspaces": [
-    "artifacts/*",
+    "artifacts/api-server",
+    "artifacts/mockup-sandbox",
     "lib/*",
     "scripts"
   ],
