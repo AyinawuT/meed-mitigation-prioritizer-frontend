@@ -1676,7 +1676,7 @@ export function Recommendations({ params }: Props) {
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>🌍</div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Emissions profile</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{(totalCityEmissions / 1_000_000).toFixed(1)} Mt CO₂e total · {new Set(Object.keys(result.cityEmissionsByGpc ?? {}).map(k => k.split('.')[0])).size} sectors</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e total · {new Set(Object.keys(result.cityEmissionsByGpc ?? {}).map(k => k.split('.')[0])).size} sectors</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
                 </button>
 
