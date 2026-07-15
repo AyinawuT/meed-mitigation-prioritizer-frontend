@@ -115,8 +115,19 @@ function addPageFrame(pdf: jsPDF, actionName: string): void {
   pdf.setFontSize(7.5);
   pdf.setFont("helvetica", "normal");
   pdf.setTextColor(...SOFT);
-  const leftLabel = pdf.splitTextToSize(`City Action Output · ${stripInline(actionName).slice(0, 60)}`, CONTENT_W * 0.75);
-  pdf.text(leftLabel[0], MARGIN_X, FOOTER_Y);
+
+  // Build footer label and truncate with ellipsis so it never overflows
+  const maxFooterW = CONTENT_W * 0.78;
+  const prefix = "City Action Output · ";
+  let label = prefix + stripInline(actionName);
+  while (label.length > prefix.length && pdf.getTextWidth(label) > maxFooterW) {
+    label = label.slice(0, -1);
+  }
+  if (label.length < prefix.length + stripInline(actionName).length) {
+    label = label.trimEnd() + "…";
+  }
+
+  pdf.text(label, MARGIN_X, FOOTER_Y);
   pdf.text(`${n}`, PAGE_W - MARGIN_X, FOOTER_Y, { align: "right" });
 }
 
