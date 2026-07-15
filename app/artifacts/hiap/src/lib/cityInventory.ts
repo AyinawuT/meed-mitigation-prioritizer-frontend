@@ -193,3 +193,57 @@ export function getFormattedTotalEmissions(locode: string): string | null {
   const millions = total / 1_000_000;
   return `${millions.toFixed(2)}M tCO₂e`;
 }
+
+/**
+ * Convert a raw CityCatalyst inventory into the shape expected by the
+ * prioritisation API (`FrontendCityEmissionsData`).
+ * Returns null when no inventory exists for the given locode.
+ */
+export function getInventoryAsEmissionsData(locode: string): {
+  inventoryYear: number;
+  gpcData: Record<string, {
+    notationKey: null;
+    activities: Array<{
+      activityType: string | null;
+      totalEmissions: number;
+      totalEmissionsUnit: string;
+      activityValue: null;
+      activityUnit: null;
+      dataSource: null;
+      notationKey: null;
+    }>;
+  }>;
+} | null {
+  const raw = INVENTORY_REGISTRY[locode.toUpperCase()];
+  if (!raw) return null;
+  const { year, inventoryValues } = raw.data;
+  const gpcData: Record<string, {
+    notationKey: null;
+    activities: Array<{
+      activityType: string | null;
+      totalEmissions: number;
+      totalEmissionsUnit: string;
+      activityValue: null;
+      activityUnit: null;
+      dataSource: null;
+      notationKey: null;
+    }>;
+  }> = {};
+  for (const inv of inventoryValues) {
+    const co2 = inv.co2eq ? parseFloat(inv.co2eq) : null;
+    if (!co2 || co2 <= 0) continue;
+    gpcData[inv.gpcReferenceNumber] = {
+      notationKey: null,
+      activities: [{
+        activityType: inv.subSector?.subsectorName ?? null,
+        totalEmissions: co2,
+        totalEmissionsUnit: "t CO2e",
+        activityValue: null,
+        activityUnit: null,
+        dataSource: null,
+        notationKey: null,
+      }],
+    };
+  }
+  return { inventoryYear: year, gpcData };
+}

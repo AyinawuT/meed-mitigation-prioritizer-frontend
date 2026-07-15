@@ -5,9 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
 import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
-import { getEmissionsData } from "@/lib/cityInventory";
+import { getInventoryAsEmissionsData } from "@/lib/cityInventory";
 import actionsRaw from "@/data/actions.json";
-import mockRequest from "@/data/prioritizerRequestMock.json";
 import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
 
@@ -1132,17 +1131,22 @@ function ContextBreakdownTab({
       .catch(() => {});
   }, [locode]);
 
-  // Top GPC sector — use result if populated, else derive from mock data (stale cache fallback)
-  const mockEmissions = (mockRequest as { requestData: { cityDataList: Array<{ cityEmissionsData: { inventoryYear?: number; gpcData: Record<string, unknown> } }> } }).requestData.cityDataList[0].cityEmissionsData;
+  // Sector emissions — prefer pipeline result; fall back to local inventory (stale localStorage cache)
+  const localInventoryForFallback = getInventoryAsEmissionsData(locode);
   const sectorEmissions = Object.keys(result.cityEmissionsByGpc ?? {}).length > 0
     ? result.cityEmissionsByGpc
-    : deriveEmissions(mockEmissions.gpcData as Parameters<typeof deriveEmissions>[0]).byRef;
+    : localInventoryForFallback
+      ? deriveEmissions(localInventoryForFallback.gpcData as Parameters<typeof deriveEmissions>[0]).byRef
+      : {};
   const topGpcEntry = Object.entries(sectorEmissions).sort(([, a], [, b]) => b - a)[0];
   const topGpcSector = topGpcEntry ? gpcSectorName([topGpcEntry[0]]) : "—";
 
-  // Inventory year — use result if set, else fall back to local emissions data
-  const localInventoryYear = getEmissionsData(locode)?.year ?? mockEmissions.inventoryYear ?? undefined;
-  const inventoryYearDisplay = result.inventoryYear ? String(result.inventoryYear) : localInventoryYear ? String(localInventoryYear) : "—";
+  // Inventory year — use pipeline result if set, else fall back to local inventory year
+  const inventoryYearDisplay = result.inventoryYear
+    ? String(result.inventoryYear)
+    : localInventoryForFallback?.inventoryYear
+      ? String(localInventoryForFallback.inventoryYear)
+      : "—";
 
   // Socioeconomic indicators
   const indicatorCount = cityAttrs ? Object.values(cityAttrs).filter(

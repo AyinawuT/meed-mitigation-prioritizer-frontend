@@ -17,6 +17,7 @@ import {
 } from "@/lib/hiapApi";
 import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
 import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
+import { getInventoryAsEmissionsData } from "@/lib/cityInventory";
 
 // ─── Internal types matching the API response shape ───────────────────────────
 
@@ -261,6 +262,12 @@ export function buildCityInput(locode: string): FrontendCityInput {
     ? parseInt(cityObj.population.replace(/[^0-9]/g, ""), 10) || null
     : null;
 
+  // Use real city inventory when available; fall back to mock only if none exists.
+  const localInventory = getInventoryAsEmissionsData(locode);
+  const emissionsData: FrontendCityEmissionsData = localInventory
+    ? (localInventory as FrontendCityEmissionsData)
+    : mockCity.cityEmissionsData;
+
   return {
     locode,
     countryCode,
@@ -270,7 +277,7 @@ export function buildCityInput(locode: string): FrontendCityInput {
     cityStrategicPreferenceSectors,
     cityStrategicPreferenceCoBenefitKeys: strategicCoBenefitKeys,
     cityStrategicPreferenceTimeframes,
-    cityEmissionsData: sanitizeEmissionsData(mockCity.cityEmissionsData),
+    cityEmissionsData: sanitizeEmissionsData(emissionsData),
   };
 }
 
