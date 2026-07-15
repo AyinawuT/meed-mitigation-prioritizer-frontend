@@ -11,6 +11,7 @@ import actionsData from "@/data/actions.json";
 import mockRequest from "@/data/prioritizerRequestMock.json";
 import {
   callPrioritize,
+  buildMeta,
   type FrontendCityInput,
   type FrontendCityEmissionsData,
   type PrioritizerApiCityResult,
@@ -465,12 +466,14 @@ export async function runPipelineForCity(
   const { topN = 20, createExplanations = false } = options;
   const cityInput = buildCityInput(locode);
 
-  const [apiResult] = await callPrioritize({
-    cityDataList: [cityInput],
+  const requestData = {
+    requestedLanguages: ["en"],
     topN,
     createExplanations,
-    requestedLanguages: ["en"],
-  });
+    cityDataList: [cityInput],
+  };
+
+  const [apiResult] = await callPrioritize(requestData);
 
   // Backend computes the full 3-way feasibility score (legal + mitigation + financial)
   // and returns all component evidence in evidence_summary.feasibility — no client-side
@@ -478,5 +481,28 @@ export async function runPipelineForCity(
   const result = adaptApiResult(apiResult, cityInput.cityEmissionsData, topN);
 
   localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
+
+  // Store the prioritization snapshot for report generation.
+  // TODO: once the frontend moves into CityCatalyst, persist the snapshot in the
+  // CityCatalyst database instead of localStorage so it survives cache clears.
+  // Also: add staleness detection — warn the user if inputs (emissions data,
+  // strategic preferences, exclusions) changed since the snapshot was stored.
+  try {
+    const snapshot = {
+      request: {
+        meta: buildMeta("/v1/prioritize", [locode]),
+        requestData,
+      },
+      response: { results: [apiResult] },
+      storedAtUtc: new Date().toISOString(),
+    };
+    localStorage.setItem(
+      `hiap:${locode}:prioritization-snapshot`,
+      JSON.stringify(snapshot)
+    );
+  } catch {
+    // Snapshot storage failure is non-fatal — results are still usable
+  }
+
   return result;
 }

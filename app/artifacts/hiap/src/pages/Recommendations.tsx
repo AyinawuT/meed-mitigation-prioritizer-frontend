@@ -9,6 +9,8 @@ import { getInventoryAsEmissionsData } from "@/lib/cityInventory";
 import actionsRaw from "@/data/actions.json";
 import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
+import { callReportOutputPlan, loadSnapshot } from "@/lib/reportApi";
+import { generateAndDownloadPdf } from "@/lib/reportGenerator";
 
 // ─── ccglobal types ────────────────────────────────────────────────────────────
 
@@ -408,12 +410,16 @@ function DetailPanel({
   weights,
   opportunities,
   feasibilityMap,
+  onGenerate,
+  isGenerating,
 }: {
   action: RankedAction;
   onClose: () => void;
   weights: { impact: number; alignment: number; feasibility: number };
   opportunities: Opportunity[];
   feasibilityMap: Map<string, FeasibilityRow>;
+  onGenerate: () => void;
+  isGenerating: boolean;
 }) {
   const cobenefits = actionCoBenefitsMap[action.actionId] ?? [];
   const barriers = actionBarriersMap[action.actionId] ?? [];
@@ -767,11 +773,25 @@ function DetailPanel({
 
         {/* Footer CTA */}
         <div style={{ padding: "16px 28px", borderTop: "1px solid #EBEBEB", flexShrink: 0 }}>
-          <button style={{
-            width: "100%", background: "#001EA7", color: "white", border: "none",
-            borderRadius: "8px", padding: "12px", fontSize: "13px", fontWeight: "600", cursor: "pointer",
-          }}>
-            ✦ Generate output for this action
+          <button
+            onClick={onGenerate}
+            disabled={isGenerating}
+            style={{
+              width: "100%", background: isGenerating ? "#6B7280" : "#001EA7", color: "white", border: "none",
+              borderRadius: "8px", padding: "12px", fontSize: "13px", fontWeight: "600",
+              cursor: isGenerating ? "not-allowed" : "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+              opacity: isGenerating ? 0.85 : 1,
+            }}
+          >
+            {isGenerating ? (
+              <>
+                <span style={{ display: "inline-block", width: "13px", height: "13px", border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                Generating report…
+              </>
+            ) : (
+              <>✦ Generate output for this action</>
+            )}
           </button>
         </div>
       </div>
@@ -779,6 +799,7 @@ function DetailPanel({
       <style>{`
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes slideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
+        @keyframes spin { to { transform: rotate(360deg) } }
       `}</style>
     </>
   );
@@ -792,12 +813,16 @@ function TopPickCard({
   isPicked,
   onTogglePick,
   matchedProjectCount,
+  onGenerate,
+  isGenerating,
 }: {
   action: RankedAction;
   onDetail: (a: RankedAction) => void;
   isPicked: boolean;
   onTogglePick: (id: string) => void;
   matchedProjectCount: number;
+  onGenerate: () => void;
+  isGenerating: boolean;
 }) {
   const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
   const sector = gpcSectorName(action.gpcRefs);
@@ -889,17 +914,30 @@ function TopPickCard({
       </button>
 
       {/* Generate Plan button */}
-      <button style={{
-        width: "100%", background: "white", border: "1.5px solid #E5E7EB",
-        borderRadius: "8px", padding: "9px", fontSize: "12px", fontWeight: "700",
-        color: "#001EA7", cursor: "pointer", display: "flex", alignItems: "center",
-        justifyContent: "center", gap: "6px", letterSpacing: "0.04em",
-        textTransform: "uppercase",
-      }}
-        onMouseOver={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#001EA7"; (e.currentTarget as HTMLElement).style.background = "#F5F7FF"; }}
-        onMouseOut={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#E5E7EB"; (e.currentTarget as HTMLElement).style.background = "white"; }}
+      <button
+        onClick={onGenerate}
+        disabled={isGenerating}
+        style={{
+          width: "100%",
+          background: isGenerating ? "#F5F7FF" : "white",
+          border: `1.5px solid ${isGenerating ? "#001EA7" : "#E5E7EB"}`,
+          borderRadius: "8px", padding: "9px", fontSize: "12px", fontWeight: "700",
+          color: "#001EA7", cursor: isGenerating ? "not-allowed" : "pointer",
+          display: "flex", alignItems: "center",
+          justifyContent: "center", gap: "6px", letterSpacing: "0.04em",
+          textTransform: "uppercase", opacity: isGenerating ? 0.8 : 1,
+        }}
+        onMouseOver={(e) => { if (!isGenerating) { (e.currentTarget as HTMLElement).style.borderColor = "#001EA7"; (e.currentTarget as HTMLElement).style.background = "#F5F7FF"; } }}
+        onMouseOut={(e) => { if (!isGenerating) { (e.currentTarget as HTMLElement).style.borderColor = "#E5E7EB"; (e.currentTarget as HTMLElement).style.background = "white"; } }}
       >
-        <span>✦</span> Generate output for this action
+        {isGenerating ? (
+          <>
+            <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(0,30,167,0.25)", borderTopColor: "#001EA7", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+            Generating…
+          </>
+        ) : (
+          <><span>✦</span> Generate output for this action</>
+        )}
       </button>
     </div>
   );
@@ -1380,6 +1418,53 @@ export function Recommendations({ params }: Props) {
   const [pickedIds, setPickedIds] = useState<string[]>([]);
   const [pickMode, setPickMode] = useState(false);
 
+  // Report generation state
+  const [generatingIds, setGeneratingIds] = useState<string[]>([]);
+  const [generateError, setGenerateError] = useState<string | null>(null);
+
+  async function handleGenerateOutput(action: RankedAction) {
+    const snapshot = loadSnapshot(locode);
+    if (!snapshot) {
+      setGenerateError("No prioritization snapshot found. Please re-run the analysis before generating a report.");
+      return;
+    }
+
+    setGenerateError(null);
+    setGeneratingIds(prev => [...prev, action.actionId]);
+
+    try {
+      const report = await callReportOutputPlan({
+        locode,
+        actionId: action.actionId,
+        language: "en",
+        prioritizationSnapshot: snapshot,
+      });
+      generateAndDownloadPdf({
+        cityName,
+        actionName: action.actionName,
+        chapters: report.chapters,
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setGenerateError(msg);
+    } finally {
+      setGeneratingIds(prev => prev.filter(id => id !== action.actionId));
+    }
+  }
+
+  async function handleGenerateMultiple() {
+    const actions = pickedIds.length > 0
+      ? result?.ranked.filter(a => pickedIds.includes(a.actionId)) ?? []
+      : [];
+    if (actions.length === 0) {
+      setGenerateError("Select at least one action using the checkboxes before generating.");
+      return;
+    }
+    for (const action of actions) {
+      await handleGenerateOutput(action);
+    }
+  }
+
   // Load pipeline result from localStorage
   useEffect(() => {
     try {
@@ -1522,7 +1607,26 @@ export function Recommendations({ params }: Props) {
 
   return (
     <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
+      <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
       <Navbar cityName={cityName} />
+
+      {/* Generate-output error banner */}
+      {generateError && (
+        <div style={{
+          position: "fixed", top: "16px", left: "50%", transform: "translateX(-50%)",
+          background: "#FEF2F2", border: "1px solid #FECACA", color: "#991B1B",
+          padding: "12px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "500",
+          zIndex: 100, maxWidth: "580px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          display: "flex", alignItems: "flex-start", gap: "10px",
+        }}>
+          <span style={{ flexShrink: 0, marginTop: "1px" }}>⚠</span>
+          <span>{generateError}</span>
+          <button
+            onClick={() => setGenerateError(null)}
+            style={{ marginLeft: "auto", flexShrink: 0, background: "none", border: "none", cursor: "pointer", color: "#991B1B", fontSize: "16px", padding: "0 0 0 8px", lineHeight: 1 }}
+          >×</button>
+        </div>
+      )}
 
       {selectedAction && (
         <DetailPanel
@@ -1531,6 +1635,8 @@ export function Recommendations({ params }: Props) {
           weights={effectiveWeights}
           opportunities={opportunities}
           feasibilityMap={feasibilityMap}
+          onGenerate={() => handleGenerateOutput(selectedAction)}
+          isGenerating={generatingIds.includes(selectedAction.actionId)}
         />
       )}
 
@@ -1555,13 +1661,30 @@ export function Recommendations({ params }: Props) {
                 {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
-            <button style={{
-              background: "#001EA7", color: "white", border: "none", borderRadius: "8px",
-              padding: "10px 20px", fontSize: "12px", fontWeight: "700", cursor: "pointer",
-              letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
-              display: "flex", alignItems: "center", gap: "8px",
-            }}>
-              <span>✦</span> {pickedIds.length > 0 ? `Generate output for ${pickedIds.length} action${pickedIds.length !== 1 ? "s" : ""}` : "Generate output for selected actions"}
+            <button
+              onClick={handleGenerateMultiple}
+              disabled={generatingIds.length > 0 || pickedIds.length === 0}
+              style={{
+                background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
+                color: "white", border: "none", borderRadius: "8px",
+                padding: "10px 20px", fontSize: "12px", fontWeight: "700",
+                cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
+                letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
+                display: "flex", alignItems: "center", gap: "8px",
+                opacity: pickedIds.length === 0 ? 0.5 : 1,
+              }}
+            >
+              {generatingIds.length > 0 ? (
+                <>
+                  <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                  Generating {generatingIds.length > 1 ? `${generatingIds.length} reports…` : "report…"}
+                </>
+              ) : (
+                <>
+                  <span>✦</span>
+                  {pickedIds.length > 0 ? `Generate output for ${pickedIds.length} action${pickedIds.length !== 1 ? "s" : ""}` : "Generate output for selected actions"}
+                </>
+              )}
             </button>
           </div>
 
@@ -1622,6 +1745,8 @@ export function Recommendations({ params }: Props) {
                     isPicked={pickedIds.includes(action.actionId)}
                     onTogglePick={togglePick}
                     matchedProjectCount={feasibilityMap.get(action.actionId)?.inputs?.evidence?.n_existing_projects ?? 0}
+                    onGenerate={() => handleGenerateOutput(action)}
+                    isGenerating={generatingIds.includes(action.actionId)}
                   />
                 ))}
               </div>
