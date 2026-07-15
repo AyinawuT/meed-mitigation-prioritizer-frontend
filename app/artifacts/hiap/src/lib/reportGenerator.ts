@@ -5,25 +5,39 @@ import type { ReportChapter } from "@/lib/reportApi";
 
 const PAGE_W = 210;
 const PAGE_H = 297;
-const MARGIN_X = 20;
-const MARGIN_TOP = 22;
+const MARGIN_X = 22;
+const MARGIN_TOP = 24;
 const CONTENT_W = PAGE_W - MARGIN_X * 2;
 const FOOTER_Y = PAGE_H - 10;
-const SAFE_BOTTOM = PAGE_H - 20; // stop adding content below this line
+const SAFE_BOTTOM = PAGE_H - 18;
+
+// ─── Colours ──────────────────────────────────────────────────────────────────
+
+const NAVY = [0, 30, 140] as const;
+const DARK = [25, 25, 25] as const;
+const MID  = [60, 60, 60] as const;
+const SOFT = [110, 110, 110] as const;
+const RULE = [210, 215, 225] as const;
 
 // ─── Markdown block types ─────────────────────────────────────────────────────
 
 type Block =
-  | { type: "heading2"; text: string }
+  | { type: "h1"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
   | { type: "paragraph"; text: string }
-  | { type: "bullet"; items: string[] };
+  | { type: "bullet"; text: string; depth: number };
 
-/** Strip inline markdown markers (**bold**, *italic*, `code`). */
+/** Strip inline markdown markers (**bold**, *italic*, `code`, [link](url)). */
 function stripInline(text: string): string {
   return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\*\*\*([^*]+)\*\*\*/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/\*([^*]+)\*/g, "$1")
-    .replace(/`([^`]+)`/g, "$1");
+    .replace(/_([^_]+)_/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/^#+\s*/, "");
 }
 
 /** Parse a chapter's markdown string into renderable blocks. */
@@ -33,34 +47,45 @@ function parseMarkdown(md: string): Block[] {
   let i = 0;
 
   while (i < lines.length) {
-    const line = lines[i];
-    const trimmed = line.trim();
+    const raw = lines[i];
+    const trimmed = raw.trim();
 
     if (!trimmed) { i++; continue; }
 
-    if (trimmed.startsWith("## ")) {
-      blocks.push({ type: "heading2", text: trimmed.slice(3) });
+    // Headings
+    const h1m = trimmed.match(/^#\s+(.*)/);
+    if (h1m) { blocks.push({ type: "h1", text: h1m[1] }); i++; continue; }
+
+    const h2m = trimmed.match(/^##\s+(.*)/);
+    if (h2m) { blocks.push({ type: "h2", text: h2m[1] }); i++; continue; }
+
+    const h3m = trimmed.match(/^###\s+(.*)/);
+    if (h3m) { blocks.push({ type: "h3", text: h3m[1] }); i++; continue; }
+
+    // Bullets (-, *, or numbered)
+    const bulletMatch = raw.match(/^(\s*)[-*]\s+(.*)/);
+    if (bulletMatch) {
+      const depth = Math.floor(bulletMatch[1].length / 2);
+      blocks.push({ type: "bullet", text: bulletMatch[2], depth });
+      i++;
+      continue;
+    }
+    const numMatch = raw.match(/^(\s*)\d+\.\s+(.*)/);
+    if (numMatch) {
+      const depth = Math.floor(numMatch[1].length / 2);
+      blocks.push({ type: "bullet", text: numMatch[2], depth });
       i++;
       continue;
     }
 
-    if (trimmed.startsWith("- ")) {
-      const items: string[] = [];
-      while (i < lines.length && lines[i].trim().startsWith("- ")) {
-        items.push(lines[i].trim().slice(2));
-        i++;
-      }
-      blocks.push({ type: "bullet", items });
-      continue;
-    }
-
-    // Accumulate paragraph until blank line or a block-level marker
+    // Paragraph — accumulate until blank line or block-level marker
     const paraLines: string[] = [];
     while (
       i < lines.length &&
       lines[i].trim() &&
-      !lines[i].trim().startsWith("## ") &&
-      !lines[i].trim().startsWith("- ")
+      !lines[i].trim().match(/^#{1,3}\s/) &&
+      !lines[i].trim().match(/^[-*]\s/) &&
+      !lines[i].trim().match(/^\d+\.\s/)
     ) {
       paraLines.push(lines[i].trim());
       i++;
@@ -73,25 +98,39 @@ function parseMarkdown(md: string): Block[] {
   return blocks;
 }
 
-// ─── Footer helper ────────────────────────────────────────────────────────────
+// ─── Footer / header helpers ──────────────────────────────────────────────────
 
-function addFooter(pdf: jsPDF): void {
-  const pageNum = pdf.getNumberOfPages();
+function addPageFrame(pdf: jsPDF, actionName: string): void {
+  const n = pdf.getNumberOfPages();
+
+  // Thin top bar
+  pdf.setFillColor(...NAVY);
+  pdf.rect(0, 0, PAGE_W, 6, "F");
+
+  // Footer rule
+  pdf.setDrawColor(...RULE);
+  pdf.setLineWidth(0.3);
+  pdf.line(MARGIN_X, FOOTER_Y - 4, PAGE_W - MARGIN_X, FOOTER_Y - 4);
+
   pdf.setFontSize(7.5);
   pdf.setFont("helvetica", "normal");
-  pdf.setTextColor(160, 160, 160);
-  pdf.text("MEED+ HIAP — City Action Report", MARGIN_X, FOOTER_Y);
-  pdf.text(`Page ${pageNum}`, PAGE_W - MARGIN_X, FOOTER_Y, { align: "right" });
+  pdf.setTextColor(...SOFT);
+  const leftLabel = pdf.splitTextToSize(`City Action Output Plan · ${stripInline(actionName).slice(0, 60)}`, CONTENT_W * 0.75);
+  pdf.text(leftLabel[0], MARGIN_X, FOOTER_Y);
+  pdf.text(`${n}`, PAGE_W - MARGIN_X, FOOTER_Y, { align: "right" });
 }
 
 /**
- * Check whether the next block needs a page break.
- * If so, add footer to the current page and open a new one.
- * Returns the (possibly reset) y cursor.
+ * Ensure there is room for `needed` mm.  If not, add a new page and reset y.
  */
-function maybeNewPage(pdf: jsPDF, y: number, needed: number): number {
+function ensureSpace(
+  pdf: jsPDF,
+  y: number,
+  needed: number,
+  actionName: string,
+): number {
   if (y + needed > SAFE_BOTTOM) {
-    addFooter(pdf);
+    addPageFrame(pdf, actionName);
     pdf.addPage();
     return MARGIN_TOP;
   }
@@ -101,23 +140,14 @@ function maybeNewPage(pdf: jsPDF, y: number, needed: number): number {
 // ─── PDF filename helpers ─────────────────────────────────────────────────────
 
 function buildFilename(cityName: string, actionName: string): string {
-  const safeCityName = cityName
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9\s]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
+  const norm = (s: string) =>
+    s.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9\s]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
 
-  const safeActionName = actionName
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .slice(0, 50);
-
-  return `${safeCityName}-${safeActionName}-output-plan.pdf`;
+  return `${norm(cityName)}-${norm(actionName).toLowerCase().slice(0, 50)}-output-plan.pdf`;
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
@@ -128,157 +158,187 @@ export interface GeneratePdfOptions {
   chapters: ReportChapter[];
 }
 
-/**
- * Assemble the report chapters into a styled PDF and trigger a browser download.
- */
 export function generateAndDownloadPdf(options: GeneratePdfOptions): void {
   const { cityName, actionName, chapters } = options;
 
   const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
 
-  // ── Cover page ──────────────────────────────────────────────────────────────
+  // ── Cover page ───────────────────────────────────────────────────────────────
 
-  // Blue header band
-  pdf.setFillColor(0, 30, 167);
-  pdf.rect(0, 0, PAGE_W, 72, "F");
+  // Full navy background
+  pdf.setFillColor(...NAVY);
+  pdf.rect(0, 0, PAGE_W, PAGE_H, "F");
 
-  // Thin gold accent line
+  // Gold accent stripe at bottom of header area
   pdf.setFillColor(249, 162, 0);
-  pdf.rect(0, 72, PAGE_W, 2, "F");
+  pdf.rect(MARGIN_X, 110, 40, 1.5, "F");
 
-  // Wordmark
+  // Document type label (small caps style)
+  pdf.setTextColor(180, 195, 230);
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(9);
+  pdf.text("CLIMATE ACTION REPORT", MARGIN_X, 50);
+
+  // Main title
   pdf.setTextColor(255, 255, 255);
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(22);
-  pdf.text("MEED+ HIAP", MARGIN_X, 30);
-
-  pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(12);
-  pdf.text("City Action Output Plan", MARGIN_X, 42);
-
-  // Light separator
-  pdf.setDrawColor(255, 255, 255, 0.3);
-  pdf.setLineWidth(0.3);
-  pdf.line(MARGIN_X, 50, PAGE_W - MARGIN_X, 50);
+  pdf.setFontSize(28);
+  pdf.text("City Action", MARGIN_X, 68);
+  pdf.text("Output Plan", MARGIN_X, 82);
 
   // City name
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(13);
-  pdf.text(cityName, MARGIN_X, 60);
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(14);
+  pdf.setTextColor(210, 220, 240);
+  pdf.text(cityName, MARGIN_X, 120);
 
-  // Body content area
-  pdf.setTextColor(30, 30, 30);
-  let coverY = 90;
+  // Divider
+  pdf.setDrawColor(255, 255, 255);
+  pdf.setDrawColor(255, 255, 255);
+  pdf.setLineWidth(0.2);
+  pdf.line(MARGIN_X, 128, PAGE_W - MARGIN_X, 128);
 
   // Action label
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(9);
-  pdf.setTextColor(120, 120, 120);
-  pdf.text("ACTION", MARGIN_X, coverY);
-  coverY += 6;
+  pdf.setFontSize(8);
+  pdf.setTextColor(160, 175, 210);
+  pdf.text("ACTION", MARGIN_X, 140);
 
-  // Action name (may wrap)
+  // Action name (wrapped)
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(14);
-  pdf.setTextColor(20, 20, 20);
+  pdf.setFontSize(13);
+  pdf.setTextColor(255, 255, 255);
   const actionLines = pdf.splitTextToSize(stripInline(actionName), CONTENT_W);
-  pdf.text(actionLines, MARGIN_X, coverY);
-  coverY += actionLines.length * 8 + 6;
+  pdf.text(actionLines.slice(0, 4), MARGIN_X, 149);
 
-  // Divider
-  pdf.setDrawColor(220, 220, 220);
-  pdf.setLineWidth(0.4);
-  pdf.line(MARGIN_X, coverY, MARGIN_X + 60, coverY);
-  coverY += 10;
-
-  // Generation date
-  pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(9);
-  pdf.setTextColor(120, 120, 120);
+  // Generation date at bottom left
   const today = new Date().toLocaleDateString("en-GB", {
     year: "numeric", month: "long", day: "numeric",
   });
-  pdf.text(`Generated ${today}`, MARGIN_X, coverY);
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(8);
+  pdf.setTextColor(130, 150, 190);
+  pdf.text(`Generated ${today}`, MARGIN_X, PAGE_H - 16);
 
-  // Cover footer
-  addFooter(pdf);
+  // ── Content pages ─────────────────────────────────────────────────────────
 
-  // ── Chapter pages ────────────────────────────────────────────────────────────
+  pdf.addPage();
+  let y = MARGIN_TOP;
 
-  for (const chapter of chapters) {
-    pdf.addPage();
-    let y = MARGIN_TOP;
+  for (let ci = 0; ci < chapters.length; ci++) {
+    const chapter = chapters[ci];
 
-    // Chapter title
+    // ── Chapter header band ────────────────────────────────────────────────
+    // Ensure enough room for chapter heading + first content block
+    y = ensureSpace(pdf, y, 22, actionName);
+
+    // Chapter title row
+    pdf.setFillColor(240, 243, 252);
+    pdf.rect(MARGIN_X - 4, y - 5, CONTENT_W + 8, 10, "F");
+
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(14);
-    pdf.setTextColor(0, 30, 167);
-    y = maybeNewPage(pdf, y, 16);
+    pdf.setFontSize(11);
+    pdf.setTextColor(...NAVY);
     pdf.text(chapter.title, MARGIN_X, y);
-    y += 5;
+    y += 10;
 
-    // Underline
-    pdf.setDrawColor(0, 30, 167);
+    // Thin navy rule
+    pdf.setDrawColor(...NAVY);
     pdf.setLineWidth(0.5);
     pdf.line(MARGIN_X, y, PAGE_W - MARGIN_X, y);
-    y += 8;
+    y += 7;
 
-    // Render markdown blocks
+    // ── Markdown content ───────────────────────────────────────────────────
     const blocks = parseMarkdown(chapter.markdown);
 
     for (const block of blocks) {
-      if (block.type === "heading2") {
-        y = maybeNewPage(pdf, y, 14);
+      if (block.type === "h1") {
+        y = ensureSpace(pdf, y, 14, actionName);
         pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(11);
-        pdf.setTextColor(40, 40, 40);
-        const hLines = pdf.splitTextToSize(stripInline(block.text), CONTENT_W);
-        for (const line of hLines) {
-          y = maybeNewPage(pdf, y, 7);
+        pdf.setFontSize(12);
+        pdf.setTextColor(...DARK);
+        const lines = pdf.splitTextToSize(stripInline(block.text), CONTENT_W);
+        for (const line of lines) {
+          y = ensureSpace(pdf, y, 7, actionName);
           pdf.text(line, MARGIN_X, y);
           y += 6;
         }
         y += 2;
 
-      } else if (block.type === "paragraph") {
-        y = maybeNewPage(pdf, y, 8);
-        pdf.setFont("helvetica", "normal");
+      } else if (block.type === "h2") {
+        y = ensureSpace(pdf, y, 12, actionName);
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(10.5);
+        pdf.setTextColor(...MID);
+        const lines = pdf.splitTextToSize(stripInline(block.text), CONTENT_W);
+        for (const line of lines) {
+          y = ensureSpace(pdf, y, 6.5, actionName);
+          pdf.text(line, MARGIN_X, y);
+          y += 5.5;
+        }
+        y += 1.5;
+
+      } else if (block.type === "h3") {
+        y = ensureSpace(pdf, y, 10, actionName);
+        pdf.setFont("helvetica", "bold");
         pdf.setFontSize(10);
-        pdf.setTextColor(50, 50, 50);
-        const pLines = pdf.splitTextToSize(stripInline(block.text), CONTENT_W);
-        for (const line of pLines) {
-          y = maybeNewPage(pdf, y, 6);
+        pdf.setTextColor(...SOFT);
+        const lines = pdf.splitTextToSize(stripInline(block.text), CONTENT_W);
+        for (const line of lines) {
+          y = ensureSpace(pdf, y, 6, actionName);
           pdf.text(line, MARGIN_X, y);
           y += 5.2;
         }
-        y += 3;
+        y += 1;
+
+      } else if (block.type === "paragraph") {
+        y = ensureSpace(pdf, y, 7, actionName);
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9.5);
+        pdf.setTextColor(...MID);
+        const lines = pdf.splitTextToSize(stripInline(block.text), CONTENT_W);
+        for (const line of lines) {
+          y = ensureSpace(pdf, y, 5.5, actionName);
+          pdf.text(line, MARGIN_X, y);
+          y += 5;
+        }
+        y += 2.5;
 
       } else if (block.type === "bullet") {
+        const indent = MARGIN_X + 3 + block.depth * 4;
+        const bulletW = CONTENT_W - 3 - block.depth * 4;
         pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(10);
-        pdf.setTextColor(50, 50, 50);
-        for (const item of block.items) {
-          const indent = 4;
-          const bulletText = stripInline(item);
-          const bLines = pdf.splitTextToSize(bulletText, CONTENT_W - indent);
-          for (let li = 0; li < bLines.length; li++) {
-            y = maybeNewPage(pdf, y, 6);
-            if (li === 0) {
-              pdf.text("•", MARGIN_X, y);
-              pdf.text(bLines[li], MARGIN_X + indent, y);
-            } else {
-              pdf.text(bLines[li], MARGIN_X + indent, y);
-            }
-            y += 5.2;
+        pdf.setFontSize(9.5);
+        pdf.setTextColor(...MID);
+        const lines = pdf.splitTextToSize(stripInline(block.text), bulletW - 4);
+        for (let li = 0; li < lines.length; li++) {
+          y = ensureSpace(pdf, y, 5.5, actionName);
+          if (li === 0) {
+            pdf.setTextColor(...NAVY);
+            pdf.text("•", indent, y);
+            pdf.setTextColor(...MID);
+            pdf.text(lines[li], indent + 4, y);
+          } else {
+            pdf.text(lines[li], indent + 4, y);
           }
+          y += 5;
         }
-        y += 2;
+        y += 1.5;
       }
     }
 
-    addFooter(pdf);
+    // Small gap between chapters (not a page break)
+    if (ci < chapters.length - 1) {
+      y = ensureSpace(pdf, y, 14, actionName);
+      pdf.setDrawColor(...RULE);
+      pdf.setLineWidth(0.3);
+      pdf.line(MARGIN_X, y, PAGE_W - MARGIN_X, y);
+      y += 10;
+    }
   }
 
-  // ── Save ──────────────────────────────────────────────────────────────────
+  // Frame the last page
+  addPageFrame(pdf, actionName);
+
   pdf.save(buildFilename(cityName, actionName));
 }
