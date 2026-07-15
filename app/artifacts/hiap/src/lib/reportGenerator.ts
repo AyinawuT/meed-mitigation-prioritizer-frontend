@@ -183,8 +183,7 @@ export function generateAndDownloadPdf(options: GeneratePdfOptions): void {
   pdf.setTextColor(255, 255, 255);
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(28);
-  pdf.text("City Action", MARGIN_X, 68);
-  pdf.text("Output Plan", MARGIN_X, 82);
+  pdf.text("City Action Output", MARGIN_X, 74);
 
   // City name
   pdf.setFont("helvetica", "normal");
