@@ -50,6 +50,12 @@ export async function callReportOutputPlan(params: {
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
+    if (res.status === 404) {
+      throw new Error(
+        "The report generation endpoint is not yet available on the backend. " +
+        "Please ask the backend team to start the reports service."
+      );
+    }
     throw new Error(
       `Report generation failed: HTTP ${res.status}${text ? ` — ${text.slice(0, 300)}` : ""}`
     );
