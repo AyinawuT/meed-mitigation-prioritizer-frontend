@@ -70,8 +70,16 @@ export function Footer() {
             />
           </div>
           <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", textAlign: "center", maxWidth: "190px", lineHeight: "1.5" }}>
-            Funded by the Crea y Valida programme,{" "}
-            Comité InnovaChile de Corfo
+            Funded by the{" "}
+            <a
+              href="https://www.chileatiende.gob.cl/fichas/65100-crea-y-valida"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: "2px", opacity: 0.8 }}
+            >
+              Crea y Valida
+            </a>{" "}
+            programme, Comité InnovaChile de Corfo
           </div>
         </div>
 
