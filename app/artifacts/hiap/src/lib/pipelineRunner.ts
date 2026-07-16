@@ -500,7 +500,8 @@ export async function runPipelineForCity(
       `hiap:${locode}:prioritization-snapshot`,
       JSON.stringify(snapshot)
     );
-  } catch {
+  } catch (error) {
+    console.error("Snapshot storage failed:", error);
     // Snapshot storage failure is non-fatal — results are still usable
   }
 
