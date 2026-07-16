@@ -122,7 +122,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_agriculture_forestry: {
-    label: "Agriculture & Forestry Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Agriculture & Forestry Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large agriculture sector — AFOLU actions have strong local labour impact",
       "high":      "Large agriculture sector — AFOLU actions have notable labour implications",
@@ -132,7 +132,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_electricity_gas: {
-    label: "Electricity & Gas Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Electricity & Gas Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large utilities workforce — energy transition just-transition is critical",
       "high":      "Significant utilities workforce — energy transition planning is important",
@@ -142,7 +142,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_manufacturing: {
-    label: "Manufacturing Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Manufacturing Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large manufacturing base — industrial decarbonisation is a key priority",
       "high":      "Large manufacturing base — industrial decarbonisation has major impact",
@@ -152,7 +152,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_mining: {
-    label: "Mining Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Mining Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large mining sector — extraction emissions and just-transition are critical",
       "high":      "Significant mining sector — just-transition considerations are important",
@@ -162,7 +162,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_water_waste: {
-    label: "Water & Waste Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Water & Waste Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large water/waste sector — waste and water actions have high local impact",
       "high":      "Significant water/waste workforce — waste management actions are highly relevant",
@@ -172,7 +172,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   disability_prevalence: {
-    label: "Disability Prevalence", source: "", theme: "Demographics", units: "percent", concern: "neutral",
+    label: "Disability Prevalence", source: "ENDISC 2015", theme: "Demographics", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very high disability prevalence — accessibility must be central to action design",
       "high":      "High disability prevalence — accessibility considerations are important",
@@ -182,7 +182,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   fixed_internet_household_share: {
-    label: "Fixed Internet Household Access", source: "", theme: "Digital Infrastructure", units: "percent", concern: "opportunity",
+    label: "Fixed Internet Household Access", source: "SUBTEL 2022", theme: "Digital Infrastructure", units: "percent", concern: "opportunity",
     relevance: {
       "very high": "Near-universal internet access — smart city and digital monitoring actions are highly feasible",
       "high":      "High internet access — digital infrastructure actions have strong reach",
@@ -192,7 +192,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   indigenous_identification_rate: {
-    label: "Indigenous Population Share", source: "", theme: "Demographics", units: "percent", concern: "neutral",
+    label: "Indigenous Population Share", source: "CASEN 2022", theme: "Demographics", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very high indigenous share — FPIC and culturally appropriate co-design are essential",
       "high":      "High indigenous population share — culturally inclusive engagement is critical",
@@ -202,7 +202,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   literacy_rate: {
-    label: "Literacy Rate", source: "", theme: "Demographics", units: "percent", concern: "opportunity",
+    label: "Literacy Rate", source: "CASEN 2022", theme: "Demographics", units: "percent", concern: "opportunity",
     relevance: {
       "very high": "Very high literacy — public communication and behaviour change programmes are highly effective",
       "high":      "High literacy — public engagement and awareness campaigns are broadly effective",
@@ -212,7 +212,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   mean_years_schooling: {
-    label: "Mean Years of Schooling", source: "", theme: "Demographics", units: "years", concern: "opportunity",
+    label: "Mean Years of Schooling", source: "CASEN 2022", theme: "Demographics", units: "years", concern: "opportunity",
     relevance: {
       "very high": "High education levels — technical workforce capacity for complex actions is strong",
       "high":      "Good education levels — capacity for technical and professional green jobs is high",
@@ -222,7 +222,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   population: {
-    label: "Population", source: "", theme: "Demographics", units: "count", concern: "neutral",
+    label: "Population", source: "CENSO 2017", theme: "Demographics", units: "count", concern: "neutral",
     relevance: {
       "very high": "Very large city — actions with high per-capita impact maximise absolute emissions reductions",
       "high":      "Large city — broad-reach actions deliver significant total emissions reductions",
