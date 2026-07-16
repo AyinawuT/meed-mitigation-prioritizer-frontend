@@ -331,6 +331,36 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
       "very low":  "Minimal bare land — land restoration is not a significant local AFOLU lever",
     },
   },
+  urban_built_share: {
+    label: "Urban Built Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high urban density — built environment decarbonisation (buildings, transport, energy) is the primary lever",
+      "high":      "High urban built share — building retrofits, urban mobility, and district energy actions have broad reach",
+      "medium":    "Moderate urban area — built environment actions complement land-use and green infrastructure approaches",
+      "low":       "Low urban built share — green and blue infrastructure actions may complement urban climate investments",
+      "very low":  "Minimal urban footprint — land-use and nature-based solutions may have greater relative impact than built-environment actions",
+    },
+  },
+  water_share: {
+    label: "Water Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high water body share — blue carbon, wetland protection, and flood-risk management are high-priority actions",
+      "high":      "High water share — water ecosystem protection and blue carbon actions are locally significant",
+      "medium":    "Moderate water body coverage — water ecosystem management has some climate relevance",
+      "low":       "Low water share — water body climate actions have limited local scope",
+      "very low":  "Minimal water cover — blue carbon and water ecosystem actions are not a primary local lever",
+    },
+  },
+  wetland_share: {
+    label: "Wetland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high wetland cover — wetland conservation is a critical blue carbon and biodiversity action",
+      "high":      "High wetland share — protecting and restoring wetlands can deliver significant carbon sequestration and flood resilience",
+      "medium":    "Moderate wetland area — wetland conservation has meaningful carbon and biodiversity co-benefits",
+      "low":       "Low wetland share — limited scope for wetland-focused climate actions locally",
+      "very low":  "Minimal wetlands — blue carbon from wetland conservation is not a significant local lever",
+    },
+  },
 };
 
 const CATEGORY_STYLES: Record<Category, { bg: string; color: string; label: string }> = {
