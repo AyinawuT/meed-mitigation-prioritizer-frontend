@@ -401,9 +401,16 @@ function buildIndicatorsFromApi(apiData: ApiCityData): Indicator[] {
       const units = meta?.units ?? field.attribute_units ?? "percent";
       const label = meta?.label ?? key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
       const theme = meta?.theme ?? "Other";
-      const relevance = meta?.relevance?.[category] ?? "";
       const concern = meta?.concern ?? "neutral";
-      const source = meta?.source ?? "";
+      const source = meta?.source || "ccglobal API";
+      const fallbackRelevance: Record<Category, string> = {
+        "very high": `Very high ${label.toLowerCase()} relative to comparable cities`,
+        "high":      `High ${label.toLowerCase()} relative to comparable cities`,
+        "medium":    `Moderate ${label.toLowerCase()} — close to the national average`,
+        "low":       `Low ${label.toLowerCase()} relative to comparable cities`,
+        "very low":  `Very low ${label.toLowerCase()} relative to comparable cities`,
+      };
+      const relevance = meta?.relevance?.[category] || fallbackRelevance[category];
       return { key, label, value: field.attribute_value, units, category, theme, relevance, concern, source };
     });
 }
