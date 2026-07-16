@@ -408,7 +408,6 @@ function DetailPanel({
   action,
   onClose,
   weights,
-  opportunities,
   feasibilityMap,
   onGenerate,
   isGenerating,
@@ -416,7 +415,6 @@ function DetailPanel({
   action: RankedAction;
   onClose: () => void;
   weights: { impact: number; alignment: number; feasibility: number };
-  opportunities: Opportunity[];
   feasibilityMap: Map<string, FeasibilityRow>;
   onGenerate: () => void;
   isGenerating: boolean;
@@ -431,6 +429,7 @@ function DetailPanel({
   // Fetch projects for this action from ccglobal
   const [projects, setProjects] = useState<Project[]>([]);
   const [projLoading, setProjLoading] = useState(false);
+  const [actionOpps, setActionOpps] = useState<Opportunity[]>([]);
   const [showAllOpps, setShowAllOpps] = useState(false);
   const [showAllProj, setShowAllProj] = useState(false);
 
@@ -445,16 +444,18 @@ function DetailPanel({
       .finally(() => setProjLoading(false));
   }, [feasRow?.links?.projects]);
 
-  // Filter opportunities by action sector
-  const actionSector = (feasRow?.sector ?? "").toLowerCase();
-  const matchedOpps = useMemo(() => {
-    if (!actionSector) return [];
-    return opportunities.filter(o =>
-      (o.gpc_sectors ?? []).some(s => s.toLowerCase() === actionSector)
-    );
-  }, [opportunities, actionSector]);
+  // Fetch opportunities for this specific action
+  useEffect(() => {
+    setActionOpps([]);
+    const relUrl = feasRow?.links?.opportunities;
+    if (!relUrl) return;
+    fetch(`https://ccglobal.openearth.dev${relUrl}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(res => setActionOpps(res?.data ?? []))
+      .catch(() => {});
+  }, [feasRow?.links?.opportunities]);
 
-  const visibleOpps = showAllOpps ? matchedOpps : matchedOpps.slice(0, 2);
+  const visibleOpps = showAllOpps ? actionOpps : actionOpps.slice(0, 2);
   const visibleProjs = showAllProj ? projects : projects.slice(0, 3);
 
   const timelineDesc =
@@ -642,14 +643,14 @@ function DetailPanel({
           <div style={{ marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
               <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fund Access</div>
-              {matchedOpps.length > 0 && (
+              {actionOpps.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
-                  {feasRow?.inputs?.finance?.n_reachable_opportunities ?? matchedOpps.length} DIRECT
+                  {feasRow?.inputs?.finance?.n_reachable_opportunities ?? actionOpps.length} DIRECT
                 </div>
               )}
             </div>
 
-            {matchedOpps.length === 0 ? (
+            {actionOpps.length === 0 ? (
               <EmptyState
                 title="No direct fund matches"
                 body="No funding opportunities currently match this action's sector in the climate finance database. Check back as new rounds open."
@@ -688,10 +689,10 @@ function DetailPanel({
                     </div>
                   );
                 })}
-                {matchedOpps.length > 2 && (
+                {actionOpps.length > 2 && (
                   <button onClick={() => setShowAllOpps(v => !v)}
                     style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                    {showAllOpps ? "Show fewer funds" : `Show all ${matchedOpps.length} matched funds >`}
+                    {showAllOpps ? "Show fewer funds" : `Show all ${actionOpps.length} matched funds >`}
                   </button>
                 )}
               </div>
@@ -1380,7 +1381,6 @@ export function Recommendations({ params }: Props) {
   const rankingRef = useRef<HTMLDivElement>(null);
 
   // ccglobal data
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [feasibilityRows, setFeasibilityRows] = useState<FeasibilityRow[]>([]);
   const [natPolicyScore, setNatPolicyScore] = useState<number | null>(null);
   const [policyScoresByAction, setPolicyScoresByAction] = useState<Record<string, number>>({});
@@ -1490,19 +1490,16 @@ export function Recommendations({ params }: Props) {
     const base = "https://ccglobal.openearth.dev";
     const enc = encodeURIComponent(locode);
     const feasUrl   = `${base}/api/v1/cities/${enc}/climate-finance/feasibility?country_code=${countryCode}`;
-    const oppUrl    = `${base}/api/v1/climate-finance/opportunities?country_code=${countryCode}&limit=200&offset=0`;
     const policyUrl = `${base}/api/v1/cities/${enc}/action-policy-scores?top_evidence_limit=5`;
 
     Promise.all([
       fetch(feasUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-      fetch(oppUrl).then(r => r.ok ? r.json() : null).catch(() => null),
       fetch(policyUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-    ]).then(([feasRes, oppRes, polRes]) => {
+    ]).then(([feasRes, polRes]) => {
       const rows: FeasibilityRow[] = (feasRes?.data ?? []).filter(
         (r: FeasibilityRow) => typeof r.financial_feasibility === "number"
       );
       setFeasibilityRows(rows);
-      setOpportunities(oppRes?.data ?? []);
       if (polRes?.scores?.length) {
         const rawScores = polRes.scores as { src_action_id: string; policy_support_score: number }[];
         const byAction: Record<string, number> = {};
@@ -1633,7 +1630,6 @@ export function Recommendations({ params }: Props) {
           action={selectedAction}
           onClose={() => setSelectedAction(null)}
           weights={effectiveWeights}
-          opportunities={opportunities}
           feasibilityMap={feasibilityMap}
           onGenerate={() => handleGenerateOutput(selectedAction)}
           isGenerating={generatingIds.includes(selectedAction.actionId)}
