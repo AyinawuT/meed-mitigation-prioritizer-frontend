@@ -136,7 +136,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
           {[
             { label: "Total GHG Emissions", value: inventoryData ? `${totalMillions}M tCO₂e` : "—" },
             { label: "Inventory Year", value: inventoryYear },
-            { label: "Primary Source", value: inventoryData ? "CityCatalyst" : "—" },
+            { label: "Primary Source", value: inventoryData ? "SSG" : "—" },
             { label: "Completeness", value: `${confirmedCount} of ${sectors.length} sectors` },
           ].map((s) => (
             <div key={s.label}>
