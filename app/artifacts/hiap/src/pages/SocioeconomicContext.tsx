@@ -231,6 +231,106 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
       "very low":  "Very small city — highly targeted interventions maximise proportional impact",
     },
   },
+  primary_forest_share: {
+    label: "Primary Forest Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high primary forest cover — AFOLU conservation actions can deliver major carbon sequestration",
+      "high":      "High primary forest share — forest conservation and management are high-priority AFOLU actions",
+      "medium":    "Moderate primary forest — forest protection actions have meaningful sequestration potential",
+      "low":       "Low primary forest share — limited forest carbon stock; focus on restoration",
+      "very low":  "Minimal primary forest — afforestation and ecosystem restoration are the priority AFOLU pathway",
+    },
+  },
+  secondary_forest_share: {
+    label: "Secondary Forest Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high secondary forest — restoration management can significantly boost carbon sequestration",
+      "high":      "High secondary forest share — active forest management can enhance carbon stocks",
+      "medium":    "Moderate secondary forest — restoration programmes can build long-term carbon sinks",
+      "low":       "Low secondary forest — limited regeneration base; restoration investment needed",
+      "very low":  "Minimal secondary forest — afforestation from degraded land is the primary AFOLU option",
+    },
+  },
+  silviculture_share: {
+    label: "Silviculture Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large managed forest area — sustainable forestry practices can deliver significant carbon benefits",
+      "high":      "High silviculture share — sustainable timber and biomass management is a key AFOLU lever",
+      "medium":    "Moderate silviculture — sustainable forestry practices have measurable carbon impact",
+      "low":       "Small managed forest area — silviculture actions have limited local carbon scope",
+      "very low":  "Minimal silviculture — managed forest carbon actions are not a primary local lever",
+    },
+  },
+  cropland_share: {
+    label: "Cropland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large cropland area — agricultural emissions reduction and soil carbon actions are high priority",
+      "high":      "High cropland share — sustainable agriculture and soil carbon sequestration are key AFOLU actions",
+      "medium":    "Moderate cropland — agricultural emissions management has measurable local impact",
+      "low":       "Small cropland area — agricultural AFOLU actions have limited local scope",
+      "very low":  "Minimal cropland — land-use emissions from agriculture are negligible locally",
+    },
+  },
+  pasture_share: {
+    label: "Pasture Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large pasture area — livestock emissions and grassland carbon management are critical AFOLU priorities",
+      "high":      "High pasture share — grassland and livestock management actions have significant emissions impact",
+      "medium":    "Moderate pasture — grazing management and grassland restoration have measurable carbon potential",
+      "low":       "Small pasture area — livestock-related AFOLU actions have limited local scope",
+      "very low":  "Minimal pasture — grassland carbon and livestock emissions are negligible locally",
+    },
+  },
+  grassland_share: {
+    label: "Grassland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high grassland cover — grassland restoration can deliver significant soil carbon sequestration",
+      "high":      "High grassland share — restoration and management of grasslands can enhance carbon stocks",
+      "medium":    "Moderate grassland — grassland management has some carbon sequestration potential",
+      "low":       "Low grassland share — limited scope for grassland carbon actions",
+      "very low":  "Minimal grassland — grassland carbon sequestration is not a significant local lever",
+    },
+  },
+  shrubland_share: {
+    label: "Shrubland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high shrubland cover — fire risk management and restoration can protect significant carbon stocks",
+      "high":      "High shrubland share — vegetation management and wildfire prevention are relevant AFOLU actions",
+      "medium":    "Moderate shrubland — vegetation management has some carbon and fire-risk relevance",
+      "low":       "Low shrubland share — limited scope for shrubland-focused climate actions",
+      "very low":  "Minimal shrubland — not a significant land-use lever for local climate action",
+    },
+  },
+  beach_dune_share: {
+    label: "Beach Dune Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high coastal dune cover — dune restoration can protect carbon-rich coastal ecosystems and reduce flood risk",
+      "high":      "High beach/dune share — coastal ecosystem protection supports blue carbon and climate resilience",
+      "medium":    "Moderate coastal dune area — coastal protection actions have measurable resilience benefits",
+      "low":       "Low beach/dune share — limited scope for coastal ecosystem carbon actions",
+      "very low":  "Minimal coastal dune area — not a significant land-use lever locally",
+    },
+  },
+  ice_snow_share: {
+    label: "Ice Snow Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "risk",
+    relevance: {
+      "very high": "Very high glacier/snow cover — high climate vulnerability; cryosphere loss threatens water supply and downstream flooding",
+      "high":      "High ice/snow share — significant cryosphere area at risk from warming; water security actions are critical",
+      "medium":    "Moderate glacier/snow cover — some climate vulnerability related to snowmelt timing and water availability",
+      "low":       "Low ice/snow share — limited cryosphere exposure; water supply risk from glacial retreat is moderate",
+      "very low":  "Minimal ice/snow cover — cryosphere-related climate risk is negligible locally",
+    },
+  },
+  other_bare_share: {
+    label: "Other Bare Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high bare land cover — large degraded or unvegetated areas represent a significant restoration opportunity",
+      "high":      "High bare land share — afforestation and revegetation of degraded land can build new carbon sinks",
+      "medium":    "Moderate bare land area — targeted revegetation can contribute to local carbon sequestration",
+      "low":       "Low bare land share — limited degraded land available for restoration",
+      "very low":  "Minimal bare land — land restoration is not a significant local AFOLU lever",
+    },
+  },
 };
 
 const CATEGORY_STYLES: Record<Category, { bg: string; color: string; label: string }> = {
@@ -249,7 +349,7 @@ const CONCERN_ICON: Record<string, string> = {
 
 const THEME_ORDER = [
   "Income & Welfare", "Housing", "Mobility", "Energy", "Employment",
-  "Demographics", "Digital Infrastructure", "Other",
+  "Demographics", "Digital Infrastructure", "Land Use", "Other",
 ];
 
 function formatValue(ind: Indicator): string {
