@@ -1,0 +1,1338 @@
+{
+  "data": {
+    "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+    "inventoryName": "Renca - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "57b55975-a580-4a36-bc03-5232f0af6020",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.768471Z",
+    "created": "2026-07-15T12:58:06.768577Z",
+    "last_updated": "2026-07-15T12:58:06.768683Z",
+    "city": {
+      "cityId": "57b55975-a580-4a36-bc03-5232f0af6020",
+      "locode": "CL REN",
+      "name": "Renca",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "356ab648-369c-4820-bc27-6deb7074a6e1",
+      "created": "2026-07-15T12:58:06.768793Z",
+      "last_updated": "2026-07-15T12:58:06.768899Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "9c2d57b9-33f7-459c-9949-7f8bef7ab60b",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "41585",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "cbf917fd-49de-45bf-87eb-42a6a3cac82f",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.754689Z",
+        "last_updated": "2026-07-15T12:58:06.754822Z",
+        "activityValues": [
+          {
+            "id": "5fd4dda3-3e8e-4598-8c24-900dbd47aeb9",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "41585",
+            "co2eqYears": 100,
+            "inventoryValueId": "73acda09-0a75-4039-9f39-7b576ca5c7f8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.754935Z",
+            "last_updated": "2026-07-15T12:58:06.755047Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "2324216a-4fec-4a16-a0de-2dd07503c2a5",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "33497",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "10599747-8884-4c30-ae0f-c9e5f9d84bbb",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.755176Z",
+        "last_updated": "2026-07-15T12:58:06.755285Z",
+        "activityValues": [
+          {
+            "id": "97a12d9a-2f74-4ae5-be65-58dd7b50b0d5",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "33497",
+            "co2eqYears": 100,
+            "inventoryValueId": "d4d54234-50e1-4a2f-a137-076a6b3628aa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.755396Z",
+            "last_updated": "2026-07-15T12:58:06.755500Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "277ad6ec-3704-4250-9115-3f97e60ae643",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1909",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "1aa6a287-689f-4353-8568-2d0d8bd87e8d",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.755610Z",
+        "last_updated": "2026-07-15T12:58:06.755716Z",
+        "activityValues": [
+          {
+            "id": "0f1f916c-0a29-418f-ba41-e0afbea3d1ee",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "1909",
+            "co2eqYears": 100,
+            "inventoryValueId": "1c9c56df-d7ee-471c-9336-7558f67ba3f4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.755827Z",
+            "last_updated": "2026-07-15T12:58:06.755932Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "96e15b36-8b77-4afc-9591-1c3e6faa4470",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8180",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "1ebd253e-6b46-46a2-a074-727c7c702f4e",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.756042Z",
+        "last_updated": "2026-07-15T12:58:06.756147Z",
+        "activityValues": [
+          {
+            "id": "6775fdfd-2cc6-4e14-9779-e63215ffd298",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "8180",
+            "co2eqYears": 100,
+            "inventoryValueId": "bbb50add-c68d-4622-bc9e-9ca334926b47",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.756255Z",
+            "last_updated": "2026-07-15T12:58:06.756359Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "247cf659-cc77-41eb-92f4-150864e5538c",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "24657",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "5fbce5d8-741c-4f84-9412-3cb1875d7aea",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.756470Z",
+        "last_updated": "2026-07-15T12:58:06.756576Z",
+        "activityValues": [
+          {
+            "id": "0357fea4-ac00-4d0d-9628-b0e38f850846",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "24657",
+            "co2eqYears": 100,
+            "inventoryValueId": "9d4eef87-2074-4c8e-a238-d5407364f49d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.756685Z",
+            "last_updated": "2026-07-15T12:58:06.756800Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "a35723ef-d138-4930-8523-816be693137e",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1405",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "de605eb7-2aff-4b85-8810-5354f9ab4792",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.756925Z",
+        "last_updated": "2026-07-15T12:58:06.757030Z",
+        "activityValues": [
+          {
+            "id": "dd4c606c-e37f-4717-a763-8ce2f32f02c6",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "1405",
+            "co2eqYears": 100,
+            "inventoryValueId": "6ef4994a-609b-444b-9568-65b8f27de58d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.757164Z",
+            "last_updated": "2026-07-15T12:58:06.757269Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "045bc6ce-3fb8-4dad-874c-1b6a54bd8219",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "40173",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "e39f2227-24cb-45e6-9826-785a8eea90a8",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.757385Z",
+        "last_updated": "2026-07-15T12:58:06.757508Z",
+        "activityValues": [
+          {
+            "id": "f75d00b7-0b03-4fb7-b770-f7d37bbbf0a3",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "40173",
+            "co2eqYears": 100,
+            "inventoryValueId": "a7fbb357-4365-4182-a760-0a945aecad51",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.757615Z",
+            "last_updated": "2026-07-15T12:58:06.757744Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "29418423-fa1a-42f1-a2bc-e5ec7fc9cfa5",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "39094",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "a5eb9cde-1d09-473c-ac40-f327f97ab88d",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.757854Z",
+        "last_updated": "2026-07-15T12:58:06.757959Z",
+        "activityValues": [
+          {
+            "id": "22cab72d-717b-4181-87c3-895d25a604da",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "39094",
+            "co2eqYears": 100,
+            "inventoryValueId": "3f605cad-9523-44a4-8320-d8428a64406d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.758067Z",
+            "last_updated": "2026-07-15T12:58:06.758171Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "303e7043-0d0e-42a9-9b61-4c96fe21f642",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2228",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "15238735-1f50-42f7-b1ee-a1bbfb40c4fc",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.758283Z",
+        "last_updated": "2026-07-15T12:58:06.758404Z",
+        "activityValues": [
+          {
+            "id": "afbf957e-fe7e-487e-83a5-459bf7a0129f",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "2228",
+            "co2eqYears": 100,
+            "inventoryValueId": "61a8f0c4-37b4-47cd-9596-22dd4c8e68c1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.758519Z",
+            "last_updated": "2026-07-15T12:58:06.758623Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "57659024-a31d-4cd4-b85f-a430be0070d9",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "18169",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "bd924b09-605b-421a-917a-ad32225b69ae",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.758734Z",
+        "last_updated": "2026-07-15T12:58:06.758847Z",
+        "activityValues": [
+          {
+            "id": "c92c53f1-5a42-4637-93db-c771d369865d",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "18169",
+            "co2eqYears": 100,
+            "inventoryValueId": "4e17321b-991b-4e9e-9e3a-148bd1b26cad",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.758963Z",
+            "last_updated": "2026-07-15T12:58:06.759076Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "e5077a50-c18a-4aeb-a06b-bfb830f65e9b",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "515",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "3ec667e2-589a-4128-b959-87509a606ba6",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.759193Z",
+        "last_updated": "2026-07-15T12:58:06.759305Z",
+        "activityValues": [
+          {
+            "id": "aa3d4822-000c-457d-b42e-eb02bd98555c",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "515",
+            "co2eqYears": 100,
+            "inventoryValueId": "b4bb136d-9f40-4929-91b7-34bdfcb6912e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.759421Z",
+            "last_updated": "2026-07-15T12:58:06.759545Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "3ee5aded-90da-42e4-a1b1-07f2a00f83c2",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "29",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "e449808d-b27c-4fe6-b5b9-e13a047cbce5",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.759670Z",
+        "last_updated": "2026-07-15T12:58:06.759789Z",
+        "activityValues": [
+          {
+            "id": "534c75a2-535f-41d7-b8d0-bae70bea3b67",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "29",
+            "co2eqYears": 100,
+            "inventoryValueId": "7e67ab26-b3dc-49de-b211-27cf10d56998",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.759911Z",
+            "last_updated": "2026-07-15T12:58:06.760028Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "01c853ac-e2ea-420f-b19f-82629f7940a5",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "42",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "d2bdf540-0fe3-4729-9072-2096875d91b8",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.760153Z",
+        "last_updated": "2026-07-15T12:58:06.760271Z",
+        "activityValues": [
+          {
+            "id": "6f2f17ac-b81f-49cb-b67c-5cbbf3f15ee0",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "42",
+            "co2eqYears": 100,
+            "inventoryValueId": "abc7f402-d954-4ace-8990-6bedb4496917",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.760392Z",
+            "last_updated": "2026-07-15T12:58:06.760508Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "a941bee2-7fee-4541-ab6d-2525f3dcfa9d",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "30",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "8eeefa6b-fad5-4806-b7f5-89850ea778b7",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.760630Z",
+        "last_updated": "2026-07-15T12:58:06.760746Z",
+        "activityValues": [
+          {
+            "id": "31d1e981-5d5e-41d6-8822-54633e87736f",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "30",
+            "co2eqYears": 100,
+            "inventoryValueId": "0148a585-9d21-412e-b584-7c6c73f17292",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.760863Z",
+            "last_updated": "2026-07-15T12:58:06.760978Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "1dc9db59-542e-4e5f-88a3-a9e0ff7f3e20",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "e570b3a9-5425-43e1-a006-9be1816559bb",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.761115Z",
+        "last_updated": "2026-07-15T12:58:06.761235Z",
+        "activityValues": [
+          {
+            "id": "742411ba-05a1-4fc0-9376-726a584dd692",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1",
+            "co2eqYears": 100,
+            "inventoryValueId": "bada8a42-a3ca-4b58-8abc-27a37acb7710",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.761368Z",
+            "last_updated": "2026-07-15T12:58:06.761483Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "d8e4a5a5-9c76-407e-92bd-1ac9de4d7f8b",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "260220",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "d2af2f91-1b8a-411d-b4ec-817f84538075",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.761612Z",
+        "last_updated": "2026-07-15T12:58:06.761732Z",
+        "activityValues": [
+          {
+            "id": "e7b70c23-84dc-4df4-97d8-720a792ccd0f",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "260220",
+            "co2eqYears": 100,
+            "inventoryValueId": "8ce595de-e1a0-4623-800b-739ce022a48e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.761854Z",
+            "last_updated": "2026-07-15T12:58:06.761967Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "63478de1-741a-4092-b72a-ae0b620d1128",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1913",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "93ca4cd4-8a21-433f-ab06-7dbad4cec7af",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.762085Z",
+        "last_updated": "2026-07-15T12:58:06.762208Z",
+        "activityValues": [
+          {
+            "id": "1a9bd172-7c64-478c-8ca7-83c0489ce0e6",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "1913",
+            "co2eqYears": 100,
+            "inventoryValueId": "a752241e-72a0-4dc0-adb8-8452929b489a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.762324Z",
+            "last_updated": "2026-07-15T12:58:06.762436Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "5e587091-39ec-4c77-bc36-a9364cd397dc",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "457",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "8d3d17cf-38cc-4758-86ce-906b9d3c492f",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.762557Z",
+        "last_updated": "2026-07-15T12:58:06.762668Z",
+        "activityValues": [
+          {
+            "id": "f392d70b-bd7b-4899-8d49-fe402648ab0c",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "457",
+            "co2eqYears": 100,
+            "inventoryValueId": "87809754-33fc-4fc3-852f-4d66d57bc47f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.762784Z",
+            "last_updated": "2026-07-15T12:58:06.762902Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "941ec8d6-ac59-447c-bc18-e7b265bcd868",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "821",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "48747313-6690-4a48-a7a1-70f835b4b300",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.763025Z",
+        "last_updated": "2026-07-15T12:58:06.763137Z",
+        "activityValues": [
+          {
+            "id": "623b1b8a-2aca-4c4f-94bc-c0e0f62ad98e",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "821",
+            "co2eqYears": 100,
+            "inventoryValueId": "d29b1074-4154-425b-af89-ff6a08dc72d0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.763258Z",
+            "last_updated": "2026-07-15T12:58:06.763371Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "e12a1dd3-dd50-4cc2-856b-366653d64b84",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "82088",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "a10184d4-2b08-4348-b765-c9f835f9037c",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.763489Z",
+        "last_updated": "2026-07-15T12:58:06.763604Z",
+        "activityValues": [
+          {
+            "id": "2ebaf8cb-a8c1-4685-a02e-d6c38bce37df",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "82088",
+            "co2eqYears": 100,
+            "inventoryValueId": "199deebb-2625-4db7-b10b-95d3f2b33c5d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.763722Z",
+            "last_updated": "2026-07-15T12:58:06.763833Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "0a8869bc-24dc-4cf9-890b-27ae84516250",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2696",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "0792e038-ac70-4d79-af3b-a67f9526a3f3",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.763951Z",
+        "last_updated": "2026-07-15T12:58:06.764063Z",
+        "activityValues": [
+          {
+            "id": "280b2e24-b739-4013-b9e2-33a030127bf9",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "2696",
+            "co2eqYears": 100,
+            "inventoryValueId": "dd572ed8-f617-472a-b9e1-d6d0d088b7b6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.764177Z",
+            "last_updated": "2026-07-15T12:58:06.764289Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "97e84893-6674-4716-a81c-f136f1f23426",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "136000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "b5601d49-7a7a-4cb7-9245-682b415a8ed9",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.764407Z",
+        "last_updated": "2026-07-15T12:58:06.764520Z",
+        "activityValues": [
+          {
+            "id": "bdb23e93-7ffe-4baf-8512-75135c31a9ba",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "136000",
+            "co2eqYears": 100,
+            "inventoryValueId": "ff7497b9-0726-455f-b489-e677588d3e1e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.764815Z",
+            "last_updated": "2026-07-15T12:58:06.764975Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "e3c0556b-fd30-4eff-84ca-e2500e6d62fe",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "751",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "f33207ce-63c3-48bb-897e-c8eb626845b4",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.765124Z",
+        "last_updated": "2026-07-15T12:58:06.765254Z",
+        "activityValues": [
+          {
+            "id": "bbf55752-9407-4565-af31-a4a369e670d3",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "751",
+            "co2eqYears": 100,
+            "inventoryValueId": "79ed811a-5aea-43fe-9e49-a58584cbd2b3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.765382Z",
+            "last_updated": "2026-07-15T12:58:06.765505Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "f164b3b3-7e49-41ad-a2bd-9797ce8ea24e",
+        "gpcReferenceNumber": "III.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "29000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "2fccb8aa-24a3-4479-ae27-9bb4291cfecb",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.765636Z",
+        "last_updated": "2026-07-15T12:58:06.765745Z",
+        "activityValues": [
+          {
+            "id": "ad11c9ce-c224-4a73-9eef-16c1c521a6bf",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "29000",
+            "co2eqYears": 100,
+            "inventoryValueId": "8f625556-4091-49cb-90cd-5a6f5eaa1812",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.765871Z",
+            "last_updated": "2026-07-15T12:58:06.765994Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "885ccc60-e3f2-443b-8bf2-0a545117026c",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "11774",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "cb6d2b78-d4a2-403d-8724-48d3de46c055",
+        "subCategoryId": "b2432cb8-f149-49f3-9715-4f97197422e9",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.766121Z",
+        "last_updated": "2026-07-15T12:58:06.766229Z",
+        "activityValues": [
+          {
+            "id": "e5af348a-e9a1-4035-a5d0-38f849e03950",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "11774",
+            "co2eqYears": 100,
+            "inventoryValueId": "be3f2d26-34f8-46c2-a53f-ba22a2f36361",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.766341Z",
+            "last_updated": "2026-07-15T12:58:06.766446Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "cb6d2b78-d4a2-403d-8724-48d3de46c055",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "3fb4c896-99a4-44fa-9b8b-37eaeed51b98",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "24856",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e2217772-e836-4502-8106-8f589b5dbba7",
+        "subCategoryId": "fde99ec4-4574-4003-8be3-231f5a053c94",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.766561Z",
+        "last_updated": "2026-07-15T12:58:06.766670Z",
+        "activityValues": [
+          {
+            "id": "ea18d82c-6c36-437c-ba8a-f3bf196c49c2",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "24856",
+            "co2eqYears": 100,
+            "inventoryValueId": "11ed787d-6d04-4b99-b28a-0cd254e8e54e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.766787Z",
+            "last_updated": "2026-07-15T12:58:06.766904Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e2217772-e836-4502-8106-8f589b5dbba7",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "ba36aec1-ae70-45de-9ca3-8d7bbeff254d",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "1926eba7-ef4b-4212-8d41-e514d722f312",
+        "subCategoryId": "ec85a3b2-2b6c-463e-90dd-d8a6aefa6d0e",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.767020Z",
+        "last_updated": "2026-07-15T12:58:06.767127Z",
+        "activityValues": [
+          {
+            "id": "05e003e1-da03-4d15-93b7-c3a8e88a7673",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "2",
+            "co2eqYears": 100,
+            "inventoryValueId": "4efa90b0-d940-4b7a-8c13-cd8ea978d588",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.767239Z",
+            "last_updated": "2026-07-15T12:58:06.767344Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "1926eba7-ef4b-4212-8d41-e514d722f312",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "c8abf2b3-d21a-4a30-ad26-711cbbe5bd3b",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "440",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "2c6906f5-17ec-4c5e-a0cc-001b7b2070a8",
+        "subCategoryId": "d421ec41-81c7-4ea3-bdfc-9f3b0ce999ab",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.767468Z",
+        "last_updated": "2026-07-15T12:58:06.767580Z",
+        "activityValues": [
+          {
+            "id": "294ef41f-fa2d-4545-aeee-56b33e8c4ae2",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "440",
+            "co2eqYears": 100,
+            "inventoryValueId": "2230cab4-9ec6-4415-99f5-933f867a2a02",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.767709Z",
+            "last_updated": "2026-07-15T12:58:06.767915Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "2c6906f5-17ec-4c5e-a0cc-001b7b2070a8",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "37de168a-3b6d-4712-ac48-ca19d7777ca7",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "240",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "b3ab016c-4522-4aef-b950-690cbe364fe8",
+        "subCategoryId": "dd4f29e7-4acf-4336-a97b-488f8f5dde3c",
+        "inventoryId": "3f1684d5-fcfa-4c18-9e92-9e880ed7f79f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.768038Z",
+        "last_updated": "2026-07-15T12:58:06.768148Z",
+        "activityValues": [
+          {
+            "id": "06455da5-411d-4822-b9e5-25166e719aa5",
+            "activityData": {
+              "data-source": "inventory-CHL-13128-Renca-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "240",
+            "co2eqYears": 100,
+            "inventoryValueId": "b253458c-c878-49ff-a0f4-2a5c02e73c38",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13128-Renca-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.768259Z",
+            "last_updated": "2026-07-15T12:58:06.768364Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "b3ab016c-4522-4aef-b950-690cbe364fe8",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,933 @@
+{
+  "data": {
+    "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+    "inventoryName": "Canela - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "40c76221-7c58-4224-936b-f20ef81d45d7",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.571229Z",
+    "created": "2026-07-15T12:58:06.571334Z",
+    "last_updated": "2026-07-15T12:58:06.571446Z",
+    "city": {
+      "cityId": "40c76221-7c58-4224-936b-f20ef81d45d7",
+      "locode": "CL CAN",
+      "name": "Canela",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "982e63b1-5347-4f44-9d16-6339d1bc0709",
+      "created": "2026-07-15T12:58:06.571555Z",
+      "last_updated": "2026-07-15T12:58:06.571664Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "e96b9d0f-777c-489a-b31e-924ac8f896cd",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1802",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "7a9f870e-a261-494e-8abd-66fb94fb3b2f",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.561439Z",
+        "last_updated": "2026-07-15T12:58:06.561620Z",
+        "activityValues": [
+          {
+            "id": "d19bef76-446b-4e9d-8de6-a9d4b35ea7f1",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "1802",
+            "co2eqYears": 100,
+            "inventoryValueId": "0b5b385e-7423-4799-afbd-e560ac06a970",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.561746Z",
+            "last_updated": "2026-07-15T12:58:06.561871Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "7a400eeb-adb5-4a7d-97bc-e1d3f9c7f414",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1583",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "4016f505-294f-411d-86a8-5ce7cdbd69ad",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.562001Z",
+        "last_updated": "2026-07-15T12:58:06.562112Z",
+        "activityValues": [
+          {
+            "id": "1e3cdf87-3bfd-4e8c-b7cb-f423f3888099",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "1583",
+            "co2eqYears": 100,
+            "inventoryValueId": "0d215bfe-b373-44b8-98a6-77c1a7c1471e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.562245Z",
+            "last_updated": "2026-07-15T12:58:06.562352Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "5d6f5735-c423-482a-8291-d09509059269",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "90",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "dfb037c3-333f-4e55-bc37-5ec91b94711f",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.562481Z",
+        "last_updated": "2026-07-15T12:58:06.562600Z",
+        "activityValues": [
+          {
+            "id": "dc893b1b-4547-4bde-9867-f05f5d758b18",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "90",
+            "co2eqYears": 100,
+            "inventoryValueId": "84e7392a-d930-4401-be59-04e9fa889068",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.562721Z",
+            "last_updated": "2026-07-15T12:58:06.562830Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "132e3a44-d9dc-4c6d-abb3-0b96bf7f8fd2",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "389",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "cd2608e8-6334-47cd-8408-a9eec1eb9528",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.562943Z",
+        "last_updated": "2026-07-15T12:58:06.563050Z",
+        "activityValues": [
+          {
+            "id": "647f3ceb-b91e-4657-aa59-a6ce6ad044e0",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "389",
+            "co2eqYears": 100,
+            "inventoryValueId": "cea76063-0b6f-4306-9307-045e349ca9e8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.563160Z",
+            "last_updated": "2026-07-15T12:58:06.563267Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "69043863-803d-4e14-ae1a-e99e89f219cf",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "360",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "29c34772-901e-4ec6-ae8a-0fde3d42bb42",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.563382Z",
+        "last_updated": "2026-07-15T12:58:06.563505Z",
+        "activityValues": [
+          {
+            "id": "1cdf7179-a70e-4b69-bf12-94ce993f8612",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "360",
+            "co2eqYears": 100,
+            "inventoryValueId": "25e31756-8aad-4de5-a7cb-e702fd1422aa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.563626Z",
+            "last_updated": "2026-07-15T12:58:06.563746Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "af5d0176-ec84-4b53-8fa8-853a762e7799",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "49b0dfdb-e133-4ab4-a6c2-58a1ed64e3d6",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.563875Z",
+        "last_updated": "2026-07-15T12:58:06.563997Z",
+        "activityValues": [
+          {
+            "id": "c8467c35-335f-4bbf-94d4-68210e5517cb",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "20",
+            "co2eqYears": 100,
+            "inventoryValueId": "ccc64a72-be7b-441d-b832-880c0d48798f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.564122Z",
+            "last_updated": "2026-07-15T12:58:06.564241Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "ed90367f-9dd2-453c-afa3-322cf54e8956",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3023",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "7fe6b553-f1a9-4af3-a2e9-458ce2d731da",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.564367Z",
+        "last_updated": "2026-07-15T12:58:06.564487Z",
+        "activityValues": [
+          {
+            "id": "97538811-d380-476e-b43d-60af9e29b646",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "3023",
+            "co2eqYears": 100,
+            "inventoryValueId": "05a2407d-fab5-4aea-a32b-96700fb923d6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.564608Z",
+            "last_updated": "2026-07-15T12:58:06.564727Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "22309948-0c3c-48e2-a8b8-2c0a06791f4b",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3389",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "67312cee-f9d8-4ce4-9965-a6da8f54d704",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.564857Z",
+        "last_updated": "2026-07-15T12:58:06.564978Z",
+        "activityValues": [
+          {
+            "id": "2e61307f-47c9-409d-b150-12eb4e61cd64",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "3389",
+            "co2eqYears": 100,
+            "inventoryValueId": "15ff4d29-a05e-4834-bdec-7c4fddef8dee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.565101Z",
+            "last_updated": "2026-07-15T12:58:06.565220Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "cee85760-aa2f-42bb-b53f-9f23e2912c58",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "193",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "f6f9e4d0-b79c-48d8-999b-a1ff826030c0",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.565376Z",
+        "last_updated": "2026-07-15T12:58:06.565514Z",
+        "activityValues": [
+          {
+            "id": "72dba488-7ee4-4b0a-99db-ab3a19495974",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "193",
+            "co2eqYears": 100,
+            "inventoryValueId": "42ae93a4-4533-491e-bbc2-f4e07ad33f36",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.565642Z",
+            "last_updated": "2026-07-15T12:58:06.565764Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "aef2dc10-ee93-458a-b646-57e77c470fb8",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "fd0d70e1-e2d5-41be-9d9e-eaa5b79a3f56",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.565899Z",
+        "last_updated": "2026-07-15T12:58:06.566023Z",
+        "activityValues": [
+          {
+            "id": "7d777851-e84e-4e3a-9606-70ede372941d",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "4",
+            "co2eqYears": 100,
+            "inventoryValueId": "dfdbd289-8bcd-4fb5-807c-11c520ae142b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.566152Z",
+            "last_updated": "2026-07-15T12:58:06.566275Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "d81583cb-e245-4d5f-afea-b8ef8db3f1b5",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "0",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "1f081458-aacc-4867-bfaa-2b68e9f5e510",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.566405Z",
+        "last_updated": "2026-07-15T12:58:06.566527Z",
+        "activityValues": [
+          {
+            "id": "2d6cfcae-f45a-4d2c-b7ce-c2eb679af779",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "0",
+            "co2eqYears": 100,
+            "inventoryValueId": "16aa75fe-ce1f-4ea6-b4cf-e9a25aaabeee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.566650Z",
+            "last_updated": "2026-07-15T12:58:06.566770Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "449570d4-e74f-4e8c-8869-a9bf756cc691",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "0",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "99e8a010-b3b1-4ce9-9f15-1a0315dbbf6f",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.566901Z",
+        "last_updated": "2026-07-15T12:58:06.567028Z",
+        "activityValues": [
+          {
+            "id": "42fd5c0e-35fc-4d93-9cdb-ba5ab891d0d3",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "0",
+            "co2eqYears": 100,
+            "inventoryValueId": "2fc2af1b-ab7c-491c-99a4-bb9a15b1f34d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.567216Z",
+            "last_updated": "2026-07-15T12:58:06.567446Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "5e8cdb95-561e-4a06-9690-d3e811a738b2",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "26953",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "daa51e33-22f8-414a-a9e7-db2467d1b3a2",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.567593Z",
+        "last_updated": "2026-07-15T12:58:06.567706Z",
+        "activityValues": [
+          {
+            "id": "81174636-e6a5-43cb-98cd-f596e854bcc2",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "26953",
+            "co2eqYears": 100,
+            "inventoryValueId": "f7916f70-81c8-407a-98b7-4f991d819819",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.567842Z",
+            "last_updated": "2026-07-15T12:58:06.567970Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "b08f37a5-6eb3-4cbd-a91e-129e308d4a5e",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "143",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "40179581-7f97-4e2d-afd5-2f01c87ca0b5",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.568100Z",
+        "last_updated": "2026-07-15T12:58:06.568241Z",
+        "activityValues": [
+          {
+            "id": "6cc982ef-0249-4c66-a984-3e82a3aab18f",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "143",
+            "co2eqYears": 100,
+            "inventoryValueId": "c0b7af2d-7196-43ec-92ad-abdac1984029",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.568360Z",
+            "last_updated": "2026-07-15T12:58:06.568471Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "bbc039fe-f164-491a-a377-d027ca943c22",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "c51d14ae-7af6-4744-ab53-ff94ea4ad496",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.568588Z",
+        "last_updated": "2026-07-15T12:58:06.568697Z",
+        "activityValues": [
+          {
+            "id": "e3035284-278a-4b01-8fcb-15897794f38b",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "3000",
+            "co2eqYears": 100,
+            "inventoryValueId": "7da51fe3-e974-416d-9500-048722251abc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.568808Z",
+            "last_updated": "2026-07-15T12:58:06.568916Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "d92a441c-8dec-4f29-a378-0094a54f9aa6",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "0c6a43bb-7340-48f9-9020-5f07e9ab3783",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.569053Z",
+        "last_updated": "2026-07-15T12:58:06.569162Z",
+        "activityValues": [
+          {
+            "id": "355f1eec-a57a-4111-b9ad-2ea07af0b24b",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "1c14e079-5e84-4a69-82ed-9fc2ec4615c9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.569274Z",
+            "last_updated": "2026-07-15T12:58:06.569381Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "6183c1fb-2e03-4a32-893e-d000cee3ef02",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "662",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e0c99fd1-3ddf-47ca-964a-e4b02f29e486",
+        "subCategoryId": "3abc48e2-2f62-4b0c-9291-fbebbee755a2",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.569496Z",
+        "last_updated": "2026-07-15T12:58:06.569603Z",
+        "activityValues": [
+          {
+            "id": "9f416c9d-1cf0-46be-9107-d8a88edf0b1e",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "662",
+            "co2eqYears": 100,
+            "inventoryValueId": "b8cdc069-ee31-46dd-9372-754623663770",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.569710Z",
+            "last_updated": "2026-07-15T12:58:06.569815Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e0c99fd1-3ddf-47ca-964a-e4b02f29e486",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "9378fa6f-4619-4dd0-8f6a-2106d5c47815",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9440",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "9dbfcff0-c627-4ba3-9a66-5d836500b439",
+        "subCategoryId": "2bfacf31-a665-4503-9668-02629cb05b97",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.569928Z",
+        "last_updated": "2026-07-15T12:58:06.570038Z",
+        "activityValues": [
+          {
+            "id": "ffeb8b61-25e1-4292-8482-607f235cd2b5",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "9440",
+            "co2eqYears": 100,
+            "inventoryValueId": "b74b9d59-1cc1-4d8b-a106-9b3d735fbdc1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.570150Z",
+            "last_updated": "2026-07-15T12:58:06.570255Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "9dbfcff0-c627-4ba3-9a66-5d836500b439",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "27838542-10db-4f29-bfcb-38041df68e18",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-8561",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "7e1bddb2-eeb8-4f5c-a9f3-fe9947886b3f",
+        "subCategoryId": "d7036169-5e60-4aa2-a865-77ecfee2d52b",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.570367Z",
+        "last_updated": "2026-07-15T12:58:06.570472Z",
+        "activityValues": [
+          {
+            "id": "50cbf67f-c362-431e-924b-485a5781afc6",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-8561",
+            "co2eqYears": 100,
+            "inventoryValueId": "cd4f42ff-b43f-4813-8072-16aecf8295c4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.570580Z",
+            "last_updated": "2026-07-15T12:58:06.570686Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "7e1bddb2-eeb8-4f5c-a9f3-fe9947886b3f",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "17570500-b452-4a39-843b-591d1add5e3a",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "872",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "29a5f920-9f29-4638-baf9-9191173a2f13",
+        "subCategoryId": "25386340-dd87-4c60-a892-20ed5b71c4b9",
+        "inventoryId": "b6dbef4f-d37b-4e4e-9f81-ca4658aa5cce",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.570797Z",
+        "last_updated": "2026-07-15T12:58:06.570903Z",
+        "activityValues": [
+          {
+            "id": "3925f224-6e40-4ba2-84c4-b33d494e8d1d",
+            "activityData": {
+              "data-source": "inventory-CHL-04202-Canela-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "872",
+            "co2eqYears": 100,
+            "inventoryValueId": "8449f0be-7410-4f32-9e16-826b0a2f0b67",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-04202-Canela-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.571012Z",
+            "last_updated": "2026-07-15T12:58:06.571120Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "29a5f920-9f29-4638-baf9-9191173a2f13",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

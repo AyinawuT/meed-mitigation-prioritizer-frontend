@@ -1,0 +1,1383 @@
+{
+  "data": {
+    "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+    "inventoryName": "Temuco - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "5885d59f-798d-4fa1-962a-f6e651df709e",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.621498Z",
+    "created": "2026-07-15T12:58:06.621602Z",
+    "last_updated": "2026-07-15T12:58:06.621705Z",
+    "city": {
+      "cityId": "5885d59f-798d-4fa1-962a-f6e651df709e",
+      "locode": "CL TEM",
+      "name": "Temuco",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "5b36e369-bbdd-4aee-92b9-1d785a7dce4c",
+      "created": "2026-07-15T12:58:06.621811Z",
+      "last_updated": "2026-07-15T12:58:06.621915Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "ceac7d31-547d-4204-bf36-2d144271ef11",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "59617",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "92037fef-de20-4d8a-8c37-e3af03915cb0",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.607230Z",
+        "last_updated": "2026-07-15T12:58:06.607399Z",
+        "activityValues": [
+          {
+            "id": "739e0a8d-e853-49a1-b28e-22c94f3e05bc",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "59617",
+            "co2eqYears": 100,
+            "inventoryValueId": "b49918fb-f7c8-42b4-9f46-80447629d119",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.607541Z",
+            "last_updated": "2026-07-15T12:58:06.607657Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "6bcdf6ac-e262-43f6-8a70-faa071e0d2fc",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "78163",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "70eaccdd-d929-46fa-8edd-edc06a1ea51e",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.607781Z",
+        "last_updated": "2026-07-15T12:58:06.607887Z",
+        "activityValues": [
+          {
+            "id": "f1d11dfc-cf30-4614-837a-230870c0e274",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "78163",
+            "co2eqYears": 100,
+            "inventoryValueId": "056a8e33-6b5d-4f72-8ccb-d9f61f41aec0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.608002Z",
+            "last_updated": "2026-07-15T12:58:06.608109Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "3e5dbbfc-939b-4ca0-86c9-60082340a42b",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4455",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "5d8eba22-9cc9-46df-b596-05b180354073",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.608223Z",
+        "last_updated": "2026-07-15T12:58:06.608329Z",
+        "activityValues": [
+          {
+            "id": "9432af99-0c9e-40af-9829-8e6b1ccf3c1b",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "4455",
+            "co2eqYears": 100,
+            "inventoryValueId": "f9e5f608-ca62-44c7-9d9d-1583c8a3b052",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.608438Z",
+            "last_updated": "2026-07-15T12:58:06.608543Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "c6b29583-4eba-4b45-be0e-f2f40f9e8399",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "60841",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "b5eed094-a791-4598-a19e-24c137008ff0",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.608681Z",
+        "last_updated": "2026-07-15T12:58:06.608804Z",
+        "activityValues": [
+          {
+            "id": "cf035d13-6cc9-450c-992a-f8e136528c89",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "60841",
+            "co2eqYears": 100,
+            "inventoryValueId": "c6602a23-a066-4c0b-aff7-716539723532",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.608916Z",
+            "last_updated": "2026-07-15T12:58:06.609022Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "1464d00c-c992-4683-b861-311e52e567fa",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "62664",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "5a06202c-f32c-4edc-8c0b-09918ac863ba",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.609137Z",
+        "last_updated": "2026-07-15T12:58:06.609243Z",
+        "activityValues": [
+          {
+            "id": "22e638b8-2aae-4a89-82cd-b0ca613ca730",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "62664",
+            "co2eqYears": 100,
+            "inventoryValueId": "3befe1f6-16d3-4959-b9cd-0750ff8f8596",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.609352Z",
+            "last_updated": "2026-07-15T12:58:06.609478Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "b3d6eebd-fc94-488f-b1e4-1a1a96e76678",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3571",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "8530720b-6567-4deb-9f07-e3fb1d0f8dde",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.609629Z",
+        "last_updated": "2026-07-15T12:58:06.609772Z",
+        "activityValues": [
+          {
+            "id": "9d180f9e-3c9b-4360-8a8d-f66716ada425",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "3571",
+            "co2eqYears": 100,
+            "inventoryValueId": "15b626d4-3d80-4bcf-b228-9a7ebb42d5b5",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.609904Z",
+            "last_updated": "2026-07-15T12:58:06.610024Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "a4fab1e6-f27b-49d7-94ce-192d79d9acc7",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "137189",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "fdfc19b8-33bc-4f35-af88-0766fa61f961",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.610156Z",
+        "last_updated": "2026-07-15T12:58:06.610280Z",
+        "activityValues": [
+          {
+            "id": "b2990339-342e-4281-9c78-bea576b1fced",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "137189",
+            "co2eqYears": 100,
+            "inventoryValueId": "b2b50bf5-f7f3-43c5-a36d-b259ab15f01d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.610402Z",
+            "last_updated": "2026-07-15T12:58:06.610510Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "3c51bff9-23a2-4592-b215-8ccfb81cdbad",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "306680",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "80c937c4-2512-4a53-a85b-e099c7461dd9",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.610620Z",
+        "last_updated": "2026-07-15T12:58:06.610738Z",
+        "activityValues": [
+          {
+            "id": "53c2afa0-7cf2-4997-b03e-6bb4cd1e8e9d",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "306680",
+            "co2eqYears": 100,
+            "inventoryValueId": "7bb1b68a-ff8e-443c-b684-c54caa7f2f70",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.610864Z",
+            "last_updated": "2026-07-15T12:58:06.610971Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "a9de4c83-1bae-4a30-bc78-15aaf4cf9dac",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "17480",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "e2f4e859-d8fc-45f6-8d84-639dac0f53a1",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.611084Z",
+        "last_updated": "2026-07-15T12:58:06.611195Z",
+        "activityValues": [
+          {
+            "id": "a0084fc9-b91e-4490-8715-c6843d3a0e5d",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "17480",
+            "co2eqYears": 100,
+            "inventoryValueId": "d7de552f-ed87-469d-bb13-c5137d4a0868",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.611318Z",
+            "last_updated": "2026-07-15T12:58:06.611439Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "a391cdbe-f606-4cf9-aad5-66e5c629aace",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "40075",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "70c1715c-e21f-44e3-9993-541219b8a395",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.611571Z",
+        "last_updated": "2026-07-15T12:58:06.611690Z",
+        "activityValues": [
+          {
+            "id": "c5c80490-53b1-4bea-97c7-ec26e632176b",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "40075",
+            "co2eqYears": 100,
+            "inventoryValueId": "e956066e-114e-44ff-b811-92f00295da2d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.611811Z",
+            "last_updated": "2026-07-15T12:58:06.611933Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "e5d67b04-19c7-45a6-b64c-cbfb6199bdc1",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6069",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "ca54f612-bb16-4d53-b7f7-8aa5a9448998",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.612103Z",
+        "last_updated": "2026-07-15T12:58:06.612236Z",
+        "activityValues": [
+          {
+            "id": "4e843f2e-3a5e-4c14-a788-0a310345c640",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "6069",
+            "co2eqYears": 100,
+            "inventoryValueId": "54ded6bf-5397-4646-bdd2-0e2a4958560e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.612366Z",
+            "last_updated": "2026-07-15T12:58:06.612565Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "231aac00-c8df-4273-b95a-52a204346e52",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "345",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "3a803f05-2a35-495c-98da-45a462d67d2a",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.612713Z",
+        "last_updated": "2026-07-15T12:58:06.612837Z",
+        "activityValues": [
+          {
+            "id": "f3880d37-e972-479b-ac27-b03d954882f4",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "345",
+            "co2eqYears": 100,
+            "inventoryValueId": "fbe27e9d-8a4c-4d24-9a19-98ef69403f58",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.612959Z",
+            "last_updated": "2026-07-15T12:58:06.613091Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "d1b7244b-7695-4ee8-95ed-6f52e24f9f43",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2092",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "4fbd1268-fd0c-4f1b-9394-775bceb7ebcf",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.613219Z",
+        "last_updated": "2026-07-15T12:58:06.613342Z",
+        "activityValues": [
+          {
+            "id": "3e470170-9b8d-4743-88bf-6e8b1ee6387e",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "2092",
+            "co2eqYears": 100,
+            "inventoryValueId": "5918f186-296a-416b-a7d1-bb16e3017138",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.613469Z",
+            "last_updated": "2026-07-15T12:58:06.613587Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "f343f205-cb9e-4d75-99b9-77fe6433deac",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1444",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "0bba696d-b13a-4e7b-940c-a2aa512511a4",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.613713Z",
+        "last_updated": "2026-07-15T12:58:06.613820Z",
+        "activityValues": [
+          {
+            "id": "0a47473e-a35c-4ca7-8c05-196f4e00071b",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1444",
+            "co2eqYears": 100,
+            "inventoryValueId": "53057aac-8c02-447f-aa95-b4f4657fa59c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.613932Z",
+            "last_updated": "2026-07-15T12:58:06.614039Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "5d87866c-78ad-4160-aa90-975ccead3799",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "82",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "2f11bf74-3357-484c-99f2-2e72e7d860c7",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.614156Z",
+        "last_updated": "2026-07-15T12:58:06.614276Z",
+        "activityValues": [
+          {
+            "id": "96aac60e-f840-4ca2-87a8-1160dfb2b3a1",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "82",
+            "co2eqYears": 100,
+            "inventoryValueId": "fc396ed8-9707-49a3-9c74-0745675830b8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.614403Z",
+            "last_updated": "2026-07-15T12:58:06.614524Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "c87d239c-7baf-4364-85e3-dc642abbec99",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "380211",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "ce3f4577-2409-4200-897d-d308fa85f288",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.614652Z",
+        "last_updated": "2026-07-15T12:58:06.614760Z",
+        "activityValues": [
+          {
+            "id": "426f4898-e7f5-484e-a205-9dfad293cce9",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "380211",
+            "co2eqYears": 100,
+            "inventoryValueId": "c4746c89-2f86-452e-bb4c-c32dfb05ad91",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.614874Z",
+            "last_updated": "2026-07-15T12:58:06.614981Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "95821c52-a9dc-4a38-9f81-566c68fd450d",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "0362c4ad-ec26-4748-9b78-5f8afa689378",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.615096Z",
+        "last_updated": "2026-07-15T12:58:06.615203Z",
+        "activityValues": [
+          {
+            "id": "2e732021-712a-4926-a7a3-941da608c475",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "6",
+            "co2eqYears": 100,
+            "inventoryValueId": "26a489c9-d02e-4bf4-9d09-da77c97af016",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.615316Z",
+            "last_updated": "2026-07-15T12:58:06.615425Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "33aa8b7a-a297-4a15-af3f-45639cfb53fb",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "586",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "96a960a8-4df4-47ba-aeae-1798c3d3bfde",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.615544Z",
+        "last_updated": "2026-07-15T12:58:06.615651Z",
+        "activityValues": [
+          {
+            "id": "0523ac24-3e6a-474f-a41c-a56dfa98aa9c",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "586",
+            "co2eqYears": 100,
+            "inventoryValueId": "97e40cb1-9e5a-42ff-ad44-c52908d50d35",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.615762Z",
+            "last_updated": "2026-07-15T12:58:06.615870Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "c01ba66a-653d-4969-a743-829039ecc82f",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8386",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "54c0cf2c-32ae-4c6f-af4f-a0660a7faa07",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.615985Z",
+        "last_updated": "2026-07-15T12:58:06.616092Z",
+        "activityValues": [
+          {
+            "id": "956e4fa4-2933-4db3-b9f1-2d0ac24a4c3d",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "8386",
+            "co2eqYears": 100,
+            "inventoryValueId": "2a7dbd92-7f1e-4777-85a9-5485c6c7c594",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.616207Z",
+            "last_updated": "2026-07-15T12:58:06.616314Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "0727eb69-0a4d-4266-904a-ba5425c82a60",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "33768",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "5ed14e72-386a-4cfa-bc23-59ddddad365b",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.616444Z",
+        "last_updated": "2026-07-15T12:58:06.616564Z",
+        "activityValues": [
+          {
+            "id": "82bed14b-bcdb-45ed-9e3f-ba5527769707",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "33768",
+            "co2eqYears": 100,
+            "inventoryValueId": "f729e15e-0330-482c-9dfc-90fac212c55e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.616685Z",
+            "last_updated": "2026-07-15T12:58:06.616814Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "701890f7-6ccf-4c01-82f4-e294472bb1fc",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "3949c5b8-8ea9-4ccd-9d38-a29e8480830c",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.617030Z",
+        "last_updated": "2026-07-15T12:58:06.617162Z",
+        "activityValues": [
+          {
+            "id": "220c9637-5e30-4cae-8ff3-b5c1ab2cbafb",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "bbd00f7c-bbef-43c4-911d-099cff954f8e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.617278Z",
+            "last_updated": "2026-07-15T12:58:06.617388Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "e18ff533-6e55-4a22-bbbe-5c89c1d82138",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "202000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "8833a985-e195-4f99-9b5d-fd96be6f3adb",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.617511Z",
+        "last_updated": "2026-07-15T12:58:06.617619Z",
+        "activityValues": [
+          {
+            "id": "387658cb-16ae-4c7f-bc3e-b07fa4dd5248",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "202000",
+            "co2eqYears": 100,
+            "inventoryValueId": "b7ad4757-6605-4343-931f-8ed273b656ad",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.617749Z",
+            "last_updated": "2026-07-15T12:58:06.617891Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "dc1e2855-53e6-4a84-921f-b8822ee68bc4",
+        "gpcReferenceNumber": "III.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "10",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "89aa7cc9-29a2-4cc9-bd90-8586faf85e7a",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.618087Z",
+        "last_updated": "2026-07-15T12:58:06.618197Z",
+        "activityValues": [
+          {
+            "id": "43a273d4-5248-4ef6-b1ca-0c822e6f3825",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "10",
+            "co2eqYears": 100,
+            "inventoryValueId": "a368ef6b-f799-42eb-b41a-ebb9710e8e39",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.618307Z",
+            "last_updated": "2026-07-15T12:58:06.618414Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "5c4dcd10-7f46-40f3-ad9b-44e4fb53e138",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "6168734d-f040-485a-b5df-f921d9aaf010",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.618525Z",
+        "last_updated": "2026-07-15T12:58:06.618630Z",
+        "activityValues": [
+          {
+            "id": "12f60911-3ccd-40da-9011-dc92c4d027d0",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "5",
+            "co2eqYears": 100,
+            "inventoryValueId": "9c5676b7-c672-4a94-873c-6e284f899f12",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.618737Z",
+            "last_updated": "2026-07-15T12:58:06.618842Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "5a281d33-76bc-430e-bbe6-67304c3ed66d",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "43000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "eb9636ba-8bd5-4a26-9e68-3205458c7bc5",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.618951Z",
+        "last_updated": "2026-07-15T12:58:06.619055Z",
+        "activityValues": [
+          {
+            "id": "8bdb8ac9-1b3e-4a1f-874c-a9e019007a5f",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "43000",
+            "co2eqYears": 100,
+            "inventoryValueId": "ab70d536-1477-44de-a967-19bddfda423f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.619163Z",
+            "last_updated": "2026-07-15T12:58:06.619267Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "e43bb1fb-f293-44fd-bc78-3a8f482ce59e",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "285",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "2c997cec-9c58-483a-ade2-6c9c1fca1fb2",
+        "subCategoryId": "5441b575-9759-4352-ab7b-58e33654bd6b",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.619379Z",
+        "last_updated": "2026-07-15T12:58:06.619483Z",
+        "activityValues": [
+          {
+            "id": "f87f205a-bba3-499e-8f61-968206e05747",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "285",
+            "co2eqYears": 100,
+            "inventoryValueId": "812e5be4-63f0-4d8b-babb-691c357e6266",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.619590Z",
+            "last_updated": "2026-07-15T12:58:06.619694Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "2c997cec-9c58-483a-ade2-6c9c1fca1fb2",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "151c4090-0196-4a75-96b5-0e43434b6924",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "178890",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ca389da2-3e8d-4863-8e01-05d562ac91b8",
+        "subCategoryId": "99ca0817-3b44-4d5d-9d39-c5dd27b583d3",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.619804Z",
+        "last_updated": "2026-07-15T12:58:06.619909Z",
+        "activityValues": [
+          {
+            "id": "5f59f75e-f7c0-47b9-b407-9d416823a990",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "178890",
+            "co2eqYears": 100,
+            "inventoryValueId": "83488218-5cac-4c2d-8c52-eda082623d8f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.620016Z",
+            "last_updated": "2026-07-15T12:58:06.620120Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ca389da2-3e8d-4863-8e01-05d562ac91b8",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "be552b6b-36ce-4827-b38d-c22191b096c9",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "13901",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "0e936797-3355-41fc-9dd5-a951e8f09773",
+        "subCategoryId": "5d5d6186-2ae9-42e8-bcbd-daf1d1db9354",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.620230Z",
+        "last_updated": "2026-07-15T12:58:06.620334Z",
+        "activityValues": [
+          {
+            "id": "3ab13717-c98f-466d-890c-ecea9e593640",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "13901",
+            "co2eqYears": 100,
+            "inventoryValueId": "0e99bebd-9218-4266-9b93-7d2cdce167d9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.620440Z",
+            "last_updated": "2026-07-15T12:58:06.620544Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0e936797-3355-41fc-9dd5-a951e8f09773",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "298b1fab-18c9-4ad8-adc0-0385b0d80743",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-42079",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "a000c1ff-fbf8-4a14-8b64-caaafb0d3064",
+        "subCategoryId": "572569db-65f7-420e-afad-8711424b5bc7",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.620654Z",
+        "last_updated": "2026-07-15T12:58:06.620758Z",
+        "activityValues": [
+          {
+            "id": "ca404753-bc60-422f-b6ef-b91732a38d77",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-42079",
+            "co2eqYears": 100,
+            "inventoryValueId": "76bf98d3-a0e6-4a56-b2b9-59c080bd5c85",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.620865Z",
+            "last_updated": "2026-07-15T12:58:06.620969Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a000c1ff-fbf8-4a14-8b64-caaafb0d3064",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "99976342-cbeb-4a5b-8e44-51d16acfa20d",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "15915",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "35c49534-5d37-4120-8919-315fb7eb2ed6",
+        "subCategoryId": "1ce92c6b-b50a-4207-89f0-cfa8f4f4ab59",
+        "inventoryId": "b4174032-ede2-4e66-a745-f7cdda9a6a2f",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.621079Z",
+        "last_updated": "2026-07-15T12:58:06.621183Z",
+        "activityValues": [
+          {
+            "id": "601d16d6-3aa3-4796-ab69-7dd0434a806c",
+            "activityData": {
+              "data-source": "inventory-CHL-09101-Temuco-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "15915",
+            "co2eqYears": 100,
+            "inventoryValueId": "68d689bf-d205-4ab0-9bf4-0a174df3d425",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-09101-Temuco-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.621289Z",
+            "last_updated": "2026-07-15T12:58:06.621394Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "35c49534-5d37-4120-8919-315fb7eb2ed6",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

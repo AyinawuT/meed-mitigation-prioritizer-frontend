@@ -122,7 +122,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_agriculture_forestry: {
-    label: "Agriculture & Forestry Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Agriculture & Forestry Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large agriculture sector — AFOLU actions have strong local labour impact",
       "high":      "Large agriculture sector — AFOLU actions have notable labour implications",
@@ -132,7 +132,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_electricity_gas: {
-    label: "Electricity & Gas Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Electricity & Gas Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large utilities workforce — energy transition just-transition is critical",
       "high":      "Significant utilities workforce — energy transition planning is important",
@@ -142,7 +142,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_manufacturing: {
-    label: "Manufacturing Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Manufacturing Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large manufacturing base — industrial decarbonisation is a key priority",
       "high":      "Large manufacturing base — industrial decarbonisation has major impact",
@@ -152,7 +152,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_mining: {
-    label: "Mining Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Mining Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large mining sector — extraction emissions and just-transition are critical",
       "high":      "Significant mining sector — just-transition considerations are important",
@@ -162,7 +162,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   employment_water_waste: {
-    label: "Water & Waste Employment", source: "", theme: "Employment", units: "percent", concern: "neutral",
+    label: "Water & Waste Employment", source: "INE 2022", theme: "Employment", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very large water/waste sector — waste and water actions have high local impact",
       "high":      "Significant water/waste workforce — waste management actions are highly relevant",
@@ -172,7 +172,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   disability_prevalence: {
-    label: "Disability Prevalence", source: "", theme: "Demographics", units: "percent", concern: "neutral",
+    label: "Disability Prevalence", source: "ENDISC 2015", theme: "Demographics", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very high disability prevalence — accessibility must be central to action design",
       "high":      "High disability prevalence — accessibility considerations are important",
@@ -182,7 +182,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   fixed_internet_household_share: {
-    label: "Fixed Internet Household Access", source: "", theme: "Digital Infrastructure", units: "percent", concern: "opportunity",
+    label: "Fixed Internet Household Access", source: "SUBTEL 2022", theme: "Digital Infrastructure", units: "percent", concern: "opportunity",
     relevance: {
       "very high": "Near-universal internet access — smart city and digital monitoring actions are highly feasible",
       "high":      "High internet access — digital infrastructure actions have strong reach",
@@ -192,7 +192,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   indigenous_identification_rate: {
-    label: "Indigenous Population Share", source: "", theme: "Demographics", units: "percent", concern: "neutral",
+    label: "Indigenous Population Share", source: "CASEN 2022", theme: "Demographics", units: "percent", concern: "neutral",
     relevance: {
       "very high": "Very high indigenous share — FPIC and culturally appropriate co-design are essential",
       "high":      "High indigenous population share — culturally inclusive engagement is critical",
@@ -202,7 +202,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   literacy_rate: {
-    label: "Literacy Rate", source: "", theme: "Demographics", units: "percent", concern: "opportunity",
+    label: "Literacy Rate", source: "CASEN 2022", theme: "Demographics", units: "percent", concern: "opportunity",
     relevance: {
       "very high": "Very high literacy — public communication and behaviour change programmes are highly effective",
       "high":      "High literacy — public engagement and awareness campaigns are broadly effective",
@@ -212,7 +212,7 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   mean_years_schooling: {
-    label: "Mean Years of Schooling", source: "", theme: "Demographics", units: "years", concern: "opportunity",
+    label: "Mean Years of Schooling", source: "CASEN 2022", theme: "Demographics", units: "years", concern: "opportunity",
     relevance: {
       "very high": "High education levels — technical workforce capacity for complex actions is strong",
       "high":      "Good education levels — capacity for technical and professional green jobs is high",
@@ -222,13 +222,143 @@ const INDICATOR_ENRICHMENT: Record<string, IndicatorMeta> = {
     },
   },
   population: {
-    label: "Population", source: "", theme: "Demographics", units: "count", concern: "neutral",
+    label: "Population", source: "CENSO 2017", theme: "Demographics", units: "count", concern: "neutral",
     relevance: {
       "very high": "Very large city — actions with high per-capita impact maximise absolute emissions reductions",
       "high":      "Large city — broad-reach actions deliver significant total emissions reductions",
       "medium":    "Medium-sized city — mix of city-wide and targeted actions is effective",
       "low":       "Small city — targeted, high-leverage actions deliver the most impact",
       "very low":  "Very small city — highly targeted interventions maximise proportional impact",
+    },
+  },
+  primary_forest_share: {
+    label: "Primary Forest Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high primary forest cover — AFOLU conservation actions can deliver major carbon sequestration",
+      "high":      "High primary forest share — forest conservation and management are high-priority AFOLU actions",
+      "medium":    "Moderate primary forest — forest protection actions have meaningful sequestration potential",
+      "low":       "Low primary forest share — limited forest carbon stock; focus on restoration",
+      "very low":  "Minimal primary forest — afforestation and ecosystem restoration are the priority AFOLU pathway",
+    },
+  },
+  secondary_forest_share: {
+    label: "Secondary Forest Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high secondary forest — restoration management can significantly boost carbon sequestration",
+      "high":      "High secondary forest share — active forest management can enhance carbon stocks",
+      "medium":    "Moderate secondary forest — restoration programmes can build long-term carbon sinks",
+      "low":       "Low secondary forest — limited regeneration base; restoration investment needed",
+      "very low":  "Minimal secondary forest — afforestation from degraded land is the primary AFOLU option",
+    },
+  },
+  silviculture_share: {
+    label: "Silviculture Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large managed forest area — sustainable forestry practices can deliver significant carbon benefits",
+      "high":      "High silviculture share — sustainable timber and biomass management is a key AFOLU lever",
+      "medium":    "Moderate silviculture — sustainable forestry practices have measurable carbon impact",
+      "low":       "Small managed forest area — silviculture actions have limited local carbon scope",
+      "very low":  "Minimal silviculture — managed forest carbon actions are not a primary local lever",
+    },
+  },
+  cropland_share: {
+    label: "Cropland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large cropland area — agricultural emissions reduction and soil carbon actions are high priority",
+      "high":      "High cropland share — sustainable agriculture and soil carbon sequestration are key AFOLU actions",
+      "medium":    "Moderate cropland — agricultural emissions management has measurable local impact",
+      "low":       "Small cropland area — agricultural AFOLU actions have limited local scope",
+      "very low":  "Minimal cropland — land-use emissions from agriculture are negligible locally",
+    },
+  },
+  pasture_share: {
+    label: "Pasture Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very large pasture area — livestock emissions and grassland carbon management are critical AFOLU priorities",
+      "high":      "High pasture share — grassland and livestock management actions have significant emissions impact",
+      "medium":    "Moderate pasture — grazing management and grassland restoration have measurable carbon potential",
+      "low":       "Small pasture area — livestock-related AFOLU actions have limited local scope",
+      "very low":  "Minimal pasture — grassland carbon and livestock emissions are negligible locally",
+    },
+  },
+  grassland_share: {
+    label: "Grassland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high grassland cover — grassland restoration can deliver significant soil carbon sequestration",
+      "high":      "High grassland share — restoration and management of grasslands can enhance carbon stocks",
+      "medium":    "Moderate grassland — grassland management has some carbon sequestration potential",
+      "low":       "Low grassland share — limited scope for grassland carbon actions",
+      "very low":  "Minimal grassland — grassland carbon sequestration is not a significant local lever",
+    },
+  },
+  shrubland_share: {
+    label: "Shrubland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high shrubland cover — fire risk management and restoration can protect significant carbon stocks",
+      "high":      "High shrubland share — vegetation management and wildfire prevention are relevant AFOLU actions",
+      "medium":    "Moderate shrubland — vegetation management has some carbon and fire-risk relevance",
+      "low":       "Low shrubland share — limited scope for shrubland-focused climate actions",
+      "very low":  "Minimal shrubland — not a significant land-use lever for local climate action",
+    },
+  },
+  beach_dune_share: {
+    label: "Beach Dune Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high coastal dune cover — dune restoration can protect carbon-rich coastal ecosystems and reduce flood risk",
+      "high":      "High beach/dune share — coastal ecosystem protection supports blue carbon and climate resilience",
+      "medium":    "Moderate coastal dune area — coastal protection actions have measurable resilience benefits",
+      "low":       "Low beach/dune share — limited scope for coastal ecosystem carbon actions",
+      "very low":  "Minimal coastal dune area — not a significant land-use lever locally",
+    },
+  },
+  ice_snow_share: {
+    label: "Ice Snow Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "risk",
+    relevance: {
+      "very high": "Very high glacier/snow cover — high climate vulnerability; cryosphere loss threatens water supply and downstream flooding",
+      "high":      "High ice/snow share — significant cryosphere area at risk from warming; water security actions are critical",
+      "medium":    "Moderate glacier/snow cover — some climate vulnerability related to snowmelt timing and water availability",
+      "low":       "Low ice/snow share — limited cryosphere exposure; water supply risk from glacial retreat is moderate",
+      "very low":  "Minimal ice/snow cover — cryosphere-related climate risk is negligible locally",
+    },
+  },
+  other_bare_share: {
+    label: "Other Bare Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high bare land cover — large degraded or unvegetated areas represent a significant restoration opportunity",
+      "high":      "High bare land share — afforestation and revegetation of degraded land can build new carbon sinks",
+      "medium":    "Moderate bare land area — targeted revegetation can contribute to local carbon sequestration",
+      "low":       "Low bare land share — limited degraded land available for restoration",
+      "very low":  "Minimal bare land — land restoration is not a significant local AFOLU lever",
+    },
+  },
+  urban_built_share: {
+    label: "Urban Built Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high urban density — built environment decarbonisation (buildings, transport, energy) is the primary lever",
+      "high":      "High urban built share — building retrofits, urban mobility, and district energy actions have broad reach",
+      "medium":    "Moderate urban area — built environment actions complement land-use and green infrastructure approaches",
+      "low":       "Low urban built share — green and blue infrastructure actions may complement urban climate investments",
+      "very low":  "Minimal urban footprint — land-use and nature-based solutions may have greater relative impact than built-environment actions",
+    },
+  },
+  water_share: {
+    label: "Water Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "neutral",
+    relevance: {
+      "very high": "Very high water body share — blue carbon, wetland protection, and flood-risk management are high-priority actions",
+      "high":      "High water share — water ecosystem protection and blue carbon actions are locally significant",
+      "medium":    "Moderate water body coverage — water ecosystem management has some climate relevance",
+      "low":       "Low water share — water body climate actions have limited local scope",
+      "very low":  "Minimal water cover — blue carbon and water ecosystem actions are not a primary local lever",
+    },
+  },
+  wetland_share: {
+    label: "Wetland Share", source: "ESA CCI 2020", theme: "Land Use", units: "percent", concern: "opportunity",
+    relevance: {
+      "very high": "Very high wetland cover — wetland conservation is a critical blue carbon and biodiversity action",
+      "high":      "High wetland share — protecting and restoring wetlands can deliver significant carbon sequestration and flood resilience",
+      "medium":    "Moderate wetland area — wetland conservation has meaningful carbon and biodiversity co-benefits",
+      "low":       "Low wetland share — limited scope for wetland-focused climate actions locally",
+      "very low":  "Minimal wetlands — blue carbon from wetland conservation is not a significant local lever",
     },
   },
 };
@@ -249,7 +379,7 @@ const CONCERN_ICON: Record<string, string> = {
 
 const THEME_ORDER = [
   "Income & Welfare", "Housing", "Mobility", "Energy", "Employment",
-  "Demographics", "Digital Infrastructure", "Other",
+  "Demographics", "Digital Infrastructure", "Land Use", "Other",
 ];
 
 function formatValue(ind: Indicator): string {
@@ -271,9 +401,16 @@ function buildIndicatorsFromApi(apiData: ApiCityData): Indicator[] {
       const units = meta?.units ?? field.attribute_units ?? "percent";
       const label = meta?.label ?? key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
       const theme = meta?.theme ?? "Other";
-      const relevance = meta?.relevance?.[category] ?? "";
       const concern = meta?.concern ?? "neutral";
-      const source = meta?.source ?? "";
+      const source = meta?.source || "ccglobal API";
+      const fallbackRelevance: Record<Category, string> = {
+        "very high": `Very high ${label.toLowerCase()} relative to comparable cities`,
+        "high":      `High ${label.toLowerCase()} relative to comparable cities`,
+        "medium":    `Moderate ${label.toLowerCase()} — close to the national average`,
+        "low":       `Low ${label.toLowerCase()} relative to comparable cities`,
+        "very low":  `Very low ${label.toLowerCase()} relative to comparable cities`,
+      };
+      const relevance = meta?.relevance?.[category] || fallbackRelevance[category];
       return { key, label, value: field.attribute_value, units, category, theme, relevance, concern, source };
     });
 }

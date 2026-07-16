@@ -1,0 +1,1203 @@
+{
+  "data": {
+    "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+    "inventoryName": "La Pintana - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "55f87d89-f69b-45c2-9cb3-97066473bc99",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.684335Z",
+    "created": "2026-07-15T12:58:06.684455Z",
+    "last_updated": "2026-07-15T12:58:06.684574Z",
+    "city": {
+      "cityId": "55f87d89-f69b-45c2-9cb3-97066473bc99",
+      "locode": "CL LAP",
+      "name": "La Pintana",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "76286d46-ea85-4fae-a6f3-b7824ce58646",
+      "created": "2026-07-15T12:58:06.684711Z",
+      "last_updated": "2026-07-15T12:58:06.684832Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "0b8790be-81da-4f7c-88f7-fb51eef1f53e",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "50845",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "3fa347c4-67bd-4cae-8d79-c93c375e524d",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.667439Z",
+        "last_updated": "2026-07-15T12:58:06.670138Z",
+        "activityValues": [
+          {
+            "id": "e06519b7-f79b-465c-9194-7ffeae61ae45",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "50845",
+            "co2eqYears": 100,
+            "inventoryValueId": "0f3df2c2-69cf-4a37-ae6e-b26d65bb63bf",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.670495Z",
+            "last_updated": "2026-07-15T12:58:06.670625Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "c94d5956-f85c-46a1-820b-86d419de26b5",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "34990",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "1d11ad8a-1bc5-4cbe-8753-aa4080aad331",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.670768Z",
+        "last_updated": "2026-07-15T12:58:06.670890Z",
+        "activityValues": [
+          {
+            "id": "9a4a45fe-e982-41bb-ad5f-9da03d32f6ae",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "34990",
+            "co2eqYears": 100,
+            "inventoryValueId": "fc437309-6d02-40c9-8661-cb6b67f90f30",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.671015Z",
+            "last_updated": "2026-07-15T12:58:06.671135Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "a1284e97-ba9d-4b05-9039-a7df42f02bf9",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1994",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "4fc98d8c-3c8a-41f5-9ce2-56ef2d0bc373",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.671262Z",
+        "last_updated": "2026-07-15T12:58:06.671382Z",
+        "activityValues": [
+          {
+            "id": "edb8b986-0063-453b-a167-efad9b2a3516",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "1994",
+            "co2eqYears": 100,
+            "inventoryValueId": "d2834eeb-5e26-45a5-b5c6-bf7098bddd4e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.671507Z",
+            "last_updated": "2026-07-15T12:58:06.671626Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "3ac79315-8bb2-4df5-92a3-db089145fe58",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2007",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "488b8910-e19e-48ae-ae51-bc82acdefbb2",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.671753Z",
+        "last_updated": "2026-07-15T12:58:06.671874Z",
+        "activityValues": [
+          {
+            "id": "3732c521-a904-42a7-9ef7-42cf8906d487",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "2007",
+            "co2eqYears": 100,
+            "inventoryValueId": "07ea7104-0e04-4392-b05d-a7d821518569",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.671997Z",
+            "last_updated": "2026-07-15T12:58:06.672116Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "bc5acd4e-2b79-463b-b202-471f27689b9f",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6049",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "5b2759de-565c-4631-83dd-322ddc108c46",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.672243Z",
+        "last_updated": "2026-07-15T12:58:06.672362Z",
+        "activityValues": [
+          {
+            "id": "afda4208-77ab-4b1f-b2c4-d5213be41574",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "6049",
+            "co2eqYears": 100,
+            "inventoryValueId": "d25ed95f-6a6e-40f2-89e1-3f109f74a802",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.672485Z",
+            "last_updated": "2026-07-15T12:58:06.672604Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "0b8234f8-4015-4c8e-ae0c-695612d2e34a",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "344",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "671c5ecb-4dfe-41db-a202-ce6c70e72d34",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.672732Z",
+        "last_updated": "2026-07-15T12:58:06.672852Z",
+        "activityValues": [
+          {
+            "id": "40c32b7c-f89f-4a9e-8052-232c748b7239",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "344",
+            "co2eqYears": 100,
+            "inventoryValueId": "415315b2-ca58-4442-94ee-7c9387415033",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.672975Z",
+            "last_updated": "2026-07-15T12:58:06.673094Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "2f8b452d-5c31-46b7-9cae-b1e32b6b7e7b",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20229",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "6b515ab4-188b-4d6f-b53d-5e5df600e3e5",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.673220Z",
+        "last_updated": "2026-07-15T12:58:06.673342Z",
+        "activityValues": [
+          {
+            "id": "eef83f1d-ad6e-4e1b-8f86-1ea3158d0526",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "20229",
+            "co2eqYears": 100,
+            "inventoryValueId": "a39c59a3-e1f8-48e5-b526-dd38abc37af4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.673468Z",
+            "last_updated": "2026-07-15T12:58:06.673587Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "ea1a0d26-7e5f-49a5-9151-11860c2a8d75",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "19686",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "78689826-8160-42f0-a751-412a6e1c539a",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.673715Z",
+        "last_updated": "2026-07-15T12:58:06.673835Z",
+        "activityValues": [
+          {
+            "id": "ea1cfb13-094f-4755-a235-e281d8991a95",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "19686",
+            "co2eqYears": 100,
+            "inventoryValueId": "f62fcf92-8ae9-49fa-9ae0-45f3f5df5be5",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.673957Z",
+            "last_updated": "2026-07-15T12:58:06.674077Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "0bdf03a9-17e7-4cc7-ab6f-6f898ecbd772",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1122",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "00e142a1-0269-4e17-834d-17dd2cde3803",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.674205Z",
+        "last_updated": "2026-07-15T12:58:06.674325Z",
+        "activityValues": [
+          {
+            "id": "e9959a7d-ab7b-404f-a7b9-561f14941a23",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "1122",
+            "co2eqYears": 100,
+            "inventoryValueId": "aec64e39-5299-43ca-82ca-903ec15e97e3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.674448Z",
+            "last_updated": "2026-07-15T12:58:06.674567Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "21775a48-24bc-4651-b949-6a9d7acf3d25",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3206",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "a15465c1-fe08-42b6-8d7d-140ee3c5ce3a",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.674693Z",
+        "last_updated": "2026-07-15T12:58:06.674813Z",
+        "activityValues": [
+          {
+            "id": "11044e83-719a-457f-b430-6ba75162748f",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "3206",
+            "co2eqYears": 100,
+            "inventoryValueId": "bd5cfc2f-051e-4b0e-bcf3-5083c8c8b925",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.674935Z",
+            "last_updated": "2026-07-15T12:58:06.675058Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "bdc1c101-b8be-49a2-81d6-8ff1cbb52e33",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "90",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "b1d13ca8-e527-4961-a46d-44035c5b946d",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.675186Z",
+        "last_updated": "2026-07-15T12:58:06.675612Z",
+        "activityValues": [
+          {
+            "id": "50bba72f-4f48-4d2f-9d37-56671122af30",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "90",
+            "co2eqYears": 100,
+            "inventoryValueId": "3260c59e-fc9b-4c7b-a333-a05fd242b59f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.675963Z",
+            "last_updated": "2026-07-15T12:58:06.676385Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "dd9cc069-5ab1-4c8d-b990-f3d89d9fb6a5",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "533c183f-edaf-4e46-86a8-dcc13b59c85a",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.676561Z",
+        "last_updated": "2026-07-15T12:58:06.676689Z",
+        "activityValues": [
+          {
+            "id": "3489cbd0-0cf0-43d2-98d5-5eef2aa1b307",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "5",
+            "co2eqYears": 100,
+            "inventoryValueId": "a62994ff-d320-44ec-a254-a0669872a305",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.676816Z",
+            "last_updated": "2026-07-15T12:58:06.676943Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "9be89b4c-1a1e-4558-ac74-285c2ffa6ed3",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "86",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "7201a347-7d94-42e5-9dcc-e2bec128edbd",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.677071Z",
+        "last_updated": "2026-07-15T12:58:06.677191Z",
+        "activityValues": [
+          {
+            "id": "cbb4a316-eb46-4a15-a678-828f8930561b",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "86",
+            "co2eqYears": 100,
+            "inventoryValueId": "2d85a90e-0320-4266-8330-3561b7820deb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.677314Z",
+            "last_updated": "2026-07-15T12:58:06.677439Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "e01aeb91-e63f-40bf-ad60-694dc52194ce",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "62",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "965ba567-a51c-44bd-9823-e1d60dda419d",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.677647Z",
+        "last_updated": "2026-07-15T12:58:06.677774Z",
+        "activityValues": [
+          {
+            "id": "be3cdaac-0c04-4ff2-95e4-54392001e342",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "62",
+            "co2eqYears": 100,
+            "inventoryValueId": "4571172b-bafc-4da9-b99c-2c9c6d242d64",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.677899Z",
+            "last_updated": "2026-07-15T12:58:06.678020Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "0f74b867-d213-48fc-9f1d-f965d4f5492b",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "35db7eb7-7f7b-4dec-9a1b-29330bf037c0",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.678152Z",
+        "last_updated": "2026-07-15T12:58:06.678271Z",
+        "activityValues": [
+          {
+            "id": "7c0a097b-35da-4f77-a2f4-2512fb447568",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "3",
+            "co2eqYears": 100,
+            "inventoryValueId": "05caddd8-cb0d-4847-a137-a91916a4b9fa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.678395Z",
+            "last_updated": "2026-07-15T12:58:06.678524Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "cc2cb8f6-4d35-4d28-bdf6-e2e95c1abc0d",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "107796",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "1d7e7a68-f4c0-431c-a218-942e47ffbc0e",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.678653Z",
+        "last_updated": "2026-07-15T12:58:06.678771Z",
+        "activityValues": [
+          {
+            "id": "54dd9c7e-9cc9-4a82-bb0a-fc9138a51a22",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "107796",
+            "co2eqYears": 100,
+            "inventoryValueId": "92c296d4-7fa9-468d-9852-ca9db668b08d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.678892Z",
+            "last_updated": "2026-07-15T12:58:06.679015Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "a9d34de4-dc9c-45e7-9b33-1a195128ee7f",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "335",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "d1a1e4cb-ee31-45d5-b3eb-ce37b79b6c3b",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.679142Z",
+        "last_updated": "2026-07-15T12:58:06.679265Z",
+        "activityValues": [
+          {
+            "id": "5445863c-d5c9-4764-abea-52547df74830",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "335",
+            "co2eqYears": 100,
+            "inventoryValueId": "ce8b96a2-a9c3-4531-9198-e7ccd434a378",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.679391Z",
+            "last_updated": "2026-07-15T12:58:06.679510Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "a1b8d1fb-26b4-481b-8dc8-cf4ef93f21b0",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1868",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "d1149a9c-dd72-407b-9c7f-bc16aa633273",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.679640Z",
+        "last_updated": "2026-07-15T12:58:06.679760Z",
+        "activityValues": [
+          {
+            "id": "23fb7dd0-fe90-4965-8f35-132948db566e",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "1868",
+            "co2eqYears": 100,
+            "inventoryValueId": "7dbfb090-ebd4-4960-9c4f-ec9c07aa2e2f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.679982Z",
+            "last_updated": "2026-07-15T12:58:06.680123Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "41fada8c-48c3-40ed-89c0-56319c8403eb",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "143000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "2840f5f7-6192-4d70-b698-843121bf2e7b",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.680259Z",
+        "last_updated": "2026-07-15T12:58:06.680382Z",
+        "activityValues": [
+          {
+            "id": "960a3ee3-abf4-4dac-b52e-37c077ff4b3e",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "143000",
+            "co2eqYears": 100,
+            "inventoryValueId": "495797eb-80cf-497e-bb9d-c190597d8d6f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.680507Z",
+            "last_updated": "2026-07-15T12:58:06.680627Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "9bbde818-b60d-44a3-9660-88067ce9c4fb",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "22",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "989b3951-a256-4308-ab1c-c0f0a10ff5ab",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.680759Z",
+        "last_updated": "2026-07-15T12:58:06.680879Z",
+        "activityValues": [
+          {
+            "id": "9011af0d-1df9-4c82-888c-fdfa080a3a2a",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "22",
+            "co2eqYears": 100,
+            "inventoryValueId": "62840361-33b2-4a0f-b575-612d72206a90",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.681002Z",
+            "last_updated": "2026-07-15T12:58:06.681122Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "e8233e7b-64a5-4c7f-a17a-ea5a467f2526",
+        "gpcReferenceNumber": "III.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "34000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "87b81c45-3019-4a91-989a-ae6ae067afbd",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.681249Z",
+        "last_updated": "2026-07-15T12:58:06.681369Z",
+        "activityValues": [
+          {
+            "id": "9a3f92ac-9bbc-4c3e-a5e8-63e8019955e9",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "34000",
+            "co2eqYears": 100,
+            "inventoryValueId": "a0ba5ce6-7238-4c12-8e0d-9be902ee13f7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.681491Z",
+            "last_updated": "2026-07-15T12:58:06.681611Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "2cb82e8c-13de-42f1-b54a-29999d240fbf",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4447",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ae399f4c-170a-4b58-9ddc-40bc2c9c348a",
+        "subCategoryId": "f0cd1c47-13c3-4ec4-9af0-0ed4f3b4e948",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.681737Z",
+        "last_updated": "2026-07-15T12:58:06.681856Z",
+        "activityValues": [
+          {
+            "id": "913fc398-33d8-4e49-8d8a-cadcffe170b1",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "4447",
+            "co2eqYears": 100,
+            "inventoryValueId": "5ad608cf-3970-460a-a8c3-4c8433b766a3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.681980Z",
+            "last_updated": "2026-07-15T12:58:06.682099Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ae399f4c-170a-4b58-9ddc-40bc2c9c348a",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "61ce5ef1-e47b-4aa0-805e-6de384390d11",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9397",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ef526020-fcd8-446a-8808-51d621cad152",
+        "subCategoryId": "925e42d3-c5ad-45c0-8e50-6f96a2fbd440",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.682227Z",
+        "last_updated": "2026-07-15T12:58:06.682346Z",
+        "activityValues": [
+          {
+            "id": "df0de0bd-9f01-492d-b4ad-ea2e508526fe",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "9397",
+            "co2eqYears": 100,
+            "inventoryValueId": "0952bd0a-f7c9-45cb-af30-74892fbca2e5",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.682469Z",
+            "last_updated": "2026-07-15T12:58:06.682588Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ef526020-fcd8-446a-8808-51d621cad152",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "3ed3d0e5-c1c0-4e6e-a9dc-c23ec254b2fc",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "393",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "a6d0c8c6-813e-409d-b112-bce7b5197fa1",
+        "subCategoryId": "bfae7a34-6522-42d1-b58a-7b8a0533ad70",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.682717Z",
+        "last_updated": "2026-07-15T12:58:06.682837Z",
+        "activityValues": [
+          {
+            "id": "66156c72-0a28-4091-9a40-0407c2dc645c",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "393",
+            "co2eqYears": 100,
+            "inventoryValueId": "aa7b3521-0227-4cd4-8a13-dc9d6c510274",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.682960Z",
+            "last_updated": "2026-07-15T12:58:06.683078Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a6d0c8c6-813e-409d-b112-bce7b5197fa1",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "418946fe-84d5-4960-a99b-6bb4de1b138e",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "541",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "a7bd3814-97af-4076-808a-06cf731acb93",
+        "subCategoryId": "f90ee33c-26fd-4c93-b01b-4e9f1846acac",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.683208Z",
+        "last_updated": "2026-07-15T12:58:06.683420Z",
+        "activityValues": [
+          {
+            "id": "e7ebdf78-0539-4bd9-8435-a6dffb0a0432",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "541",
+            "co2eqYears": 100,
+            "inventoryValueId": "071bbb56-4ce0-4415-9730-2603871bbd64",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.683572Z",
+            "last_updated": "2026-07-15T12:58:06.683704Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a7bd3814-97af-4076-808a-06cf731acb93",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "19bb6a06-3d77-473e-bc5b-422e83187798",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1088",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "7a256428-1c54-4bdc-a7b2-7e15c5214f0a",
+        "subCategoryId": "4c058643-334d-4737-be2b-008b78c38fb8",
+        "inventoryId": "f40f1bed-385f-4604-8be4-ece87b242509",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.683841Z",
+        "last_updated": "2026-07-15T12:58:06.683969Z",
+        "activityValues": [
+          {
+            "id": "94c390a3-dfe6-45eb-b731-d50db7441abc",
+            "activityData": {
+              "data-source": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "1088",
+            "co2eqYears": 100,
+            "inventoryValueId": "054a5b77-e405-4dcb-bf7d-e2a1375453c4",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13112-La-Pintana-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.684093Z",
+            "last_updated": "2026-07-15T12:58:06.684214Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "7a256428-1c54-4bdc-a7b2-7e15c5214f0a",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

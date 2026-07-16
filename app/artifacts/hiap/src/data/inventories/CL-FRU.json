@@ -1,0 +1,978 @@
+{
+  "data": {
+    "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+    "inventoryName": "Frutillar - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "779cc24a-a3d0-42cd-aa73-48b86fb520dc",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.649306Z",
+    "created": "2026-07-15T12:58:06.649417Z",
+    "last_updated": "2026-07-15T12:58:06.649528Z",
+    "city": {
+      "cityId": "779cc24a-a3d0-42cd-aa73-48b86fb520dc",
+      "locode": "CL FRU",
+      "name": "Frutillar",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "40cb5d10-7e47-4cd1-b730-f4d1f9fde60b",
+      "created": "2026-07-15T12:58:06.649644Z",
+      "last_updated": "2026-07-15T12:58:06.649755Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "acf91346-9d9f-4e18-a80d-2471dc876858",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5112",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "747fbd20-685e-42d1-bdea-1174066298ba",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.639513Z",
+        "last_updated": "2026-07-15T12:58:06.639716Z",
+        "activityValues": [
+          {
+            "id": "b35bc053-6189-4c58-a537-fcc8abf50cea",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "5112",
+            "co2eqYears": 100,
+            "inventoryValueId": "e638a5b9-82b1-452c-80c0-d041b9137911",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.639859Z",
+            "last_updated": "2026-07-15T12:58:06.639992Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "5c807253-cc43-4bd4-824c-b8c696e374fe",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6751",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "0d241a86-79ce-49b4-81f5-11c7adde2197",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.640126Z",
+        "last_updated": "2026-07-15T12:58:06.640257Z",
+        "activityValues": [
+          {
+            "id": "f977ce25-7220-44cb-b464-4561881021ef",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "6751",
+            "co2eqYears": 100,
+            "inventoryValueId": "59279ed3-a5a0-45e9-848c-48a630bd9e31",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.640383Z",
+            "last_updated": "2026-07-15T12:58:06.640503Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "8a2a1ab3-a68b-42c1-8428-8040b2e5ce38",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "384",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "b5022e81-d57c-4642-83c0-83b9ca369c78",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.640630Z",
+        "last_updated": "2026-07-15T12:58:06.640750Z",
+        "activityValues": [
+          {
+            "id": "48c03384-1aec-4d92-ba42-b871073f4a0e",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "384",
+            "co2eqYears": 100,
+            "inventoryValueId": "e6e24aef-8e71-44ca-8080-99ed749b00ec",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.640871Z",
+            "last_updated": "2026-07-15T12:58:06.640989Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "073dfd1f-b3c3-4723-85fb-9c8a7170f711",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2910",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "aa757343-03e5-4676-b89e-34acaf9485fa",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.641116Z",
+        "last_updated": "2026-07-15T12:58:06.641236Z",
+        "activityValues": [
+          {
+            "id": "642c767d-d9a2-419d-bf6c-7e09d8264562",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "2910",
+            "co2eqYears": 100,
+            "inventoryValueId": "98f56b73-4401-49b6-8e68-78d59d67d332",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.641360Z",
+            "last_updated": "2026-07-15T12:58:06.641480Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "74889f0b-880a-49b3-8f27-c7ad1afae106",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2971",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "b09c717e-d1e3-4b72-9b46-dbf0297953ae",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.641608Z",
+        "last_updated": "2026-07-15T12:58:06.641727Z",
+        "activityValues": [
+          {
+            "id": "36368944-8c25-48cc-9221-2588a7c11981",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "2971",
+            "co2eqYears": 100,
+            "inventoryValueId": "47c8b504-1636-462e-903d-aeca272c2492",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.641847Z",
+            "last_updated": "2026-07-15T12:58:06.641972Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "0904934f-ab49-4b08-940b-8652e8431536",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "169",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "f15925dc-de66-4514-be64-24310883aed8",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.642098Z",
+        "last_updated": "2026-07-15T12:58:06.642218Z",
+        "activityValues": [
+          {
+            "id": "5d2f7a8f-82e9-4914-8e25-fb148bd3a26e",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "169",
+            "co2eqYears": 100,
+            "inventoryValueId": "39dfa071-cf79-458c-a8bb-49de86633d38",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.642339Z",
+            "last_updated": "2026-07-15T12:58:06.642456Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "c68bc253-9b3b-43e7-831e-5821fd24e655",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6096",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "5859f34d-8bca-480c-b0e6-b24b441279f9",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.642583Z",
+        "last_updated": "2026-07-15T12:58:06.642704Z",
+        "activityValues": [
+          {
+            "id": "6a49418b-19e3-4ec9-89e4-d7d6d4b07eaf",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "6096",
+            "co2eqYears": 100,
+            "inventoryValueId": "2c8709dc-9df9-4d8d-8593-ac7b96a4d43a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.642919Z",
+            "last_updated": "2026-07-15T12:58:06.643039Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "5f608745-f781-4b5a-925c-79ccbb4d741a",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6557",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "9bde52ed-1a30-45b0-8a72-7bb02cb89154",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.643168Z",
+        "last_updated": "2026-07-15T12:58:06.643283Z",
+        "activityValues": [
+          {
+            "id": "6f6bdfa2-b7df-4d16-babb-484490e1efb8",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "6557",
+            "co2eqYears": 100,
+            "inventoryValueId": "da084b3b-cabd-484b-8798-d7bc4c967264",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.643400Z",
+            "last_updated": "2026-07-15T12:58:06.643509Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "5e0c1365-df50-4e4d-b4b9-514c2cf4da05",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "373",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "52a3a057-bd80-4982-828f-a5cca851071d",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.643623Z",
+        "last_updated": "2026-07-15T12:58:06.643730Z",
+        "activityValues": [
+          {
+            "id": "1ea165b1-851a-4542-a197-bbc1f2019526",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "373",
+            "co2eqYears": 100,
+            "inventoryValueId": "fd998852-cfc2-4207-a5a5-d82de270e914",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.643840Z",
+            "last_updated": "2026-07-15T12:58:06.643947Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "5f7bf421-9cf1-47d3-8094-c5710e7b69c1",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4066",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "f27b5f7b-b90e-47be-9a51-e97a879a0879",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.644059Z",
+        "last_updated": "2026-07-15T12:58:06.644166Z",
+        "activityValues": [
+          {
+            "id": "c0cb0d86-5d61-4d03-8989-74473c1083f5",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "4066",
+            "co2eqYears": 100,
+            "inventoryValueId": "c724c75f-bf18-4044-b3bb-fd1f054e8492",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.644283Z",
+            "last_updated": "2026-07-15T12:58:06.644396Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "c4c5b44c-b7ea-439c-bcca-67f4eaea9a6f",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "837",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "97384944-2464-4a5b-afd2-8d8182117302",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.644511Z",
+        "last_updated": "2026-07-15T12:58:06.644617Z",
+        "activityValues": [
+          {
+            "id": "85a006fd-4d5b-481d-b91f-8ccb8995911c",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "837",
+            "co2eqYears": 100,
+            "inventoryValueId": "abb200cd-6fe5-47b5-9820-6a0fdd439dcf",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.644724Z",
+            "last_updated": "2026-07-15T12:58:06.644827Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "fa399feb-85ce-4b74-96e3-923c1ba43105",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "47",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "41e369e2-a459-4f73-8a31-3d9c209a0d2b",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.644937Z",
+        "last_updated": "2026-07-15T12:58:06.645044Z",
+        "activityValues": [
+          {
+            "id": "84022b25-4c67-4b5e-aca5-1e715bfe7d73",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "47",
+            "co2eqYears": 100,
+            "inventoryValueId": "a87fbe4e-8d0e-4aae-badf-947f60aef026",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.645154Z",
+            "last_updated": "2026-07-15T12:58:06.645261Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "a98838a1-5c6b-4c88-aced-2aebe6aa6289",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "56279",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "5513fb42-9171-494b-b926-ffc2e937852c",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.645374Z",
+        "last_updated": "2026-07-15T12:58:06.645479Z",
+        "activityValues": [
+          {
+            "id": "3c50fd17-bdd2-4d80-83ec-9c10179b52bf",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "56279",
+            "co2eqYears": 100,
+            "inventoryValueId": "0ca9d2f7-381f-4504-8cec-67c83b21133a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.645590Z",
+            "last_updated": "2026-07-15T12:58:06.645701Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "191e097d-1422-4ea0-acde-05519f6a30b4",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "947",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "2c25be9a-29a9-44b9-bf37-1a3db40fccb3",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.645817Z",
+        "last_updated": "2026-07-15T12:58:06.645927Z",
+        "activityValues": [
+          {
+            "id": "a2903b4b-4afc-492c-8dd4-4646bfe2b70a",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "947",
+            "co2eqYears": 100,
+            "inventoryValueId": "59892a8a-99ef-495e-a33e-5ad924f7d294",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.646037Z",
+            "last_updated": "2026-07-15T12:58:06.646141Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "d1bdb317-8012-44dd-80f0-75e266ba13b7",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "15000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "8615dd0f-4c86-4237-91dc-5110161668a4",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.646251Z",
+        "last_updated": "2026-07-15T12:58:06.646355Z",
+        "activityValues": [
+          {
+            "id": "814c0810-eea8-44de-b873-fdd76f21872e",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "15000",
+            "co2eqYears": 100,
+            "inventoryValueId": "2257292d-f46c-4abc-9809-a7baa2dbeee8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.646463Z",
+            "last_updated": "2026-07-15T12:58:06.646568Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "42228610-925e-48b8-adb3-225ca77f921f",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "30e1a97f-beb8-4f93-b727-9142bbe6ccd8",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.646682Z",
+        "last_updated": "2026-07-15T12:58:06.646800Z",
+        "activityValues": [
+          {
+            "id": "fe8d2062-ae84-4ca1-8a83-4427fe54c232",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "3000",
+            "co2eqYears": 100,
+            "inventoryValueId": "64560471-27b9-478e-9f15-dd4d5dc3f142",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.646926Z",
+            "last_updated": "2026-07-15T12:58:06.647049Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "5bca20b5-eccd-463e-bfb5-25f0c0683681",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "122",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8f1449e8-739c-408f-9080-b0a326346eb6",
+        "subCategoryId": "28b36497-afb1-428c-92bb-59e364eeb961",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.647169Z",
+        "last_updated": "2026-07-15T12:58:06.647273Z",
+        "activityValues": [
+          {
+            "id": "69f4bf28-223e-468c-9366-9790ab5882d5",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "122",
+            "co2eqYears": 100,
+            "inventoryValueId": "2749c59f-78c7-4d1a-942a-437f688b176e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.647380Z",
+            "last_updated": "2026-07-15T12:58:06.647484Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8f1449e8-739c-408f-9080-b0a326346eb6",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "42bf5013-73ad-46e8-864d-f592cf65d13f",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8373",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "854030cd-557b-45bd-9ed2-3479405c2825",
+        "subCategoryId": "129a7773-d385-4072-b28b-1e58349abd64",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.647594Z",
+        "last_updated": "2026-07-15T12:58:06.647698Z",
+        "activityValues": [
+          {
+            "id": "79704256-30be-4d7c-9a94-d53df46abe08",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "8373",
+            "co2eqYears": 100,
+            "inventoryValueId": "5cd082d4-d3d8-4a63-9578-4dc009b36ab3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.647805Z",
+            "last_updated": "2026-07-15T12:58:06.647909Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "854030cd-557b-45bd-9ed2-3479405c2825",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "a0145c99-5a61-408b-92c5-41b3e6d64c65",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "76833",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "78e1661a-fc29-451c-9fad-a0849615b7c3",
+        "subCategoryId": "7d3ae3bc-49ef-4d53-b292-e414be9128dc",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.648019Z",
+        "last_updated": "2026-07-15T12:58:06.648122Z",
+        "activityValues": [
+          {
+            "id": "3cf61444-1c40-44e7-ac33-517c8d3c5bb9",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "76833",
+            "co2eqYears": 100,
+            "inventoryValueId": "cd02715c-8bbb-4415-8af7-5abfe26b48c9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.648229Z",
+            "last_updated": "2026-07-15T12:58:06.648334Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "78e1661a-fc29-451c-9fad-a0849615b7c3",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "f899ab32-2034-48e1-955e-6f8b71832dcb",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-20857",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "5fa74fb4-26d9-4d08-8a31-48edd8c8df97",
+        "subCategoryId": "36f4b71c-fa12-491f-9d1d-cb1c1da73e48",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.648444Z",
+        "last_updated": "2026-07-15T12:58:06.648548Z",
+        "activityValues": [
+          {
+            "id": "a6a8e1d9-06f6-4d28-a32b-af1c0102caa8",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-20857",
+            "co2eqYears": 100,
+            "inventoryValueId": "abcfa8e2-b56d-4740-bf7b-f5e4519dd4b0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.648654Z",
+            "last_updated": "2026-07-15T12:58:06.648758Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5fa74fb4-26d9-4d08-8a31-48edd8c8df97",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "e0ea761e-8950-426a-a2a2-e78eb6c9f8e8",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "25282",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "900780b4-2e4f-4ff5-9c0d-978d1a86a8df",
+        "subCategoryId": "6fd49dd6-1800-489a-920c-72ecd059e753",
+        "inventoryId": "e5b59e52-b3c3-4990-b9c2-1fba2af8a9ac",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.648868Z",
+        "last_updated": "2026-07-15T12:58:06.648973Z",
+        "activityValues": [
+          {
+            "id": "faa8dd95-b6ea-416e-b8af-1034ae04b7cd",
+            "activityData": {
+              "data-source": "inventory-CHL-10105-Frutillar-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "25282",
+            "co2eqYears": 100,
+            "inventoryValueId": "d1fab1bb-a9bb-41ed-bd53-bc52d1a8e5ee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-10105-Frutillar-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.649092Z",
+            "last_updated": "2026-07-15T12:58:06.649196Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "900780b4-2e4f-4ff5-9c0d-978d1a86a8df",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

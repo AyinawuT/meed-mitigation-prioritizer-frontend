@@ -1,0 +1,1338 @@
+{
+  "data": {
+    "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+    "inventoryName": "Puente Alto - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "69ba2afb-a739-4404-8a64-593ee8ff3fce",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.784061Z",
+    "created": "2026-07-15T12:58:06.784178Z",
+    "last_updated": "2026-07-15T12:58:06.784290Z",
+    "city": {
+      "cityId": "69ba2afb-a739-4404-8a64-593ee8ff3fce",
+      "locode": "CL PUA",
+      "name": "Puente Alto",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "07d5a929-8e04-40e9-aa8e-a7d97a3f98a8",
+      "created": "2026-07-15T12:58:06.784405Z",
+      "last_updated": "2026-07-15T12:58:06.784518Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "14455693-48da-4133-9357-014016b16ad1",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "164541",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "7554bafa-da4c-4e9b-9235-a5b59e1756f7",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.770336Z",
+        "last_updated": "2026-07-15T12:58:06.770508Z",
+        "activityValues": [
+          {
+            "id": "50a49aee-8edf-4671-a62c-3de913257fbc",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "164541",
+            "co2eqYears": 100,
+            "inventoryValueId": "c0234638-f1d0-4bf0-84a9-53fbb350b5f3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.770631Z",
+            "last_updated": "2026-07-15T12:58:06.770744Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "694824cb-d865-4279-8a3c-513c20719f32",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "133309",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "0f53472c-15cc-45d2-aa42-979f172da099",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.770867Z",
+        "last_updated": "2026-07-15T12:58:06.770978Z",
+        "activityValues": [
+          {
+            "id": "4471ab56-62d6-4b51-b441-24ac39a60db8",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "133309",
+            "co2eqYears": 100,
+            "inventoryValueId": "5254360f-3fa9-49d4-a26f-b0ddbe975832",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.771097Z",
+            "last_updated": "2026-07-15T12:58:06.771226Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "cf3dc965-c7b9-4ed4-9293-fbef77fbc04f",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "7598",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "9023b9cf-18eb-47f2-b7e7-d62171443a78",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.771341Z",
+        "last_updated": "2026-07-15T12:58:06.771464Z",
+        "activityValues": [
+          {
+            "id": "51a19839-34f8-4015-a4eb-0410bff26386",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "7598",
+            "co2eqYears": 100,
+            "inventoryValueId": "a4af0720-36c8-4468-ae06-37949ec448ce",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.771592Z",
+            "last_updated": "2026-07-15T12:58:06.771711Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "09f845a8-f519-4bfc-98cb-2b249e06313c",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "7863",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "efdc3c6f-4edd-40f8-b498-7a373fd1d2d9",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.771840Z",
+        "last_updated": "2026-07-15T12:58:06.771964Z",
+        "activityValues": [
+          {
+            "id": "523ede47-74b3-41ed-926d-f2e7f65b5bf9",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "7863",
+            "co2eqYears": 100,
+            "inventoryValueId": "4ce9ddde-c7b5-4003-8690-7a8021ddb005",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.772086Z",
+            "last_updated": "2026-07-15T12:58:06.772200Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "6994a007-e80b-4ad3-a5a1-21dad98a1ecf",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "23701",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "4d8fa1cb-0449-485f-b344-f4561d450d70",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.772317Z",
+        "last_updated": "2026-07-15T12:58:06.772426Z",
+        "activityValues": [
+          {
+            "id": "564ea16d-f134-4701-9263-56ba0ff49116",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "23701",
+            "co2eqYears": 100,
+            "inventoryValueId": "1020fcfe-bbaa-49b3-81c7-9469c53b59d0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.772537Z",
+            "last_updated": "2026-07-15T12:58:06.772646Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "0f55293b-861e-4606-bb0e-9410c0835384",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1350",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "3c2a85f9-9104-4a11-a7b6-45496a3b440b",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.772763Z",
+        "last_updated": "2026-07-15T12:58:06.772871Z",
+        "activityValues": [
+          {
+            "id": "38235dda-5cec-48ea-b79c-e971acd5ca6e",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "1350",
+            "co2eqYears": 100,
+            "inventoryValueId": "3f39551a-3fe2-4a10-901c-2a4b0527e8c8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.772989Z",
+            "last_updated": "2026-07-15T12:58:06.773109Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "8a6fb9ad-825c-43f5-940b-e1ef3a62cf8e",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "35299",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "08bc519e-ecf6-473a-9261-3c2dd5156d26",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.773238Z",
+        "last_updated": "2026-07-15T12:58:06.773361Z",
+        "activityValues": [
+          {
+            "id": "5ae46c38-dda7-4374-b425-b98027823924",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "35299",
+            "co2eqYears": 100,
+            "inventoryValueId": "37803e77-d820-4405-b8c2-1414cb27a0cc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.773487Z",
+            "last_updated": "2026-07-15T12:58:06.773610Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "de0425ee-e59b-4cac-b9ee-2c4d9e06b4b9",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "34351",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "f9605270-927e-4cca-8f4a-9f1d53070262",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.773739Z",
+        "last_updated": "2026-07-15T12:58:06.773862Z",
+        "activityValues": [
+          {
+            "id": "d316e231-a236-4dfd-a252-bb575f290726",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "34351",
+            "co2eqYears": 100,
+            "inventoryValueId": "6f5d976f-161b-4c87-bb74-5db6768b289b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.773977Z",
+            "last_updated": "2026-07-15T12:58:06.774083Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "e3f7a1a2-cbd0-4bc5-8bee-87eaa548734d",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1958",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "14659be4-df43-4496-98c5-2c51c78a1816",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.774214Z",
+        "last_updated": "2026-07-15T12:58:06.774334Z",
+        "activityValues": [
+          {
+            "id": "dbb04d9d-8bc4-469c-aae9-e1495bd0344f",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "1958",
+            "co2eqYears": 100,
+            "inventoryValueId": "ec610485-a062-40f1-8037-9cf020500d5a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.774452Z",
+            "last_updated": "2026-07-15T12:58:06.774582Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "966ec8fe-9f42-41b3-bf0e-ddca887a66f2",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "37713",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "e8f26b53-bc87-4814-9167-df388ed2ccdd",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.774709Z",
+        "last_updated": "2026-07-15T12:58:06.774840Z",
+        "activityValues": [
+          {
+            "id": "8c021ba7-84a7-4291-918c-eea90d97dee7",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "37713",
+            "co2eqYears": 100,
+            "inventoryValueId": "ad5bb447-bf13-4a26-8743-1c91edaa8443",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.774966Z",
+            "last_updated": "2026-07-15T12:58:06.775083Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "bb96de86-b417-48d5-ae68-508f71c0d98c",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1069",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "684cc8fe-bf4f-4a2c-9fe6-ee1d49749ad2",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.775209Z",
+        "last_updated": "2026-07-15T12:58:06.775333Z",
+        "activityValues": [
+          {
+            "id": "caefcad8-dda7-43b3-8b83-7d2d93155b60",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "1069",
+            "co2eqYears": 100,
+            "inventoryValueId": "df1f8b6e-9985-4dc1-bb79-fb3afc8f0e24",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.775458Z",
+            "last_updated": "2026-07-15T12:58:06.775572Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "a0317109-aa2b-40e9-b9f7-7bfa21708a5c",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "60",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "ab1967c9-e4f3-4b82-baff-814677260995",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.775686Z",
+        "last_updated": "2026-07-15T12:58:06.775791Z",
+        "activityValues": [
+          {
+            "id": "ba4e3f6e-7a1a-445c-8ae1-f95ef3df2fa3",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "60",
+            "co2eqYears": 100,
+            "inventoryValueId": "a4dab276-357d-4139-ab6b-ca9ff3bed3e1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.775900Z",
+            "last_updated": "2026-07-15T12:58:06.776023Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "1c5bbc96-34d2-47a7-b9c8-24b1f5d305c7",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "96",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "0118668c-a66c-476f-bb42-6a1065f430d9",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.776289Z",
+        "last_updated": "2026-07-15T12:58:06.776438Z",
+        "activityValues": [
+          {
+            "id": "bd8dd5e4-869a-4748-9987-a4701b513957",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "96",
+            "co2eqYears": 100,
+            "inventoryValueId": "38ab3faa-d3e7-4e80-91fe-be717c2edd2e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.776560Z",
+            "last_updated": "2026-07-15T12:58:06.776672Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "448f2720-519f-4a92-89bf-93e03e5792c9",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "69",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "33ec355d-9d60-4135-8dc2-6d80cf6f15eb",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.776787Z",
+        "last_updated": "2026-07-15T12:58:06.776894Z",
+        "activityValues": [
+          {
+            "id": "467b5059-5822-423d-b175-af147fd978da",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "69",
+            "co2eqYears": 100,
+            "inventoryValueId": "318af876-cea9-45e7-990e-11dd2399e58c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.777004Z",
+            "last_updated": "2026-07-15T12:58:06.777110Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "15b10b45-34cc-4cdc-b500-9c84659a8c32",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "c6e490fb-cb65-490f-b0cb-2b364e7dc4a2",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.777222Z",
+        "last_updated": "2026-07-15T12:58:06.777328Z",
+        "activityValues": [
+          {
+            "id": "1975fd77-41d3-4e00-93f3-ad71eea34e4a",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "3",
+            "co2eqYears": 100,
+            "inventoryValueId": "e39cd176-1fb3-4568-abaa-a004fbb6c215",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.777438Z",
+            "last_updated": "2026-07-15T12:58:06.777551Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "36e0968b-cce9-4422-b71d-d7b45f081cae",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "511444",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "43436a24-bbb0-414b-9c42-3691454e2d44",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.777666Z",
+        "last_updated": "2026-07-15T12:58:06.777774Z",
+        "activityValues": [
+          {
+            "id": "236a2246-c21f-488d-a36e-9ec6b3ad75da",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "511444",
+            "co2eqYears": 100,
+            "inventoryValueId": "4bb3c665-ec65-4ce1-bb03-568700a54d03",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.777892Z",
+            "last_updated": "2026-07-15T12:58:06.778010Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "a6e367a0-6c93-403d-9521-f24acf8add03",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6233",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "ae04f41c-5cc1-4edb-a414-90f7153db099",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.778126Z",
+        "last_updated": "2026-07-15T12:58:06.778232Z",
+        "activityValues": [
+          {
+            "id": "53b72e65-c9e0-48c0-8676-e01a70bfa357",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "6233",
+            "co2eqYears": 100,
+            "inventoryValueId": "5abe908f-1afb-46a0-9a85-5a2ac9b1c354",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.778354Z",
+            "last_updated": "2026-07-15T12:58:06.778465Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "57d1c616-a01a-45ac-89e0-1152fa5e0380",
+        "gpcReferenceNumber": "II.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4178",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "225bb571-aee4-460d-9e7c-d6c6d2347772",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.778583Z",
+        "last_updated": "2026-07-15T12:58:06.778689Z",
+        "activityValues": [
+          {
+            "id": "938256b0-9905-44d7-886e-db03da2f8a75",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "4178",
+            "co2eqYears": 100,
+            "inventoryValueId": "d77d65af-ac97-4e7f-8af3-0569a3e6121f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.778797Z",
+            "last_updated": "2026-07-15T12:58:06.778906Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "d2ec7645-13c7-4e88-b618-358de36e6dbb",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3351",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "1f961c04-b447-4916-b6a8-c87b9ee94867",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.779025Z",
+        "last_updated": "2026-07-15T12:58:06.779131Z",
+        "activityValues": [
+          {
+            "id": "1c33cb95-a0cb-477d-af67-6be472b2b0ea",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "3351",
+            "co2eqYears": 100,
+            "inventoryValueId": "87849fc2-6f75-4218-93c5-4fab4f48838d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.779240Z",
+            "last_updated": "2026-07-15T12:58:06.779347Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "4371b5ab-1866-4e9c-80f2-3d0c09e1deb2",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "993a80a6-5e02-4ae8-883c-882209df1bac",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.779460Z",
+        "last_updated": "2026-07-15T12:58:06.779571Z",
+        "activityValues": [
+          {
+            "id": "ba26661d-5077-4d18-88f3-6b3147536923",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "bcf9b766-0742-438c-9031-e0546ec96308",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.779691Z",
+            "last_updated": "2026-07-15T12:58:06.779804Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "08eb52ec-9ba8-4a92-88be-bb5409622a41",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "563000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "145ff234-b0ce-4bab-93fb-fdd3e5e8238e",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.779918Z",
+        "last_updated": "2026-07-15T12:58:06.780024Z",
+        "activityValues": [
+          {
+            "id": "bf37eba9-d1ad-4d83-9c42-10e9f7fc7113",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "563000",
+            "co2eqYears": 100,
+            "inventoryValueId": "e0eb7560-c12f-499d-a5c2-f0715d3769a5",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.780133Z",
+            "last_updated": "2026-07-15T12:58:06.780243Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "2f1dab9c-57c8-4d20-b20d-2c94a7a04c54",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "14871",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "13aada60-e6c7-4883-ba7a-9c0e998f03c8",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.780357Z",
+        "last_updated": "2026-07-15T12:58:06.780465Z",
+        "activityValues": [
+          {
+            "id": "449fe038-687c-4e7b-9c2d-a884a6f0756b",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "14871",
+            "co2eqYears": 100,
+            "inventoryValueId": "417e8833-5712-41ad-910b-f949ed3b68de",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.780578Z",
+            "last_updated": "2026-07-15T12:58:06.780694Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "2542807d-6cfe-4ec4-8d9c-3a59f3d1df7c",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "66a244fd-9113-47d6-b7d5-adfba83180f6",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.780818Z",
+        "last_updated": "2026-07-15T12:58:06.780926Z",
+        "activityValues": [
+          {
+            "id": "f7825967-8e7d-4bc7-9327-0e61bdb9495c",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "98a9b73b-bfd4-4ee3-b6e5-1bed97cb2a12",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.781036Z",
+            "last_updated": "2026-07-15T12:58:06.781145Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "6a96e879-f2dc-4fe6-beb3-d0cb269b006f",
+        "gpcReferenceNumber": "III.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "119000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "8e81e19c-6e42-4b09-8a39-46089a33b28a",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.781256Z",
+        "last_updated": "2026-07-15T12:58:06.781364Z",
+        "activityValues": [
+          {
+            "id": "8086ffd6-e40a-48e5-ab1b-284da45fba4d",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "119000",
+            "co2eqYears": 100,
+            "inventoryValueId": "061c0d78-22b1-4894-b363-1cac691190d2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.781492Z",
+            "last_updated": "2026-07-15T12:58:06.781599Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "c43e87f7-5314-42ea-88e4-78179e5ca65a",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8026",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "20e9b18a-899c-492c-977e-3bef457586a5",
+        "subCategoryId": "9c98ffcc-010a-4f0a-8d61-1fa286eb9e16",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.781713Z",
+        "last_updated": "2026-07-15T12:58:06.781827Z",
+        "activityValues": [
+          {
+            "id": "4a6b6f59-18d6-4f69-aef2-77163f3ed96a",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "8026",
+            "co2eqYears": 100,
+            "inventoryValueId": "fee89668-e6a7-4365-a461-58d8f22b42d2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.781945Z",
+            "last_updated": "2026-07-15T12:58:06.782059Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "20e9b18a-899c-492c-977e-3bef457586a5",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "5648c196-acb9-458c-895f-1599a91610a7",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "33252",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a2654600-4cc9-4459-8581-e162ce9abcd9",
+        "subCategoryId": "c53d7eec-a3fa-4d42-aa81-7cc5ed257482",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.782185Z",
+        "last_updated": "2026-07-15T12:58:06.782300Z",
+        "activityValues": [
+          {
+            "id": "8f302acf-dee3-49bc-b08f-7902acd9b420",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "33252",
+            "co2eqYears": 100,
+            "inventoryValueId": "42f5eb50-2a14-4e4f-8a01-81188bc3e1b0",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.782416Z",
+            "last_updated": "2026-07-15T12:58:06.782529Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a2654600-4cc9-4459-8581-e162ce9abcd9",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "04aa0d9e-c1bf-4624-a592-0d6239187b66",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "485",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "8f1c4ba2-ebda-4eef-af99-9fbbd9dc6b83",
+        "subCategoryId": "b538c79f-778a-4374-a7aa-5c2874d4a736",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.782652Z",
+        "last_updated": "2026-07-15T12:58:06.782766Z",
+        "activityValues": [
+          {
+            "id": "467be8dc-973b-4c0f-afbb-83b8f243da08",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "485",
+            "co2eqYears": 100,
+            "inventoryValueId": "4b9b8e56-e055-42f8-976e-1220e8796b50",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.782882Z",
+            "last_updated": "2026-07-15T12:58:06.782995Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8f1c4ba2-ebda-4eef-af99-9fbbd9dc6b83",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "d0a8c526-884b-4089-95b0-76350286b2c7",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-3392",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "62caf565-a131-46dc-9bd8-922b43d63530",
+        "subCategoryId": "e1955d47-c40a-4381-80ca-a41509431370",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.783117Z",
+        "last_updated": "2026-07-15T12:58:06.783230Z",
+        "activityValues": [
+          {
+            "id": "c1a777ac-05a4-4e32-8968-ac885b72ea6d",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-3392",
+            "co2eqYears": 100,
+            "inventoryValueId": "382cf25e-9c46-44d4-bff9-909ea43b0cea",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.783356Z",
+            "last_updated": "2026-07-15T12:58:06.783484Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "62caf565-a131-46dc-9bd8-922b43d63530",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "3298d943-9e9f-4351-92ab-3dc312be92e2",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "695",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "beb9d9f9-9ff4-4930-ab0a-0528e985451d",
+        "subCategoryId": "3e52b34b-d69b-44fc-904f-733d78c30b5b",
+        "inventoryId": "31021c49-67c8-409d-bb25-988644f72752",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.783604Z",
+        "last_updated": "2026-07-15T12:58:06.783718Z",
+        "activityValues": [
+          {
+            "id": "e7cd3b16-3d12-44d7-a872-8401358ecbcd",
+            "activityData": {
+              "data-source": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "695",
+            "co2eqYears": 100,
+            "inventoryValueId": "2265cedf-d17d-41d5-a7ac-8a4a0bc6082e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-13201-Puente-Alto-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.783834Z",
+            "last_updated": "2026-07-15T12:58:06.783947Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "beb9d9f9-9ff4-4930-ab0a-0528e985451d",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

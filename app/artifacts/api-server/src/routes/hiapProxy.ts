@@ -64,6 +64,22 @@ router.post("/v1/prioritize", async (req, res) => {
   }
 });
 
+// POST /v1/reports/output-plan
+router.post("/v1/reports/output-plan", async (req, res) => {
+  try {
+    const { status, data } = await proxyPost("/v1/reports/output-plan", req.body);
+    res.status(status).json(data);
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : String(err);
+    const code = (err as NodeJS.ErrnoException).code ?? "unknown";
+    req.log.error(
+      { targetUrl: `${HIAP_BACKEND_URL}/v1/reports/output-plan`, errCode: code, detail },
+      "hiap-proxy: reports/output-plan FAILED"
+    );
+    res.status(502).json({ error: "Upstream error", code, detail });
+  }
+});
+
 // POST /v1/explanations/translate
 router.post("/v1/explanations/translate", async (req, res) => {
   try {

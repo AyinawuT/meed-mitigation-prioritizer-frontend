@@ -1,0 +1,1113 @@
+{
+  "data": {
+    "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+    "inventoryName": "Panguipulli - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "939f9ed9-2520-419a-9f54-d51fd6c7ff77",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.824078Z",
+    "created": "2026-07-15T12:58:06.824204Z",
+    "last_updated": "2026-07-15T12:58:06.824340Z",
+    "city": {
+      "cityId": "939f9ed9-2520-419a-9f54-d51fd6c7ff77",
+      "locode": "CL PAN",
+      "name": "Panguipulli",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "f58bda90-2fd2-4d29-9303-c2c635f17883",
+      "created": "2026-07-15T12:58:06.824457Z",
+      "last_updated": "2026-07-15T12:58:06.824584Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "3acf3227-0ea5-427f-8b6f-9dd855b8adbd",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "8153",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "fe3b6ddd-0491-4bf8-8a1e-cea8d43686d5",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.812943Z",
+        "last_updated": "2026-07-15T12:58:06.813057Z",
+        "activityValues": [
+          {
+            "id": "bbf5d207-40fa-42fa-b4ca-b34439df7e38",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "8153",
+            "co2eqYears": 100,
+            "inventoryValueId": "89448ecc-0e10-40be-9e4c-e776ecfce06a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.813168Z",
+            "last_updated": "2026-07-15T12:58:06.813272Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "9d668f41-081d-4619-bedf-9a9e4ae68ff1",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9079",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "b01764ad-c22c-46d1-a1b3-1f5b59c55862",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.813383Z",
+        "last_updated": "2026-07-15T12:58:06.813487Z",
+        "activityValues": [
+          {
+            "id": "7f6c9cd5-f696-4e2e-b064-a0b0cee31d93",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "9079",
+            "co2eqYears": 100,
+            "inventoryValueId": "9bbb684d-bac0-4040-a6d8-373ebd397268",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.813595Z",
+            "last_updated": "2026-07-15T12:58:06.813699Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "797e9ea6-8e57-4d94-8836-42d3154a2c69",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "517",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "46280efe-c759-4c0b-aff4-f92382a03395",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.813809Z",
+        "last_updated": "2026-07-15T12:58:06.813913Z",
+        "activityValues": [
+          {
+            "id": "18b71ac0-1bd6-4fcb-ae4e-72314235c243",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "517",
+            "co2eqYears": 100,
+            "inventoryValueId": "1d1a65c2-40d8-46b9-bbbf-19b6a409c95b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.814020Z",
+            "last_updated": "2026-07-15T12:58:06.814124Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "c5976689-3026-455b-9107-af994d42712c",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5885",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "0cc0dd24-37c7-41a3-b4b9-7980321a5eb1",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.814234Z",
+        "last_updated": "2026-07-15T12:58:06.814339Z",
+        "activityValues": [
+          {
+            "id": "8a5b0b81-3462-4d8a-9481-4a8f948b5855",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "5885",
+            "co2eqYears": 100,
+            "inventoryValueId": "0a0ec052-5fe9-4623-b053-ad30c0f0b498",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.814446Z",
+            "last_updated": "2026-07-15T12:58:06.814557Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "0baa18a6-b444-433e-b827-02fd6cf8ee12",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3542",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "982088c5-700a-4c98-a44e-e4ddb734a4a7",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.814686Z",
+        "last_updated": "2026-07-15T12:58:06.814806Z",
+        "activityValues": [
+          {
+            "id": "9a528c87-cc10-4061-adca-b99b22115e18",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "3542",
+            "co2eqYears": 100,
+            "inventoryValueId": "941e6b2b-6941-4245-8cf6-481b3b70e720",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.814920Z",
+            "last_updated": "2026-07-15T12:58:06.815027Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "5a60cd91-7e7d-4a6c-8c87-430cbab14106",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "201",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "d4cbc7d8-fe2e-4b03-82dc-6996ba27d3d2",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.815140Z",
+        "last_updated": "2026-07-15T12:58:06.815252Z",
+        "activityValues": [
+          {
+            "id": "9f5baaeb-52d8-4bce-8945-6cc2944a67cc",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "201",
+            "co2eqYears": 100,
+            "inventoryValueId": "622d823b-e57e-41c6-a6ea-166940c1daeb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.815367Z",
+            "last_updated": "2026-07-15T12:58:06.815479Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "53f84ad9-d556-4fc9-9930-e39e4aa47a21",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "17133",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "225fbfee-54b9-41ed-a14f-69dc2bf00d4b",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.815597Z",
+        "last_updated": "2026-07-15T12:58:06.815709Z",
+        "activityValues": [
+          {
+            "id": "8bb41fb5-3f0f-4e35-b91d-d21860fffcc6",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "17133",
+            "co2eqYears": 100,
+            "inventoryValueId": "5fa7cdef-5215-443e-8edc-0d8080d108e9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.815823Z",
+            "last_updated": "2026-07-15T12:58:06.815935Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "abfdd16a-c38b-4072-b810-166fd8d69dcd",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "16711",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "a57da924-186a-4774-b031-040fdd03b376",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.816055Z",
+        "last_updated": "2026-07-15T12:58:06.816167Z",
+        "activityValues": [
+          {
+            "id": "f661ee80-ef34-4fe6-9291-cad37349b0e8",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "16711",
+            "co2eqYears": 100,
+            "inventoryValueId": "ebb16835-2f9a-4dd2-abbf-d653b2251f25",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.816282Z",
+            "last_updated": "2026-07-15T12:58:06.816394Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "1c38f60a-54a3-4515-ae40-46f9c570b375",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "952",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "a575912c-b781-4e43-9479-5ea1842de23b",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.816511Z",
+        "last_updated": "2026-07-15T12:58:06.816623Z",
+        "activityValues": [
+          {
+            "id": "bdbb2d90-7ccb-429c-b37d-9c5324ba032d",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "952",
+            "co2eqYears": 100,
+            "inventoryValueId": "8509473d-bb39-4859-a9b8-fb116e57fb78",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.816738Z",
+            "last_updated": "2026-07-15T12:58:06.816872Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "3aaf8f5f-13dd-45f9-9660-0ed63129b0b3",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "800",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "34892e34-e8ea-4a42-a035-141b8114f8d8",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.817044Z",
+        "last_updated": "2026-07-15T12:58:06.817170Z",
+        "activityValues": [
+          {
+            "id": "b6342ff1-3d99-4b70-896b-6eeb75cff921",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "800",
+            "co2eqYears": 100,
+            "inventoryValueId": "71d0083e-3374-4422-a3c9-f8a0086fc1cf",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.817300Z",
+            "last_updated": "2026-07-15T12:58:06.817425Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "f8318d7f-a4ac-44aa-9d98-f240c19f2d3e",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1361",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "b67d94c3-3725-446d-840c-a2655326ac8e",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.817555Z",
+        "last_updated": "2026-07-15T12:58:06.817661Z",
+        "activityValues": [
+          {
+            "id": "123d9390-f4bb-4630-8d23-5a464e3825be",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1361",
+            "co2eqYears": 100,
+            "inventoryValueId": "8528b4fe-343d-4d1c-b3df-0af37dadfe6e",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.817815Z",
+            "last_updated": "2026-07-15T12:58:06.817943Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "dc964622-e3bf-459a-b58b-eb4157143f52",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1030",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "ac253632-761f-41de-afcb-2287d02d6407",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.818077Z",
+        "last_updated": "2026-07-15T12:58:06.818195Z",
+        "activityValues": [
+          {
+            "id": "62cf691e-f13f-479b-9a13-a11ef597458f",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1030",
+            "co2eqYears": 100,
+            "inventoryValueId": "bf371c6b-af16-42f2-82b6-5eac2080aee1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.818323Z",
+            "last_updated": "2026-07-15T12:58:06.818431Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "42e6192c-01e4-4a48-af21-589c3f709a24",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "58",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "2455f7ac-9d24-40f5-bea8-c4fc086a30ef",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.818543Z",
+        "last_updated": "2026-07-15T12:58:06.818648Z",
+        "activityValues": [
+          {
+            "id": "7379962d-2654-4d5e-a025-e0dabd778777",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "58",
+            "co2eqYears": 100,
+            "inventoryValueId": "47510ea9-7e4b-4def-a4bc-6623ba9ef4d1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.818756Z",
+            "last_updated": "2026-07-15T12:58:06.818861Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "ce3e6723-48c5-4a57-b3b8-4a8c3d006fa7",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "63063",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "69752920-de1a-4171-a008-6e40bf648a77",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.818986Z",
+        "last_updated": "2026-07-15T12:58:06.819099Z",
+        "activityValues": [
+          {
+            "id": "5babb6fb-5df8-4e94-bdf1-8ff5f3042d4d",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "63063",
+            "co2eqYears": 100,
+            "inventoryValueId": "529ae936-c22f-4406-84bd-dc59f48b9afb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.819207Z",
+            "last_updated": "2026-07-15T12:58:06.819313Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "2a839530-a1c1-4ca9-adfe-299f0af1175d",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "3d5d46d2-0c94-421d-ba3b-57f296487009",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.819425Z",
+        "last_updated": "2026-07-15T12:58:06.819531Z",
+        "activityValues": [
+          {
+            "id": "9dd15b87-11f9-4584-a40b-aba4dbf6fa4a",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "4",
+            "co2eqYears": 100,
+            "inventoryValueId": "fe311475-46ac-4f7d-9d5b-116d5be4eacf",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.819642Z",
+            "last_updated": "2026-07-15T12:58:06.819752Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "9e829320-62dd-4333-8293-4a79247b2ab9",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1675",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "b6d4ed9d-b242-4dc5-8131-26c8ec6f1ec5",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.819865Z",
+        "last_updated": "2026-07-15T12:58:06.819973Z",
+        "activityValues": [
+          {
+            "id": "8a966330-f56c-4735-b3c4-b7c796ccb97f",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "1675",
+            "co2eqYears": 100,
+            "inventoryValueId": "3dafd5a4-0c42-43f5-87b7-121205f1d150",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.820087Z",
+            "last_updated": "2026-07-15T12:58:06.820195Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "e28cf9e9-4d20-4b24-8ad4-5fe820e31916",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "a8de3007-5699-417d-a394-67c7f771e99a",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.820315Z",
+        "last_updated": "2026-07-15T12:58:06.820424Z",
+        "activityValues": [
+          {
+            "id": "f10688bb-95f5-460b-8f8d-50dcc40fe26b",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "5000",
+            "co2eqYears": 100,
+            "inventoryValueId": "4dcf4e51-406b-4509-b571-68df40029de8",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.820535Z",
+            "last_updated": "2026-07-15T12:58:06.820640Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "49ec98cd-5258-44cf-8ea8-91986968ab63",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "16",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "9ab65707-12be-47a1-ad29-8e41da9ecaae",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.820752Z",
+        "last_updated": "2026-07-15T12:58:06.820858Z",
+        "activityValues": [
+          {
+            "id": "920a667a-4111-4e06-b373-3a61078431c9",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "16",
+            "co2eqYears": 100,
+            "inventoryValueId": "d421e772-74cc-457a-8d4b-78ffee39dbf7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.820974Z",
+            "last_updated": "2026-07-15T12:58:06.821096Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "052d9ea4-8584-42fd-a133-e6c6b8e95c18",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "cd1bc1e1-23ad-4508-b3ed-8ac20734f14d",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.821228Z",
+        "last_updated": "2026-07-15T12:58:06.821348Z",
+        "activityValues": [
+          {
+            "id": "a7b0fca2-dce8-435c-9fc2-ff8ece3a0a8f",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "4000",
+            "co2eqYears": 100,
+            "inventoryValueId": "5b225d8f-8a04-4265-8562-2fcbc508126a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.821473Z",
+            "last_updated": "2026-07-15T12:58:06.821596Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "cf529873-fa6c-4cef-a110-dac0d2bc70d8",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "261",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8ac030a8-ce9d-4e0f-a1fa-b4b8f9cc7678",
+        "subCategoryId": "25ed3f56-0fe4-42ce-8bd0-6a349a0bb44f",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.821720Z",
+        "last_updated": "2026-07-15T12:58:06.821842Z",
+        "activityValues": [
+          {
+            "id": "9f3b731e-e063-491e-8418-c52666eadb96",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "261",
+            "co2eqYears": 100,
+            "inventoryValueId": "a360332b-b2f2-4061-aff1-fd6a21d44d7f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.821963Z",
+            "last_updated": "2026-07-15T12:58:06.822078Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8ac030a8-ce9d-4e0f-a1fa-b4b8f9cc7678",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "ffd31d42-83e1-47a8-9ec5-e988de6fc450",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "14165",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a6059603-a379-4e86-adb4-95091ad91f2b",
+        "subCategoryId": "46fd616b-1f2c-447a-830b-9dfb45651212",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.822190Z",
+        "last_updated": "2026-07-15T12:58:06.822297Z",
+        "activityValues": [
+          {
+            "id": "2eed2c64-0a34-45c4-bc60-689dab2104b8",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "14165",
+            "co2eqYears": 100,
+            "inventoryValueId": "547c09af-49ca-4b2f-ac42-6faff0408b1c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.822411Z",
+            "last_updated": "2026-07-15T12:58:06.822518Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a6059603-a379-4e86-adb4-95091ad91f2b",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "b48669bb-c673-4442-bcab-7b1f91a2ff6f",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "89950",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "9f74ec6d-d3e2-4437-9882-0635f270e1dc",
+        "subCategoryId": "b9e09387-3569-4b33-be7f-71b61a218f41",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.822640Z",
+        "last_updated": "2026-07-15T12:58:06.822764Z",
+        "activityValues": [
+          {
+            "id": "01c5f1fd-109d-4568-a0d0-bdd216f653b9",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "89950",
+            "co2eqYears": 100,
+            "inventoryValueId": "6803a4d2-928f-42e4-b2a1-5ecd948e9291",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.822889Z",
+            "last_updated": "2026-07-15T12:58:06.823018Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "9f74ec6d-d3e2-4437-9882-0635f270e1dc",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "2dc2205f-9529-45c7-af16-d58531c15012",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-567570",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "6bfec881-9923-4b38-8c2d-069a6b0f11cd",
+        "subCategoryId": "60a03184-65d2-4db9-9302-bfe7c3bfe42e",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.823135Z",
+        "last_updated": "2026-07-15T12:58:06.823242Z",
+        "activityValues": [
+          {
+            "id": "36956623-784b-46fc-b500-34a1c4bfeba0",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-567570",
+            "co2eqYears": 100,
+            "inventoryValueId": "c7a3991a-fcc2-4684-8669-d0c797571807",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.823359Z",
+            "last_updated": "2026-07-15T12:58:06.823482Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "6bfec881-9923-4b38-8c2d-069a6b0f11cd",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "aced0250-31d4-43f5-95e8-7568cd7bb207",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "34442",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "0f98f564-ca91-4b82-adfe-6185e00ec16c",
+        "subCategoryId": "952341b9-b559-4b24-adc2-7cb97bdeaa39",
+        "inventoryId": "9260cea7-66d8-44bc-87ee-d78a77601b97",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.823615Z",
+        "last_updated": "2026-07-15T12:58:06.823736Z",
+        "activityValues": [
+          {
+            "id": "79585150-04ea-4c9b-ab78-a73570aabfd3",
+            "activityData": {
+              "data-source": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "34442",
+            "co2eqYears": 100,
+            "inventoryValueId": "09b68e95-ddd6-41b0-bf38-4fba31cea120",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14108-Panguipulli-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.823851Z",
+            "last_updated": "2026-07-15T12:58:06.823965Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "0f98f564-ca91-4b82-adfe-6185e00ec16c",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1383 @@
+{
+  "data": {
+    "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+    "inventoryName": "Valpara\u00edso - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "fa05ed84-8abc-4a5d-9811-49a9c19bd64e",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.587969Z",
+    "created": "2026-07-15T12:58:06.588091Z",
+    "last_updated": "2026-07-15T12:58:06.588231Z",
+    "city": {
+      "cityId": "fa05ed84-8abc-4a5d-9811-49a9c19bd64e",
+      "locode": "CL VPA",
+      "name": "Valpara\u00edso",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "6007cfac-1155-47a3-963e-53d06520b675",
+      "created": "2026-07-15T12:58:06.588356Z",
+      "last_updated": "2026-07-15T12:58:06.588475Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "5da88321-2275-46fa-97ed-ada1f06df0c6",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "68139",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "12eadc7a-e76f-4fed-a514-d247b2ef0087",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.573315Z",
+        "last_updated": "2026-07-15T12:58:06.573525Z",
+        "activityValues": [
+          {
+            "id": "4f50e44c-e1bd-4af3-8786-de741d8a618d",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "68139",
+            "co2eqYears": 100,
+            "inventoryValueId": "4429d90d-995c-4afd-bfc2-698f6fb4cbed",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.573659Z",
+            "last_updated": "2026-07-15T12:58:06.573783Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "3904e9e8-f1d5-43af-b376-86e391bcf78b",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "69286",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "2ec87662-a116-449b-a2e8-1712e78dd414",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.573922Z",
+        "last_updated": "2026-07-15T12:58:06.574035Z",
+        "activityValues": [
+          {
+            "id": "92ba710a-8b0d-4f9d-a5d0-a2e1422349f7",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "69286",
+            "co2eqYears": 100,
+            "inventoryValueId": "d2a467a6-00cc-4aa4-9f97-579828c4dbe2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.574148Z",
+            "last_updated": "2026-07-15T12:58:06.574254Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "dedc87d7-9a3f-46c0-9aea-bf81432e311a",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3949",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "ce8fbe42-4c81-49c6-8df0-64105f9a40a4",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.574366Z",
+        "last_updated": "2026-07-15T12:58:06.574472Z",
+        "activityValues": [
+          {
+            "id": "e2b20f83-5314-40f4-9520-d51ad89f19c7",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "3949",
+            "co2eqYears": 100,
+            "inventoryValueId": "209c5999-250c-47a7-8c73-d374780c5cc1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.574581Z",
+            "last_updated": "2026-07-15T12:58:06.574703Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "b839676c-cf1a-476f-86d6-18ef144ee17f",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "26464",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "2fff5234-191b-49c0-99a0-96b0165986eb",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.574821Z",
+        "last_updated": "2026-07-15T12:58:06.574928Z",
+        "activityValues": [
+          {
+            "id": "e8ae2cd3-44d2-4477-956c-46aff6107f73",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "26464",
+            "co2eqYears": 100,
+            "inventoryValueId": "6895459e-7113-4ae3-9e99-34e99b6400c6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.575050Z",
+            "last_updated": "2026-07-15T12:58:06.575157Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "2fa18918-7344-43e1-b759-1d3e5c0ad496",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "73139",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "81823340-04d5-4307-b6ce-9b0df02c02aa",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.575276Z",
+        "last_updated": "2026-07-15T12:58:06.575381Z",
+        "activityValues": [
+          {
+            "id": "eda24f23-e768-4e9c-b3bc-a7cd81ff114a",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "73139",
+            "co2eqYears": 100,
+            "inventoryValueId": "88ec573d-d5ea-4019-ba2b-9544fd0ff3ee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.575489Z",
+            "last_updated": "2026-07-15T12:58:06.575594Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "d598c03c-808e-4838-af5d-dba3fc568a56",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4168",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "c911fe96-0112-4c8e-ac2e-4f6dc421cf98",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.575709Z",
+        "last_updated": "2026-07-15T12:58:06.575814Z",
+        "activityValues": [
+          {
+            "id": "137c88b8-04c3-4e58-93a6-ab90e087023f",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "4168",
+            "co2eqYears": 100,
+            "inventoryValueId": "c41d70c0-e4f2-4c0f-aa21-eefd0ef69b38",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.575922Z",
+            "last_updated": "2026-07-15T12:58:06.576055Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "05dead3d-fae8-4f9a-8c63-727e9119a142",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "109941",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "bfd1a6a1-2689-4acf-ad6e-023879377db9",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.576322Z",
+        "last_updated": "2026-07-15T12:58:06.576510Z",
+        "activityValues": [
+          {
+            "id": "2a7e97d6-22f7-4e00-a91e-fb96c656a3f3",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "109941",
+            "co2eqYears": 100,
+            "inventoryValueId": "cd797527-bf25-4f68-a502-9b84732045c1",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.576658Z",
+            "last_updated": "2026-07-15T12:58:06.576771Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "ea9ac912-74a3-4b74-8dd0-c95540b86dd0",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "87437",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "24686f72-4a53-456c-a401-320d21429a5f",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.576894Z",
+        "last_updated": "2026-07-15T12:58:06.577006Z",
+        "activityValues": [
+          {
+            "id": "2abb8992-5861-424f-ba86-a536adb8cf17",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "87437",
+            "co2eqYears": 100,
+            "inventoryValueId": "e9ce6659-c4f5-41f6-a86f-f88b741c766c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.577121Z",
+            "last_updated": "2026-07-15T12:58:06.577227Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "98070d27-a262-4242-809f-e7c0a2181f63",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4983",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "a811d2c5-eed3-4556-9dcf-053378750ace",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.577341Z",
+        "last_updated": "2026-07-15T12:58:06.577449Z",
+        "activityValues": [
+          {
+            "id": "5f67c2b8-649a-4add-b99d-abe671633e88",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "4983",
+            "co2eqYears": 100,
+            "inventoryValueId": "3e8a4d90-c41c-4df6-bdce-a6762d327bc7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.577558Z",
+            "last_updated": "2026-07-15T12:58:06.577664Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "b23c8b69-8a82-46af-a220-384bdc41d6d8",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4070622",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "69254c0f-3623-4ddc-8827-8eb28b35c9fb",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.577780Z",
+        "last_updated": "2026-07-15T12:58:06.577886Z",
+        "activityValues": [
+          {
+            "id": "9c1bafa1-d314-4903-b144-0a0200ba961e",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "4070622",
+            "co2eqYears": 100,
+            "inventoryValueId": "ec56f70e-f8e2-45f0-bf04-1a7fd1e74100",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.577997Z",
+            "last_updated": "2026-07-15T12:58:06.578128Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "39f39946-1b39-4931-aa1d-d1f8b742625c",
+        "gpcReferenceNumber": "I.4.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "98732",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "05509cc6-f0e5-482c-8d00-3c6e6bbf0c21",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.578247Z",
+        "last_updated": "2026-07-15T12:58:06.578352Z",
+        "activityValues": [
+          {
+            "id": "4ba3ae77-ef74-4bc4-ae66-2ff4b1829684",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "98732",
+            "co2eqYears": 100,
+            "inventoryValueId": "f41c87e1-17ad-4d1a-86f1-21c933a85690",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.578460Z",
+            "last_updated": "2026-07-15T12:58:06.578566Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "c134a88e-bb14-4c95-858a-019e38f6b42c",
+        "gpcReferenceNumber": "I.4.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5627",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "8dd8373e-3726-431f-a6a4-898b0c23426e",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.578679Z",
+        "last_updated": "2026-07-15T12:58:06.578784Z",
+        "activityValues": [
+          {
+            "id": "dd09744e-c5a5-48a5-a280-a014cc65924a",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "5627",
+            "co2eqYears": 100,
+            "inventoryValueId": "b4d39d71-a767-4e03-bd29-8c64cb6a988b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.578893Z",
+            "last_updated": "2026-07-15T12:58:06.578998Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "f38bdcdd-16ae-420c-85e0-5345bba377a5",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "38",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "ca356b05-c2dd-4ef5-8e12-8fc3cafc27a3",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.579109Z",
+        "last_updated": "2026-07-15T12:58:06.579218Z",
+        "activityValues": [
+          {
+            "id": "a67883e2-bbc3-4e33-982a-99ffff51713e",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "38",
+            "co2eqYears": 100,
+            "inventoryValueId": "eacdf2b5-71af-48a0-a0ef-49b4cd9f46ad",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.579326Z",
+            "last_updated": "2026-07-15T12:58:06.579431Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "66d3ab2f-b798-4ebd-a130-8f6ad191b9a2",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "17",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "6b51196f-5931-42e2-b7dc-9af8587cf4ed",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.579541Z",
+        "last_updated": "2026-07-15T12:58:06.579646Z",
+        "activityValues": [
+          {
+            "id": "72ec9537-af8d-4594-a545-8737e1564eb7",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "17",
+            "co2eqYears": 100,
+            "inventoryValueId": "f17dcfc9-96a1-4f71-95b8-ce76632ba1d2",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.579753Z",
+            "last_updated": "2026-07-15T12:58:06.579859Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "29b0deb9-c66b-435e-9370-de248855e3b3",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "a4708e6e-3061-4abb-acfb-74946b330876",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.579970Z",
+        "last_updated": "2026-07-15T12:58:06.580078Z",
+        "activityValues": [
+          {
+            "id": "0ae4fd9e-154d-4a8e-8b92-cbf210e154d8",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "1",
+            "co2eqYears": 100,
+            "inventoryValueId": "2160aad3-48c6-4a0a-b050-b54c12b03140",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.580207Z",
+            "last_updated": "2026-07-15T12:58:06.580312Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "a4654077-9db5-443c-9c99-098ab77ded74",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "277078",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "87119a54-7080-4e72-9a19-7670b2d149a3",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.580447Z",
+        "last_updated": "2026-07-15T12:58:06.580572Z",
+        "activityValues": [
+          {
+            "id": "7d811035-a590-409c-a30e-05a69a0b86ff",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "277078",
+            "co2eqYears": 100,
+            "inventoryValueId": "3bf47d26-40e8-4e5b-be3f-a3899840968b",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.580698Z",
+            "last_updated": "2026-07-15T12:58:06.580806Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "908f60a6-b400-404b-b524-0bb6a7b46f26",
+        "gpcReferenceNumber": "II.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "6e9a6162-3835-40a0-aa12-23cd8672718b",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.580922Z",
+        "last_updated": "2026-07-15T12:58:06.581029Z",
+        "activityValues": [
+          {
+            "id": "b4c95cec-ed3c-466b-96d6-a4395c78b619",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "1",
+            "co2eqYears": 100,
+            "inventoryValueId": "cc14fb16-1c91-4af9-b4fb-5022b3626045",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.581143Z",
+            "last_updated": "2026-07-15T12:58:06.581249Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "fc7b9118-5af4-4cb5-8bb4-8dfcb048d9fe",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "194",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "a07f1a09-2b9f-410f-aa5b-fbe5ee0a1981",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.581360Z",
+        "last_updated": "2026-07-15T12:58:06.581465Z",
+        "activityValues": [
+          {
+            "id": "ea1e1605-9ca8-45d7-ab57-135537f2079e",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "194",
+            "co2eqYears": 100,
+            "inventoryValueId": "95b428bd-d013-40ca-bb3e-6bae4209398d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.581581Z",
+            "last_updated": "2026-07-15T12:58:06.581699Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "8282ea7a-c25a-4a09-9ab0-56ceadbd6c04",
+        "gpcReferenceNumber": "II.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "82122",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "waterborne-navigation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ab32c321-e9e1-31b3-9dde-f93ade472219",
+        "subCategoryId": "e8b351c7-0b5c-4a69-8138-828f7309e546",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.581819Z",
+        "last_updated": "2026-07-15T12:58:06.581929Z",
+        "activityValues": [
+          {
+            "id": "83308aa8-84aa-4da3-b320-f3871a61c93a",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Waterborne navigation"
+            },
+            "co2eq": "82122",
+            "co2eqYears": 100,
+            "inventoryValueId": "f71bb37f-4e91-4ab1-892e-6502b6541f9f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.582039Z",
+            "last_updated": "2026-07-15T12:58:06.582144Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ab32c321-e9e1-31b3-9dde-f93ade472219",
+          "subsectorName": "Waterborne navigation"
+        }
+      },
+      {
+        "id": "055b6334-154e-43d2-83fc-2c625417aa23",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "5298",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "6c40051f-0762-4a71-8dd1-603b65ed147d",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.582255Z",
+        "last_updated": "2026-07-15T12:58:06.582374Z",
+        "activityValues": [
+          {
+            "id": "5e7a14b4-f055-434c-bd5b-9d5433c1df91",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "5298",
+            "co2eqYears": 100,
+            "inventoryValueId": "7ea59730-c22c-4e3a-a5c6-1904ac6be80c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.582495Z",
+            "last_updated": "2026-07-15T12:58:06.582609Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "b506d145-03d3-4c71-bba8-cad183cb927f",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "11874",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "82528b29-67a1-4bde-9a71-a7ecf10ba6cf",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.582736Z",
+        "last_updated": "2026-07-15T12:58:06.582871Z",
+        "activityValues": [
+          {
+            "id": "30daa358-aa5b-48bd-8d1e-16ce84d4fea1",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "11874",
+            "co2eqYears": 100,
+            "inventoryValueId": "5601d394-d63b-4bfd-b3f7-92ed4acea16f",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.583000Z",
+            "last_updated": "2026-07-15T12:58:06.583120Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "9e46900c-e110-4ab2-9844-aabfbe035631",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "258000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "c9d76d13-0215-4125-a6af-2077ac48ec0a",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.583241Z",
+        "last_updated": "2026-07-15T12:58:06.583364Z",
+        "activityValues": [
+          {
+            "id": "35a72d0e-5e0c-468d-ba35-ad7d08070d37",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "258000",
+            "co2eqYears": 100,
+            "inventoryValueId": "f17ff972-7c97-4da4-9997-8acc362c2131",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.583489Z",
+            "last_updated": "2026-07-15T12:58:06.583617Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "4a8f7c41-50f3-4399-9622-6adc9b18d847",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "66aace65-0b21-4596-a933-4157492283fc",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.583742Z",
+        "last_updated": "2026-07-15T12:58:06.583857Z",
+        "activityValues": [
+          {
+            "id": "2fcfc373-6673-4f37-98d4-38b8a537addf",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "6000",
+            "co2eqYears": 100,
+            "inventoryValueId": "3b78a97e-b3c2-45a6-ab52-42a09a10737a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.583979Z",
+            "last_updated": "2026-07-15T12:58:06.584094Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "71df336b-dd19-43fa-b551-f00883509dd7",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "71",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "f3b86f15-fe32-4f4f-8441-f658aceedb13",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.584221Z",
+        "last_updated": "2026-07-15T12:58:06.584351Z",
+        "activityValues": [
+          {
+            "id": "d4b98184-6a1f-4036-9e14-ed393813f48b",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "71",
+            "co2eqYears": 100,
+            "inventoryValueId": "1d4c6b78-5b81-4172-834d-a7757dc45bee",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.584479Z",
+            "last_updated": "2026-07-15T12:58:06.584609Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "b0a65ba8-a6ba-42ba-9225-1592c7b8d76b",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "41000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "107a7eef-8d34-44e2-8be4-02ad5828fd81",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.584733Z",
+        "last_updated": "2026-07-15T12:58:06.584847Z",
+        "activityValues": [
+          {
+            "id": "c35b1441-bb6a-4d98-8da5-e6415a56d46e",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "41000",
+            "co2eqYears": 100,
+            "inventoryValueId": "075b3df8-8cee-47fd-8147-000e926b3e26",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.584965Z",
+            "last_updated": "2026-07-15T12:58:06.585079Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "ce6b44b7-e2ff-4dce-aa34-6fc12a6d1365",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "21954",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "6ad47dad-d811-427f-adc9-c9d117abc1d3",
+        "subCategoryId": "457a5ef8-708a-4318-a6b3-5c4f8a6064fe",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.585203Z",
+        "last_updated": "2026-07-15T12:58:06.585319Z",
+        "activityValues": [
+          {
+            "id": "623cea19-cafc-4f86-b0eb-e5ee97331a0d",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "21954",
+            "co2eqYears": 100,
+            "inventoryValueId": "ef99b4dd-26bb-403b-be0a-cdd18b9c30d6",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.585460Z",
+            "last_updated": "2026-07-15T12:58:06.585573Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "6ad47dad-d811-427f-adc9-c9d117abc1d3",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "0ebe91b9-81c0-4c01-a50a-f9c1e77bc8c1",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "101432",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "fc644c01-a80e-4d78-91dd-1c4a2008f03b",
+        "subCategoryId": "5be5a464-15f0-4be8-bbc4-48c501f44780",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.585693Z",
+        "last_updated": "2026-07-15T12:58:06.585808Z",
+        "activityValues": [
+          {
+            "id": "bcc22355-cbf0-418d-aa34-a09e6ee0190f",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "101432",
+            "co2eqYears": 100,
+            "inventoryValueId": "baaad265-d3eb-4aa7-a276-3c4a0fdb15f3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.585928Z",
+            "last_updated": "2026-07-15T12:58:06.586043Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "fc644c01-a80e-4d78-91dd-1c4a2008f03b",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "14171ad9-e8c5-4f49-829a-ec25f77f6045",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "764",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "e3f826b2-c6f6-47c5-bd3e-1c8de0e03546",
+        "subCategoryId": "b0f7855f-b34b-4eca-b67b-eb62eade4498",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.586164Z",
+        "last_updated": "2026-07-15T12:58:06.586408Z",
+        "activityValues": [
+          {
+            "id": "1c75d374-a477-49d8-96ab-4be04c5cbb2f",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "764",
+            "co2eqYears": 100,
+            "inventoryValueId": "a69d8baa-3fb4-4156-b29b-c42081963e95",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.586543Z",
+            "last_updated": "2026-07-15T12:58:06.586655Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e3f826b2-c6f6-47c5-bd3e-1c8de0e03546",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "ab15734e-c6b1-4ae4-a506-db2847f7cb3f",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-43113",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "11606855-08c1-4586-ad53-92e6330b4e24",
+        "subCategoryId": "9f380eb0-25ab-40cc-adfa-067dd1eea145",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.586777Z",
+        "last_updated": "2026-07-15T12:58:06.586901Z",
+        "activityValues": [
+          {
+            "id": "2861d560-3ee3-4128-b69d-a4ca04611d39",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-43113",
+            "co2eqYears": 100,
+            "inventoryValueId": "614ba27e-7442-4bf0-8e00-3cf38c569ed7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.587030Z",
+            "last_updated": "2026-07-15T12:58:06.587159Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "11606855-08c1-4586-ad53-92e6330b4e24",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "0b83a371-f4f3-401d-b9d0-1659dc916bd2",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1184",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "5136efb5-7cf9-447e-b4c9-2490824f1ec0",
+        "subCategoryId": "af11a5f7-d464-4d35-b872-ada5278bc7e8",
+        "inventoryId": "785d3361-6f80-4416-9fae-eed00a84e2e9",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.587288Z",
+        "last_updated": "2026-07-15T12:58:06.587408Z",
+        "activityValues": [
+          {
+            "id": "b806b3c7-3298-4f24-9099-6fe1ea71e7ca",
+            "activityData": {
+              "data-source": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "1184",
+            "co2eqYears": 100,
+            "inventoryValueId": "7dbbc95b-001b-48cb-8ad9-cfdf9ed115a7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-05101-Valpara\u00edso-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.587530Z",
+            "last_updated": "2026-07-15T12:58:06.587649Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5136efb5-7cf9-447e-b4c9-2490824f1ec0",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

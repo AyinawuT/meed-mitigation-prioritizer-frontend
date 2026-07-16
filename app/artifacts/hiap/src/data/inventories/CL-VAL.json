@@ -1,0 +1,1203 @@
+{
+  "data": {
+    "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+    "inventoryName": "Valdivia - 2022",
+    "year": 2022,
+    "totalEmissions": null,
+    "cityId": "ff55d401-64cd-4283-98b0-b781a6354ff6",
+    "totalCountryEmissions": null,
+    "isPublic": false,
+    "publishedAt": null,
+    "inventoryType": "gpc_basic_plus",
+    "globalWarmingPotentialType": "ar6",
+    "lastUpdated": "2026-07-15T12:58:06.798406Z",
+    "created": "2026-07-15T12:58:06.798520Z",
+    "last_updated": "2026-07-15T12:58:06.798649Z",
+    "city": {
+      "cityId": "ff55d401-64cd-4283-98b0-b781a6354ff6",
+      "locode": "CL VAL",
+      "name": "Valdivia",
+      "shape": null,
+      "country": "Chile",
+      "region": "Multiple",
+      "countryLocode": "CL",
+      "regionLocode": "CL-MUL",
+      "area": null,
+      "projectId": "dc721b25-47d1-4404-94eb-22239da497c4",
+      "created": "2026-07-15T12:58:06.798771Z",
+      "last_updated": "2026-07-15T12:58:06.798885Z"
+    },
+    "inventoryValues": [
+      {
+        "id": "05f96dd5-3cac-41eb-8590-7c8945a53c46",
+        "gpcReferenceNumber": "I.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "32411",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "6a10ef40-733d-4c58-b5dc-7757e0ee69aa",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.785855Z",
+        "last_updated": "2026-07-15T12:58:06.786002Z",
+        "activityValues": [
+          {
+            "id": "2f170e26-fe88-4ca7-b7e2-df9cc35bec55",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "32411",
+            "co2eqYears": 100,
+            "inventoryValueId": "1048b0a2-1690-4f59-a168-91ca6431f8ec",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.786129Z",
+            "last_updated": "2026-07-15T12:58:06.786246Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "32e43310-5480-455f-baa4-75e3d8be5ca7",
+        "gpcReferenceNumber": "I.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "47594",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "b2580e88-d089-45c0-aea5-5a00ae0db77a",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.786362Z",
+        "last_updated": "2026-07-15T12:58:06.786469Z",
+        "activityValues": [
+          {
+            "id": "ace28d0d-c773-459a-8c04-7cbb751fabac",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "47594",
+            "co2eqYears": 100,
+            "inventoryValueId": "6cb274ea-d7c2-4b86-a296-e85ac2007727",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.786582Z",
+            "last_updated": "2026-07-15T12:58:06.786688Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "7fbd42c7-2b04-478f-9b50-11c4b77a3b2c",
+        "gpcReferenceNumber": "I.1.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "2712",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "residential-buildings-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+        "subCategoryId": "fb3a1379-8f29-48f8-9c64-2fd0b1dd911d",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.786815Z",
+        "last_updated": "2026-07-15T12:58:06.786920Z",
+        "activityValues": [
+          {
+            "id": "d03844b8-0512-4c72-a12c-654c7084f505",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Residential buildings"
+            },
+            "co2eq": "2712",
+            "co2eqYears": 100,
+            "inventoryValueId": "e6a17697-f236-4843-8779-e456ad9c23f3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.787029Z",
+            "last_updated": "2026-07-15T12:58:06.787152Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "abe4c7b0-242d-3ed2-a146-48885d6fb38d",
+          "subsectorName": "Residential buildings"
+        }
+      },
+      {
+        "id": "27fbad7c-bfae-467d-856a-8944836f0135",
+        "gpcReferenceNumber": "I.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "55483",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "99545165-3134-4fc2-aed4-3e2c3c7d1ec7",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.787297Z",
+        "last_updated": "2026-07-15T12:58:06.787427Z",
+        "activityValues": [
+          {
+            "id": "c6a3a0da-1c2e-4488-8f19-467b4d16daa3",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "55483",
+            "co2eqYears": 100,
+            "inventoryValueId": "95ba38b9-50db-4f8a-b5a8-11fa48b69d5a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.787558Z",
+            "last_updated": "2026-07-15T12:58:06.787680Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "88098b87-dbcc-4153-8364-b0879bdc8e5d",
+        "gpcReferenceNumber": "I.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "33391",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "9833ed5a-d90b-404d-851c-feff1cb3df00",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.787806Z",
+        "last_updated": "2026-07-15T12:58:06.787927Z",
+        "activityValues": [
+          {
+            "id": "437ca4e9-92f3-4383-be33-4bc1e4574032",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "33391",
+            "co2eqYears": 100,
+            "inventoryValueId": "5db79882-26f1-46fa-9107-6b872aa01cd7",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.788050Z",
+            "last_updated": "2026-07-15T12:58:06.788169Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "cb13bf57-e5a3-48f4-9f39-866238f73452",
+        "gpcReferenceNumber": "I.2.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1903",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "commercial-and-institutional-buildings-and-facilities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+        "subCategoryId": "37bef639-bb6e-4a6c-90ed-6988109eac57",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.788285Z",
+        "last_updated": "2026-07-15T12:58:06.788393Z",
+        "activityValues": [
+          {
+            "id": "9a7e5afe-d91d-4a17-8a08-d301061ff1a3",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Commercial and institutional buildings and facilities"
+            },
+            "co2eq": "1903",
+            "co2eqYears": 100,
+            "inventoryValueId": "3094d7d4-aeaf-4dec-bb01-44c60b54484a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.788515Z",
+            "last_updated": "2026-07-15T12:58:06.788632Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a235005c-f223-3c64-a0d2-f55d6f22f32f",
+          "subsectorName": "Commercial and institutional buildings and facilities"
+        }
+      },
+      {
+        "id": "8b31ca40-d277-443f-9ffa-c5f794b98229",
+        "gpcReferenceNumber": "I.3.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "124492",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "c719e8c0-f2d8-4d1f-b866-4f99539f0979",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.788753Z",
+        "last_updated": "2026-07-15T12:58:06.788861Z",
+        "activityValues": [
+          {
+            "id": "e87cf7d4-e506-4be1-9430-e17f63200fb1",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "124492",
+            "co2eqYears": 100,
+            "inventoryValueId": "bc42114b-fb0a-4d82-9b39-8e0762669c0c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.788975Z",
+            "last_updated": "2026-07-15T12:58:06.789082Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "4dfe1c4e-961c-4803-b014-45a61275a0b0",
+        "gpcReferenceNumber": "I.3.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "121430",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "1ca3aae6-c53c-45c6-8b51-489f2f2c17c0",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.789201Z",
+        "last_updated": "2026-07-15T12:58:06.789309Z",
+        "activityValues": [
+          {
+            "id": "6c42a712-3d1c-4060-9951-9fa11f693fb5",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "121430",
+            "co2eqYears": 100,
+            "inventoryValueId": "7f1d5a77-d020-4973-b16f-e730636566b9",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.789429Z",
+            "last_updated": "2026-07-15T12:58:06.789551Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "4768e780-9d13-497e-af51-4c3dfbb6b9d9",
+        "gpcReferenceNumber": "I.3.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "6921",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "manufacturing-industries-and-construction-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+        "subCategoryId": "90212172-fe3f-47f3-8645-fb239fcc8a5a",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.789676Z",
+        "last_updated": "2026-07-15T12:58:06.789796Z",
+        "activityValues": [
+          {
+            "id": "20b129e5-bb1b-4bf6-870a-1a4e93b46f2b",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Manufacturing industries and construction"
+            },
+            "co2eq": "6921",
+            "co2eqYears": 100,
+            "inventoryValueId": "d296f675-8f1a-4561-85f5-49aae9af35bb",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.789920Z",
+            "last_updated": "2026-07-15T12:58:06.790039Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8de1d11d-4146-35f3-a973-e66930e68a50",
+          "subsectorName": "Manufacturing industries and construction"
+        }
+      },
+      {
+        "id": "2c7e8dfe-19d9-41d4-b601-ccb78386d27b",
+        "gpcReferenceNumber": "I.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3950",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "energy-industries-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+        "subCategoryId": "507fe2b2-2b58-403b-8371-335a8def7d91",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.790166Z",
+        "last_updated": "2026-07-15T12:58:06.790274Z",
+        "activityValues": [
+          {
+            "id": "ef3e9491-a1f7-4c23-86b9-7244807f8ff5",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Energy industries"
+            },
+            "co2eq": "3950",
+            "co2eqYears": 100,
+            "inventoryValueId": "64bff961-f085-4206-afa5-d259953ef178",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.790413Z",
+            "last_updated": "2026-07-15T12:58:06.790535Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4f342e84-0269-3f04-aceb-1d6cd0a183bc",
+          "subsectorName": "Energy industries"
+        }
+      },
+      {
+        "id": "0f34984e-a14d-4714-bad4-71a91e833841",
+        "gpcReferenceNumber": "I.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9515",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "60623589-b8f8-4639-8c5d-57132c89f827",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.790664Z",
+        "last_updated": "2026-07-15T12:58:06.790770Z",
+        "activityValues": [
+          {
+            "id": "314cac37-fb39-4aeb-80b1-8c4e88409946",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "9515",
+            "co2eqYears": 100,
+            "inventoryValueId": "bba9750e-48ee-4888-a5ba-554a74df865c",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.790880Z",
+            "last_updated": "2026-07-15T12:58:06.790998Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "19866c20-abca-49d7-bb27-047a1720a698",
+        "gpcReferenceNumber": "I.5.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "7200",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "cb3b1742-358d-41d3-8aea-301266cb153d",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.791127Z",
+        "last_updated": "2026-07-15T12:58:06.791245Z",
+        "activityValues": [
+          {
+            "id": "0e54f0d0-37bd-4970-bf97-f88d4e32fb1b",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "7200",
+            "co2eqYears": 100,
+            "inventoryValueId": "84c20caa-3a4a-40e0-9625-0ebed91e5fe3",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.791363Z",
+            "last_updated": "2026-07-15T12:58:06.791478Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "7556d43f-32fa-4663-8425-01f48f17b7bd",
+        "gpcReferenceNumber": "I.5.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "410",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "agriculture,-forestry-and-fishing-activities-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+        "subCategoryId": "70afaf4c-92fd-4460-8f15-47b0e6ada5b9",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.791607Z",
+        "last_updated": "2026-07-15T12:58:06.791725Z",
+        "activityValues": [
+          {
+            "id": "d6124e43-8982-462d-a31b-77a0fd4d1da7",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Agriculture, forestry and fishing activities"
+            },
+            "co2eq": "410",
+            "co2eqYears": 100,
+            "inventoryValueId": "d34a7ca4-6866-4437-9d9e-3ecb65ab55ec",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.791845Z",
+            "last_updated": "2026-07-15T12:58:06.791960Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "95c049d1-eff9-3b26-af49-2b32982e7dd9",
+          "subsectorName": "Agriculture, forestry and fishing activities"
+        }
+      },
+      {
+        "id": "e0feda6b-62cc-4b99-b44d-dde82aa542ac",
+        "gpcReferenceNumber": "II.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "258214",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "on-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+        "subCategoryId": "0e40cb48-e3d4-4313-9942-47432fb37d82",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.792091Z",
+        "last_updated": "2026-07-15T12:58:06.792211Z",
+        "activityValues": [
+          {
+            "id": "20ac116a-903d-44eb-ba82-08eaf7194ec1",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "On-road transportation"
+            },
+            "co2eq": "258214",
+            "co2eqYears": 100,
+            "inventoryValueId": "f53048c8-8197-4bf1-9756-ff11ed24f8ed",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.792334Z",
+            "last_updated": "2026-07-15T12:58:06.792452Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "48fcfadb-90ed-34aa-80d9-fa31a90bef80",
+          "subsectorName": "On-road transportation"
+        }
+      },
+      {
+        "id": "e2a76a35-f516-464f-bcea-5106d5d972c9",
+        "gpcReferenceNumber": "II.2.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "153",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "railways-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+        "subCategoryId": "e8ce1149-a6da-446d-8015-0f8598b9770a",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.792571Z",
+        "last_updated": "2026-07-15T12:58:06.792686Z",
+        "activityValues": [
+          {
+            "id": "63cfaf9f-3d00-4179-a3e6-1a7e9e3f4e47",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Railways"
+            },
+            "co2eq": "153",
+            "co2eqYears": 100,
+            "inventoryValueId": "e99254ca-c311-440f-865d-22d6632fd993",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.792832Z",
+            "last_updated": "2026-07-15T12:58:06.792993Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "8cf35b86-9ed2-36bd-b04d-eddc47db6676",
+          "subsectorName": "Railways"
+        }
+      },
+      {
+        "id": "2fefd3aa-80fc-46d0-836f-a816c162e65c",
+        "gpcReferenceNumber": "II.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "195",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "aviation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+        "subCategoryId": "5095ec96-e103-42fa-9ac6-dbe8896fde0d",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.793149Z",
+        "last_updated": "2026-07-15T12:58:06.793275Z",
+        "activityValues": [
+          {
+            "id": "4817e1cb-a432-4a20-8726-8de8f77fc1d6",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Aviation"
+            },
+            "co2eq": "195",
+            "co2eqYears": 100,
+            "inventoryValueId": "ddec8ab9-7099-426f-95dd-fdbeb0267807",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.793446Z",
+            "last_updated": "2026-07-15T12:58:06.793572Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "5b84b809-1878-3b1b-bf6b-250c64d5e920",
+          "subsectorName": "Aviation"
+        }
+      },
+      {
+        "id": "0ba3de74-c5f5-41df-bdf7-7f51a5718f3b",
+        "gpcReferenceNumber": "II.5.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9609",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "off-road-transportation-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+        "subCategoryId": "87727f52-de90-460f-923f-86fa666071d2",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.793704Z",
+        "last_updated": "2026-07-15T12:58:06.793815Z",
+        "activityValues": [
+          {
+            "id": "a691c161-0a3c-4f89-803d-ab8cb9c9bc37",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Off-road transportation"
+            },
+            "co2eq": "9609",
+            "co2eqYears": 100,
+            "inventoryValueId": "a5b3c693-7870-427a-835b-7b0f92364724",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.793930Z",
+            "last_updated": "2026-07-15T12:58:06.794039Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "e20ace37-9ba4-3a80-9d88-8cac5253c0b0",
+          "subsectorName": "Off-road transportation"
+        }
+      },
+      {
+        "id": "1f33e69e-650f-41b0-9fee-dc70ad37e245",
+        "gpcReferenceNumber": "III.1.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "47000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "9d161107-371a-4455-bd27-7da7aee7bb9c",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.794174Z",
+        "last_updated": "2026-07-15T12:58:06.794282Z",
+        "activityValues": [
+          {
+            "id": "6fbb3249-b500-45c6-976a-8eb1bc400b25",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "47000",
+            "co2eqYears": 100,
+            "inventoryValueId": "9803c3a1-f206-4884-af2a-6ceb90923073",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.794397Z",
+            "last_updated": "2026-07-15T12:58:06.794523Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "f07e8dce-75ed-47d6-ac93-35431b98b099",
+        "gpcReferenceNumber": "III.1.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "1000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "solid-waste-disposal-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+        "subCategoryId": "bbd2cb9f-55a8-4037-ba33-76ef7dc542a4",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.794642Z",
+        "last_updated": "2026-07-15T12:58:06.794762Z",
+        "activityValues": [
+          {
+            "id": "5dc81999-d9b9-4361-a2da-fc5a8b5da425",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Solid waste disposal"
+            },
+            "co2eq": "1000",
+            "co2eqYears": 100,
+            "inventoryValueId": "5d064a5d-c678-4c33-81eb-b61eb2493baa",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.794876Z",
+            "last_updated": "2026-07-15T12:58:06.794982Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "172d10c0-6b80-3173-902e-eca5c0af84c8",
+          "subsectorName": "Solid waste disposal"
+        }
+      },
+      {
+        "id": "2ac9c4ef-8448-452e-a762-4f7c087fc572",
+        "gpcReferenceNumber": "III.2.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "3558",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "biological-treatment-of-waste-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+        "subCategoryId": "0c8a16f6-3c51-48c6-9001-7045764d11a4",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.795100Z",
+        "last_updated": "2026-07-15T12:58:06.795213Z",
+        "activityValues": [
+          {
+            "id": "3b4f222a-a251-4e77-92fd-cdd81dc8605e",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Biological treatment of waste"
+            },
+            "co2eq": "3558",
+            "co2eqYears": 100,
+            "inventoryValueId": "69a4ae3b-7eda-4ff6-840f-8a5e01fc5a9d",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.795325Z",
+            "last_updated": "2026-07-15T12:58:06.795440Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a8baeb06-0ab2-3215-a93e-2fcbe0e8f8a9",
+          "subsectorName": "Biological treatment of waste"
+        }
+      },
+      {
+        "id": "a7a78fa9-4b4f-4ddc-813b-c36e69ccea0c",
+        "gpcReferenceNumber": "III.4.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "20000",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "wastewater-treatment-and-discharge-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+        "subCategoryId": "345acf79-0353-434e-ada1-1da57fd68157",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.795575Z",
+        "last_updated": "2026-07-15T12:58:06.795707Z",
+        "activityValues": [
+          {
+            "id": "0432acf2-b871-46df-8d4c-ece2b1db588e",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Wastewater treatment and discharge"
+            },
+            "co2eq": "20000",
+            "co2eqYears": 100,
+            "inventoryValueId": "c188481c-c626-4f99-b79d-192dbad2e846",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.795834Z",
+            "last_updated": "2026-07-15T12:58:06.795945Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "c465e7a2-1634-337f-819a-2dfbe147927e",
+          "subsectorName": "Wastewater treatment and discharge"
+        }
+      },
+      {
+        "id": "0e7cb1c2-ffde-4bc2-bcd3-59cb4cdcd7ba",
+        "gpcReferenceNumber": "IV.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "4010",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "4dd48840-64f4-4373-8336-f535d741fc49",
+        "subCategoryId": "46c5cc0a-ed0e-4024-ae2d-0ae0d2b66326",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.796065Z",
+        "last_updated": "2026-07-15T12:58:06.796173Z",
+        "activityValues": [
+          {
+            "id": "07349886-9c87-4fcc-90a0-3e15c2406f36",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "4010",
+            "co2eqYears": 100,
+            "inventoryValueId": "11ff5e1b-a679-49c4-bee6-a6984660607a",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.796285Z",
+            "last_updated": "2026-07-15T12:58:06.796397Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "4dd48840-64f4-4373-8336-f535d741fc49",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "18da3ab6-ce94-4102-ba41-a3b040fda81d",
+        "gpcReferenceNumber": "IV.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "100748",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-industrial-processes-occurring-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "5da765a9-1ca6-37e1-bcd6-7b387f909a4e",
+        "subSectorId": "ff7a3c80-c9a1-4984-b3f0-ba0a9f9a19a0",
+        "subCategoryId": "4a49a4df-cece-4fa7-a735-3f668e9ce5f6",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.796516Z",
+        "last_updated": "2026-07-15T12:58:06.796637Z",
+        "activityValues": [
+          {
+            "id": "daa73c3e-ef7e-47c9-9452-9e2e2c996fdd",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Emissions from industrial processes occurring within the city boundary"
+            },
+            "co2eq": "100748",
+            "co2eqYears": 100,
+            "inventoryValueId": "a42b47a6-6160-4f3d-bed0-21c2c3393468",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.796766Z",
+            "last_updated": "2026-07-15T12:58:06.796896Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "ff7a3c80-c9a1-4984-b3f0-ba0a9f9a19a0",
+          "subsectorName": "Emissions from industrial processes occurring within the city boundary"
+        }
+      },
+      {
+        "id": "056dcfbf-7260-43ae-bee7-f7f4a50da26f",
+        "gpcReferenceNumber": "V.1",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "25238",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-livestock-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "a535a715-6757-487d-8b11-3aa36ae9c882",
+        "subCategoryId": "f52c096d-dea0-4a64-9282-1cc89beab5d4",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.797033Z",
+        "last_updated": "2026-07-15T12:58:06.797156Z",
+        "activityValues": [
+          {
+            "id": "4819edb8-0182-4503-8fb5-6a9bcfeba73c",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Emissions from livestock within the city boundary"
+            },
+            "co2eq": "25238",
+            "co2eqYears": 100,
+            "inventoryValueId": "ea27b08d-1c7f-47b2-a6fd-8c3f78eac6dc",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.797276Z",
+            "last_updated": "2026-07-15T12:58:06.797384Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "a535a715-6757-487d-8b11-3aa36ae9c882",
+          "subsectorName": "Emissions from livestock within the city boundary"
+        }
+      },
+      {
+        "id": "dfb275a0-1c9c-44e1-a5ff-f4b0b5e50e41",
+        "gpcReferenceNumber": "V.2",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "-249923",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "b01984b0-e602-4b80-9fc1-5e85b68209c0",
+        "subCategoryId": "7c3f03bd-2780-4299-8e6a-8c9a45eaf624",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.797503Z",
+        "last_updated": "2026-07-15T12:58:06.797611Z",
+        "activityValues": [
+          {
+            "id": "250c911a-2696-4744-b6b0-a3cb9119fa39",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Emissions from land within the city boundary"
+            },
+            "co2eq": "-249923",
+            "co2eqYears": 100,
+            "inventoryValueId": "a2ce0799-cdaa-4743-ae95-598c17c01193",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.797720Z",
+            "last_updated": "2026-07-15T12:58:06.797826Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "b01984b0-e602-4b80-9fc1-5e85b68209c0",
+          "subsectorName": "Emissions from land within the city boundary"
+        }
+      },
+      {
+        "id": "1903d7cf-b04a-45b5-84aa-9187d58fc2c7",
+        "gpcReferenceNumber": "V.3",
+        "activityUnits": null,
+        "activityValue": null,
+        "co2eq": "9677",
+        "co2eqYears": 100,
+        "unavailableReason": null,
+        "unavailableExplanation": null,
+        "inputMethodology": "emissions-from-aggregate-sources-and-non-co2-emission-sources-on-land-within-the-city-boundary-direct-measure-methodology",
+        "sectorId": "b7845aa4-e50b-3b8c-8941-77d098a73e82",
+        "subSectorId": "7dc95d00-b1aa-4133-9d0e-b60a5e38210c",
+        "subCategoryId": "375cee2e-e71a-425a-80ec-ab50d62ad56a",
+        "inventoryId": "58433b1c-f1f8-4f74-a8fd-f2094dc0902e",
+        "datasourceId": null,
+        "created": "2026-07-15T12:58:06.797939Z",
+        "last_updated": "2026-07-15T12:58:06.798056Z",
+        "activityValues": [
+          {
+            "id": "34c8cf0c-7c42-41c0-ba8d-173878346607",
+            "activityData": {
+              "data-source": "inventory-CHL-14101-Valdivia-2022.csv",
+              "subsector": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+            },
+            "co2eq": "9677",
+            "co2eqYears": 100,
+            "inventoryValueId": "94047438-4d42-43e2-ab8a-0b4ba998d349",
+            "datasourceId": null,
+            "metadata": {
+              "dataQuality": "high",
+              "activityTitle": "activity-value",
+              "sourceExplanation": "inventory-CHL-14101-Valdivia-2022.csv",
+              "emissionFactorType": ""
+            },
+            "created": "2026-07-15T12:58:06.798175Z",
+            "last_updated": "2026-07-15T12:58:06.798289Z",
+            "gasValues": []
+          }
+        ],
+        "dataSource": null,
+        "subSector": {
+          "subsectorId": "7dc95d00-b1aa-4133-9d0e-b60a5e38210c",
+          "subsectorName": "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary"
+        }
+      }
+    ]
+  }
+}

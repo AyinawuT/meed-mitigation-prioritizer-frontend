@@ -352,10 +352,9 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa,
 
 // ─── Detail Pane ──────────────────────────────────────────────────────────────
 
-function DetailPane({ row, cityName, opportunities, onClose }: {
+function DetailPane({ row, cityName, onClose }: {
   row: FeasibilityRow;
   cityName: string;
-  opportunities: Opportunity[];
   onClose: () => void;
 }) {
   const rm = getRouteMeta(row.route);
@@ -366,6 +365,7 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [projLoading, setProjLoading] = useState(true);
+  const [actionOpps, setActionOpps] = useState<Opportunity[]>([]);
   const [showAllOpps, setShowAllOpps] = useState(false);
   const [showAllProj, setShowAllProj] = useState(false);
 
@@ -382,13 +382,18 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
       .finally(() => setProjLoading(false));
   }, [row.action_id]);
 
-  // Opportunities: filter pre-fetched list by exact gpc_sectors match
-  const actionSector = (row.sector ?? "").toLowerCase();
-  const matchedOpps = useMemo(() => opportunities.filter(o =>
-    (o.gpc_sectors ?? []).some(s => s.toLowerCase() === actionSector)
-  ), [opportunities, actionSector]);
+  // Fetch opportunities for this specific action
+  useEffect(() => {
+    setActionOpps([]);
+    const relUrl = row.links?.opportunities;
+    if (!relUrl) return;
+    fetch(`https://ccglobal.openearth.dev${relUrl}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(res => setActionOpps(res?.data ?? []))
+      .catch(() => {});
+  }, [row.action_id]);
 
-  const visibleOpps = showAllOpps ? matchedOpps : matchedOpps.slice(0, 2);
+  const visibleOpps = showAllOpps ? actionOpps : actionOpps.slice(0, 2);
   const visibleProjs = showAllProj ? projects : projects.slice(0, 3);
 
   return (
@@ -493,14 +498,14 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
           <div style={{ marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
               <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fund Access</div>
-              {matchedOpps.length > 0 && (
+              {actionOpps.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
-                  {inp.finance?.n_reachable_opportunities ?? matchedOpps.length} DIRECT
+                  {inp.finance?.n_reachable_opportunities ?? actionOpps.length} DIRECT
                 </div>
               )}
             </div>
 
-            {matchedOpps.length === 0 ? (
+            {actionOpps.length === 0 ? (
               <EmptyState
                 title="No matched funds yet"
                 body="No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added."
@@ -541,10 +546,10 @@ function DetailPane({ row, cityName, opportunities, onClose }: {
                     );
                   })}
                 </div>
-                {matchedOpps.length > 2 && (
+                {actionOpps.length > 2 && (
                   <button onClick={() => setShowAllOpps(v => !v)}
                     style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                    {showAllOpps ? "Show fewer funds" : `Show all ${matchedOpps.length} matched funds >`}
+                    {showAllOpps ? "Show fewer funds" : `Show all ${actionOpps.length} matched funds >`}
                   </button>
                 )}
               </>
@@ -709,7 +714,6 @@ export function FinancialFeasibility({ params }: Props) {
   const countryCode = locode.slice(0, 2).toUpperCase();
 
   const [feasibility, setFeasibility] = useState<FeasibilityRow[]>([]);
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<FeasibilityRow | null>(null);
@@ -722,21 +726,17 @@ export function FinancialFeasibility({ params }: Props) {
     const base = "https://ccglobal.openearth.dev";
     const enc = encodeURIComponent(locode);
     const feasUrl = `${base}/api/v1/cities/${enc}/climate-finance/feasibility?country_code=${countryCode}`;
-    const oppUrl  = `${base}/api/v1/climate-finance/opportunities?country_code=${countryCode}&limit=200&offset=0`;
 
-    Promise.all([
-      fetch(feasUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-      fetch(oppUrl).then(r => r.ok ? r.json() : null).catch(() => null),
-    ]).then(([feasRes, oppRes]) => {
-      const rows: FeasibilityRow[] = (feasRes?.data ?? []).filter(
-        (r: FeasibilityRow) => typeof r.financial_feasibility === "number"
-      );
-      rows.sort((a, b) => b.financial_feasibility - a.financial_feasibility);
-      setFeasibility(rows);
-      setOpportunities(oppRes?.data ?? []);
-      if (rows.length > 0) setStepProgress(locode, "financial-feasibility", { visited: true, progress: 100, sub: `${rows.length} actions assessed` });
-    }).catch(() => setError("Could not load financial feasibility data."))
-      .finally(() => setLoading(false));
+    fetch(feasUrl).then(r => r.ok ? r.json() : null).catch(() => null)
+      .then((feasRes) => {
+        const rows: FeasibilityRow[] = (feasRes?.data ?? []).filter(
+          (r: FeasibilityRow) => typeof r.financial_feasibility === "number"
+        );
+        rows.sort((a, b) => b.financial_feasibility - a.financial_feasibility);
+        setFeasibility(rows);
+        if (rows.length > 0) setStepProgress(locode, "financial-feasibility", { visited: true, progress: 100, sub: `${rows.length} actions assessed` });
+      }).catch(() => setError("Could not load financial feasibility data."))
+        .finally(() => setLoading(false));
   }, [locode, countryCode]);
 
   // City profile (from first row's inputs)
@@ -786,7 +786,6 @@ export function FinancialFeasibility({ params }: Props) {
         <DetailPane
           row={selected}
           cityName={cityName}
-          opportunities={opportunities}
           onClose={() => setSelected(null)}
         />
       )}
