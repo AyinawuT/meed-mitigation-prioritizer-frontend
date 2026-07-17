@@ -545,7 +545,7 @@ export function PreflightCheck({ params }: Props) {
             Adjust how much each pillar contributes to the final ranking. Moving one slider redistributes the remainder proportionally across the other two.
           </p>
           <p style={{ fontSize: "12px", color: "#9CA3AF", margin: "0 0 20px" }}>
-            Default weights follow the MEED+ HIAP methodology: Impact {DEFAULT_WEIGHTS.impact}% · Alignment {DEFAULT_WEIGHTS.alignment}% · Feasibility {DEFAULT_WEIGHTS.feasibility}%
+            Default weights follow the Aceleradora Local de Mitigación methodology: Impact {DEFAULT_WEIGHTS.impact}% · Alignment {DEFAULT_WEIGHTS.alignment}% · Feasibility {DEFAULT_WEIGHTS.feasibility}%
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "24px" }}>

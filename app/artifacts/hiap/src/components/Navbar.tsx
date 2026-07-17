@@ -48,18 +48,15 @@ export function Navbar({ cityName }: NavbarProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "11px",
+            fontSize: "9px",
             fontWeight: "700",
             color: "white",
           }}
         >
-          M+
+          ALM
         </div>
         <span style={{ color: "white", fontWeight: "500", fontSize: "14px" }}>
-          MEED+
-        </span>
-        <span style={{ color: "#93C5FD", fontSize: "12px", marginLeft: "4px" }}>
-          · HIAP
+          Aceleradora Local de Mitigación
         </span>
       </button>
 

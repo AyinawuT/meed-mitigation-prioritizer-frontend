@@ -369,7 +369,7 @@ export function RegulationsLaws({ params }: Props) {
             Regulations &amp; Laws
           </h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px", lineHeight: "1.6" }}>
-            MEED+ HIAP has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
+            Aceleradora Local de Mitigación has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
           </p>
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div style={{
@@ -379,7 +379,7 @@ export function RegulationsLaws({ params }: Props) {
               fontSize: "11px", color: "#15803D", fontWeight: "600",
             }}>
               <span>⚖</span>
-              <span>MEED+ FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
+              <span>ALM FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
             </div>
           </div>
         </div>

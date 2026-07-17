@@ -93,7 +93,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
               Emissions Data
             </h1>
             <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-              MEED+ HIAP uses {city.name}'s greenhouse gas inventory to identify which sectors contribute most to emissions. This data determines the potential impact of each climate action and shapes how actions are ranked.
+              Aceleradora Local de Mitigación uses {city.name}'s greenhouse gas inventory to identify which sectors contribute most to emissions. This data determines the potential impact of each climate action and shapes how actions are ranked.
             </p>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
               <span style={{
@@ -113,7 +113,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
                 <span>📊</span>
-                <span>MEED+ IMPACT: Emissions data shapes 55% of ranking</span>
+                <span>ALM IMPACT: Emissions data shapes 55% of ranking</span>
               </div>
             </div>
           </div>

@@ -816,7 +816,7 @@ export function FinancialFeasibility({ params }: Props) {
               fontSize: "11px", color: "#15803D", fontWeight: "600",
             }}>
               <span>💰</span>
-              <span>MEED+ FEASIBILITY: Financial feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
+              <span>ALM FEASIBILITY: Financial feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
             </div>
           </div>
         </div>

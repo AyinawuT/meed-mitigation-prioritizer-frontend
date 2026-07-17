@@ -989,7 +989,7 @@ function RankingTable({
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "hiap-ranked-actions.csv";
+    a.download = "alm-ranked-actions.csv";
     a.click();
     URL.revokeObjectURL(url);
     setShowDownload(false);

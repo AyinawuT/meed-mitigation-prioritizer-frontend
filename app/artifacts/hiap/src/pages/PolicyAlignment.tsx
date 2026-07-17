@@ -206,7 +206,7 @@ export function PolicyAlignment({ params }: Props) {
             <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", borderRadius: "4px", padding: "2px 8px", fontWeight: "500" }}>Optional</span>
           </div>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-            MEED+ HIAP has assessed each candidate action against national, regional, and municipal climate policy. Policy alignment shapes how actions are ranked — better-backed actions score higher.
+            Aceleradora Local de Mitigación has assessed each candidate action against national, regional, and municipal climate policy. Policy alignment shapes how actions are ranked — better-backed actions score higher.
           </p>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: "6px",
@@ -215,7 +215,7 @@ export function PolicyAlignment({ params }: Props) {
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
             <span>📋</span>
-            <span>MEED+ ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking</span>
+            <span>ALM ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking</span>
           </div>
         </div>
       </div>

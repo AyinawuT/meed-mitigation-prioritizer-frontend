@@ -41,8 +41,10 @@ const ES: Record<string, string> = {
 
   // ── Landing — hero ────────────────────────────────────────────────────
   "Prioritise climate actions for your city": "Prioriza las acciones climáticas para tu ciudad",
-  "MEED+ HIAP analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.":
-    "MEED+ HIAP analiza las emisiones de tu ciudad, el contexto de políticas y la capacidad de implementación para recomendar las acciones de mitigación de mayor impacto — clasificadas y listas para actuar.",
+  "Aceleradora Local de Mitigación analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.":
+    "Aceleradora Local de Mitigación analiza las emisiones de tu ciudad, el contexto de políticas y la capacidad de implementación para recomendar las acciones de mitigación de mayor impacto — clasificadas y listas para actuar.",
+  "Aceleradora Local de Mitigación combines your city's emissions inventory, regulatory context, policy context, strategic preferences, financial feasibility and socioeconomic profile to score and rank climate mitigation actions, giving municipal teams a clear, data-driven starting point for their climate plans.":
+    "Aceleradora Local de Mitigación combina el inventario de emisiones de tu ciudad, el contexto regulatorio, el contexto de políticas, las preferencias estratégicas, la viabilidad financiera y el perfil socioeconómico para puntuar y clasificar acciones de mitigación climática, dando a los equipos municipales un punto de partida claro y basado en datos para sus planes climáticos.",
   "Search by city name (e.g. Iquique, Antofagasta, Arica)...":
     "Busca por nombre de ciudad (ej. Iquique, Antofagasta, Arica)...",
 
@@ -54,8 +56,8 @@ const ES: Record<string, string> = {
 
   // ── Landing — how it works ────────────────────────────────────────────
   "How it works": "Cómo funciona",
-  "MEED+ HIAP guides you through four steps to generate a ranked action plan for your city.":
-    "MEED+ HIAP te guía a través de cuatro pasos para generar un plan de acción clasificado para tu ciudad.",
+  "Aceleradora Local de Mitigación guides you through four steps to generate a ranked action plan for your city.":
+    "Aceleradora Local de Mitigación te guía a través de cuatro pasos para generar un plan de acción clasificado para tu ciudad.",
   "Select your city": "Selecciona tu ciudad",
   "Search by city name to find your city's profile.":
     "Busca por nombre de ciudad para encontrar el perfil de tu ciudad.",
@@ -63,8 +65,8 @@ const ES: Record<string, string> = {
   "Review and confirm emissions data, socioeconomic context, regulations & laws, policy alignment, financial feasibility, and strategic preferences.":
     "Revisa y confirma los datos de emisiones, contexto socioeconómico, regulaciones y leyes, alineación de políticas, viabilidad financiera y preferencias estratégicas.",
   "Generate recommendations": "Generar recomendaciones",
-  "Run MEED+ HIAP's scoring pipeline across over 100 mitigation actions ranked for your city.":
-    "Ejecuta el pipeline de puntuación de MEED+ HIAP a través de más de 100 acciones de mitigación clasificadas para tu ciudad.",
+  "Run the ALM scoring pipeline across over 100 mitigation actions ranked for your city.":
+    "Ejecuta el pipeline de puntuación de ALM a través de más de 100 acciones de mitigación clasificadas para tu ciudad.",
   "Act on the ranking": "Actúa sobre el ranking",
   "Download your ranked action plan and share with your city's climate team.":
     "Descarga tu plan de acción clasificado y compártelo con el equipo climático de tu ciudad.",
@@ -171,12 +173,12 @@ const ES: Record<string, string> = {
   "No actions match your search": "Ninguna acción coincide con tu búsqueda",
 
   // ── About ─────────────────────────────────────────────────────────────
-  "About MEED+ HIAP": "Acerca de MEED+ HIAP",
+  "About Aceleradora Local de Mitigación": "Acerca de la Aceleradora Local de Mitigación",
   "Visit openearth.org ↗": "Visitar openearth.org ↗",
   "Visit ssg.coop ↗": "Visitar ssg.coop ↗",
 
   // ── Methodology ───────────────────────────────────────────────────────
-  "HOW MEED+ HIAP WORKS": "CÓMO FUNCIONA MEED+ HIAP",
+  "HOW ALM WORKS": "CÓMO FUNCIONA ALM",
 };
 
 // ─── Hook ──────────────────────────────────────────────────────────────────────

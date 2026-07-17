@@ -162,13 +162,13 @@ export function Methodology() {
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "48px 48px 40px" }}>
         <div style={{ maxWidth: "820px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", fontWeight: "600", color: NAVY, letterSpacing: "0.08em", marginBottom: "12px" }}>
-            HOW MEED+ HIAP WORKS
+            HOW ALM WORKS
           </div>
           <h1 style={{ fontSize: "36px", fontWeight: "700", color: "#111827", margin: "0 0 16px", lineHeight: "1.2" }}>
             The prioritization methodology
           </h1>
           <p style={{ fontSize: "16px", color: "#4B5563", margin: 0, lineHeight: "1.7", maxWidth: "680px" }}>
-            MEED+ HIAP ranks climate mitigation actions for your city using a three-pillar scoring model.
+            Aceleradora Local de Mitigación ranks climate mitigation actions for your city using a three-pillar scoring model.
             Every score is traceable — you can see exactly which data inputs produced each number
             and why an action ranked where it did.
           </p>

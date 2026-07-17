@@ -16,12 +16,12 @@ export function Footer() {
             <div style={{
               background: "#16A34A", borderRadius: "5px", width: "24px", height: "24px",
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "10px", fontWeight: "700", color: "white",
-            }}>M+</div>
-            <span style={{ color: "#93C5FD", fontSize: "13px" }}>MEED+ · HIAP</span>
+              fontSize: "8px", fontWeight: "700", color: "white",
+            }}>ALM</div>
+            <span style={{ color: "#93C5FD", fontSize: "13px" }}>Aceleradora Local de Mitigación</span>
           </div>
           <span style={{ color: "#3B5FA0", fontSize: "12px" }}>
-            High Impact Action Prioritizer — Climate Solutions for Chilean Cities
+            Climate Solutions for Chilean Cities
           </span>
         </div>
 

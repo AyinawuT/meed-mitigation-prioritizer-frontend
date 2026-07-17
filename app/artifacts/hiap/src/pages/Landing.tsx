@@ -90,7 +90,7 @@ export function Landing() {
                 {t("The right climate actions for your city, ranked by evidence")}
               </p>
               <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: "0" }}>
-                {t("MEED+ HIAP combines your city's emissions inventory, regulatory context, policy context, strategic preferences, financial feasibility and socioeconomic profile to score and rank climate mitigation actions, giving municipal teams a clear, data-driven starting point for their climate plans.")}
+                {t("Aceleradora Local de Mitigación combines your city's emissions inventory, regulatory context, policy context, strategic preferences, financial feasibility and socioeconomic profile to score and rank climate mitigation actions, giving municipal teams a clear, data-driven starting point for their climate plans.")}
               </p>
             </div>
 
@@ -342,7 +342,7 @@ export function Landing() {
         <div style={{ marginBottom: "40px" }}>
           <h2 style={{ fontSize: "15px", fontWeight: "600", color: "#111827", margin: "0 0 3px" }}>{t("How it works")}</h2>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-            {t("MEED+ HIAP guides you through four steps to generate a ranked action plan for your city.")}
+            {t("Aceleradora Local de Mitigación guides you through four steps to generate a ranked action plan for your city.")}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
             {HOW_STEPS.map((step) => (

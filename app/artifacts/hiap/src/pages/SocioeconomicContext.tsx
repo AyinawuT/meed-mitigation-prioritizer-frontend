@@ -514,7 +514,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               Socioeconomic Context
             </h1>
             <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-              MEED+ HIAP uses socioeconomic indicators to assess how feasible each climate action is for {city.name}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.
+              Aceleradora Local de Mitigación uses socioeconomic indicators to assess how feasible each climate action is for {city.name}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.
             </p>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
               <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
@@ -527,7 +527,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
                 <span>👥</span>
-                <span>MEED+ FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
+                <span>ALM FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
               </div>
             </div>
           </div>
@@ -586,7 +586,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #F0F0F0", background: "#FAFAFA" }}>
-                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "MEED+ CLIMATE RELEVANCE"].map((h, i) => (
+                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "ALM CLIMATE RELEVANCE"].map((h, i) => (
                   <th key={i} style={{
                     padding: "10px 16px",
                     fontSize: "11px",
@@ -662,7 +662,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
         }}>
           <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
           <span>
-            <strong>How MEED+ HIAP uses this data:</strong> Socioeconomic conditions feed into the mitigation feasibility component, which makes up 33% of the
+            <strong>How ALM uses this data:</strong> Socioeconomic conditions feed into the mitigation feasibility component, which makes up 33% of the
             feasibility score, which in turn shapes 23% of the final action ranking by default.
             They adjust scores to account for feasibility constraints (e.g. low income limits
             capital-intensive actions) and amplify co-benefits (e.g. green jobs matter more
