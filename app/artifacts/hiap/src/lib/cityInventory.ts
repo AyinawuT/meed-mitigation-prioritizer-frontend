@@ -38,6 +38,13 @@ interface CityCatalystInventory {
 
 // ─── Output types ─────────────────────────────────────────────────────────────
 
+export interface EmissionSubSectorRow {
+  ref: string;
+  name: string;
+  emissions: number;
+  share: number | null;
+}
+
 export interface EmissionSectorRow {
   sector: string;
   sub: string;
@@ -46,6 +53,7 @@ export interface EmissionSectorRow {
   share: number | null;
   source: string | null;
   status: "Confirmed" | "Not mapped";
+  subRows?: EmissionSubSectorRow[];
 }
 
 export interface ParsedCityInventory {
@@ -111,6 +119,25 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
     ];
     const sub = subNames.length > 0 ? subNames.join(" · ") : refRange;
 
+    // Group values by sub-sector reference — first two GPC parts, e.g.
+    // "I.1.2" → "I.1" (IPPU/AFOLU refs like "IV.1" are already two-part)
+    const groups = new Map<string, { name: string | null; emissions: number }>();
+    for (const v of values) {
+      const subRef = v.gpcReferenceNumber.split(".").slice(0, 2).join(".");
+      const g = groups.get(subRef) ?? { name: null, emissions: 0 };
+      g.emissions += parseFloat(v.co2eq ?? "0");
+      if (!g.name && v.subSector?.subsectorName) g.name = v.subSector.subsectorName;
+      groups.set(subRef, g);
+    }
+    const subRows: EmissionSubSectorRow[] = [...groups.entries()]
+      .map(([subRef, g]) => ({
+        ref: subRef,
+        name: g.name ?? subRef,
+        emissions: Math.round(g.emissions),
+        share: null,
+      }))
+      .sort((a, b) => b.emissions - a.emissions);
+
     return {
       sector: name,
       sub,
@@ -119,10 +146,12 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
       share: null,
       source: `CityCatalyst Inventory ${year}`,
       status: "Confirmed",
+      subRows,
     };
   });
 
-  // Back-fill percentage shares
+  // Back-fill percentage shares (sub-sector shares use the same citywide
+  // denominator, so they sum to their sector's share)
   const total = rows.reduce((sum, r) => sum + (r.emissions ?? 0), 0);
   const rowsWithShare = rows.map((r) => ({
     ...r,
@@ -130,6 +159,10 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
       r.emissions !== null && total > 0
         ? parseFloat(((r.emissions / total) * 100).toFixed(1))
         : null,
+    subRows: r.subRows?.map((s) => ({
+      ...s,
+      share: total > 0 ? parseFloat(((s.emissions / total) * 100).toFixed(1)) : null,
+    })),
   }));
 
   return {

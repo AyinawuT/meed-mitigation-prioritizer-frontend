@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
@@ -33,6 +33,16 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const inventoryData = getEmissionsData(locode);
   const sectors = inventoryData?.rows ?? EMPTY_SECTORS;
   const inventoryYear = inventoryData?.year.toString() ?? city?.emissionsYear ?? "—";
+
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  function toggleExpanded(sector: string) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(sector)) next.delete(sector);
+      else next.add(sector);
+      return next;
+    });
+  }
 
   if (!city) {
     return (
@@ -176,32 +186,98 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
             <tbody>
               {sectors.map((row, i) => {
                 const isConfirmed = row.status === "Confirmed";
+                const hasSubRows = (row.subRows?.length ?? 0) > 0;
+                const isExpanded = hasSubRows && expanded.has(row.sector);
                 return (
-                  <tr key={i} style={{ borderBottom: i < sectors.length - 1 ? "1px solid #F5F5F5" : "none" }}>
-                    <td style={{ padding: "13px 16px" }}>
-                      <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{row.sector}</div>
-                      <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px", fontFamily: "monospace" }}>{row.ref}</div>
-                    </td>
-                    <td style={{ padding: "13px 16px", fontSize: "12px", color: "#6B7280", maxWidth: "220px" }}>
-                      {row.sub}
-                    </td>
-                    <td style={{ padding: "13px 16px", fontSize: "13px", color: isConfirmed ? "#111827" : "#D1D5DB", fontVariantNumeric: "tabular-nums" }}>
-                      {row.emissions !== null ? row.emissions.toLocaleString() : "—"}
-                    </td>
-                    <td style={{ padding: "13px 16px", fontSize: "13px", color: isConfirmed ? "#111827" : "#D1D5DB" }}>
-                      {row.share !== null ? `${row.share}%` : "—"}
-                    </td>
-                    <td style={{ padding: "13px 16px", fontSize: "12px", color: "#6B7280" }}>
-                      {row.source ?? "—"}
-                    </td>
-                    <td style={{ padding: "13px 16px" }}>
-                      {isConfirmed ? (
-                        <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>✓ Confirmed</span>
-                      ) : (
-                        <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Not mapped</span>
-                      )}
-                    </td>
-                  </tr>
+                  <Fragment key={i}>
+                    <tr style={{ borderBottom: isExpanded || i < sectors.length - 1 ? "1px solid #F5F5F5" : "none" }}>
+                      <td style={{ padding: "13px 16px" }}>
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                          {hasSubRows && (
+                            <button
+                              onClick={() => toggleExpanded(row.sector)}
+                              aria-expanded={isExpanded}
+                              style={{
+                                background: "none",
+                                border: "none",
+                                padding: "1px 0 0",
+                                cursor: "pointer",
+                                fontSize: "11px",
+                                color: "#6B7280",
+                                width: "14px",
+                                flexShrink: 0,
+                              }}
+                            >
+                              {isExpanded ? "▾" : "▸"}
+                            </button>
+                          )}
+                          <div>
+                            <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>{row.sector}</div>
+                            <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px", fontFamily: "monospace" }}>{row.ref}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td style={{ padding: "13px 16px", fontSize: "12px", color: "#6B7280", maxWidth: "220px" }}>
+                        {hasSubRows ? (
+                          <button
+                            onClick={() => toggleExpanded(row.sector)}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              padding: 0,
+                              fontSize: "12px",
+                              color: "#001EA7",
+                              cursor: "pointer",
+                              textDecoration: "underline",
+                              textDecorationColor: "#C7D2FE",
+                              textUnderlineOffset: "2px",
+                            }}
+                          >
+                            {row.subRows!.length} sub-sectors
+                          </button>
+                        ) : (
+                          row.sub
+                        )}
+                      </td>
+                      <td style={{ padding: "13px 16px", fontSize: "13px", color: isConfirmed ? "#111827" : "#D1D5DB", fontVariantNumeric: "tabular-nums" }}>
+                        {row.emissions !== null ? row.emissions.toLocaleString() : "—"}
+                      </td>
+                      <td style={{ padding: "13px 16px", fontSize: "13px", color: isConfirmed ? "#111827" : "#D1D5DB" }}>
+                        {row.share !== null ? `${row.share}%` : "—"}
+                      </td>
+                      <td style={{ padding: "13px 16px", fontSize: "12px", color: "#6B7280" }}>
+                        {row.source ?? "—"}
+                      </td>
+                      <td style={{ padding: "13px 16px" }}>
+                        {isConfirmed ? (
+                          <span style={{ fontSize: "12px", color: "#16A34A", fontWeight: "500" }}>✓ Confirmed</span>
+                        ) : (
+                          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Not mapped</span>
+                        )}
+                      </td>
+                    </tr>
+                    {isExpanded &&
+                      row.subRows!.map((sub, j) => {
+                        const isLastSubRow = i === sectors.length - 1 && j === row.subRows!.length - 1;
+                        return (
+                          <tr key={`${i}-${j}`} style={{ background: "#FAFAFA", borderBottom: isLastSubRow ? "none" : "1px solid #F5F5F5" }}>
+                            <td style={{ padding: "9px 16px 9px 38px" }}>
+                              <div style={{ fontSize: "12px", color: "#374151" }}>{sub.name}</div>
+                              <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "1px", fontFamily: "monospace" }}>{sub.ref}</div>
+                            </td>
+                            <td style={{ padding: "9px 16px", fontSize: "11px", color: "#9CA3AF" }}>—</td>
+                            <td style={{ padding: "9px 16px", fontSize: "12px", color: "#374151", fontVariantNumeric: "tabular-nums" }}>
+                              {sub.emissions.toLocaleString()}
+                            </td>
+                            <td style={{ padding: "9px 16px", fontSize: "12px", color: "#374151" }}>
+                              {sub.share !== null ? `${sub.share}%` : "—"}
+                            </td>
+                            <td style={{ padding: "9px 16px", fontSize: "11px", color: "#9CA3AF" }}>—</td>
+                            <td style={{ padding: "9px 16px" }} />
+                          </tr>
+                        );
+                      })}
+                  </Fragment>
                 );
               })}
             </tbody>
