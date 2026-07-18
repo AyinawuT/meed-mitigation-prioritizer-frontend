@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { useLocation, useSearch } from "wouter";
-import { FiInfo, FiInbox } from "react-icons/fi";
+import { Info, Inbox, Star, Landmark, MapPin, Wallet } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
@@ -81,6 +81,11 @@ function getRouteMeta(route: string | null): RouteMeta {
   if (k.includes("co-finance") || k === "needs external co-finance") return ROUTE_DEFS[1];
   if (k.includes("pooling") || k.includes("ta /") || k.includes("support")) return ROUTE_DEFS[2];
   return { label: route.replace(/\b\w/g, c => c.toUpperCase()), prefix: "●", color: "#6B7280", bg: "#F9FAFB", border: "#E5E7EB", tagline: "" };
+}
+
+function RoutePrefix({ prefix, size = 12 }: { prefix: string; size?: number }) {
+  if (prefix === "★") return <Star size={size} fill="currentColor" style={{ flexShrink: 0, verticalAlign: "middle" }} />;
+  return <>{prefix}</>;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -199,7 +204,7 @@ function InfoTooltip({ text }: { text: string }) {
       onMouseLeave={hide}
       style={{ display: "inline-flex", alignItems: "center", verticalAlign: "middle", marginLeft: "4px", cursor: "default" }}
     >
-      <FiInfo size={12} color="#9CA3AF" style={{ flexShrink: 0 }} />
+      <Info size={12} color="#9CA3AF" style={{ flexShrink: 0 }} />
       {pos && (
         <span style={{
           position: "fixed",
@@ -231,7 +236,7 @@ function InfoTooltip({ text }: { text: string }) {
 function EmptyState({ title, body }: { title: string; body: string }) {
   return (
     <div style={{ border: "1px solid #F3F4F6", borderRadius: "8px", padding: "32px 20px", textAlign: "center" }}>
-      <FiInbox size={28} color="#D1D5DB" style={{ margin: "0 auto 10px", display: "block" }} />
+      <Inbox size={28} color="#D1D5DB" style={{ margin: "0 auto 10px", display: "block" }} />
       <div style={{ fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>{title}</div>
       <div style={{ fontSize: "12px", color: "#9CA3AF", lineHeight: "1.6", maxWidth: "300px", margin: "0 auto" }}>{body}</div>
     </div>
@@ -259,8 +264,8 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa,
 
       {/* City type */}
       <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: bg, borderRadius: "8px", padding: "12px 16px", marginBottom: "20px" }}>
-        <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
-          🏛️
+        <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <Landmark size={18} color={titleColor} style={{ flexShrink: 0 }} />
         </div>
         <div>
           <div style={{ fontSize: "13px", fontWeight: "700", color: titleColor, marginBottom: "4px" }}>{t(profileLabel)}</div>
@@ -343,7 +348,7 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa,
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
         {ROUTE_DEFS.map((r, i) => (
           <div key={i} style={{ background: r.bg, border: `1px solid ${r.border}`, borderRadius: "8px", padding: "10px 12px" }}>
-            <div style={{ fontSize: "12px", fontWeight: "700", color: r.color, marginBottom: "4px" }}>{r.prefix} {t(r.label)}</div>
+            <div style={{ fontSize: "12px", fontWeight: "700", color: r.color, marginBottom: "4px" }}><RoutePrefix prefix={r.prefix} size={12} /> {t(r.label)}</div>
             <div style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.5" }}>{t(r.tagline)}</div>
           </div>
         ))}
@@ -430,7 +435,7 @@ function DetailPane({ row, cityName, onClose }: {
           {/* Route card */}
           <div style={{ background: rm.bg, border: `1px solid ${rm.border}`, borderRadius: "8px", padding: "10px 14px 12px", marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-              <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}>{rm.prefix} {t(rm.label)}</span>
+              <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}><RoutePrefix prefix={rm.prefix} size={13} /> {t(rm.label)}</span>
               <span style={{ fontSize: "18px", fontWeight: "800", color: rm.color, fontVariantNumeric: "tabular-nums" }}>
                 {row.financial_feasibility.toFixed(2)}
               </span>
@@ -604,7 +609,7 @@ function DetailPane({ row, cityName, onClose }: {
                           <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{nameEs}</div>
                         )}
                         {proj.jurisdiction && (
-                          <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {proj.jurisdiction}</div>
+                          <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px", display: "inline-flex", alignItems: "center", gap: "4px" }}><MapPin size={12} color="#6B7280" style={{ flexShrink: 0 }} /> {proj.jurisdiction}</div>
                         )}
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
                           {cost && <span>{t("Cost:")} <strong style={{ color: "#374151" }}>{cost}</strong></span>}
@@ -651,7 +656,7 @@ function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) 
       </td>
       <td style={{ padding: "11px 12px", verticalAlign: "middle" }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "11px", fontWeight: "600", color: rm.color, background: rm.bg, border: `1px solid ${rm.border}`, padding: "3px 9px", borderRadius: "20px", whiteSpace: "nowrap" }}>
-          {rm.prefix} {t(rm.label)}
+          <RoutePrefix prefix={rm.prefix} size={11} /> {t(rm.label)}
         </span>
       </td>
       <td style={{ padding: "11px 12px", fontSize: "13px", fontWeight: "700", color: scoreColor(row.financial_feasibility), textAlign: "right", fontVariantNumeric: "tabular-nums", verticalAlign: "middle" }}>
@@ -821,7 +826,7 @@ export function FinancialFeasibility({ params }: Props) {
               borderRadius: "6px", padding: "5px 12px",
               fontSize: "11px", color: "#15803D", fontWeight: "600",
             }}>
-              <span>💰</span>
+              <Wallet size={14} color="#15803D" style={{ flexShrink: 0 }} />
               <span>{t("ALM FEASIBILITY: Financial feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking")}</span>
             </div>
           </div>
@@ -868,7 +873,7 @@ export function FinancialFeasibility({ params }: Props) {
             return (
               <button key={route} onClick={() => setActiveRoute(isActive ? null : route)}
                 style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "13px", fontWeight: "600", color: isActive ? "white" : rm.color, background: isActive ? rm.color : rm.bg, border: `1.5px solid ${isActive ? rm.color : rm.border}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
-                <span>{rm.prefix}</span><span>{t(rm.label)}</span><span style={{ opacity: 0.8 }}>{cnt}</span>
+                <span><RoutePrefix prefix={rm.prefix} size={13} /></span><span>{t(rm.label)}</span><span style={{ opacity: 0.8 }}>{cnt}</span>
               </button>
             );
           })}

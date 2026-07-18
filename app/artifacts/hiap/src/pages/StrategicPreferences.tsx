@@ -6,6 +6,7 @@ import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
 import { InfoTip } from "@/components/InfoTip";
+import { Target } from "lucide-react";
 import { DEFS } from "@/lib/definitions";
 
 const ALL_SECTORS = [
@@ -193,7 +194,7 @@ export function StrategicPreferences({ params }: Props) {
             borderRadius: "6px", padding: "5px 12px",
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
-            <span>🎯</span>
+            <Target size={14} color="#15803D" style={{ flexShrink: 0 }} />
             <span>{t("ALM ALIGNMENT: Alignment shapes 22% of ranking — priority sectors 15% · timeframe preference 5% · strategic priorities 5%")}</span>
           </div>
         </div>

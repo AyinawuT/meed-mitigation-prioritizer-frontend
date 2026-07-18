@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
+import { Languages, ChevronDown, Check } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 interface NavbarProps {
@@ -101,9 +102,9 @@ export function Navbar({ cityName }: NavbarProps) {
             onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
           >
-            <span>{lang === "en" ? "🇬🇧" : "🇨🇱"}</span>
+            <Languages size={15} style={{ flexShrink: 0 }} />
             <span style={{ fontWeight: "500" }}>{lang === "en" ? "EN" : "ES"}</span>
-            <span style={{ fontSize: "10px" }}>▾</span>
+            <ChevronDown size={12} style={{ flexShrink: 0 }} />
           </button>
 
           {open && (
@@ -140,14 +141,14 @@ export function Navbar({ cityName }: NavbarProps) {
                   onMouseEnter={(e) => { if (lang !== l) (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"; }}
                   onMouseLeave={(e) => { if (lang !== l) (e.currentTarget as HTMLButtonElement).style.background = "white"; }}
                 >
-                  <span style={{ fontSize: "16px" }}>{l === "en" ? "🇬🇧" : "🇨🇱"}</span>
+                  <Languages size={16} color="#6B7280" style={{ flexShrink: 0 }} />
                   <div>
                     <div>{l === "en" ? "English" : "Español"}</div>
                     <div style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: "400" }}>
                       {l === "en" ? "English" : "Castellano"}
                     </div>
                   </div>
-                  {lang === l && <span style={{ marginLeft: "auto", color: "#001EA7", fontSize: "14px" }}>✓</span>}
+                  {lang === l && <Check size={14} color="#001EA7" style={{ marginLeft: "auto", flexShrink: 0 }} />}
                 </button>
               ))}
             </div>

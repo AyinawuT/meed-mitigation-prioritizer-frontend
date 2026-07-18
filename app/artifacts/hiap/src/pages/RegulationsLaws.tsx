@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
@@ -10,6 +10,7 @@ import { runPipelineForCity } from "@/lib/pipelineRunner";
 import { useLanguage } from "@/lib/i18n";
 import { InfoTip } from "@/components/InfoTip";
 import { DEFS } from "@/lib/definitions";
+import { Scale, CircleCheck, CircleX, TriangleAlert } from "lucide-react";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
 
@@ -249,7 +250,7 @@ function SummaryCard({
   count, label, sublabel, sectorLine, bg, border, countColor, icon,
 }: {
   count: number; label: string; sublabel?: string; sectorLine?: string;
-  bg: string; border: string; countColor: string; icon: string;
+  bg: string; border: string; countColor: string; icon: ReactNode;
 }) {
   return (
     <div style={{
@@ -389,7 +390,7 @@ export function RegulationsLaws({ params }: Props) {
               borderRadius: "6px", padding: "5px 12px",
               fontSize: "11px", color: "#15803D", fontWeight: "600",
             }}>
-              <span>⚖</span>
+              <Scale size={14} color="#15803D" style={{ flexShrink: 0 }} />
               <span>{t("ALM FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking")}</span>
             </div>
           </div>
@@ -410,21 +411,21 @@ export function RegulationsLaws({ params }: Props) {
                 : t("top {n} shown in your ranking", { n: String(result?.topN ?? 20) })
             }
             sectorLine={ranked.length > 0 ? sectorBreakdown(rankedSectorItems, t) : undefined}
-            bg="#F0FDF4" border="#BBF7D0" countColor="#16A34A" icon="✓"
+            bg="#F0FDF4" border="#BBF7D0" countColor="#16A34A" icon={<CircleCheck size={14} color="#16A34A" style={{ flexShrink: 0 }} />}
           />
           <SummaryCard
             count={legalExcluded.length}
             label={t("Excluded from ranking")}
             sublabel={t("Removed before scoring")}
             sectorLine={legalExcluded.length > 0 ? sectorBreakdown(legalExcluded, t) : undefined}
-            bg="#FEF2F2" border="#FECACA" countColor="#DC2626" icon="✗"
+            bg="#FEF2F2" border="#FECACA" countColor="#DC2626" icon={<CircleX size={14} color="#DC2626" style={{ flexShrink: 0 }} />}
           />
           <SummaryCard
             count={legalFlagged.length}
             label={t("Flagged — evidence missing")}
             sublabel={t("Included in ranking, assessment pending")}
             sectorLine={legalFlagged.length > 0 ? sectorBreakdown(legalFlagged, t) : undefined}
-            bg="#FFFBEB" border="#FDE68A" countColor="#D97706" icon="⚠"
+            bg="#FFFBEB" border="#FDE68A" countColor="#D97706" icon={<TriangleAlert size={14} color="#D97706" style={{ flexShrink: 0 }} />}
           />
         </div>
 
@@ -456,7 +457,7 @@ export function RegulationsLaws({ params }: Props) {
             background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "12px",
             padding: "28px 24px", textAlign: "center",
           }}>
-            <div style={{ fontSize: "28px", marginBottom: "10px" }}>⚠</div>
+            <div style={{ marginBottom: "10px" }}><TriangleAlert size={28} color="#DC2626" style={{ flexShrink: 0 }} /></div>
             <div style={{ fontSize: "14px", fontWeight: "700", color: "#991B1B", marginBottom: "6px" }}>
               {t("Could not load legal review")}
             </div>
@@ -485,7 +486,7 @@ export function RegulationsLaws({ params }: Props) {
             background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "12px",
             padding: "28px 24px", textAlign: "center",
           }}>
-            <div style={{ fontSize: "28px", marginBottom: "10px" }}>✅</div>
+            <div style={{ marginBottom: "10px" }}><CircleCheck size={28} color="#15803D" style={{ flexShrink: 0 }} /></div>
             <div style={{ fontSize: "14px", fontWeight: "700", color: "#15803D", marginBottom: "6px" }}>
               {t("All actions passed the legal review")}
             </div>

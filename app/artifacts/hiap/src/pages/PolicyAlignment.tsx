@@ -6,6 +6,7 @@ import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
 import { InfoTip } from "@/components/InfoTip";
+import { ClipboardList, FileText } from "lucide-react";
 import { DEFS } from "@/lib/definitions";
 import actionNames from "@/data/actionNames.json";
 
@@ -218,7 +219,7 @@ export function PolicyAlignment({ params }: Props) {
             borderRadius: "6px", padding: "5px 12px",
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
-            <span>📋</span>
+            <ClipboardList size={14} color="#15803D" style={{ flexShrink: 0 }} />
             <span>{t("ALM ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking")}</span>
           </div>
         </div>
@@ -316,7 +317,7 @@ export function PolicyAlignment({ params }: Props) {
               }}
             >
               <input ref={fileRef} type="file" accept=".pdf,.docx,.doc" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) setMunFile(f); }} />
-              <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#F3F4F6", margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>📄</div>
+              <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#F3F4F6", margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center" }}><FileText size={22} color="#6B7280" style={{ flexShrink: 0 }} /></div>
               <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "4px" }}>{t("Upload your municipal climate plan")}</div>
               <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "12px" }}>{t("Drag and drop or click to browse · PDF or Word document")}</div>
               <div style={{ fontSize: "11px", color: "#6B7280", background: "#F3F4F6", borderRadius: "6px", padding: "8px 14px", display: "inline-block", textAlign: "left", maxWidth: "420px" }}>
@@ -325,7 +326,7 @@ export function PolicyAlignment({ params }: Props) {
             </div>
           ) : (
             <div style={{ background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "10px", padding: "14px 18px", display: "flex", alignItems: "center", gap: "12px" }}>
-              <span style={{ fontSize: "24px" }}>📄</span>
+              <FileText size={22} color="#B45309" style={{ flexShrink: 0 }} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{munFile.name}</div>
                 <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "2px" }}>{t("Uploaded · {kb} KB · Awaiting processing", { kb: (munFile.size / 1024).toFixed(0) })}</div>

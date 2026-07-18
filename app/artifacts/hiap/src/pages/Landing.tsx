@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
+import { Search, X, MapPin } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
@@ -134,7 +135,7 @@ export function Landing() {
           {/* Search */}
           <div style={{ position: "relative", maxWidth: "560px", margin: "0 auto", textAlign: "left" }}>
             <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-              <span style={{ position: "absolute", left: "16px", color: "#9CA3AF", fontSize: "17px", zIndex: 1 }}>🔍</span>
+              <Search size={18} color="#9CA3AF" style={{ position: "absolute", left: "16px", zIndex: 1 }} />
               <input
                 ref={inputRef}
                 type="text"
@@ -146,6 +147,7 @@ export function Landing() {
                 placeholder={t("Search by city name (e.g. Iquique, Antofagasta, Arica)...")}
                 style={{
                   width: "100%",
+                  background: "#FFFFFF",
                   border: "none",
                   borderRadius: panelOpen ? "12px 12px 0 0" : "12px",
                   padding: "16px 40px 16px 46px",
@@ -159,10 +161,10 @@ export function Landing() {
               {searchVal && (
                 <button
                   onMouseDown={() => { setSearchVal(""); setSelectedCity(null); setShowDropdown(true); inputRef.current?.focus(); }}
-                  style={{ position: "absolute", right: "14px", background: "none", border: "none", cursor: "pointer", color: "#9CA3AF", fontSize: "17px", lineHeight: 1 }}
+                  style={{ position: "absolute", right: "14px", background: "none", border: "none", cursor: "pointer", color: "#9CA3AF", lineHeight: 1, display: "flex", alignItems: "center" }}
                   aria-label="Clear search"
                 >
-                  ✕
+                  <X size={17} />
                 </button>
               )}
             </div>
@@ -221,7 +223,7 @@ export function Landing() {
                         background: idx === highlightIdx ? "#F0F4FF" : "white",
                       }}
                     >
-                      <span style={{ color: "#001EA7", fontSize: "15px" }}>📍</span>
+                      <MapPin size={15} color="#001EA7" style={{ flexShrink: 0 }} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontWeight: "500" }}>{city.name}</div>
                         <div style={{ fontSize: "11px", color: "#9CA3AF", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{city.region}, {city.country}</div>
@@ -255,7 +257,7 @@ export function Landing() {
         <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "24px 64px 28px" }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <span style={{ color: "#001EA7", fontSize: "16px" }}>📍</span>
+              <MapPin size={16} color="#001EA7" style={{ flexShrink: 0 }} />
               <span style={{ fontSize: "17px", fontWeight: "700", color: "#111827" }}>
                 {selectedCity.name}, {selectedCity.country}
               </span>

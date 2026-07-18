@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { BarChart3 } from "lucide-react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
@@ -124,7 +125,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                 borderRadius: "6px", padding: "5px 12px",
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
-                <span>📊</span>
+                <BarChart3 size={14} color="#15803D" style={{ flexShrink: 0 }} />
                 <span>{t("ALM IMPACT: Emissions data shapes 55% of ranking")}</span>
               </div>
             </div>

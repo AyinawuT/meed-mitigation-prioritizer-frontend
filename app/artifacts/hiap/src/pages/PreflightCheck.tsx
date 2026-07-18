@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { TriangleAlert, Zap } from "lucide-react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
@@ -472,7 +473,7 @@ export function PreflightCheck({ params }: Props) {
                         </span>
                         {detail && (
                           <span style={{ fontSize: "12px", color: isPartial ? "#B45309" : isNotEntered ? "#9CA3AF" : "#6B7280", display: "flex", alignItems: "center", gap: "4px" }}>
-                            {isPartial && <span style={{ fontSize: "13px" }}>⚠</span>}
+                            {isPartial && <TriangleAlert size={13} color="#B45309" style={{ flexShrink: 0 }} />}
                             {detail}
                           </span>
                         )}
@@ -516,7 +517,7 @@ export function PreflightCheck({ params }: Props) {
 
               {confHint && (
                 <div style={{ marginTop: "12px", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "7px", padding: "10px 12px", fontSize: "12px", color: "#B45309", display: "flex", gap: "6px", alignItems: "flex-start" }}>
-                  <span style={{ flexShrink: 0 }}>⚠</span>
+                  <TriangleAlert size={14} color="#B45309" style={{ flexShrink: 0 }} />
                   <span>{t(confHint)}</span>
                 </div>
               )}
@@ -769,7 +770,7 @@ export function PreflightCheck({ params }: Props) {
             <div style={{ marginTop: "20px" }}>
               {!canGenerate && (
                 <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "12px 16px", fontSize: "13px", color: "#B91C1C", marginBottom: "12px", display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                  <span style={{ flexShrink: 0, fontWeight: "700" }}>⚠</span>
+                  <TriangleAlert size={14} color="#B91C1C" style={{ flexShrink: 0 }} />
                   <span><strong>{t("Emissions data required.")}</strong> {t("Confirm at least one emissions sector before generating recommendations. Without it, there is no city-specific data to rank actions against.")}</span>
                 </div>
               )}
@@ -788,7 +789,7 @@ export function PreflightCheck({ params }: Props) {
                   transition: "all 0.15s",
                 }}
               >
-                <span style={{ fontSize: "16px" }}>⚡</span>
+                <Zap size={16} style={{ flexShrink: 0 }} />
                 {canGenerate ? t("Generate recommendations — confirm you're ready") : t("Enter emissions data to continue")}
               </button>
             </div>

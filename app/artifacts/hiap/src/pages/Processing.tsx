@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { TriangleAlert } from "lucide-react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
@@ -124,7 +125,7 @@ export function Processing({ params }: Props) {
         <Navbar cityName={cityName} />
         <div style={{ display: "flex", justifyContent: "center", padding: "80px 24px" }}>
           <div style={{ width: "100%", maxWidth: "560px", background: "white", borderRadius: "14px", border: "1px solid #FECACA", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", padding: "32px 28px", textAlign: "center" }}>
-            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#FEF2F2", border: "2px solid #FECACA", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: "22px" }}>⚠</div>
+            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#FEF2F2", border: "2px solid #FECACA", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}><TriangleAlert size={22} color="#DC2626" style={{ flexShrink: 0 }} /></div>
             <div style={{ fontSize: "16px", fontWeight: "700", color: "#991B1B", marginBottom: "8px" }}>{t("Prioritization failed")}</div>
             <div style={{ fontSize: "13px", color: "#6B7280", marginBottom: "8px", lineHeight: "1.6" }}>
               {t("The scoring pipeline encountered an error. This is usually caused by missing or malformed input data.")}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Zap } from "lucide-react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -297,7 +298,7 @@ export function CityProfile({ params }: CityProfileProps) {
               }}
               title={canGenerate ? t("Generate recommendations") : t("Complete at least 3 sections to unlock recommendations")}
             >
-              <span>⚡</span>
+              <Zap size={14} style={{ flexShrink: 0 }} />
               <span>{t("Generate recommendations")}</span>
             </button>
           </div>

@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation, useSearch } from "wouter";
-import { FiInbox } from "react-icons/fi";
+import {
+  Inbox, Sparkles, Bookmark, Folder, SquareCheck, Factory, Users, Scale,
+  Wallet, ClipboardList, Globe, BarChart3, MapPin, TriangleAlert, Star, Wind, HeartPulse, Bird, Leaf,
+  HardHat, TrendingUp, HeartHandshake, BatteryCharging, Waves, Droplet,
+  VolumeX, Sun, Wheat, Mountain, GraduationCap, Lightbulb, Building2, Home,
+  Handshake, Bike, Trees, Brain, Recycle, CircleCheck, type LucideIcon,
+} from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import type { PipelineResult, RankedAction } from "@/lib/scoringPipeline";
@@ -135,38 +141,38 @@ rawActions.forEach((a) => {
   if (neg.length) actionBarriersMap[a.actionId] = neg;
 });
 
-const CO_BENEFIT_ICONS: Record<string, string> = {
-  "air quality": "🌬️",
-  "public health": "❤️‍🩹",
-  "biodiversity": "🦋",
-  "habitat": "🌿",
-  "employment": "👷",
-  "economic development": "💰",
-  "social equity": "🤲",
-  "energy security": "🔋",
-  "water management": "🌊",
-  "water quality": "💧",
-  "noise reduction": "🎧",
-  "urban heat": "🌇",
-  "food security": "🥗",
-  "resilience": "🏔️",
-  "climate resilience": "🌍",
-  "gender equity": "🫶",
-  "education": "🎓",
-  "innovation": "⚗️",
-  "community wellbeing": "🏘️",
-  "housing": "🏠",
-  "cost of living": "🪙",
-  "stakeholder engagement": "🤝",
-  "mobility": "🚲",
-  "green spaces": "🌳",
-  "mental health": "🧠",
-  "waste reduction": "♻️",
+const CO_BENEFIT_ICONS: Record<string, LucideIcon> = {
+  "air quality": Wind,
+  "public health": HeartPulse,
+  "biodiversity": Bird,
+  "habitat": Leaf,
+  "employment": HardHat,
+  "economic development": TrendingUp,
+  "social equity": HeartHandshake,
+  "energy security": BatteryCharging,
+  "water management": Waves,
+  "water quality": Droplet,
+  "noise reduction": VolumeX,
+  "urban heat": Sun,
+  "food security": Wheat,
+  "resilience": Mountain,
+  "climate resilience": Globe,
+  "gender equity": Users,
+  "education": GraduationCap,
+  "innovation": Lightbulb,
+  "community wellbeing": Building2,
+  "housing": Home,
+  "cost of living": Wallet,
+  "stakeholder engagement": Handshake,
+  "mobility": Bike,
+  "green spaces": Trees,
+  "mental health": Brain,
+  "waste reduction": Recycle,
 };
 
-function getCoBenefitIcon(label: string): string {
+function getCoBenefitIcon(label: string): LucideIcon {
   const lower = label.toLowerCase();
-  return CO_BENEFIT_ICONS[lower] ?? "✅";
+  return CO_BENEFIT_ICONS[lower] ?? CircleCheck;
 }
 
 // ─── GPC sector mapping ─────────────────────────────────────────────────────
@@ -405,7 +411,7 @@ function ScoreBar({
 function EmptyState({ title, body }: { title: string; body: string }) {
   return (
     <div style={{ border: "1px solid #F3F4F6", borderRadius: "8px", padding: "28px 20px", textAlign: "center" }}>
-      <FiInbox size={24} color="#D1D5DB" style={{ margin: "0 auto 8px", display: "block" }} />
+      <Inbox size={24} color="#D1D5DB" style={{ margin: "0 auto 8px", display: "block" }} />
       <div style={{ fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "4px" }}>{title}</div>
       <div style={{ fontSize: "12px", color: "#9CA3AF", lineHeight: "1.6", maxWidth: "280px", margin: "0 auto" }}>{body}</div>
     </div>
@@ -610,7 +616,7 @@ function DetailPanel({
               <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
                 {cobenefits.map((b) => (
                   <div key={b} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#4B5563" }}>
-                    <span style={{ color: "#16A34A", fontWeight: "700" }}>✓</span> {t(b)}
+                    <CircleCheck size={15} color="#16A34A" style={{ flexShrink: 0 }} /> {t(b)}
                   </div>
                 ))}
               </div>
@@ -624,7 +630,7 @@ function DetailPanel({
               <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
                 {barriers.map((b) => (
                   <div key={b} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#4B5563" }}>
-                    <span style={{ color: "#F59E0B", fontWeight: "700" }}>⚠</span> {t(b)}
+                    <TriangleAlert size={15} color="#F59E0B" style={{ flexShrink: 0 }} /> {t(b)}
                   </div>
                 ))}
               </div>
@@ -642,7 +648,9 @@ function DetailPanel({
               </div>
               <div style={{ background: rm.bg, border: `1px solid ${rm.border}`, borderRadius: "8px", padding: "10px 14px 12px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-                  <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}>{rm.prefix} {t(rm.label)}</span>
+                  <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color, display: "inline-flex", alignItems: "center", gap: "5px" }}>
+                    {rm.prefix === "★" ? <Star size={13} fill="currentColor" style={{ flexShrink: 0 }} /> : rm.prefix} {t(rm.label)}
+                  </span>
                   <span style={{ fontSize: "18px", fontWeight: "800", color: rm.color, fontVariantNumeric: "tabular-nums" }}>
                     {action.financialFeasibilityComponent > 0 ? action.financialFeasibilityComponent.toFixed(2) : feasRow?.financial_feasibility?.toFixed(2) ?? "—"}
                   </span>
@@ -767,7 +775,7 @@ function DetailPanel({
                         <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{nameEs}</div>
                       )}
                       {proj.jurisdiction && (
-                        <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {proj.jurisdiction}</div>
+                        <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px", display: "flex", alignItems: "center", gap: "4px" }}><MapPin size={12} style={{ flexShrink: 0 }} /> {proj.jurisdiction}</div>
                       )}
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
                         {cost && <span>{t("Cost:")} <strong style={{ color: "#374151" }}>{cost}</strong></span>}
@@ -809,7 +817,7 @@ function DetailPanel({
                 {t("Generating report…")}
               </>
             ) : (
-              <>✦ {t("Generate output for this action")}</>
+              <><Sparkles size={13} style={{ marginRight: "4px", flexShrink: 0 }} /> {t("Generate output for this action")}</>
             )}
           </button>
         </div>
@@ -858,7 +866,7 @@ function TopPickCard({
       {/* Top row: TOP PICK badge + checkbox */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span style={{ fontSize: "13px", color: "#001EA7" }}>🔖</span>
+          <Bookmark size={14} color="#001EA7" style={{ flexShrink: 0 }} />
           <span style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.06em" }}>{t("TOP PICK")}</span>
         </div>
         {/* Checkbox */}
@@ -920,7 +928,7 @@ function TopPickCard({
       <div style={{ minHeight: "27px", marginBottom: "10px" }}>
         {matchedProjectCount > 0 && (
           <span style={{ fontSize: "11px", fontWeight: "600", color: "#1D4ED8", background: "#EFF6FF", padding: "3px 8px", borderRadius: "4px", display: "inline-flex", alignItems: "center", gap: "4px" }}>
-            📁 {matchedProjectCount === 1 ? t("{n} matched project", { n: "1" }) : t("{n} matched projects", { n: String(matchedProjectCount) })}
+            <Folder size={12} style={{ flexShrink: 0, marginRight: "2px", verticalAlign: "-1px" }} />{matchedProjectCount === 1 ? t("{n} matched project", { n: "1" }) : t("{n} matched projects", { n: String(matchedProjectCount) })}
           </span>
         )}
       </div>
@@ -956,7 +964,7 @@ function TopPickCard({
             {t("Generating…")}
           </>
         ) : (
-          <><span>✦</span> {t("Generate output for this action")}</>
+          <><Sparkles size={14} style={{ flexShrink: 0 }} /> {t("Generate output for this action")}</>
         )}
       </button>
     </div>
@@ -1036,7 +1044,7 @@ function RankingTable({
               fontWeight: pickMode ? "600" : "400",
             }}
           >
-            <span>☑</span> {t("Pick top actions")}
+            <SquareCheck size={15} style={{ flexShrink: 0 }} /> {t("Pick top actions")}
           </button>
 
           <div ref={dlRef} style={{ position: "relative" }}>
@@ -1229,9 +1237,9 @@ function ContextBreakdownTab({
 
   const divider = <div style={{ height: "1px", background: "#E5E7EB" }} />;
 
-  const sectionHead = (icon: string, title: string) => (
+  const sectionHead = (Icon: LucideIcon, title: string) => (
     <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
-      <span style={{ fontSize: "18px" }}>{icon}</span> {title}
+      <Icon size={18} color="#001EA7" style={{ flexShrink: 0 }} /> {title}
     </div>
   );
 
@@ -1249,7 +1257,7 @@ function ContextBreakdownTab({
 
       {/* Emissions Profile */}
       <div>
-        {sectionHead("🏭", t("Emissions Profile"))}
+        {sectionHead(Factory, t("Emissions Profile"))}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
           {statCard(t("Total emissions"), `${(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e`)}
           {statCard(t("Top sector"), topGpcSector)}
@@ -1262,7 +1270,7 @@ function ContextBreakdownTab({
 
       {/* Socioeconomic Context */}
       <div>
-        {sectionHead("👥", t("Socioeconomic Context"))}
+        {sectionHead(Users, t("Socioeconomic Context"))}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
           {statCard(t("Indicators loaded"), indicatorCount !== null ? String(indicatorCount) : "—")}
           {statCard(t("Poverty rate"),
@@ -1279,7 +1287,7 @@ function ContextBreakdownTab({
 
       {/* Regulations & Laws */}
       <div>
-        {sectionHead("⚖️", t("Regulations & Laws"))}
+        {sectionHead(Scale, t("Regulations & Laws"))}
         <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
           {t("Each candidate action checked against Chilean laws. Actions failing a mandatory or required check are excluded from the ranking.")}<InfoTip text={DEFS.legalStrength} />
         </div>
@@ -1313,7 +1321,7 @@ function ContextBreakdownTab({
 
       {/* Financial Feasibility */}
       <div>
-        {sectionHead("💰", t("Financial Feasibility"))}
+        {sectionHead(Wallet, t("Financial Feasibility"))}
         {feasibilityRows.length === 0 ? (
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "20px", fontSize: "13px", color: "#9CA3AF", textAlign: "center" }}>
             {t("Loading financial profile…")}
@@ -1358,7 +1366,7 @@ function ContextBreakdownTab({
           : "—";
         return (
           <div>
-            {sectionHead("📋", t("Policy Alignment"))}
+            {sectionHead(ClipboardList, t("Policy Alignment"))}
             <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
               {t("How well ranked actions are backed by existing national policy frameworks.")}
             </div>
@@ -1638,7 +1646,7 @@ export function Recommendations({ params }: Props) {
           zIndex: 100, maxWidth: "580px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
           display: "flex", alignItems: "flex-start", gap: "10px",
         }}>
-          <span style={{ flexShrink: 0, marginTop: "1px" }}>⚠</span>
+          <TriangleAlert size={16} color="#991B1B" style={{ flexShrink: 0, marginTop: "1px" }} />
           <span>{t(generateError)}</span>
           <button
             onClick={() => setGenerateError(null)}
@@ -1699,7 +1707,7 @@ export function Recommendations({ params }: Props) {
                 </>
               ) : (
                 <>
-                  <span>✦</span>
+                  <Sparkles size={14} style={{ flexShrink: 0 }} />
                   {pickedIds.length > 0 ? t("Generate output for {n} actions", { n: String(pickedIds.length) }) : t("Generate output for selected actions")}
                 </>
               )}
@@ -1788,7 +1796,7 @@ export function Recommendations({ params }: Props) {
                       gap: "8px", background: "white", border: "1px solid #E5E7EB",
                       borderRadius: "10px", padding: "16px 12px", textAlign: "center",
                     }}>
-                      <span style={{ fontSize: "28px", lineHeight: 1 }}>{getCoBenefitIcon(cb)}</span>
+                      {(() => { const CbIcon = getCoBenefitIcon(cb); return <CbIcon size={26} color="#001EA7" strokeWidth={1.75} />; })()}
                       <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{t(cb)}</div>
                       <div style={{ fontSize: "11px", color: "#9CA3AF" }}>
                         {t("{count} of {total} top actions", { count: String(count), total: String(displayTop.length) })}
@@ -1817,7 +1825,7 @@ export function Recommendations({ params }: Props) {
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>🌍</div>
+                  <div style={{ marginBottom: "8px" }}><Globe size={20} color="#001EA7" /></div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Emissions profile")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{t("{v} Mt CO₂e total · {n} sectors", { v: (totalCityEmissions / 1_000_000).toFixed(2), n: String(new Set(Object.keys(result.cityEmissionsByGpc ?? {}).map(k => k.split('.')[0])).size) })}</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
@@ -1830,7 +1838,7 @@ export function Recommendations({ params }: Props) {
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>👥</div>
+                  <div style={{ marginBottom: "8px" }}><Users size={20} color="#001EA7" /></div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Socioeconomic indicators")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{indicatorCount !== null ? t("{n} indicators loaded", { n: String(indicatorCount) }) : t("Loading…")}</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
@@ -1843,7 +1851,7 @@ export function Recommendations({ params }: Props) {
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>⚖️</div>
+                  <div style={{ marginBottom: "8px" }}><Scale size={20} color="#001EA7" /></div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Legal context")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{t("{a} included · {b} excluded · {c} flagged", { a: String(result.validActionsCount ?? ranked.length), b: String(legalExcluded.length), c: String(legalFlagged.length) })}</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
@@ -1856,7 +1864,7 @@ export function Recommendations({ params }: Props) {
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>💰</div>
+                  <div style={{ marginBottom: "8px" }}><Wallet size={20} color="#001EA7" /></div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Financial context")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
                     {feasibilityRows.length > 0 ? t(profileToAttrs(feasibilityRows[0]?.inputs?.city?.profile).label) : t("Loading…")}
@@ -1871,7 +1879,7 @@ export function Recommendations({ params }: Props) {
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>📋</div>
+                  <div style={{ marginBottom: "8px" }}><ClipboardList size={20} color="#001EA7" /></div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Policy alignment")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
                     {natPolicyScore !== null ? t("{n}% national alignment", { n: String(Math.round(natPolicyScore * 100)) }) : t("Loading…")}
@@ -1886,7 +1894,7 @@ export function Recommendations({ params }: Props) {
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = "#001EA7")}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>📊</div>
+                  <div style={{ marginBottom: "8px" }}><BarChart3 size={20} color="#001EA7" /></div>
                   <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Full ranking")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{t("{n} actions ranked", { n: String(ranked.length) })}</div>
                   <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>

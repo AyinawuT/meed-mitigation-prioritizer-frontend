@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { FiInfo } from "react-icons/fi";
+import { Info } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 // Shared info tooltip for explaining terminology (timelines, cost levels,
@@ -25,7 +25,7 @@ export function InfoTip({ term, text, size = 12 }: { term?: string; text: string
       onMouseLeave={hide}
       style={{ display: "inline-flex", alignItems: "center", verticalAlign: "middle", marginLeft: "4px", cursor: "default" }}
     >
-      <FiInfo size={size} color="#9CA3AF" style={{ flexShrink: 0 }} />
+      <Info size={size} color="#9CA3AF" style={{ flexShrink: 0 }} />
       {pos && (
         <span style={{
           position: "fixed",

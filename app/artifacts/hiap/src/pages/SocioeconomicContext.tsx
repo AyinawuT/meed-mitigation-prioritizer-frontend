@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
@@ -7,6 +7,7 @@ import { CITIES, type CityData } from "@/data/cities";
 import { useLanguage } from "@/lib/i18n";
 import { InfoTip } from "@/components/InfoTip";
 import { DEFS } from "@/lib/definitions";
+import { Users, TriangleAlert } from "lucide-react";
 
 type Category = "very high" | "high" | "medium" | "low" | "very low";
 
@@ -374,8 +375,8 @@ const CATEGORY_STYLES: Record<Category, { bg: string; color: string; label: stri
   "very low":  { bg: "#F9FAFB", color: "#6B7280", label: "Very Low" },
 };
 
-const CONCERN_ICON: Record<string, string> = {
-  risk:        "⚠",
+const CONCERN_ICON: Record<string, ReactNode> = {
+  risk:        <TriangleAlert size={13} style={{ flexShrink: 0 }} />,
   opportunity: "↑",
   neutral:     "→",
 };
@@ -530,7 +531,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 borderRadius: "6px", padding: "5px 12px",
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
-                <span>👥</span>
+                <Users size={14} color="#15803D" style={{ flexShrink: 0 }} />
                 <span>{t("ALM FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking")}</span>
               </div>
             </div>
