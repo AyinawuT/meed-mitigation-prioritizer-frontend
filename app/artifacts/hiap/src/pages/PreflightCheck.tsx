@@ -6,6 +6,8 @@ import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, setStepProgress, type StepProgress } from "@/lib/stepProgress";
 import { callExclusionsPreview } from "@/lib/hiapApi";
 import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
 import policyPlansData from "@/data/policyPlans.json";
 import actionsRaw from "@/data/actions.json";
 
@@ -493,7 +495,7 @@ export function PreflightCheck({ params }: Props) {
 
             {/* Model confidence */}
             <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>{t("Model confidence")}</h2>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>{t("Model confidence")}<InfoTip text={DEFS.modelConfidence} /></h2>
 
               <div style={{ position: "relative", marginBottom: "8px" }}>
                 <div style={{ height: "8px", borderRadius: "5px", background: "linear-gradient(to right, #F23D33 0%, #F9A200 40%, #16A34A 100%)", marginBottom: "4px" }} />

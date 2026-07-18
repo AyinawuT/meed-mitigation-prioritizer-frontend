@@ -8,6 +8,8 @@ import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/sc
 import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 import { runPipelineForCity } from "@/lib/pipelineRunner";
 import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
 
@@ -520,6 +522,7 @@ export function RegulationsLaws({ params }: Props) {
             <div style={{ marginBottom: "12px" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
                 {t("Excluded from ranking ({n})", { n: String(filteredExcluded.length) })}
+                <InfoTip text={DEFS.verdictBlocked} />
               </h2>
               <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
                 {t("These actions were removed before scoring. The city does not currently have the legal authority to implement them independently.")}
@@ -539,6 +542,7 @@ export function RegulationsLaws({ params }: Props) {
             <div style={{ marginBottom: "12px" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
                 {t("Flagged — evidence missing ({n})", { n: String(filteredFlagged.length) })}
+                <InfoTip text={DEFS.verdictConditional} />
               </h2>
               <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
                 {t("No legal assessment was found for these actions. They are included in the ranking with a neutral legal score.")}

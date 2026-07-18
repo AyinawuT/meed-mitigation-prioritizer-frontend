@@ -5,6 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
 
 type Category = "very high" | "high" | "medium" | "low" | "very low";
 
@@ -599,6 +601,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                     whiteSpace: "nowrap",
                   }}>
                     {t(h)}
+                    {h === "RELATIVE LEVEL" && <InfoTip text={DEFS.relativeLevel} />}
                   </th>
                 ))}
               </tr>

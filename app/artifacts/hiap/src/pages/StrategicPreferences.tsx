@@ -5,6 +5,8 @@ import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
 
 const ALL_SECTORS = [
   "Stationary Energy",
@@ -327,6 +329,9 @@ export function StrategicPreferences({ params }: Props) {
                   </div>
                   <div style={{ fontSize: "13px", fontWeight: on ? "600" : "400", color: on ? "#001EA7" : "#111827" }}>
                     {t(opt.label)}
+                    {opt.value === "short" && <InfoTip text={DEFS.timelineShort} />}
+                    {opt.value === "medium" && <InfoTip text={DEFS.timelineMedium} />}
+                    {opt.value === "long" && <InfoTip text={DEFS.timelineLong} />}
                   </div>
                 </button>
               );

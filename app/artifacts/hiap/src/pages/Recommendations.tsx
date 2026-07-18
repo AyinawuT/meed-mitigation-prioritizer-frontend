@@ -11,6 +11,15 @@ import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
 import { callReportOutputPlan, loadSnapshot } from "@/lib/reportApi";
 import { generateAndDownloadPdf } from "@/lib/reportGenerator";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
+
+// Pick the timeline definition matching an action's implementation horizon.
+function timelineDef(score: number | null | undefined): string {
+  if (score === 1.0) return DEFS.timelineShort;
+  if (score === 0.5) return DEFS.timelineMedium;
+  return DEFS.timelineLong;
+}
 
 // ─── ccglobal types ────────────────────────────────────────────────────────────
 
@@ -902,7 +911,7 @@ function TopPickCard({
           <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{t(sector)}</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{t("Timeline")}</span>
+          <span style={{ fontSize: "12px", color: "#9CA3AF", display: "inline-flex", alignItems: "center" }}>{t("Timeline")}<InfoTip text={timelineDef(action.timelineScore)} /></span>
           <span style={{ fontSize: "12px", fontWeight: "600", color: "#374151" }}>{t(tl)}</span>
         </div>
       </div>
@@ -1272,7 +1281,7 @@ function ContextBreakdownTab({
       <div>
         {sectionHead("⚖️", t("Regulations & Laws"))}
         <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
-          {t("Each candidate action checked against Chilean laws. Actions failing a mandatory or required check are excluded from the ranking.")}
+          {t("Each candidate action checked against Chilean laws. Actions failing a mandatory or required check are excluded from the ranking.")}<InfoTip text={DEFS.legalStrength} />
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
           <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px", padding: "16px 20px" }}>

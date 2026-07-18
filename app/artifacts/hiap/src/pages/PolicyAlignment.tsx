@@ -5,6 +5,8 @@ import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
 import actionNames from "@/data/actionNames.json";
 
 interface ActionMeta { name: string; category: string; subcategory: string }
@@ -482,6 +484,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
             <ColHeader label={t("Signal type")} tip={t("The kind of policy backing found — e.g. a direct mandate (Policy action), budget allocation (Funding), institutional responsibility (Governance), inclusion in a sector strategy (Sector plan), or a link to an emissions target.")} minWidth="80px" />
             <ColHeader label={t("Policy support")} tip={t("How explicitly this plan covers the action, from 0% (no mention) to 100% (full, direct mandate). Scores above 75% are considered strong.")} minWidth="110px" align="right" />
             <ColHeader label={t("Strength")} tip={t("Overall signal quality: Strong = explicit, high-confidence coverage · Moderate = indirect or partial reference · Weak = incidental mention.")} minWidth="56px" align="right" />
+            <InfoTip text={DEFS.policyStrength} />
           </div>
           {plan.actions.map(a => {
             const meta = ACTION_NAMES[a.id];
