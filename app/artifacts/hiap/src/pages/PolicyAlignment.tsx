@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
+import { useLanguage } from "@/lib/i18n";
 import actionNames from "@/data/actionNames.json";
 
 interface ActionMeta { name: string; category: string; subcategory: string }
@@ -130,6 +131,7 @@ interface Props { params: { locode: string } }
 export function PolicyAlignment({ params }: Props) {
   const [, navigate] = useLocation();
   const search = useSearch();
+  const { t } = useLanguage();
   const fromPreflight = search.includes("from=preflight");
   const fromRecommendations = search.includes("from=recommendations");
   const urlLocode = params.locode ?? "";
@@ -171,7 +173,7 @@ export function PolicyAlignment({ params }: Props) {
       <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <p style={{ color: "#6B7280" }}>City not found.</p>
+          <p style={{ color: "#6B7280" }}>{t("City not found.")}</p>
         </div>
       </div>
     );
@@ -182,7 +184,7 @@ export function PolicyAlignment({ params }: Props) {
   const regionalPlans = plans.filter(p => p.scope === "Regional");
 
   const citySlug = city.locode.replace(" ", "-");
-  const regLocation = regionalPlans[0]?.locationName ?? "Region";
+  const regLocation = regionalPlans[0]?.locationName ?? t("Region");
 
   function toggle(name: string) {
     setExpanded(prev => ({ ...prev, [name]: !prev[name] }));
@@ -197,16 +199,16 @@ export function PolicyAlignment({ params }: Props) {
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <Breadcrumb items={[
-            { label: "Cities", onClick: () => navigate("/") },
+            { label: t("Cities"), onClick: () => navigate("/") },
             { label: city.name, onClick: () => navigate(`/city/${citySlug}`) },
-            { label: "Policy Alignment" },
+            { label: t("Policy Alignment") },
           ]} />
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
-            <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: 0 }}>Policy Alignment</h1>
-            <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", borderRadius: "4px", padding: "2px 8px", fontWeight: "500" }}>Optional</span>
+            <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: 0 }}>{t("Policy Alignment")}</h1>
+            <span style={{ fontSize: "11px", background: "#F3F4F6", color: "#6B7280", borderRadius: "4px", padding: "2px 8px", fontWeight: "500" }}>{t("Optional")}</span>
           </div>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-            Aceleradora Local de Mitigación has assessed each candidate action against national, regional, and municipal climate policy. Policy alignment shapes how actions are ranked — better-backed actions score higher.
+            {t("Aceleradora Local de Mitigación has assessed each candidate action against national, regional, and municipal climate policy. Policy alignment shapes how actions are ranked — better-backed actions score higher.")}
           </p>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: "6px",
@@ -215,7 +217,7 @@ export function PolicyAlignment({ params }: Props) {
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
             <span>📋</span>
-            <span>ALM ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking</span>
+            <span>{t("ALM ALIGNMENT: Policy alignment contributes 75% to the city's alignment score · Alignment shapes 22% of ranking")}</span>
           </div>
         </div>
       </div>
@@ -224,33 +226,33 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Data source note */}
         <div style={{ marginBottom: "16px", padding: "10px 14px", background: "#F5F7FF", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "11px", color: "#4338CA" }}>
-          Policy signals sourced from {nationalPlans.length} national and {regionalPlans.length} regional plans for <strong>{city.name}</strong> · {Object.keys(perActionScores).length} candidate actions checked for policy backing
+          {t("Policy signals sourced from {n} national and {r} regional plans for", { n: String(nationalPlans.length), r: String(regionalPlans.length) })} <strong>{city.name}</strong> {t("· {n} candidate actions checked for policy backing", { n: String(Object.keys(perActionScores).length) })}
         </div>
 
         {/* Score cards */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", marginBottom: "32px" }}>
           <ScoreCard
-            scope="National plan"
+            scope={t("National plan")}
             score={aggregateScores.national}
             color={scoreColor(aggregateScores.national)}
-            label={scoreLabel(aggregateScores.national)}
-            description={`Average policy support score across ${nationalPlans.length} national mitigation plans · ${Object.keys(perActionScores).length} actions assessed`}
+            label={t(scoreLabel(aggregateScores.national))}
+            description={t("Average policy support score across {n} national mitigation plans · {a} actions assessed", { n: String(nationalPlans.length), a: String(Object.keys(perActionScores).length) })}
           />
           <ScoreCard
-            scope="Regional plan"
+            scope={t("Regional plan")}
             score={aggregateScores.regional}
             color={scoreColor(aggregateScores.regional)}
-            label={scoreLabel(aggregateScores.regional)}
-            description={`Average signal strength across ${regionalPlans.length} regional plan · ${Object.values(perActionScores).filter(a => a.regScore !== null).length} of ${Object.keys(perActionScores).length} actions with regional coverage`}
+            label={t(scoreLabel(aggregateScores.regional))}
+            description={t("Average signal strength across {n} regional plan · {c} of {total} actions with regional coverage", { n: String(regionalPlans.length), c: String(Object.values(perActionScores).filter(a => a.regScore !== null).length), total: String(Object.keys(perActionScores).length) })}
           />
           <ScoreCard
-            scope="Municipal plan"
+            scope={t("Municipal plan")}
             score={null}
             color="#9CA3AF"
-            label={munFile ? "Uploaded — awaiting processing" : "No plan uploaded"}
+            label={munFile ? t("Uploaded — awaiting processing") : t("No plan uploaded")}
             description={munFile
-              ? `${munFile.name} received · municipal alignment score will be added when processed`
-              : `Upload your PACCC or local climate plan to add a municipal alignment score`}
+              ? t("{file} received · municipal alignment score will be added when processed", { file: munFile.name })
+              : t("Upload your PACCC or local climate plan to add a municipal alignment score")}
             munFile={munFile}
             onRemoveMunFile={() => setMunFile(null)}
           />
@@ -258,9 +260,9 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* National Plans */}
         <ScopeSection
-          title="National Plans"
+          title={t("National Plans")}
           subtitle="Chile"
-          badge={{ label: `${nationalPlans.length} plans`, bg: "#F0FDF4", text: "#16A34A", border: "#BBF7D0" }}
+          badge={{ label: t("{n} plans", { n: String(nationalPlans.length) }), bg: "#F0FDF4", text: "#16A34A", border: "#BBF7D0" }}
         >
           {nationalPlans.map(plan => (
             <PlanCard
@@ -275,9 +277,9 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Regional Plans */}
         <ScopeSection
-          title="Regional Plans"
+          title={t("Regional Plans")}
           subtitle={regLocation}
-          badge={{ label: `${regionalPlans.length} plan${regionalPlans.length !== 1 ? "s" : ""}`, bg: "#FFFBEB", text: "#B45309", border: "#FDE68A" }}
+          badge={{ label: t(regionalPlans.length !== 1 ? "{n} plans" : "{n} plan", { n: String(regionalPlans.length) }), bg: "#FFFBEB", text: "#B45309", border: "#FDE68A" }}
         >
           {regionalPlans.map(plan => (
             <PlanCard
@@ -292,11 +294,11 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Municipal Plans */}
         <ScopeSection
-          title="Municipal Plans"
+          title={t("Municipal Plans")}
           subtitle={city.name}
           badge={munFile
-            ? { label: "1 plan uploaded", bg: "#F0FDF4", text: "#16A34A", border: "#BBF7D0" }
-            : { label: "No data", bg: "#F3F4F6", text: "#6B7280", border: "#E5E7EB" }
+            ? { label: t("1 plan uploaded"), bg: "#F0FDF4", text: "#16A34A", border: "#BBF7D0" }
+            : { label: t("No data"), bg: "#F3F4F6", text: "#6B7280", border: "#E5E7EB" }
           }
         >
           {!munFile ? (
@@ -313,10 +315,10 @@ export function PolicyAlignment({ params }: Props) {
             >
               <input ref={fileRef} type="file" accept=".pdf,.docx,.doc" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) setMunFile(f); }} />
               <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#F3F4F6", margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>📄</div>
-              <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "4px" }}>Upload your municipal climate plan</div>
-              <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "12px" }}>Drag and drop or click to browse · PDF or Word document</div>
+              <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "4px" }}>{t("Upload your municipal climate plan")}</div>
+              <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "12px" }}>{t("Drag and drop or click to browse · PDF or Word document")}</div>
               <div style={{ fontSize: "11px", color: "#6B7280", background: "#F3F4F6", borderRadius: "6px", padding: "8px 14px", display: "inline-block", textAlign: "left", maxWidth: "420px" }}>
-                Upload your PACCC, PLADECO, or local climate action plan. Our team will download and process the document to extract policy signals, which will then be added to the ranking in a future update — it will not be reflected immediately.
+                {t("Upload your PACCC, PLADECO, or local climate action plan. Our team will download and process the document to extract policy signals, which will then be added to the ranking in a future update — it will not be reflected immediately.")}
               </div>
             </div>
           ) : (
@@ -324,10 +326,10 @@ export function PolicyAlignment({ params }: Props) {
               <span style={{ fontSize: "24px" }}>📄</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{munFile.name}</div>
-                <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "2px" }}>Uploaded · {(munFile.size / 1024).toFixed(0)} KB · Awaiting processing</div>
+                <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "2px" }}>{t("Uploaded · {kb} KB · Awaiting processing", { kb: (munFile.size / 1024).toFixed(0) })}</div>
               </div>
               <button onClick={() => setMunFile(null)} style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "4px 10px", fontSize: "11px", color: "#6B7280", cursor: "pointer" }}>
-                Remove
+                {t("Remove")}
               </button>
             </div>
           )}
@@ -336,10 +338,10 @@ export function PolicyAlignment({ params }: Props) {
         {/* Footer actions */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "24px" }}>
           <button onClick={() => navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", padding: 0 }}>
-            {fromRecommendations ? "← Back to context breakdown" : fromPreflight ? "← Back to pre-flight" : "← Skip this step"}
+            {t(fromRecommendations ? "← Back to context breakdown" : fromPreflight ? "← Back to pre-flight" : "← Skip this step")}
           </button>
           <button onClick={() => { confirmStep(locode, "policy"); navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : fromPreflight ? `/city/${citySlug}/preflight` : `/city/${citySlug}/financial-feasibility`); }} style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "12px 28px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
-            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
+            {t(fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Save & continue →")}
           </button>
         </div>
       </div>
@@ -393,11 +395,12 @@ function ScoreCard({ scope, score, color, label, description, munFile, onRemoveM
   scope: string; score: number | null; color: string; label: string; description: string;
   munFile?: File | null; onRemoveMunFile?: () => void;
 }) {
+  const { t } = useLanguage();
   const pct = score !== null ? Math.round(score * 100) : 0;
   return (
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "18px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
-        <span style={{ fontSize: "12px", color: "#6B7280", fontWeight: "500", lineHeight: "1.4" }}>{scope}<br />alignment</span>
+        <span style={{ fontSize: "12px", color: "#6B7280", fontWeight: "500", lineHeight: "1.4" }}>{scope}<br />{t("alignment")}</span>
         <span style={{ fontSize: "26px", fontWeight: "700", color, lineHeight: "1" }}>
           {score !== null ? `${Math.round(score * 100)}%` : "—"}
         </span>
@@ -431,6 +434,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
   plan: Plan; open: boolean; onToggle: () => void;
   perActionScores: Record<string, ActionScore>;
 }) {
+  const { t } = useLanguage();
   const knownActions = plan.actions.filter(a => !!ACTION_NAMES[a.id]);
   const highCount = knownActions.filter(a => a.strength === "high").length;
   const medCount  = knownActions.filter(a => a.strength === "medium").length;
@@ -450,20 +454,20 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
                 onClick={e => e.stopPropagation()}
                 style={{ fontSize: "10px", color: "#001EA7", textDecoration: "none", flexShrink: 0, border: "1px solid #C7D2FE", borderRadius: "3px", padding: "1px 5px", background: "#F5F7FF" }}
               >
-                ↗ source
+                {t("↗ source")}
               </a>
             )}
           </div>
           <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>
-            {plan.horizon ? `Horizon: ${plan.horizon} · ` : ""}{knownActions.length} action{knownActions.length !== 1 ? "s" : ""} matched
+            {plan.horizon ? t("Horizon: {h} · ", { h: plan.horizon }) : ""}{t(knownActions.length !== 1 ? "{n} actions matched" : "{n} action matched", { n: String(knownActions.length) })}
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "16px", flexShrink: 0 }}>
           {highCount > 0 && (
-            <span style={{ fontSize: "11px", padding: "2px 7px", borderRadius: "4px", background: "#F0FDF4", color: "#16A34A", border: "1px solid #BBF7D0", fontWeight: "600" }}>{highCount} strong</span>
+            <span style={{ fontSize: "11px", padding: "2px 7px", borderRadius: "4px", background: "#F0FDF4", color: "#16A34A", border: "1px solid #BBF7D0", fontWeight: "600" }}>{t("{n} strong", { n: String(highCount) })}</span>
           )}
           {medCount > 0 && (
-            <span style={{ fontSize: "11px", padding: "2px 7px", borderRadius: "4px", background: "#FFFBEB", color: "#B45309", border: "1px solid #FDE68A", fontWeight: "600" }}>{medCount} moderate</span>
+            <span style={{ fontSize: "11px", padding: "2px 7px", borderRadius: "4px", background: "#FFFBEB", color: "#B45309", border: "1px solid #FDE68A", fontWeight: "600" }}>{t("{n} moderate", { n: String(medCount) })}</span>
           )}
           <span style={{ fontSize: "16px", color: "#9CA3AF", marginLeft: "4px" }}>{open ? "▾" : "▸"}</span>
         </div>
@@ -474,10 +478,10 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
           {/* Column legend */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingBottom: "6px", borderBottom: "1px solid #F3F4F6" }}>
             <span style={{ width: "8px", flexShrink: 0 }} />
-            <span style={{ fontSize: "10px", color: "#9CA3AF", flex: 1, fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>Action</span>
-            <ColHeader label="Signal type" tip="The kind of policy backing found — e.g. a direct mandate (Policy action), budget allocation (Funding), institutional responsibility (Governance), inclusion in a sector strategy (Sector plan), or a link to an emissions target." minWidth="80px" />
-            <ColHeader label="Policy support" tip="How explicitly this plan covers the action, from 0% (no mention) to 100% (full, direct mandate). Scores above 75% are considered strong." minWidth="110px" align="right" />
-            <ColHeader label="Strength" tip="Overall signal quality: Strong = explicit, high-confidence coverage · Moderate = indirect or partial reference · Weak = incidental mention." minWidth="56px" align="right" />
+            <span style={{ fontSize: "10px", color: "#9CA3AF", flex: 1, fontWeight: "600", letterSpacing: "0.04em", textTransform: "uppercase" }}>{t("Action")}</span>
+            <ColHeader label={t("Signal type")} tip={t("The kind of policy backing found — e.g. a direct mandate (Policy action), budget allocation (Funding), institutional responsibility (Governance), inclusion in a sector strategy (Sector plan), or a link to an emissions target.")} minWidth="80px" />
+            <ColHeader label={t("Policy support")} tip={t("How explicitly this plan covers the action, from 0% (no mention) to 100% (full, direct mandate). Scores above 75% are considered strong.")} minWidth="110px" align="right" />
+            <ColHeader label={t("Strength")} tip={t("Overall signal quality: Strong = explicit, high-confidence coverage · Moderate = indirect or partial reference · Weak = incidental mention.")} minWidth="56px" align="right" />
           </div>
           {plan.actions.map(a => {
             const meta = ACTION_NAMES[a.id];
@@ -489,7 +493,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
               <div key={a.id} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: col, flexShrink: 0 }} />
                 <span style={{ fontSize: "12px", color: "#374151", flex: 1, lineHeight: "1.4" }}>{meta.name}</span>
-                <span style={{ fontSize: "11px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px" }}>{TYPE_LABEL[a.signalType]}</span>
+                <span style={{ fontSize: "11px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px" }}>{t(TYPE_LABEL[a.signalType])}</span>
                 {ps ? (
                   <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0, minWidth: "110px", justifyContent: "flex-end" }}>
                     <div style={{ width: "48px", height: "5px", background: "#F3F4F6", borderRadius: "3px", overflow: "hidden" }}>
@@ -501,7 +505,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
                   <span style={{ flexShrink: 0, minWidth: "110px" }} />
                 )}
                 <span style={{ fontSize: "11px", fontWeight: "600", color: col, flexShrink: 0, minWidth: "56px", textAlign: "right" }}>
-                  {a.strength === "high" ? "Strong" : a.strength === "medium" ? "Moderate" : "Weak"}
+                  {t(a.strength === "high" ? "Strong" : a.strength === "medium" ? "Moderate" : "Weak")}
                 </span>
               </div>
             );

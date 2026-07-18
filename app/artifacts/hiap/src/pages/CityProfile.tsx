@@ -192,11 +192,12 @@ function SectionCard({ def, state, onClick }: SectionCardProps) {
 }
 
 function KeyStat({ label, value, sub }: { label: string; value: string | null; sub?: string }) {
+  const { t } = useLanguage();
   return (
     <div style={{ background: "white", border: "1px solid #EBEBEB", borderRadius: "10px", padding: "14px 18px", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
       <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "4px", textTransform: "uppercase", letterSpacing: "0.04em" }}>{label}</div>
       <div style={{ fontSize: value ? "18px" : "13px", fontWeight: value ? "700" : "400", color: value ? "#111827" : "#9CA3AF", lineHeight: "1.2" }}>
-        {value ?? "No data available"}
+        {value ?? t("No data available")}
       </div>
       {value && sub && <div style={{ fontSize: "11px", color: "#6B7280", marginTop: "3px" }}>{sub}</div>}
     </div>
@@ -229,10 +230,10 @@ export function CityProfile({ params }: CityProfileProps) {
       <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 8px" }}>City not found</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>We couldn't find a city with the locode "{urlLocode}".</p>
+          <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", margin: "0 0 8px" }}>{t("City not found")}</h2>
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>{t("We couldn't find a city with the locode \"{locode}\".", { locode: urlLocode })}</p>
           <button onClick={() => navigate("/")} style={{ background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "500", cursor: "pointer" }}>
-            ← Back to cities
+            {t("← Back to cities")}
           </button>
         </div>
       </div>
@@ -352,7 +353,7 @@ export function CityProfile({ params }: CityProfileProps) {
           </span>
           {!canGenerate && !emissionsReady && (
             <span style={{ fontSize: "13px", color: "#F23D33", fontWeight: "500" }}>
-              Emissions Data required · enter your GHG inventory to unlock recommendations →
+              {t("Emissions Data required · enter your GHG inventory to unlock recommendations →")}
             </span>
           )}
           {!canGenerate && emissionsReady && (

@@ -1,4 +1,7 @@
+import { useLanguage } from "@/lib/i18n";
+
 export function Footer() {
+  const { t } = useLanguage();
   return (
     <div style={{ background: "#001EA7", padding: "24px 64px" }}>
       <div style={{
@@ -21,7 +24,7 @@ export function Footer() {
             <span style={{ color: "#93C5FD", fontSize: "13px" }}>Aceleradora Local de Mitigación</span>
           </div>
           <span style={{ color: "#3B5FA0", fontSize: "12px" }}>
-            Climate Solutions for Chilean Cities
+            {t("Climate Solutions for Chilean Cities")}
           </span>
         </div>
 
@@ -50,7 +53,7 @@ export function Footer() {
             />
           </div>
           <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", textAlign: "center", lineHeight: "1.5" }}>
-            Built by Open Earth Foundation and Sustainability Solutions Group
+            {t("Built by Open Earth Foundation and Sustainability Solutions Group")}
           </div>
         </div>
 
@@ -70,7 +73,7 @@ export function Footer() {
             />
           </div>
           <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", textAlign: "center", maxWidth: "190px", lineHeight: "1.5" }}>
-            Funded by the{" "}
+            {t("Funded by the")}{" "}
             <a
               href="https://www.chileatiende.gob.cl/fichas/65100-crea-y-valida"
               target="_blank"
@@ -79,7 +82,7 @@ export function Footer() {
             >
               Crea y Valida
             </a>{" "}
-            programme, Comité InnovaChile de Corfo
+            {t("programme, Comité InnovaChile de Corfo")}
           </div>
         </div>
 

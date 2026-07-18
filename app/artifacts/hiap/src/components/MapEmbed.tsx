@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/i18n";
 
 interface MapEmbedProps {
   cityName: string;
@@ -12,6 +13,7 @@ function buildEmbedUrl(lat: number, lon: number, delta = 0.12): string {
 }
 
 export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedProps) {
+  const { t } = useLanguage();
   const cacheKey = `hiap:map3:${cityName}:${regionName}`;
 
   const [embedUrl, setEmbedUrl] = useState<string | null>(() => {
@@ -55,7 +57,7 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
   if (loading) {
     return (
       <div style={{ ...base, background: "#F5F5F7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ fontSize: "13px", color: "#9CA3AF" }}>Loading map…</span>
+        <span style={{ fontSize: "13px", color: "#9CA3AF" }}>{t("Loading map…")}</span>
       </div>
     );
   }
@@ -63,7 +65,7 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
   if (!embedUrl) {
     return (
       <div style={{ ...base, background: "#F5F5F7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ fontSize: "13px", color: "#9CA3AF" }}>Map not available</span>
+        <span style={{ fontSize: "13px", color: "#9CA3AF" }}>{t("Map not available")}</span>
       </div>
     );
   }
@@ -75,7 +77,7 @@ export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedPro
         width="100%"
         height="100%"
         style={{ border: "none", display: "block" }}
-        title={`Map of ${cityName}`}
+        title={t("Map of {name}", { name: cityName })}
       />
     </div>
   );

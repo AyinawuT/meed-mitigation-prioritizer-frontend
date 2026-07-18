@@ -7,6 +7,7 @@ import { CITIES, type CityData } from "@/data/cities";
 import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/scoringPipeline";
 import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 import { runPipelineForCity } from "@/lib/pipelineRunner";
+import { useLanguage } from "@/lib/i18n";
 
 // ─── Sector display helpers ───────────────────────────────────────────────────
 
@@ -35,18 +36,20 @@ const VERDICT_CHIPS: Record<string, { label: string; bg: string; color: string }
 };
 
 function SectorChip({ tag }: { tag: string }) {
+  const { t } = useLanguage();
   const s = SECTOR_COLORS[tag] ?? SECTOR_COLORS.cross_sector;
   return (
     <span style={{
       fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
       background: s.bg, color: s.color, whiteSpace: "nowrap",
     }}>
-      {SECTOR_DISPLAY[tag] ?? tag}
+      {t(SECTOR_DISPLAY[tag] ?? tag)}
     </span>
   );
 }
 
 function VerdictChip({ category }: { category: string | null }) {
+  const { t } = useLanguage();
   if (!category) return null;
   const chip = VERDICT_CHIPS[category];
   if (!chip) return null;
@@ -55,25 +58,29 @@ function VerdictChip({ category }: { category: string | null }) {
       fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
       background: chip.bg, color: chip.color, whiteSpace: "nowrap",
     }}>
-      {chip.label}
+      {t(chip.label)}
     </span>
   );
 }
 
-function sectorBreakdown(actions: { sectorTag: string }[]): string {
+function sectorBreakdown(
+  actions: { sectorTag: string }[],
+  t: (en: string, vars?: Record<string, string>) => string,
+): string {
   const counts: Record<string, number> = {};
   for (const a of actions) {
     const tag = a.sectorTag || "cross_sector";
     counts[tag] = (counts[tag] ?? 0) + 1;
   }
   return Object.entries(counts)
-    .map(([tag, n]) => `${n} ${SECTOR_DISPLAY[tag] ?? tag}`)
+    .map(([tag, n]) => `${n} ${t(SECTOR_DISPLAY[tag] ?? tag)}`)
     .join(" · ");
 }
 
 // ─── Excluded action card ─────────────────────────────────────────────────────
 
 function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [justOpen, setJustOpen] = useState(false);
   const [refsOpen, setRefsOpen] = useState(false);
@@ -98,7 +105,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
           fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
           background: "#FEF2F2", color: "#DC2626", whiteSpace: "nowrap",
         }}>
-          Excluded
+          {t("Excluded")}
         </span>
         {hasDetail && (
           <button
@@ -111,7 +118,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
               whiteSpace: "nowrap",
             }}
           >
-            {open ? "Hide details ▲" : "Why excluded? ▼"}
+            {open ? t("Hide details ▲") : t("Why excluded? ▼")}
           </button>
         )}
       </div>
@@ -124,7 +131,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
           {ld.ownership_category && (
             <div style={{ marginBottom: "10px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: ownershipDesc ? "4px" : 0 }}>
-                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>Ownership</span>
+                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>{t("Ownership")}</span>
                 <VerdictChip category={ld.ownership_category} />
               </div>
               {ownershipDesc && (
@@ -139,7 +146,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
           {ld.restrictions_category && (
             <div style={{ marginBottom: justification || ld.legal_references.length > 0 ? "10px" : 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: restrictionsDesc ? "4px" : 0 }}>
-                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>Restrictions</span>
+                <span style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", width: "84px", flexShrink: 0 }}>{t("Restrictions")}</span>
                 <VerdictChip category={ld.restrictions_category} />
               </div>
               {restrictionsDesc && (
@@ -162,7 +169,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
                 }}
               >
                 <span style={{ fontSize: "9px" }}>{justOpen ? "▲" : "▼"}</span>
-                Legal justification
+                {t("Legal justification")}
               </button>
               {justOpen && (
                 <p style={{ fontSize: "12px", color: "#4B5563", marginTop: "8px", marginBottom: 0, lineHeight: "1.6" }}>
@@ -184,7 +191,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
                 }}
               >
                 <span style={{ fontSize: "9px" }}>{refsOpen ? "▲" : "▼"}</span>
-                Legal references
+                {t("Legal references")}
               </button>
               {refsOpen && (
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
@@ -209,6 +216,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
 // ─── Flagged action card ──────────────────────────────────────────────────────
 
 function FlaggedActionCard({ action }: { action: LegalExcludedAction }) {
+  const { t } = useLanguage();
   return (
     <div style={{
       background: "white", border: "1px solid #FDE68A", borderRadius: "10px",
@@ -223,11 +231,11 @@ function FlaggedActionCard({ action }: { action: LegalExcludedAction }) {
           fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
           background: "#FFFBEB", color: "#92400E", whiteSpace: "nowrap",
         }}>
-          Assessment pending
+          {t("Assessment pending")}
         </span>
       </div>
       <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
-        No legal assessment is available for this action yet. It has been included in the ranking with a neutral legal score.
+        {t("No legal assessment is available for this action yet. It has been included in the ranking with a neutral legal score.")}
       </p>
     </div>
   );
@@ -266,6 +274,7 @@ function SummaryCard({
 interface Props { params: { locode: string } }
 
 export function RegulationsLaws({ params }: Props) {
+  const { t } = useLanguage();
   const [, navigate] = useLocation();
   const search = useSearch();
   const urlLocode = params.locode ?? "";
@@ -356,20 +365,20 @@ export function RegulationsLaws({ params }: Props) {
         <div style={{ maxWidth: "840px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
-              Cities
+              {t("Cities")}
             </button>
             <span>›</span>
             <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
               {cityName}
             </button>
             <span>›</span>
-            <span style={{ color: "#374151" }}>Regulations &amp; Laws</span>
+            <span style={{ color: "#374151" }}>{t("Regulations & Laws")}</span>
           </div>
           <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-            Regulations &amp; Laws
+            {t("Regulations & Laws")}
           </h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px", lineHeight: "1.6" }}>
-            Aceleradora Local de Mitigación has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.
+            {t("Aceleradora Local de Mitigación has checked each candidate action against Chilean laws. Actions where the city lacks the legal authority to implement them independently are excluded from the ranking before scoring begins.")}
           </p>
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div style={{
@@ -379,7 +388,7 @@ export function RegulationsLaws({ params }: Props) {
               fontSize: "11px", color: "#15803D", fontWeight: "600",
             }}>
               <span>⚖</span>
-              <span>ALM FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking</span>
+              <span>{t("ALM FEASIBILITY: Legal verdict shapes 34% of feasibility score · Feasibility shapes 23% of ranking")}</span>
             </div>
           </div>
         </div>
@@ -392,27 +401,27 @@ export function RegulationsLaws({ params }: Props) {
         <div style={{ display: "flex", gap: "12px", marginBottom: "28px", flexWrap: "wrap" }}>
           <SummaryCard
             count={includedCount}
-            label="passed legal review"
+            label={t("passed legal review")}
             sublabel={
               !result
-                ? "Run the pipeline to see legal review"
-                : `top ${result?.topN ?? 20} shown in your ranking`
+                ? t("Run the pipeline to see legal review")
+                : t("top {n} shown in your ranking", { n: String(result?.topN ?? 20) })
             }
-            sectorLine={ranked.length > 0 ? sectorBreakdown(rankedSectorItems) : undefined}
+            sectorLine={ranked.length > 0 ? sectorBreakdown(rankedSectorItems, t) : undefined}
             bg="#F0FDF4" border="#BBF7D0" countColor="#16A34A" icon="✓"
           />
           <SummaryCard
             count={legalExcluded.length}
-            label="Excluded from ranking"
-            sublabel="Removed before scoring"
-            sectorLine={legalExcluded.length > 0 ? sectorBreakdown(legalExcluded) : undefined}
+            label={t("Excluded from ranking")}
+            sublabel={t("Removed before scoring")}
+            sectorLine={legalExcluded.length > 0 ? sectorBreakdown(legalExcluded, t) : undefined}
             bg="#FEF2F2" border="#FECACA" countColor="#DC2626" icon="✗"
           />
           <SummaryCard
             count={legalFlagged.length}
-            label="Flagged — evidence missing"
-            sublabel="Included in ranking, assessment pending"
-            sectorLine={legalFlagged.length > 0 ? sectorBreakdown(legalFlagged) : undefined}
+            label={t("Flagged — evidence missing")}
+            sublabel={t("Included in ranking, assessment pending")}
+            sectorLine={legalFlagged.length > 0 ? sectorBreakdown(legalFlagged, t) : undefined}
             bg="#FFFBEB" border="#FDE68A" countColor="#D97706" icon="⚠"
           />
         </div>
@@ -431,10 +440,10 @@ export function RegulationsLaws({ params }: Props) {
               }} />
             </div>
             <div style={{ fontSize: "14px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
-              Running legal review…
+              {t("Running legal review…")}
             </div>
             <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
-              Checking all candidate actions against Chilean laws
+              {t("Checking all candidate actions against Chilean laws")}
             </div>
           </div>
         )}
@@ -447,7 +456,7 @@ export function RegulationsLaws({ params }: Props) {
           }}>
             <div style={{ fontSize: "28px", marginBottom: "10px" }}>⚠</div>
             <div style={{ fontSize: "14px", fontWeight: "700", color: "#991B1B", marginBottom: "6px" }}>
-              Could not load legal review
+              {t("Could not load legal review")}
             </div>
             <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "16px", lineHeight: "1.5", maxWidth: "380px", margin: "0 auto 16px" }}>
               {legalError}
@@ -463,7 +472,7 @@ export function RegulationsLaws({ params }: Props) {
               }}
               style={{ padding: "8px 20px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
             >
-              Retry
+              {t("Retry")}
             </button>
           </div>
         )}
@@ -476,10 +485,10 @@ export function RegulationsLaws({ params }: Props) {
           }}>
             <div style={{ fontSize: "28px", marginBottom: "10px" }}>✅</div>
             <div style={{ fontSize: "14px", fontWeight: "700", color: "#15803D", marginBottom: "6px" }}>
-              All actions passed the legal review
+              {t("All actions passed the legal review")}
             </div>
             <div style={{ fontSize: "12px", color: "#4B5563" }}>
-              No actions were excluded or flagged based on legal authority requirements.
+              {t("No actions were excluded or flagged based on legal authority requirements.")}
             </div>
           </div>
         )}
@@ -499,7 +508,7 @@ export function RegulationsLaws({ params }: Props) {
                   border: sectorFilter === s ? "1px solid #001EA7" : "1px solid #D1D5DB",
                 }}
               >
-                {s === "all" ? "All sectors" : SECTOR_DISPLAY[s] ?? s}
+                {s === "all" ? t("All sectors") : t(SECTOR_DISPLAY[s] ?? s)}
               </button>
             ))}
           </div>
@@ -510,10 +519,10 @@ export function RegulationsLaws({ params }: Props) {
           <div style={{ marginBottom: "28px" }}>
             <div style={{ marginBottom: "12px" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
-                Excluded from ranking ({filteredExcluded.length})
+                {t("Excluded from ranking ({n})", { n: String(filteredExcluded.length) })}
               </h2>
               <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
-                These actions were removed before scoring. The city does not currently have the legal authority to implement them independently.
+                {t("These actions were removed before scoring. The city does not currently have the legal authority to implement them independently.")}
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -529,10 +538,10 @@ export function RegulationsLaws({ params }: Props) {
           <div style={{ marginBottom: "28px" }}>
             <div style={{ marginBottom: "12px" }}>
               <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
-                Flagged — evidence missing ({filteredFlagged.length})
+                {t("Flagged — evidence missing ({n})", { n: String(filteredFlagged.length) })}
               </h2>
               <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: "1.5" }}>
-                No legal assessment was found for these actions. They are included in the ranking with a neutral legal score.
+                {t("No legal assessment was found for these actions. They are included in the ranking with a neutral legal score.")}
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -546,7 +555,7 @@ export function RegulationsLaws({ params }: Props) {
         {/* Empty state when sector filter returns nothing */}
         {result && sectorFilter !== "all" && filteredExcluded.length === 0 && filteredFlagged.length === 0 && (
           <div style={{ textAlign: "center", padding: "24px", color: "#9CA3AF", fontSize: "13px" }}>
-            No excluded or flagged actions in {SECTOR_DISPLAY[sectorFilter] ?? sectorFilter}.
+            {t("No excluded or flagged actions in {sector}.", { sector: t(SECTOR_DISPLAY[sectorFilter] ?? sectorFilter) })}
           </div>
         )}
 
@@ -563,7 +572,7 @@ export function RegulationsLaws({ params }: Props) {
               cursor: "pointer",
             }}
           >
-            ← Socioeconomic Context
+            ← {t("Socioeconomic Context")}
           </button>
           <button
             onClick={() => {
@@ -578,7 +587,7 @@ export function RegulationsLaws({ params }: Props) {
               cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Strategic preferences →"}
+            {fromRecommendations ? t("Save & return to context breakdown →") : fromPreflight ? t("Save & return to pre-flight →") : t("Strategic preferences →")}
           </button>
         </div>
       </div>

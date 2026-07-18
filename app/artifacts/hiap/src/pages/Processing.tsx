@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
 import actionsData from "@/data/actions.json";
 import { runPipelineForCity } from "@/lib/pipelineRunner";
+import { useLanguage } from "@/lib/i18n";
 
 const ACTION_COUNT = (actionsData as { actions: unknown[] }).actions.length;
 
@@ -19,7 +20,7 @@ const STAGES = [
   {
     id: "impact",
     label: "Impact Analysis",
-    desc: `Scoring ${ACTION_COUNT} actions on emissions reduction potential & implementation timeline`,
+    desc: "Scoring {n} actions on emissions reduction potential & implementation timeline",
   },
   {
     id: "alignment",
@@ -62,6 +63,7 @@ interface Props { params: { locode: string } }
 
 export function Processing({ params }: Props) {
   const [, navigate] = useLocation();
+  const { t } = useLanguage();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city = CITIES.find(c => c.locode.toLowerCase() === locode.toLowerCase());
@@ -123,9 +125,9 @@ export function Processing({ params }: Props) {
         <div style={{ display: "flex", justifyContent: "center", padding: "80px 24px" }}>
           <div style={{ width: "100%", maxWidth: "560px", background: "white", borderRadius: "14px", border: "1px solid #FECACA", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", padding: "32px 28px", textAlign: "center" }}>
             <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#FEF2F2", border: "2px solid #FECACA", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: "22px" }}>⚠</div>
-            <div style={{ fontSize: "16px", fontWeight: "700", color: "#991B1B", marginBottom: "8px" }}>Prioritization failed</div>
+            <div style={{ fontSize: "16px", fontWeight: "700", color: "#991B1B", marginBottom: "8px" }}>{t("Prioritization failed")}</div>
             <div style={{ fontSize: "13px", color: "#6B7280", marginBottom: "8px", lineHeight: "1.6" }}>
-              The scoring pipeline encountered an error. This is usually caused by missing or malformed input data.
+              {t("The scoring pipeline encountered an error. This is usually caused by missing or malformed input data.")}
             </div>
             <div style={{ fontSize: "11px", color: "#9CA3AF", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "8px 12px", marginBottom: "24px", fontFamily: "monospace", textAlign: "left", wordBreak: "break-word" }}>
               {pipelineError}
@@ -134,7 +136,7 @@ export function Processing({ params }: Props) {
               onClick={() => navigate(`/city/${citySlug}/preflight`)}
               style={{ padding: "10px 24px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "13px", fontWeight: "600" }}
             >
-              ← Back to pre-flight check
+              {t("← Back to pre-flight check")}
             </button>
           </div>
         </div>
@@ -156,10 +158,10 @@ export function Processing({ params }: Props) {
               <Spinner done={done} />
               <div>
                 <div style={{ fontSize: "15px", fontWeight: "700", color: done ? "#16A34A" : "#B45309" }}>
-                  {done ? "Recommendations ready" : "Generating action recommendations"}
+                  {done ? t("Recommendations ready") : t("Generating action recommendations")}
                 </div>
                 <div style={{ fontSize: "12px", color: "#92400E", marginTop: "2px" }}>
-                  Started just now · {cityName} · Expected wait time 30 seconds
+                  {t("Started just now · {name} · Expected wait time 30 seconds", { name: cityName })}
                 </div>
               </div>
             </div>
@@ -176,8 +178,8 @@ export function Processing({ params }: Props) {
                 }} />
               </div>
               <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "6px", marginBottom: "4px" }}>
-                {displayPct}% complete{!done && ` — ${currentStageName(displayPct)} in progress`}
-                {done && " — All analyses complete"}
+                {t("{pct}% complete", { pct: String(displayPct) })}{!done && ` — ${t("{stage} in progress", { stage: t(currentStageName(displayPct)) })}`}
+                {done && ` — ${t("All analyses complete")}`}
               </div>
             </div>
 
@@ -213,7 +215,7 @@ export function Processing({ params }: Props) {
                           fontSize: "13px", fontWeight: "600",
                           color: status === "pending" ? "#9CA3AF" : "#111827",
                         }}>
-                          {stage.label}
+                          {t(stage.label)}
                         </span>
                         {status !== "pending" && (
                           <span style={{
@@ -228,7 +230,7 @@ export function Processing({ params }: Props) {
                         )}
                       </div>
                       <div style={{ fontSize: "12px", color: status === "pending" ? "#D1D5DB" : "#6B7280", lineHeight: "1.5" }}>
-                        {stage.desc}
+                        {t(stage.desc, { n: String(ACTION_COUNT) })}
                       </div>
                       {status === "running" && (
                         <div style={{ marginTop: "8px", height: "4px", background: "#FEF3C7", borderRadius: "3px", overflow: "hidden" }}>
@@ -251,7 +253,7 @@ export function Processing({ params }: Props) {
             <div style={{ margin: "12px 16px 16px", background: "#EEF2FF", border: "1px solid #C7D2FE", borderRadius: "8px", padding: "12px 16px", display: "flex", alignItems: "flex-start", gap: "10px" }}>
               <span style={{ fontSize: "13px", color: "#4338CA", flexShrink: 0, fontWeight: "700" }}>✓</span>
               <div style={{ fontSize: "13px", fontWeight: "600", color: "#3730A3" }}>
-                Results will be ready shortly!
+                {t("Results will be ready shortly!")}
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
 import type { ReportChapter } from "@/lib/reportApi";
+import { preloadReportLogos, type LogoImage } from "@/lib/pdfAssets";
 
 // ─── Page constants (A4 in mm) ────────────────────────────────────────────────
 
@@ -161,16 +162,48 @@ function buildFilename(cityName: string, actionName: string): string {
   return `${norm(cityName)}-${norm(actionName).toLowerCase().slice(0, 50)}-output-plan.pdf`;
 }
 
+// ─── PDF chrome strings (report body arrives already in the chosen language) ──
+
+const CHROME = {
+  en: {
+    docType: "CLIMATE ACTION REPORT",
+    title: "City Action Output",
+    action: "ACTION",
+    builtBy: "BUILT BY",
+    fundedBy: "FUNDED BY",
+    builtCredit: "Built by Open Earth Foundation and Sustainability Solutions Group",
+    fundedCredit: "Funded by the Crea y Valida programme, Comité InnovaChile de Corfo",
+    generated: "Generated",
+    dateLocale: "en-GB",
+  },
+  es: {
+    docType: "INFORME DE ACCIÓN CLIMÁTICA",
+    title: "Informe de Acción de la Ciudad",
+    action: "ACCIÓN",
+    builtBy: "DESARROLLADO POR",
+    fundedBy: "FINANCIADO POR",
+    builtCredit: "Desarrollado por Open Earth Foundation y Sustainability Solutions Group",
+    fundedCredit: "Financiado por el programa Crea y Valida, Comité InnovaChile de Corfo",
+    generated: "Generado el",
+    dateLocale: "es-CL",
+  },
+} as const;
+
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 export interface GeneratePdfOptions {
   cityName: string;
   actionName: string;
   chapters: ReportChapter[];
+  lang?: "en" | "es";
 }
 
-export function generateAndDownloadPdf(options: GeneratePdfOptions): void {
+export async function generateAndDownloadPdf(options: GeneratePdfOptions): Promise<void> {
   const { cityName, actionName, chapters } = options;
+  const chrome = CHROME[options.lang ?? "en"];
+
+  // Logos degrade independently to null; the PDF always renders.
+  const logos = await preloadReportLogos().catch(() => ({ oef: null, ssg: null, corfo: null }));
 
   const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
 
@@ -184,17 +217,21 @@ export function generateAndDownloadPdf(options: GeneratePdfOptions): void {
   pdf.setFillColor(249, 162, 0);
   pdf.rect(MARGIN_X, 110, 40, 1.5, "F");
 
-  // Document type label (small caps style)
+  // Brand + document type label (small caps style)
+  pdf.setTextColor(210, 220, 240);
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(9);
+  pdf.text("ACELERADORA LOCAL DE MITIGACIÓN", MARGIN_X, 44);
   pdf.setTextColor(180, 195, 230);
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(9);
-  pdf.text("CLIMATE ACTION REPORT", MARGIN_X, 50);
+  pdf.text(chrome.docType, MARGIN_X, 51);
 
   // Main title
   pdf.setTextColor(255, 255, 255);
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(28);
-  pdf.text("City Action Output", MARGIN_X, 74);
+  pdf.text(chrome.title, MARGIN_X, 74);
 
   // City name
   pdf.setFont("helvetica", "normal");
@@ -212,7 +249,7 @@ export function generateAndDownloadPdf(options: GeneratePdfOptions): void {
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(8);
   pdf.setTextColor(160, 175, 210);
-  pdf.text("ACTION", MARGIN_X, 140);
+  pdf.text(chrome.action, MARGIN_X, 140);
 
   // Action name (wrapped)
   pdf.setFont("helvetica", "bold");
@@ -221,14 +258,56 @@ export function generateAndDownloadPdf(options: GeneratePdfOptions): void {
   const actionLines = pdf.splitTextToSize(stripInline(actionName), CONTENT_W);
   pdf.text(actionLines.slice(0, 4), MARGIN_X, 149);
 
+  // ── Cover bottom band — partner logos + credits ────────────────────────────
+  // Logos sit on the navy background (pre-composited in pdfAssets); each one
+  // is optional so a failed asset load never blocks the download.
+
+  const LOGO_BOTTOM = 248;
+  const placeLogo = (logo: LogoImage | null, x: number, hMm: number): number => {
+    if (!logo) return 0;
+    const wMm = (logo.wPx / logo.hPx) * hMm;
+    try {
+      pdf.addImage(logo.dataUrl, "PNG", x, LOGO_BOTTOM - hMm, wMm, hMm);
+      return wMm;
+    } catch {
+      return 0;
+    }
+  };
+
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(6.5);
+  pdf.setTextColor(160, 175, 210);
+  pdf.text(chrome.builtBy, MARGIN_X, 231);
+
+  // Builders (left): OEF + SSG, heights mirroring the site footer (64px/64px)
+  let logoX = MARGIN_X;
+  const oefW = placeLogo(logos.oef, logoX, 12);
+  if (oefW > 0) logoX += oefW + 8;
+  placeLogo(logos.ssg, logoX, 12);
+
+  // Funder (right): CORFO, visually smaller per brand guidelines (48px)
+  const corfoH = 9;
+  const corfoW = logos.corfo ? (logos.corfo.wPx / logos.corfo.hPx) * corfoH : 0;
+  const corfoX = PAGE_W - MARGIN_X - corfoW;
+  if (logos.corfo) {
+    pdf.text(chrome.fundedBy, corfoX, 231);
+    placeLogo(logos.corfo, corfoX, corfoH);
+  }
+
+  // Credit lines (always rendered, even if logo images failed to load)
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(150, 165, 205);
+  pdf.text(chrome.builtCredit, MARGIN_X, 258);
+  pdf.text(chrome.fundedCredit, MARGIN_X, 263);
+
   // Generation date at bottom left
-  const today = new Date().toLocaleDateString("en-GB", {
+  const today = new Date().toLocaleDateString(chrome.dateLocale, {
     year: "numeric", month: "long", day: "numeric",
   });
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(8);
   pdf.setTextColor(130, 150, 190);
-  pdf.text(`Generated ${today}`, MARGIN_X, PAGE_H - 16);
+  pdf.text(`${chrome.generated} ${today}`, MARGIN_X, PAGE_H - 16);
 
   // ── Content pages ─────────────────────────────────────────────────────────
 

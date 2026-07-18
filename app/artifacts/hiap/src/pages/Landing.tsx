@@ -323,7 +323,7 @@ export function Landing() {
                     </span>
                     <div>
                       <div style={{ fontSize: stat.value ? stat.valueSize : "12px", fontWeight: stat.value ? stat.valueWeight as any : "400", color: stat.value ? stat.valueColor : "#9CA3AF", lineHeight: "1.2" }}>
-                        {stat.value ?? "No data available"}
+                        {stat.value ?? t("No data available")}
                       </div>
                       <div style={{ fontSize: "12px", color: "#9CA3AF", marginTop: "2px" }}>{stat.label}</div>
                     </div>
