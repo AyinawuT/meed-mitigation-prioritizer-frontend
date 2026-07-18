@@ -44,4 +44,29 @@ export const landing: Record<string, string> = {
   // ── Cities grid ─────────────────────────────────────────────────────
   "{count} comunas across Chile. Open a city profile to begin.":
     "{count} comunas en Chile. Abre un perfil para comenzar.",
+
+  // ── Hero (redesign) ─────────────────────────────────────────────────
+  "Climate mitigation planning for Chilean cities":
+    "Planificación de mitigación climática para ciudades chilenas",
+  "Search a city to score and rank over 100 mitigation actions against its emissions, laws, policy and socioeconomic profile.":
+    "Busca una ciudad para puntuar y clasificar más de 100 acciones de mitigación según sus emisiones, leyes, políticas y perfil socioeconómico.",
+  "Cities with emissions data": "Ciudades con datos de emisiones",
+
+  // ── Search dropdown ─────────────────────────────────────────────────
+  "Search results": "Resultados de búsqueda",
+  "Cities ready to explore": "Ciudades listas para explorar",
+  "Data ready": "Datos listos",
+  "No cities match \"{q}\". Try one of the cities with emissions data:":
+    "Ninguna ciudad coincide con \"{q}\". Prueba con una de las ciudades con datos de emisiones:",
+
+  // ── Selected city preview ───────────────────────────────────────────
+  "Start ranking for {name} →": "Iniciar ranking para {name} →",
+  "Total emissions · inventory {year}": "Emisiones totales · inventario {year}",
+
+  // ── Cities with ranked actions ──────────────────────────────────────
+  "Cities with ranked actions": "Ciudades con acciones clasificadas",
+  "Jump straight back into a ranking you've already generated.":
+    "Vuelve directamente a un ranking que ya generaste.",
+  "Ranked": "Clasificada",
+  "View ranking →": "Ver ranking →",
 };

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
+import { useLanguage } from "@/lib/i18n";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -129,18 +130,18 @@ function profileToAttrs(profile: string | undefined) {
   // Normalise: lowercase + replace underscores with hyphens so "delivery_ready" == "delivery-ready"
   const p = (profile ?? "").toLowerCase().replace(/_/g, "-");
   if (p.includes("delivery-ready") || p === "delivery-ready") {
-    return { type: "delivery-ready" as const, label: "Delivery-ready city", fa: "lower", dc: "high", desc: (city: string) => `${city} relies more on central transfers than its own revenue, but has the staff and track record to run projects well once funded.` };
+    return { type: "delivery-ready" as const, label: "Delivery-ready city", fa: "lower", dc: "high", desc: "{city} relies more on central transfers than its own revenue, but has the staff and track record to run projects well once funded." };
   }
   if (p.includes("financially-strong") || p.includes("self-sufficient")) {
-    return { type: "financially-strong" as const, label: "Financially strong city", fa: "high", dc: "high", desc: (city: string) => `${city} generates strong local revenue and has the institutional capacity to plan and deliver most projects independently.` };
+    return { type: "financially-strong" as const, label: "Financially strong city", fa: "high", dc: "high", desc: "{city} generates strong local revenue and has the institutional capacity to plan and deliver most projects independently." };
   }
   if (p.includes("revenue-strong")) {
-    return { type: "revenue-strong" as const, label: "Revenue-strong city", fa: "high", dc: "lower", desc: (city: string) => `${city} generates significant local revenue but may need to build delivery capacity to implement more complex projects.` };
+    return { type: "revenue-strong" as const, label: "Revenue-strong city", fa: "high", dc: "lower", desc: "{city} generates significant local revenue but may need to build delivery capacity to implement more complex projects." };
   }
   if (p.includes("capacity-rich")) {
-    return { type: "capacity-rich" as const, label: "Capacity-rich city", fa: "lower", dc: "higher", desc: (city: string) => `${city} has strong institutional capacity but depends heavily on central transfers to fund project delivery.` };
+    return { type: "capacity-rich" as const, label: "Capacity-rich city", fa: "lower", dc: "higher", desc: "{city} has strong institutional capacity but depends heavily on central transfers to fund project delivery." };
   }
-  return { type: "other" as const, label: profile ? `${profile} city` : "Transitioning city", fa: undefined, dc: undefined, desc: (city: string) => `${city} is building its financial and delivery capacity, and may need external support for larger-scale projects.` };
+  return { type: "other" as const, label: profile ? `${profile} city` : "Transitioning city", fa: undefined, dc: undefined, desc: "{city} is building its financial and delivery capacity, and may need external support for larger-scale projects." };
 }
 
 // cost_total is in CLP millions per the API (amount_unit: "CLP_millions")
@@ -243,6 +244,7 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa,
   cityName: string; profileLabel: string; profileDesc: string;
   profileType?: string; fa?: string; dc?: string;
 }) {
+  const { t } = useLanguage();
   const isDeliveryReady = profileType === "delivery-ready";
   const bg       = isDeliveryReady ? "#F0FDF4" : "#EFF6FF";
   const iconBg   = isDeliveryReady ? "#DCFCE7" : "#DBEAFE";
@@ -252,7 +254,7 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa,
   return (
     <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px 24px", marginBottom: "32px" }}>
       <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "16px" }}>
-        {cityName}'s financial profile
+        {t("{city}'s financial profile", { city: cityName })}
       </div>
 
       {/* City type */}
@@ -261,88 +263,88 @@ function CityProfileCard({ cityName, profileLabel, profileDesc, profileType, fa,
           🏛️
         </div>
         <div>
-          <div style={{ fontSize: "13px", fontWeight: "700", color: titleColor, marginBottom: "4px" }}>{profileLabel}</div>
+          <div style={{ fontSize: "13px", fontWeight: "700", color: titleColor, marginBottom: "4px" }}>{t(profileLabel)}</div>
           <div style={{ fontSize: "12px", color: descColor, lineHeight: "1.55" }}>{profileDesc}</div>
         </div>
       </div>
 
       {/* Factors */}
       <div style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "4px" }}>
-        Four factors determine an action's financial route
+        {t("Four factors determine an action's financial route")}
       </div>
       <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px" }}>
-        Each action's cost and complexity are weighed against what {cityName} can fund and deliver.
+        {t("Each action's cost and complexity are weighed against what {city} can fund and deliver.", { city: cityName })}
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", marginBottom: "16px" }}>
         {/* Headers */}
         <div style={{ padding: "8px 14px", background: "#F9FAFB", borderBottom: "1px solid #E5E7EB", borderRight: "1px solid #E5E7EB" }}>
-          <span style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>What the action needs</span>
+          <span style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>{t("What the action needs")}</span>
         </div>
         <div style={{ padding: "8px 14px", background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
-          <span style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>What {cityName} has</span>
+          <span style={{ fontSize: "10px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>{t("What {city} has", { city: cityName })}</span>
         </div>
 
         {/* Row 1 */}
         <div style={{ padding: "12px 14px", borderBottom: "1px solid #E5E7EB", borderRight: "1px solid #E5E7EB" }}>
           <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px", display: "flex", alignItems: "center" }}>
-            Capital intensity
-            <InfoTooltip text="How much money the action typically requires to implement, based on similar actions delivered elsewhere. Varies per action." />
+            {t("Capital intensity")}
+            <InfoTooltip text={t("How much money the action typically requires to implement, based on similar actions delivered elsewhere. Varies per action.")} />
           </div>
-          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per action</div>
+          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{t("Varies per action")}</div>
         </div>
         <div style={{ padding: "12px 14px", borderBottom: "1px solid #E5E7EB" }}>
           <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px", display: "flex", alignItems: "center" }}>
-            Financial autonomy
-            <InfoTooltip text={`Share of ${cityName}'s budget raised locally rather than received from national transfers. Lower autonomy means less room to self-fund.`} />
+            {t("Financial autonomy")}
+            <InfoTooltip text={t("Share of {city}'s budget raised locally rather than received from national transfers. Lower autonomy means less room to self-fund.", { city: cityName })} />
           </div>
           {fa ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px" }}>
                 <div style={{ background: levelColor(fa, "has"), width: `${levelPct(fa)}%`, height: "6px", borderRadius: "4px" }} />
               </div>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: levelColor(fa, "has"), minWidth: "46px" }}>{levelLabel(fa)}</span>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: levelColor(fa, "has"), minWidth: "46px" }}>{t(levelLabel(fa))}</span>
             </div>
           ) : (
-            <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per city</div>
+            <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{t("Varies per city")}</div>
           )}
         </div>
 
         {/* Row 2 */}
         <div style={{ padding: "12px 14px", borderRight: "1px solid #E5E7EB" }}>
           <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "2px", display: "flex", alignItems: "center" }}>
-            Preparation complexity
-            <InfoTooltip text="How much planning, technical design, or specialist input the action needs before it can start. Varies by action." />
+            {t("Preparation complexity")}
+            <InfoTooltip text={t("How much planning, technical design, or specialist input the action needs before it can start. Varies by action.")} />
           </div>
-          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per action</div>
+          <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{t("Varies per action")}</div>
         </div>
         <div style={{ padding: "12px 14px" }}>
           <div style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px", display: "flex", alignItems: "center" }}>
-            Delivery capacity
-            <InfoTooltip text={`Whether ${cityName} has enough qualified staff to plan, procure and run a project once it's financed.`} />
+            {t("Delivery capacity")}
+            <InfoTooltip text={t("Whether {city} has enough qualified staff to plan, procure and run a project once it's financed.", { city: cityName })} />
           </div>
           {dc ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <div style={{ flex: 1, background: "#EBEBEB", borderRadius: "4px", height: "6px" }}>
                 <div style={{ background: levelColor(dc, "has"), width: `${levelPct(dc)}%`, height: "6px", borderRadius: "4px" }} />
               </div>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: levelColor(dc, "has"), minWidth: "46px" }}>{levelLabel(dc)}</span>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: levelColor(dc, "has"), minWidth: "46px" }}>{t(levelLabel(dc))}</span>
             </div>
           ) : (
-            <div style={{ fontSize: "11px", color: "#9CA3AF" }}>Varies per city</div>
+            <div style={{ fontSize: "11px", color: "#9CA3AF" }}>{t("Varies per city")}</div>
           )}
         </div>
       </div>
 
       {/* What this means */}
       <div style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
-        What this means for actions
+        {t("What this means for actions")}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
         {ROUTE_DEFS.map((r, i) => (
           <div key={i} style={{ background: r.bg, border: `1px solid ${r.border}`, borderRadius: "8px", padding: "10px 12px" }}>
-            <div style={{ fontSize: "12px", fontWeight: "700", color: r.color, marginBottom: "4px" }}>{r.prefix} {r.label}</div>
-            <div style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.5" }}>{r.tagline}</div>
+            <div style={{ fontSize: "12px", fontWeight: "700", color: r.color, marginBottom: "4px" }}>{r.prefix} {t(r.label)}</div>
+            <div style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.5" }}>{t(r.tagline)}</div>
           </div>
         ))}
       </div>
@@ -357,6 +359,7 @@ function DetailPane({ row, cityName, onClose }: {
   cityName: string;
   onClose: () => void;
 }) {
+  const { t } = useLanguage();
   const rm = getRouteMeta(row.route);
   const inp = row.inputs ?? {};
   const ciLevel = numericToLevel(inp.action?.capital_intensity);
@@ -411,7 +414,7 @@ function DetailPane({ row, cityName, onClose }: {
 
           {/* Close */}
           <button onClick={onClose} style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: "600", color: "#374151", background: "none", border: "none", cursor: "pointer", padding: "0 0 16px 0" }}>
-            ← Close
+            {t("← Close")}
           </button>
 
           {/* Sector + title */}
@@ -427,40 +430,40 @@ function DetailPane({ row, cityName, onClose }: {
           {/* Route card */}
           <div style={{ background: rm.bg, border: `1px solid ${rm.border}`, borderRadius: "8px", padding: "10px 14px 12px", marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-              <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}>{rm.prefix} {rm.label}</span>
+              <span style={{ fontSize: "13px", fontWeight: "700", color: rm.color }}>{rm.prefix} {t(rm.label)}</span>
               <span style={{ fontSize: "18px", fontWeight: "800", color: rm.color, fontVariantNumeric: "tabular-nums" }}>
                 {row.financial_feasibility.toFixed(2)}
               </span>
             </div>
-            <div style={{ fontSize: "12px", color: "#4B5563" }}>{row.reason ?? rm.tagline}</div>
+            <div style={{ fontSize: "12px", color: "#4B5563" }}>{row.reason ?? t(rm.tagline)}</div>
           </div>
 
           {/* Factor breakdown */}
           {(ciLevel || pcLevel || profAttrs.fa || profAttrs.dc) && (
             <div style={{ marginBottom: "24px" }}>
               <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>
-                What determined this route
+                {t("What determined this route")}
               </div>
 
               {(ciLevel || pcLevel) && (
                 <>
-                  <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>What the action needs</div>
+                  <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>{t("What the action needs")}</div>
                   {ciLevel && (
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
                       <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
-                        Capital intensity
-                        <InfoTooltip text="How much money the action typically requires to implement, based on similar actions delivered elsewhere. Varies per action." />
+                        {t("Capital intensity")}
+                        <InfoTooltip text={t("How much money the action typically requires to implement, based on similar actions delivered elsewhere. Varies per action.")} />
                       </span>
-                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(ciLevel, "needs") }}>{levelLabel(ciLevel)}</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(ciLevel, "needs") }}>{t(levelLabel(ciLevel))}</span>
                     </div>
                   )}
                   {pcLevel && (
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
                       <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
-                        Preparation complexity
-                        <InfoTooltip text="How much planning, technical design, or specialist input the action needs before it can start. Varies by action." />
+                        {t("Preparation complexity")}
+                        <InfoTooltip text={t("How much planning, technical design, or specialist input the action needs before it can start. Varies by action.")} />
                       </span>
-                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(pcLevel, "needs") }}>{levelLabel(pcLevel)}</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(pcLevel, "needs") }}>{t(levelLabel(pcLevel))}</span>
                     </div>
                   )}
                 </>
@@ -468,23 +471,23 @@ function DetailPane({ row, cityName, onClose }: {
 
               {(profAttrs.fa || profAttrs.dc) && (
                 <>
-                  <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>What {cityName} has</div>
+                  <div style={{ fontSize: "11px", fontWeight: "600", color: "#9CA3AF", marginBottom: "10px" }}>{t("What {city} has", { city: cityName })}</div>
                   {profAttrs.fa && (
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
                       <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
-                        Financial autonomy
-                        <InfoTooltip text={`Share of ${cityName}'s budget raised locally rather than received from national transfers. Lower autonomy means less room to self-fund.`} />
+                        {t("Financial autonomy")}
+                        <InfoTooltip text={t("Share of {city}'s budget raised locally rather than received from national transfers. Lower autonomy means less room to self-fund.", { city: cityName })} />
                       </span>
-                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.fa, "has") }}>{levelLabel(profAttrs.fa)}</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.fa, "has") }}>{t(levelLabel(profAttrs.fa))}</span>
                     </div>
                   )}
                   {profAttrs.dc && (
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontSize: "13px", fontWeight: "600", color: "#374151", display: "inline-flex", alignItems: "center" }}>
-                        Delivery capacity
-                        <InfoTooltip text={`Whether ${cityName} has enough qualified staff to plan, procure and run a project once it's financed.`} />
+                        {t("Delivery capacity")}
+                        <InfoTooltip text={t("Whether {city} has enough qualified staff to plan, procure and run a project once it's financed.", { city: cityName })} />
                       </span>
-                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.dc, "has") }}>{levelLabel(profAttrs.dc)}</span>
+                      <span style={{ fontSize: "15px", fontWeight: "800", color: levelColor(profAttrs.dc, "has") }}>{t(levelLabel(profAttrs.dc))}</span>
                     </div>
                   )}
                 </>
@@ -497,18 +500,18 @@ function DetailPane({ row, cityName, onClose }: {
           {/* Fund access */}
           <div style={{ marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fund Access</div>
+              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t("Fund Access")}</div>
               {actionOpps.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
-                  {inp.finance?.n_reachable_opportunities ?? actionOpps.length} DIRECT
+                  {t("{n} DIRECT", { n: String(inp.finance?.n_reachable_opportunities ?? actionOpps.length) })}
                 </div>
               )}
             </div>
 
             {actionOpps.length === 0 ? (
               <EmptyState
-                title="No matched funds yet"
-                body="No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added."
+                title={t("No matched funds yet")}
+                body={t("No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added.")}
               />
             ) : (
               <>
@@ -523,7 +526,7 @@ function DetailPane({ row, cityName, onClose }: {
                       <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
                           <div style={{ fontSize: "13px", fontWeight: "600", color: "#0D9488", lineHeight: "1.35" }}>
-                            {opp.opportunity_name ?? "Funding opportunity"}
+                            {opp.opportunity_name ?? t("Funding opportunity")}
                           </div>
                           <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
                             {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{opp.status}</span>}
@@ -539,7 +542,7 @@ function DetailPane({ row, cityName, onClose }: {
                         {opp.source_url && (
                           <a href={opp.source_url} target="_blank" rel="noopener noreferrer"
                             style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#001EA7", background: "#EEF2FF", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
-                            View fund ↗
+                            {t("View fund ↗")}
                           </a>
                         )}
                       </div>
@@ -549,7 +552,7 @@ function DetailPane({ row, cityName, onClose }: {
                 {actionOpps.length > 2 && (
                   <button onClick={() => setShowAllOpps(v => !v)}
                     style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                    {showAllOpps ? "Show fewer funds" : `Show all ${actionOpps.length} matched funds >`}
+                    {showAllOpps ? t("Show fewer funds") : t("Show all {n} matched funds >", { n: String(actionOpps.length) })}
                   </button>
                 )}
               </>
@@ -561,20 +564,20 @@ function DetailPane({ row, cityName, onClose }: {
           {/* Matched projects */}
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>Matched Projects</div>
+              <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t("Matched Projects")}</div>
               {!projLoading && projects.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
-                  {projects.length} TOTAL
+                  {t("{n} TOTAL", { n: String(projects.length) })}
                 </div>
               )}
             </div>
 
             {projLoading ? (
-              <div style={{ padding: "16px", textAlign: "center", color: "#9CA3AF", fontSize: "12px" }}>Loading…</div>
+              <div style={{ padding: "16px", textAlign: "center", color: "#9CA3AF", fontSize: "12px" }}>{t("Loading…")}</div>
             ) : projects.length === 0 ? (
               <EmptyState
-                title="No matched projects yet"
-                body="No catalogued projects in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added."
+                title={t("No matched projects yet")}
+                body={t("No catalogued projects in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added.")}
               />
             ) : (
               <>
@@ -590,10 +593,10 @@ function DetailPane({ row, cityName, onClose }: {
                       <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "2px" }}>
                           <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.35" }}>
-                            {proj.project_name ?? "Project"}
+                            {proj.project_name ?? t("Project")}
                           </div>
                           <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-                            {conf && <span style={{ fontSize: "10px", fontWeight: "600", color: conf.color, background: conf.bg, padding: "2px 6px", borderRadius: "4px" }}>{conf.label}</span>}
+                            {conf && <span style={{ fontSize: "10px", fontWeight: "600", color: conf.color, background: conf.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(conf.label)}</span>}
                             {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{proj.lifecycle_stage.replace(/-/g, " ")}</span>}
                           </div>
                         </div>
@@ -604,11 +607,11 @@ function DetailPane({ row, cityName, onClose }: {
                           <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px" }}>📍 {proj.jurisdiction}</div>
                         )}
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
-                          {cost && <span>Cost: <strong style={{ color: "#374151" }}>{cost}</strong></span>}
-                          {proj.sector && <span>Sector: <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
-                          {proj.funding_channel && <span>Channel: <strong style={{ color: "#374151" }}>{proj.funding_channel}</strong></span>}
-                          {funder && <span>Funder: <strong style={{ color: "#374151" }}>{funder}</strong></span>}
-                          {proj.funding_sources?.[0]?.cycle && <span>Cycle: <strong style={{ color: "#374151" }}>{proj.funding_sources[0].cycle}</strong></span>}
+                          {cost && <span>{t("Cost:")} <strong style={{ color: "#374151" }}>{cost}</strong></span>}
+                          {proj.sector && <span>{t("Sector:")} <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
+                          {proj.funding_channel && <span>{t("Channel:")} <strong style={{ color: "#374151" }}>{proj.funding_channel}</strong></span>}
+                          {funder && <span>{t("Funder:")} <strong style={{ color: "#374151" }}>{funder}</strong></span>}
+                          {proj.funding_sources?.[0]?.cycle && <span>{t("Cycle:")} <strong style={{ color: "#374151" }}>{proj.funding_sources[0].cycle}</strong></span>}
                         </div>
                       </div>
                     );
@@ -617,7 +620,7 @@ function DetailPane({ row, cityName, onClose }: {
                 {projects.length > 3 && (
                   <button onClick={() => setShowAllProj(v => !v)}
                     style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                    {showAllProj ? "Show fewer projects" : `Show all ${projects.length} matched projects >`}
+                    {showAllProj ? t("Show fewer projects") : t("Show all {n} matched projects >", { n: String(projects.length) })}
                   </button>
                 )}
               </>
@@ -633,6 +636,7 @@ function DetailPane({ row, cityName, onClose }: {
 // ─── Table row ────────────────────────────────────────────────────────────────
 
 function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) {
+  const { t } = useLanguage();
   const rm = getRouteMeta(row.route);
   const fc = row.inputs?.finance?.n_reachable_opportunities ?? 0;
   return (
@@ -647,18 +651,18 @@ function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) 
       </td>
       <td style={{ padding: "11px 12px", verticalAlign: "middle" }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "11px", fontWeight: "600", color: rm.color, background: rm.bg, border: `1px solid ${rm.border}`, padding: "3px 9px", borderRadius: "20px", whiteSpace: "nowrap" }}>
-          {rm.prefix} {rm.label}
+          {rm.prefix} {t(rm.label)}
         </span>
       </td>
       <td style={{ padding: "11px 12px", fontSize: "13px", fontWeight: "700", color: scoreColor(row.financial_feasibility), textAlign: "right", fontVariantNumeric: "tabular-nums", verticalAlign: "middle" }}>
         {row.financial_feasibility.toFixed(2)}
       </td>
       <td style={{ padding: "11px 12px", fontSize: "12px", verticalAlign: "middle" }}>
-        {fc > 0 ? <><strong style={{ color: "#374151" }}>{fc}</strong> <span style={{ color: "#9CA3AF" }}>direct</span></> : <span style={{ color: "#D1D5DB" }}>—</span>}
+        {fc > 0 ? <><strong style={{ color: "#374151" }}>{fc}</strong> <span style={{ color: "#9CA3AF" }}>{t("direct")}</span></> : <span style={{ color: "#D1D5DB" }}>—</span>}
       </td>
       <td style={{ padding: "11px 16px", verticalAlign: "middle" }}>
         <button onClick={onView} style={{ fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap" }}>
-          View ↗
+          {t("View ↗")}
         </button>
       </td>
     </tr>
@@ -670,6 +674,7 @@ function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) 
 const PAGE_SIZE = 15;
 
 function Pagination({ total, page, onChange }: { total: number; page: number; onChange: (p: number) => void }) {
+  const { t } = useLanguage();
   const pages = Math.ceil(total / PAGE_SIZE);
   if (pages <= 1) return null;
 
@@ -685,7 +690,7 @@ function Pagination({ total, page, onChange }: { total: number; page: number; on
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px", padding: "14px 0" }}>
       <button onClick={() => onChange(page - 1)} disabled={page === 1}
-        style={{ ...base, color: page === 1 ? "#D1D5DB" : "#374151", cursor: page === 1 ? "default" : "pointer" }}>Prev</button>
+        style={{ ...base, color: page === 1 ? "#D1D5DB" : "#374151", cursor: page === 1 ? "default" : "pointer" }}>{t("Prev")}</button>
       {getPages().map((p, i) => (
         <button key={i} onClick={() => typeof p === "number" && onChange(p)} disabled={p === "…"}
           style={{ ...base, color: p === page ? "white" : p === "…" ? "#9CA3AF" : "#374151", background: p === page ? "#001EA7" : "none", border: p === page ? "1px solid #001EA7" : "1px solid #E5E7EB", cursor: p === "…" ? "default" : "pointer" }}>
@@ -693,7 +698,7 @@ function Pagination({ total, page, onChange }: { total: number; page: number; on
         </button>
       ))}
       <button onClick={() => onChange(page + 1)} disabled={page === pages}
-        style={{ ...base, color: page === pages ? "#D1D5DB" : "#374151", cursor: page === pages ? "default" : "pointer" }}>Next</button>
+        style={{ ...base, color: page === pages ? "#D1D5DB" : "#374151", cursor: page === pages ? "default" : "pointer" }}>{t("Next")}</button>
     </div>
   );
 }
@@ -703,6 +708,7 @@ function Pagination({ total, page, onChange }: { total: number; page: number; on
 interface Props { params: { locode: string } }
 
 export function FinancialFeasibility({ params }: Props) {
+  const { t } = useLanguage();
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromRecommendations = search.includes("from=recommendations");
@@ -771,7 +777,7 @@ export function FinancialFeasibility({ params }: Props) {
         <Navbar cityName={cityName} />
         <StepBar activeStep={5} citySlug={citySlug} />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 48px", textAlign: "center" }}>
-          <p style={{ color: "#6B7280" }}>Loading financial feasibility data…</p>
+          <p style={{ color: "#6B7280" }}>{t("Loading financial feasibility data…")}</p>
         </div>
       </div>
     );
@@ -795,18 +801,18 @@ export function FinancialFeasibility({ params }: Props) {
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
-              Cities
+              {t("Cities")}
             </button>
             <span>›</span>
             <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
               {cityName}
             </button>
             <span>›</span>
-            <span style={{ color: "#374151" }}>Financial Feasibility</span>
+            <span style={{ color: "#374151" }}>{t("Financial Feasibility")}</span>
           </div>
-          <h1 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Financial Feasibility</h1>
+          <h1 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>{t("Financial Feasibility")}</h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px", maxWidth: "720px", lineHeight: "1.65" }}>
-            For every action, the tool compares what the action needs (capital and preparation) against what {cityName} has (budget autonomy and delivery capacity) to estimate how realistically the city can finance and deliver it — and which funds could help close the gap.
+            {t("For every action, the tool compares what the action needs (capital and preparation) against what {city} has (budget autonomy and delivery capacity) to estimate how realistically the city can finance and deliver it — and which funds could help close the gap.", { city: cityName })}
           </p>
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div style={{
@@ -816,7 +822,7 @@ export function FinancialFeasibility({ params }: Props) {
               fontSize: "11px", color: "#15803D", fontWeight: "600",
             }}>
               <span>💰</span>
-              <span>ALM FEASIBILITY: Financial feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
+              <span>{t("ALM FEASIBILITY: Financial feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking")}</span>
             </div>
           </div>
         </div>
@@ -825,7 +831,7 @@ export function FinancialFeasibility({ params }: Props) {
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 48px 64px" }}>
         {error && (
           <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "10px", padding: "16px 20px", marginBottom: "24px", fontSize: "13px", color: "#DC2626" }}>
-            {error}
+            {t(error)}
           </div>
         )}
 
@@ -834,7 +840,7 @@ export function FinancialFeasibility({ params }: Props) {
           <CityProfileCard
             cityName={cityName}
             profileLabel={profAttrs.label}
-            profileDesc={profAttrs.desc(cityName)}
+            profileDesc={t(profAttrs.desc, { city: cityName })}
             profileType={profAttrs.type}
             fa={profAttrs.fa}
             dc={profAttrs.dc}
@@ -843,17 +849,17 @@ export function FinancialFeasibility({ params }: Props) {
 
         {/* Section */}
         <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>
-          What's financially aligned — and what isn't
+          {t("What's financially aligned — and what isn't")}
         </h2>
         <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px", lineHeight: "1.6" }}>
-          Filter by financial route to see what's feasible now versus what needs outside support, or narrow by sector. Click View for full reasoning per action.
+          {t("Filter by financial route to see what's feasible now versus what needs outside support, or narrow by sector. Click View for full reasoning per action.")}
         </p>
 
         {/* Filter pills */}
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
           <button onClick={() => setActiveRoute(null)}
             style={{ fontSize: "13px", fontWeight: "600", color: activeRoute === null ? "white" : "#374151", background: activeRoute === null ? "#001EA7" : "white", border: `1.5px solid ${activeRoute === null ? "#001EA7" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
-            All
+            {t("All")}
           </button>
           {routes.map(route => {
             const rm = getRouteMeta(route);
@@ -862,7 +868,7 @@ export function FinancialFeasibility({ params }: Props) {
             return (
               <button key={route} onClick={() => setActiveRoute(isActive ? null : route)}
                 style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "13px", fontWeight: "600", color: isActive ? "white" : rm.color, background: isActive ? rm.color : rm.bg, border: `1.5px solid ${isActive ? rm.color : rm.border}`, borderRadius: "20px", padding: "5px 14px", cursor: "pointer" }}>
-                <span>{rm.prefix}</span><span>{rm.label}</span><span style={{ opacity: 0.8 }}>{cnt}</span>
+                <span>{rm.prefix}</span><span>{t(rm.label)}</span><span style={{ opacity: 0.8 }}>{cnt}</span>
               </button>
             );
           })}
@@ -872,7 +878,7 @@ export function FinancialFeasibility({ params }: Props) {
               onChange={e => setActiveSector(e.target.value || null)}
               style={{ marginLeft: "auto", fontSize: "13px", fontWeight: "600", color: activeSector ? "#001EA7" : "#374151", backgroundColor: activeSector ? "#EEF2FF" : "white", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center", border: `1.5px solid ${activeSector ? "#001EA7" : "#E5E7EB"}`, borderRadius: "20px", padding: "5px 28px 5px 14px", cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none" }}
             >
-              <option value="">All sectors</option>
+              <option value="">{t("All sectors")}</option>
               {sectors.map(s => (
                 <option key={s} value={s}>{sectorLabel(s)}</option>
               ))}
@@ -880,12 +886,12 @@ export function FinancialFeasibility({ params }: Props) {
           )}
         </div>
 
-        <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "10px" }}>Sorted by score, highest first</div>
+        <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "10px" }}>{t("Sorted by score, highest first")}</div>
 
         {/* Table */}
         {feasibility.length === 0 && !error ? (
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "40px 24px", textAlign: "center" }}>
-            <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>No financial feasibility data is available for {cityName} yet.</p>
+            <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>{t("No financial feasibility data is available for {city} yet.", { city: cityName })}</p>
           </div>
         ) : (
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", overflow: "hidden" }}>
@@ -894,14 +900,14 @@ export function FinancialFeasibility({ params }: Props) {
                 <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
                   {(["Action", "Sector", "Route", "Score", "Fund Access", "Detail"] as const).map((h, i) => (
                     <th key={h} style={{ padding: `10px ${i === 0 || i === 5 ? "16px" : "12px"}`, textAlign: i === 3 ? "right" : "left", fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                      {h}
+                      {t(h)}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {filtered.length === 0 ? (
-                  <tr><td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#9CA3AF", fontSize: "13px" }}>No actions match the selected route.</td></tr>
+                  <tr><td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#9CA3AF", fontSize: "13px" }}>{t("No actions match the selected route.")}</td></tr>
                 ) : (
                   pageRows.map((row, i) => (
                     <TableRow key={`${row.action_id}-${i}`} row={row} onView={() => setSelected(row)} />
@@ -916,7 +922,7 @@ export function FinancialFeasibility({ params }: Props) {
         {/* Score note */}
         {feasibility.length > 0 && (
           <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "8px", padding: "14px 18px", marginTop: "16px", fontSize: "12px", color: "#1D4ED8", lineHeight: "1.65" }}>
-            <strong>How this is calculated:</strong> Each score weighs the action's cost and complexity against {cityName}'s profile above, plus the funds catalogued for its sector. It estimates financing difficulty — not the odds of winning a specific fund.
+            <strong>{t("How this is calculated:")}</strong> {t("Each score weighs the action's cost and complexity against {city}'s profile above, plus the funds catalogued for its sector. It estimates financing difficulty — not the odds of winning a specific fund.", { city: cityName })}
           </div>
         )}
 
@@ -924,7 +930,7 @@ export function FinancialFeasibility({ params }: Props) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "32px" }}>
           <button onClick={() => navigate(`/city/${citySlug}/policy`)}
             style={{ background: "white", border: "1px solid #DDDDE1", color: "#374151", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
-            ← Policy alignment
+            {t("← Policy alignment")}
           </button>
           <button
             onClick={() => {
@@ -932,7 +938,7 @@ export function FinancialFeasibility({ params }: Props) {
               navigate(fromRecommendations ? `/city/${citySlug}/recommendations?tab=context` : `/city/${citySlug}/preflight`);
             }}
             style={{ background: "#16A34A", color: "white", border: "none", borderRadius: "8px", padding: "10px 24px", fontSize: "13px", fontWeight: "600", cursor: "pointer", boxShadow: "0 2px 6px rgba(22,163,74,0.3)" }}>
-            {fromRecommendations ? "Save & return to context breakdown →" : "Pre-flight check →"}
+            {fromRecommendations ? t("Save & return to context breakdown →") : t("Pre-flight check →")}
           </button>
         </div>
       </div>

@@ -1451,10 +1451,11 @@ export function Recommendations({ params }: Props) {
         language: lang,
         prioritizationSnapshot: snapshot,
       });
-      generateAndDownloadPdf({
+      await generateAndDownloadPdf({
         cityName,
         actionName: action.actionName,
         chapters: report.chapters,
+        lang,
       });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
