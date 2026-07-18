@@ -1700,7 +1700,7 @@ export function Recommendations({ params }: Props) {
               ) : (
                 <>
                   <span>✦</span>
-                  {pickedIds.length > 0 ? `Generate output for ${pickedIds.length} action${pickedIds.length !== 1 ? "s" : ""}` : "Generate output for selected actions"}
+                  {pickedIds.length > 0 ? t("Generate output for {n} actions", { n: String(pickedIds.length) }) : t("Generate output for selected actions")}
                 </>
               )}
             </button>
@@ -1721,7 +1721,7 @@ export function Recommendations({ params }: Props) {
                   letterSpacing: "0.01em",
                 }}
               >
-                {tab === "results" ? "Results overview" : "Context breakdown"}
+                {tab === "results" ? t("Results overview") : t("Context breakdown")}
               </button>
             ))}
           </div>
@@ -1738,10 +1738,10 @@ export function Recommendations({ params }: Props) {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                 <div>
                   <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827" }}>
-                    {`Top actions for ${cityName}`}
+                    {t("Top actions for {name}", { name: cityName })}
                   </div>
                   <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "3px" }}>
-                    {`Highest-ranked actions based on ${cityName}'s data and priorities. Check a card to select it for output generation.`}
+                    {t("Highest-ranked actions based on {name}'s data and priorities. Check a card to select it for output generation.", { name: cityName })}
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: "10px", alignItems: "center", flexShrink: 0 }}>
@@ -1749,7 +1749,7 @@ export function Recommendations({ params }: Props) {
                     onClick={handleBrowseFullRanking}
                     style={{ fontSize: "12px", color: "#001EA7", fontWeight: "600", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: "4px" }}
                   >
-                    See full ranking ↓
+                    {t("See full ranking ↓")}
                   </button>
                 </div>
               </div>
@@ -1775,10 +1775,10 @@ export function Recommendations({ params }: Props) {
               <div style={{ marginBottom: "28px" }}>
                 <div style={{ marginBottom: "12px" }}>
                   <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
-                    Top co-benefits across these actions
+                    {t("Top co-benefits across these actions")}
                   </div>
                   <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
-                    What these top picks deliver beyond emissions reduction.
+                    {t("What these top picks deliver beyond emissions reduction.")}
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: "10px" }}>
@@ -1789,9 +1789,9 @@ export function Recommendations({ params }: Props) {
                       borderRadius: "10px", padding: "16px 12px", textAlign: "center",
                     }}>
                       <span style={{ fontSize: "28px", lineHeight: 1 }}>{getCoBenefitIcon(cb)}</span>
-                      <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{cb}</div>
+                      <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{t(cb)}</div>
                       <div style={{ fontSize: "11px", color: "#9CA3AF" }}>
-                        {count} of {displayTop.length} top action{displayTop.length !== 1 ? "s" : ""}
+                        {t("{count} of {total} top actions", { count: String(count), total: String(displayTop.length) })}
                       </div>
                     </div>
                   ))}
@@ -1803,10 +1803,10 @@ export function Recommendations({ params }: Props) {
             <div style={{ marginBottom: "28px" }}>
               <div style={{ marginBottom: "12px" }}>
                 <div style={{ fontSize: "14px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
-                  City context used for this ranking
+                  {t("City context used for this ranking")}
                 </div>
                 <div style={{ fontSize: "12px", color: "#9CA3AF" }}>
-                  The data behind every score. Click any card to see the full breakdown.
+                  {t("The data behind every score. Click any card to see the full breakdown.")}
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
@@ -1818,9 +1818,9 @@ export function Recommendations({ params }: Props) {
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>🌍</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Emissions profile</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e total · {new Set(Object.keys(result.cityEmissionsByGpc ?? {}).map(k => k.split('.')[0])).size} sectors</div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Emissions profile")}</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{t("{v} Mt CO₂e total · {n} sectors", { v: (totalCityEmissions / 1_000_000).toFixed(2), n: String(new Set(Object.keys(result.cityEmissionsByGpc ?? {}).map(k => k.split('.')[0])).size) })}</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
                 </button>
 
                 {/* Socioeconomic */}
@@ -1831,9 +1831,9 @@ export function Recommendations({ params }: Props) {
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>👥</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Socioeconomic indicators</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{indicatorCount !== null ? `${indicatorCount} indicators loaded` : "Loading…"}</div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Socioeconomic indicators")}</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{indicatorCount !== null ? t("{n} indicators loaded", { n: String(indicatorCount) }) : t("Loading…")}</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
                 </button>
 
                 {/* Legal context */}
@@ -1844,9 +1844,9 @@ export function Recommendations({ params }: Props) {
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>⚖️</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Legal context</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{result.validActionsCount ?? ranked.length} included · {legalExcluded.length} excluded · {legalFlagged.length} flagged</div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Legal context")}</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{t("{a} included · {b} excluded · {c} flagged", { a: String(result.validActionsCount ?? ranked.length), b: String(legalExcluded.length), c: String(legalFlagged.length) })}</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
                 </button>
 
                 {/* Financial context */}
@@ -1857,11 +1857,11 @@ export function Recommendations({ params }: Props) {
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>💰</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Financial context</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Financial context")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
-                    {feasibilityRows.length > 0 ? profileToAttrs(feasibilityRows[0]?.inputs?.city?.profile).label : "Loading…"}
+                    {feasibilityRows.length > 0 ? t(profileToAttrs(feasibilityRows[0]?.inputs?.city?.profile).label) : t("Loading…")}
                   </div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
                 </button>
 
                 {/* Policy alignment */}
@@ -1872,11 +1872,11 @@ export function Recommendations({ params }: Props) {
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>📋</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Policy alignment</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Policy alignment")}</div>
                   <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>
-                    {natPolicyScore !== null ? `${Math.round(natPolicyScore * 100)}% national alignment` : "Loading…"}
+                    {natPolicyScore !== null ? t("{n}% national alignment", { n: String(Math.round(natPolicyScore * 100)) }) : t("Loading…")}
                   </div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
                 </button>
 
                 {/* Full ranking */}
@@ -1887,9 +1887,9 @@ export function Recommendations({ params }: Props) {
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <div style={{ fontSize: "18px", marginBottom: "6px" }}>📊</div>
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>Full ranking</div>
-                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{ranked.length} actions ranked</div>
-                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>View details →</div>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>{t("Full ranking")}</div>
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "10px" }}>{t("{n} actions ranked", { n: String(ranked.length) })}</div>
+                  <div style={{ fontSize: "11px", color: "#001EA7", fontWeight: "600", marginTop: "auto" }}>{t("View details →")}</div>
                 </button>
               </div>
             </div>
@@ -1901,11 +1901,11 @@ export function Recommendations({ params }: Props) {
               marginBottom: "36px",
             }}>
               <div>
-                <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "6px" }}>Next steps</div>
+                <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "6px" }}>{t("Next steps")}</div>
                 <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)", lineHeight: "1.55", maxWidth: "520px" }}>
                   {pickedIds.length >= 2
-                    ? `${pickedIds.length} actions selected for a combined generated output. Use "Generate output for this action" on any single card for a one-off note instead.`
-                    : `Select more than one action for a combined generated output, or use "Generate output for this action" on any single card for a one-off note instead.`}
+                    ? t("{n} actions selected for a combined generated output. Use \"Generate output for this action\" on any single card for a one-off note instead.", { n: String(pickedIds.length) })
+                    : t("Select more than one action for a combined generated output, or use \"Generate output for this action\" on any single card for a one-off note instead.")}
                 </div>
               </div>
               <button
@@ -1916,7 +1916,7 @@ export function Recommendations({ params }: Props) {
                   whiteSpace: "nowrap", flexShrink: 0,
                 }}
               >
-                Browse full ranking ↓
+                {t("Browse full ranking ↓")}
               </button>
             </div>
 
