@@ -37,7 +37,7 @@ export function Navbar({ cityName }: NavbarProps) {
     >
       <button
         onClick={() => navigate("/")}
-        style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", padding: 0, cursor: "pointer" }}
+        style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", padding: 0, cursor: "pointer", minWidth: 0, flexShrink: 1 }}
       >
         <div
           style={{
@@ -45,6 +45,7 @@ export function Navbar({ cityName }: NavbarProps) {
             borderRadius: "6px",
             width: "28px",
             height: "28px",
+            flexShrink: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -55,7 +56,7 @@ export function Navbar({ cityName }: NavbarProps) {
         >
           ALM
         </div>
-        <span style={{ color: "white", fontWeight: "500", fontSize: "14px" }}>
+        <span style={{ color: "white", fontWeight: "500", fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           Aceleradora Local de Mitigación
         </span>
       </button>
