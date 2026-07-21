@@ -2,11 +2,14 @@ import { useState, type ReactNode } from "react";
 import { Lock } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
-// Soft, client-side privacy gate for the shared preview link — NOT real
-// security (the check runs in the browser). The password comes from the
-// VITE_ACCESS_PASSWORD build-time env var so no secret lives in the source.
-// When the var is unset the gate is disabled, so local dev is never blocked.
-const EXPECTED = (import.meta.env.VITE_ACCESS_PASSWORD as string | undefined) ?? "";
+// Soft, client-side privacy gate for the shared preview link — a first
+// privacy layer, NOT real security (the check runs in the browser and the
+// value ships in the bundle). Set VITE_ACCESS_PASSWORD at build time to
+// override; otherwise the fallback below gates the deployed link out of the
+// box. Rotate the demo password by editing ACCESS_PASSWORD_FALLBACK here.
+const ACCESS_PASSWORD_FALLBACK = "meed-2026";
+const EXPECTED =
+  (import.meta.env.VITE_ACCESS_PASSWORD as string | undefined) || ACCESS_PASSWORD_FALLBACK;
 const SESSION_KEY = "alm:access";
 
 export function PasswordGate({ children }: { children: ReactNode }) {
