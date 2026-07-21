@@ -1,8 +1,8 @@
 export const landing: Record<string, string> = {
   // ── Hero ────────────────────────────────────────────────────────────
   "Prioritise climate actions for your city": "Prioriza las acciones climáticas para tu ciudad",
-  "Find the best path to your city's climate action":
-    "Encuentra el mejor camino hacia la acción climática de tu ciudad",
+  "Find the best path": "Encuentra el mejor camino",
+  "to your city's climate action": "hacia la acción climática de tu ciudad",
   "Aceleradora Local de Mitigación analyses your city's emissions, policy context, and implementation capacity to recommend the highest-impact mitigation actions — ranked and ready to act on.":
     "Aceleradora Local de Mitigación analiza las emisiones de tu ciudad, el contexto de políticas y la capacidad de implementación para recomendar las acciones de mitigación de mayor impacto — clasificadas y listas para actuar.",
   "Aceleradora Local de Mitigación combines your city's emissions inventory, regulatory context, policy context, strategic preferences, financial feasibility and socioeconomic profile to score and rank climate mitigation actions, giving municipal teams a clear, data-driven starting point for their climate plans.":
