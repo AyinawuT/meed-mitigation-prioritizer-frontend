@@ -16,8 +16,8 @@ import {
   type FrontendCityEmissionsData,
   type PrioritizerApiCityResult,
 } from "@/lib/hiapApi";
-import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction, PrioritizerRequest } from "@/lib/scoringPipeline";
-import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions, runPipeline } from "@/lib/scoringPipeline";
+import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
+import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
 import { getInventoryAsEmissionsData } from "@/lib/cityInventory";
 
 // ─── Internal types matching the API response shape ───────────────────────────
@@ -473,21 +473,7 @@ export async function runPipelineForCity(
     cityDataList: [cityInput],
   };
 
-  let apiResult;
-  try {
-    [apiResult] = await callPrioritize(requestData);
-  } catch (error) {
-    // Offline / cluster-unavailable fallback: when the HIAP backend can't be
-    // reached, score the ranking client-side from the bundled action catalogue
-    // and the public ccglobal API. Lets the app be demoed without the cluster.
-    // (Per-action LLM report generation still needs the backend and will fail
-    // gracefully.) The normal backend path above is unchanged when it succeeds.
-    console.warn("[pipeline] /v1/prioritize unavailable — using local scoring fallback.", error);
-    const localResult = await runPipeline({ ...cityInput, topN } as unknown as PrioritizerRequest, {});
-    localResult.schemaVersion = PIPELINE_RESULT_SCHEMA_VERSION;
-    localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(localResult));
-    return localResult;
-  }
+  const [apiResult] = await callPrioritize(requestData);
 
   // Backend computes the full 3-way feasibility score (legal + mitigation + financial)
   // and returns all component evidence in evidence_summary.feasibility — no client-side
