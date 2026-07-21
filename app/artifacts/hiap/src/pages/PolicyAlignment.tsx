@@ -17,14 +17,18 @@ type Strength = "high" | "medium" | "low";
 type SignalType = "action" | "funding" | "governance" | "sector" | "target";
 
 interface PlanAction { id: string; signalType: SignalType; strength: Strength }
-interface Plan { name: string; scope: string; locationName: string; link: string; horizon: string; actions: PlanAction[] }
-interface ActionScore { policyScore: number; natScore: number; regScore: number | null }
+type Scope = "National" | "Regional" | "Municipal";
+
+interface Plan { name: string; scope: Scope; locationName: string; link: string; horizon: string; actions: PlanAction[] }
+interface ActionScore { policyScore: number; natScore: number | null; regScore: number | null; munScore: number | null }
 
 // API response types for the policy scores endpoint
 interface PolicyApiEvidence {
   signal_type: string;
   signal_strength: string;
   document_name: string;
+  document_type?: string;
+  evidence_strength?: number;
 }
 interface PolicyApiScore {
   src_action_id: string;
@@ -39,7 +43,7 @@ interface PolicyApiResponse {
 interface PolicyData {
   plans: Plan[];
   perActionScores: Record<string, ActionScore>;
-  aggregateScores: { national: number; regional: number };
+  aggregateScores: { national: number; regional: number | null; municipal: number | null };
   dataSource: { locode: string };
 }
 
@@ -51,51 +55,79 @@ const SIGNAL_TYPE_MAP: Record<string, SignalType> = {
   sector_priority: "sector",
 };
 
-function adaptPolicyApiResponse(data: PolicyApiResponse, locode: string): PolicyData {
-  const docMap = new Map<string, PlanAction[]>();
+// The API tags each policy document with a scope via document_type:
+//   parcc → regional plan, paccc → municipal plan, everything else
+//   (ndc, framework, sector_plan, …) → national.
+function docScope(docType?: string): Scope {
+  if (docType === "parcc") return "Regional";
+  if (docType === "paccc") return "Municipal";
+  return "National";
+}
+
+const SIGNAL_STRENGTH_NUM: Record<string, number> = { high: 0.7, medium: 0.4, low: 0.2 };
+
+function mean(vals: number[]): number | null {
+  return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+}
+
+function adaptPolicyApiResponse(
+  data: PolicyApiResponse,
+  locode: string,
+  cityName: string,
+  regionName: string,
+): PolicyData {
+  const docMap = new Map<string, { scope: Scope; actions: PlanAction[] }>();
+  const perActionScores: Record<string, ActionScore> = {};
 
   for (const score of data.scores ?? []) {
+    const id = score.src_action_id;
+    // Strongest supporting evidence per scope for this action.
+    const scopeMax: Record<Scope, number | null> = { National: null, Regional: null, Municipal: null };
+
     for (const ev of score.policy_evidence ?? []) {
+      const scope = docScope(ev.document_type);
+      const strengthNum = typeof ev.evidence_strength === "number"
+        ? ev.evidence_strength
+        : (SIGNAL_STRENGTH_NUM[ev.signal_strength] ?? 0.2);
+      scopeMax[scope] = Math.max(scopeMax[scope] ?? 0, strengthNum);
+
       const signalType = SIGNAL_TYPE_MAP[ev.signal_type];
-      if (!signalType) continue; // skip unmapped signal types
+      if (!signalType) continue; // unmapped signals still count toward coverage, but not the plan chips
       const strength = (["high", "medium", "low"].includes(ev.signal_strength)
         ? ev.signal_strength
         : "low") as Strength;
-      const actions = docMap.get(ev.document_name) ?? [];
-      if (!actions.some(a => a.id === score.src_action_id)) {
-        actions.push({ id: score.src_action_id, signalType, strength });
+      const entry = docMap.get(ev.document_name) ?? { scope, actions: [] };
+      if (!entry.actions.some(a => a.id === id)) {
+        entry.actions.push({ id, signalType, strength });
       }
-      docMap.set(ev.document_name, actions);
+      docMap.set(ev.document_name, entry);
     }
+
+    perActionScores[id] = {
+      policyScore: score.policy_support_score,
+      natScore: scopeMax.National,
+      regScore: scopeMax.Regional,
+      munScore: scopeMax.Municipal,
+    };
   }
 
-  const plans: Plan[] = Array.from(docMap.entries()).map(([name, actions]) => ({
+  const plans: Plan[] = Array.from(docMap.entries()).map(([name, { scope, actions }]) => ({
     name,
-    scope: "National",
-    locationName: "Chile",
+    scope,
+    locationName: scope === "Regional" ? (regionName || "Region") : scope === "Municipal" ? (cityName || "City") : "Chile",
     link: "",
     horizon: "",
     actions,
   }));
 
-  const perActionScores: Record<string, ActionScore> = {};
-  for (const s of data.scores ?? []) {
-    perActionScores[s.src_action_id] = {
-      policyScore: s.policy_support_score,
-      natScore:    s.policy_support_score,
-      regScore:    null,
-    };
-  }
-
-  const scoreValues = (data.scores ?? []).map(s => s.policy_support_score);
-  const national = scoreValues.length > 0
-    ? scoreValues.reduce((a, b) => a + b, 0) / scoreValues.length
-    : 0;
+  const nationalAvg = mean((data.scores ?? []).map(s => s.policy_support_score)) ?? 0;
+  const regional = mean(Object.values(perActionScores).map(a => a.regScore).filter((v): v is number => v !== null));
+  const municipal = mean(Object.values(perActionScores).map(a => a.munScore).filter((v): v is number => v !== null));
 
   return {
     plans,
     perActionScores,
-    aggregateScores: { national, regional: 0 },
+    aggregateScores: { national: nationalAvg, regional, municipal },
     dataSource: { locode: data.meta?.api_context?.locode ?? locode },
   };
 }
@@ -103,7 +135,7 @@ function adaptPolicyApiResponse(data: PolicyApiResponse, locode: string): Policy
 const EMPTY_POLICY_DATA: Omit<PolicyData, "dataSource"> = {
   plans: [],
   perActionScores: {},
-  aggregateScores: { national: 0, regional: 0 },
+  aggregateScores: { national: 0, regional: null, municipal: null },
 };
 
 const TYPE_LABEL: Record<string, string> = {
@@ -157,13 +189,13 @@ export function PolicyAlignment({ params }: Props) {
     fetch(url)
       .then(r => r.json())
       .then((json: PolicyApiResponse) => {
-        const adapted = adaptPolicyApiResponse(json, locode);
+        const adapted = adaptPolicyApiResponse(json, locode, city?.name ?? "", city?.region ?? "");
         setPolicyData(adapted);
         setExpanded(adapted.plans.length > 0 ? { [adapted.plans[0].name]: true } : {});
         setStepProgress(locode, "policy", {
           visited: true,
           progress: 100,
-          sub: `National ${Math.round(adapted.aggregateScores.national * 100)}% · Regional ${Math.round(adapted.aggregateScores.regional * 100)}% alignment`,
+          sub: `National ${Math.round(adapted.aggregateScores.national * 100)}% · Regional ${Math.round((adapted.aggregateScores.regional ?? 0) * 100)}% · Municipal ${Math.round((adapted.aggregateScores.municipal ?? 0) * 100)}% alignment`,
         });
       })
       .catch(() => {
@@ -185,6 +217,10 @@ export function PolicyAlignment({ params }: Props) {
   const { plans, perActionScores, aggregateScores, dataSource } = policyData;
   const nationalPlans = plans.filter(p => p.scope === "National");
   const regionalPlans = plans.filter(p => p.scope === "Regional");
+  const municipalPlans = plans.filter(p => p.scope === "Municipal");
+  const hasMunicipal = municipalPlans.length > 0;
+  const totalActions = Object.keys(perActionScores).length;
+  const munCoverage = Object.values(perActionScores).filter(a => a.munScore !== null).length;
 
   const citySlug = city.locode.replace(" ", "-");
   const regLocation = regionalPlans[0]?.locationName ?? t("Region");
@@ -229,7 +265,7 @@ export function PolicyAlignment({ params }: Props) {
 
         {/* Data source note */}
         <div style={{ marginBottom: "16px", padding: "10px 14px", background: "#F5F7FF", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "11px", color: "#4338CA" }}>
-          {t("Policy signals sourced from {n} national and {r} regional plans for", { n: String(nationalPlans.length), r: String(regionalPlans.length) })} <strong>{city.name}</strong> {t("· {n} candidate actions checked for policy backing", { n: String(Object.keys(perActionScores).length) })}
+          {t("Policy signals sourced from {n} national, {r} regional and {m} municipal plans for", { n: String(nationalPlans.length), r: String(regionalPlans.length), m: String(municipalPlans.length) })} <strong>{city.name}</strong> {t("· {n} candidate actions checked for policy backing", { n: String(totalActions) })}
         </div>
 
         {/* Score cards */}
@@ -248,17 +284,27 @@ export function PolicyAlignment({ params }: Props) {
             label={t(scoreLabel(aggregateScores.regional))}
             description={t("Average signal strength across {n} regional plan · {c} of {total} actions with regional coverage", { n: String(regionalPlans.length), c: String(Object.values(perActionScores).filter(a => a.regScore !== null).length), total: String(Object.keys(perActionScores).length) })}
           />
-          <ScoreCard
-            scope={t("Municipal plan")}
-            score={null}
-            color="#9CA3AF"
-            label={munFile ? t("Uploaded — awaiting processing") : t("No plan uploaded")}
-            description={munFile
-              ? t("{file} received · municipal alignment score will be added when processed", { file: munFile.name })
-              : t("Upload your PACCC or local climate plan to add a municipal alignment score")}
-            munFile={munFile}
-            onRemoveMunFile={() => setMunFile(null)}
-          />
+          {hasMunicipal ? (
+            <ScoreCard
+              scope={t("Municipal plan")}
+              score={aggregateScores.municipal}
+              color={scoreColor(aggregateScores.municipal)}
+              label={t(scoreLabel(aggregateScores.municipal))}
+              description={t("Average signal strength across {n} municipal plan · {c} of {total} actions with municipal coverage", { n: String(municipalPlans.length), c: String(munCoverage), total: String(totalActions) })}
+            />
+          ) : (
+            <ScoreCard
+              scope={t("Municipal plan")}
+              score={null}
+              color="#9CA3AF"
+              label={munFile ? t("Uploaded — awaiting processing") : t("No plan uploaded")}
+              description={munFile
+                ? t("{file} received · municipal alignment score will be added when processed", { file: munFile.name })
+                : t("Upload your PACCC or local climate plan to add a municipal alignment score")}
+              munFile={munFile}
+              onRemoveMunFile={() => setMunFile(null)}
+            />
+          )}
         </div>
 
         {/* National Plans */}
@@ -299,12 +345,24 @@ export function PolicyAlignment({ params }: Props) {
         <ScopeSection
           title={t("Municipal Plans")}
           subtitle={city.name}
-          badge={munFile
+          badge={hasMunicipal
+            ? { label: t(municipalPlans.length !== 1 ? "{n} plans" : "{n} plan", { n: String(municipalPlans.length) }), bg: "#F0FDF4", text: "#16A34A", border: "#BBF7D0" }
+            : munFile
             ? { label: t("1 plan uploaded"), bg: "#F0FDF4", text: "#16A34A", border: "#BBF7D0" }
             : { label: t("No data"), bg: "#F3F4F6", text: "#6B7280", border: "#E5E7EB" }
           }
         >
-          {!munFile ? (
+          {hasMunicipal ? (
+            municipalPlans.map(plan => (
+              <PlanCard
+                key={plan.name}
+                plan={plan}
+                open={!!expanded[plan.name]}
+                onToggle={() => toggle(plan.name)}
+                perActionScores={perActionScores}
+              />
+            ))
+          ) : !munFile ? (
             <div
               onDragOver={e => { e.preventDefault(); setMunDragOver(true); }}
               onDragLeave={() => setMunDragOver(false)}

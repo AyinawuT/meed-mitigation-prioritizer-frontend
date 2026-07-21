@@ -11,8 +11,8 @@ export const policy: Record<string, string> = {
     "ALINEACIÓN ALM: La alineación de políticas aporta el 75% de la puntuación de alineación de la ciudad · La alineación determina el 22% del ranking",
 
   // ── Data source note ────────────────────────────────────────────────
-  "Policy signals sourced from {n} national and {r} regional plans for":
-    "Señales de política obtenidas de {n} planes nacionales y {r} planes regionales para",
+  "Policy signals sourced from {n} national, {r} regional and {m} municipal plans for":
+    "Señales de política obtenidas de {n} planes nacionales, {r} regionales y {m} municipales para",
   "· {n} candidate actions checked for policy backing":
     "· {n} acciones candidatas revisadas en busca de respaldo de políticas",
 
@@ -30,6 +30,8 @@ export const policy: Record<string, string> = {
     "Puntuación promedio de respaldo de políticas en {n} planes nacionales de mitigación · {a} acciones evaluadas",
   "Average signal strength across {n} regional plan · {c} of {total} actions with regional coverage":
     "Fuerza promedio de las señales en {n} plan regional · {c} de {total} acciones con cobertura regional",
+  "Average signal strength across {n} municipal plan · {c} of {total} actions with municipal coverage":
+    "Fuerza promedio de las señales en {n} plan municipal · {c} de {total} acciones con cobertura municipal",
   "{file} received · municipal alignment score will be added when processed":
     "{file} recibido · la puntuación de alineación municipal se añadirá cuando sea procesado",
   "Upload your PACCC or local climate plan to add a municipal alignment score":
