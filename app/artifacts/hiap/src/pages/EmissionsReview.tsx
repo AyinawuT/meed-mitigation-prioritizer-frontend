@@ -36,6 +36,8 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
   const inventoryData = getEmissionsData(locode);
   const sectors = inventoryData?.rows ?? EMPTY_SECTORS;
   const inventoryYear = inventoryData?.year.toString() ?? city?.emissionsYear ?? "—";
+  // Data provenance label shown for every mapped sector and sub-sector.
+  const dataSourceLabel = `SSG MEED+ ${inventoryYear}`;
 
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   function toggleExpanded(sector: string) {
@@ -149,7 +151,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
           {[
             { label: "Total GHG Emissions", value: inventoryData ? `${totalMillions}M tCO₂e` : "—" },
             { label: "Inventory Year", value: inventoryYear },
-            { label: "Primary Source", value: inventoryData ? "SSG" : "—" },
+            { label: "Primary Source", value: inventoryData ? dataSourceLabel : "—" },
             { label: "Completeness", value: t("{done} of {total} sectors", { done: String(confirmedCount), total: String(sectors.length) }) },
           ].map((s) => (
             <div key={s.label}>
@@ -249,7 +251,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                         {row.share !== null ? `${row.share}%` : "—"}
                       </td>
                       <td style={{ padding: "13px 16px", fontSize: "12px", color: "#6B7280" }}>
-                        {row.source ?? "—"}
+                        {row.source ? dataSourceLabel : "—"}
                       </td>
                       <td style={{ padding: "13px 16px" }}>
                         {isConfirmed ? (
@@ -275,7 +277,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                             <td style={{ padding: "9px 16px", fontSize: "12px", color: "#374151" }}>
                               {sub.share !== null ? `${sub.share}%` : "—"}
                             </td>
-                            <td style={{ padding: "9px 16px", fontSize: "11px", color: "#9CA3AF" }}>—</td>
+                            <td style={{ padding: "9px 16px", fontSize: "11px", color: "#9CA3AF" }}>{dataSourceLabel}</td>
                             <td style={{ padding: "9px 16px" }} />
                           </tr>
                         );
