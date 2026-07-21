@@ -22,12 +22,15 @@ const RULE = [210, 215, 225] as const;
 
 // ─── Markdown block types ─────────────────────────────────────────────────────
 
+type Align = "left" | "right" | "center";
+
 type Block =
   | { type: "h1"; text: string }
   | { type: "h2"; text: string }
   | { type: "h3"; text: string }
   | { type: "paragraph"; text: string }
-  | { type: "bullet"; text: string; depth: number };
+  | { type: "bullet"; text: string; depth: number }
+  | { type: "table"; headers: string[]; aligns: Align[]; rows: string[][] };
 
 /** Strip inline markdown markers (**bold**, *italic*, `code`, [link](url)). */
 function stripInline(text: string): string {
@@ -39,6 +42,37 @@ function stripInline(text: string): string {
     .replace(/_([^_]+)_/g, "$1")
     .replace(/`([^`]+)`/g, "$1")
     .replace(/^#+\s*/, "");
+}
+
+// ─── Markdown table helpers (GFM pipe tables) ─────────────────────────────────
+
+/** Split a table row `| a | b |` into trimmed cell strings. */
+function splitTableCells(line: string): string[] {
+  let s = line.trim();
+  if (s.startsWith("|")) s = s.slice(1);
+  if (s.endsWith("|")) s = s.slice(0, -1);
+  return s.split("|").map((c) => c.trim());
+}
+
+/** True if a line is a table separator, e.g. `|---|:--:|---:|`. */
+function isTableSeparator(line: string): boolean {
+  const t = line.trim();
+  if (!t.includes("|") || !t.includes("-")) return false;
+  const cells = splitTableCells(t);
+  return cells.length > 0 && cells.every((c) => /^:?-{1,}:?$/.test(c.replace(/\s+/g, "")));
+}
+
+/** Read column alignments from a separator line. */
+function parseAligns(sep: string, count: number): Align[] {
+  const cells = splitTableCells(sep).map((c) => c.replace(/\s+/g, ""));
+  const aligns: Align[] = [];
+  for (let c = 0; c < count; c++) {
+    const spec = cells[c] ?? "";
+    const l = spec.startsWith(":");
+    const r = spec.endsWith(":");
+    aligns.push(l && r ? "center" : r ? "right" : "left");
+  }
+  return aligns;
 }
 
 /** Parse a chapter's markdown string into renderable blocks. */
@@ -79,6 +113,21 @@ function parseMarkdown(md: string): Block[] {
       continue;
     }
 
+    // Tables — a `|`-row followed by a `|---|` separator line
+    if (trimmed.startsWith("|") && i + 1 < lines.length && isTableSeparator(lines[i + 1])) {
+      const headers = splitTableCells(trimmed).map(stripInline);
+      const aligns = parseAligns(lines[i + 1], headers.length);
+      i += 2;
+      const rows: string[][] = [];
+      while (i < lines.length && lines[i].trim().startsWith("|") && !isTableSeparator(lines[i])) {
+        const cells = splitTableCells(lines[i]).map(stripInline);
+        rows.push(Array.from({ length: headers.length }, (_, c) => cells[c] ?? ""));
+        i++;
+      }
+      blocks.push({ type: "table", headers, aligns, rows });
+      continue;
+    }
+
     // Paragraph — accumulate until blank line or block-level marker
     const paraLines: string[] = [];
     while (
@@ -86,7 +135,8 @@ function parseMarkdown(md: string): Block[] {
       lines[i].trim() &&
       !lines[i].trim().match(/^#{1,3}\s/) &&
       !lines[i].trim().match(/^[-*]\s/) &&
-      !lines[i].trim().match(/^\d+\.\s/)
+      !lines[i].trim().match(/^\d+\.\s/) &&
+      !(lines[i].trim().startsWith("|") && i + 1 < lines.length && isTableSeparator(lines[i + 1]))
     ) {
       paraLines.push(lines[i].trim());
       i++;
@@ -147,6 +197,99 @@ function ensureSpace(
     return MARGIN_TOP;
   }
   return y;
+}
+
+// ─── Table renderer ───────────────────────────────────────────────────────────
+
+/** Render a parsed markdown table as a bordered grid; returns the new y. */
+function renderTable(
+  pdf: jsPDF,
+  block: { headers: string[]; aligns: Align[]; rows: string[][] },
+  yStart: number,
+  actionName: string,
+): number {
+  let y = yStart;
+  const cols = block.headers.length;
+  if (cols === 0) return y;
+
+  const FS = 8.5;      // cell font size
+  const LH = 3.6;      // line height (mm)
+  const PADX = 2;      // horizontal cell padding
+  const PADY = 1.8;    // vertical cell padding
+
+  // Column widths ∝ longest cell content, clamped, then normalised to CONTENT_W.
+  const weights = block.headers.map((h, c) => {
+    let maxLen = h.length;
+    for (const r of block.rows) maxLen = Math.max(maxLen, (r[c] ?? "").length);
+    return Math.max(6, Math.min(maxLen, 60));
+  });
+  const wsum = weights.reduce((a, b) => a + b, 0);
+  let widths = weights.map((w) => Math.max(14, (CONTENT_W * w) / wsum));
+  const wtot = widths.reduce((a, b) => a + b, 0);
+  widths = widths.map((w) => (w * CONTENT_W) / wtot);
+
+  const measure = (cells: string[]) => {
+    pdf.setFontSize(FS);
+    const lines = cells.map((txt, c) => pdf.splitTextToSize(txt || "", widths[c] - 2 * PADX) as string[]);
+    const maxLines = lines.reduce((m, l) => Math.max(m, l.length), 1);
+    return { lines, h: maxLines * LH + 2 * PADY };
+  };
+
+  const drawRow = (cells: string[], header: boolean) => {
+    pdf.setFont("helvetica", header ? "bold" : "normal");
+    const { lines, h } = measure(cells);
+    if (header) {
+      pdf.setFillColor(240, 243, 252);
+      pdf.rect(MARGIN_X, y, CONTENT_W, h, "F");
+    }
+    const tc = header ? NAVY : MID;
+    pdf.setTextColor(tc[0], tc[1], tc[2]);
+    let x = MARGIN_X;
+    for (let c = 0; c < cols; c++) {
+      const align = block.aligns[c] ?? "left";
+      const cellLines = lines[c] ?? [""];
+      for (let li = 0; li < cellLines.length; li++) {
+        const baseY = y + PADY + (li + 1) * LH - 0.9;
+        if (align === "right") {
+          pdf.text(cellLines[li], x + widths[c] - PADX, baseY, { align: "right" });
+        } else if (align === "center") {
+          pdf.text(cellLines[li], x + widths[c] / 2, baseY, { align: "center" });
+        } else {
+          pdf.text(cellLines[li], x + PADX, baseY);
+        }
+      }
+      x += widths[c];
+    }
+    // Grid: column separators + bottom border.
+    pdf.setDrawColor(...RULE);
+    pdf.setLineWidth(0.2);
+    let vx = MARGIN_X;
+    for (let c = 0; c <= cols; c++) { pdf.line(vx, y, vx, y + h); if (c < cols) vx += widths[c]; }
+    pdf.line(MARGIN_X, y + h, MARGIN_X + CONTENT_W, y + h);
+    y += h;
+  };
+
+  // Keep the header with at least its first row.
+  y = ensureSpace(pdf, y, measure(block.headers).h + 8, actionName);
+  pdf.setDrawColor(...RULE);
+  pdf.setLineWidth(0.2);
+  pdf.line(MARGIN_X, y, MARGIN_X + CONTENT_W, y); // top border
+  drawRow(block.headers, true);
+
+  for (const r of block.rows) {
+    const h = measure(r).h;
+    if (y + h > SAFE_BOTTOM) {
+      addPageFrame(pdf, actionName);
+      pdf.addPage();
+      y = MARGIN_TOP;
+      pdf.setDrawColor(...RULE);
+      pdf.setLineWidth(0.2);
+      pdf.line(MARGIN_X, y, MARGIN_X + CONTENT_W, y);
+      drawRow(block.headers, true); // repeat header on the new page
+    }
+    drawRow(r, false);
+  }
+  return y + 3;
 }
 
 // ─── PDF filename helpers ─────────────────────────────────────────────────────
@@ -413,6 +556,10 @@ export async function generateAndDownloadPdf(options: GeneratePdfOptions): Promi
           y += 5;
         }
         y += 1.5;
+
+      } else if (block.type === "table") {
+        y = renderTable(pdf, block, y, actionName);
+        y += 2;
       }
     }
 
