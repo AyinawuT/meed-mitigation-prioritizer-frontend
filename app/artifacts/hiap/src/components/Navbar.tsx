@@ -60,6 +60,20 @@ export function Navbar({ cityName }: NavbarProps) {
         <span style={{ color: "white", fontWeight: "500", fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           Aceleradora Local de Mitigación
         </span>
+        <span style={{
+          flexShrink: 0,
+          fontSize: "10px",
+          fontWeight: "600",
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          color: "#BFDBFE",
+          background: "rgba(255,255,255,0.14)",
+          border: "1px solid rgba(255,255,255,0.22)",
+          borderRadius: "999px",
+          padding: "1px 7px",
+        }}>
+          Beta
+        </span>
       </button>
 
       <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>

@@ -126,7 +126,7 @@ export function Landing() {
             {t("Climate mitigation planning for Chilean cities")}
           </div>
           <h1 style={{ fontSize: "38px", fontWeight: "700", color: "#FFFFFF", margin: "0 0 16px", lineHeight: "1.15", letterSpacing: "-0.02em" }}>
-            {t("The right climate actions for your city, ranked by evidence")}
+            {t("Climate action, ranked for your city")}
           </h1>
           <p style={{ color: "#C7D2FE", fontSize: "15px", lineHeight: "1.6", margin: "0 auto 32px", maxWidth: "600px" }}>
             {t("Search a city to score and rank over 100 mitigation actions against its emissions, laws, policy and socioeconomic profile.")}
