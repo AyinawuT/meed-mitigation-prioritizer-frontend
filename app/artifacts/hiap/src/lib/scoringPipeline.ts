@@ -95,7 +95,10 @@ export interface LegalExcludedAction {
   legalData: LegalData;
 }
 
-export const PIPELINE_RESULT_SCHEMA_VERSION = 5;
+// v6: action names/descriptions now sourced from the live /api/v1/action-pathways
+// catalog instead of the bundled snapshot — bump invalidates cached results that
+// still carry the stale, country-specific bundled text.
+export const PIPELINE_RESULT_SCHEMA_VERSION = 6;
 
 export interface PipelineResult {
   schemaVersion?: number;

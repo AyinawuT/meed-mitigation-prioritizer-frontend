@@ -7,7 +7,6 @@
  */
 
 import { CITIES } from "@/data/cities";
-import actionsData from "@/data/actions.json";
 import mockRequest from "@/data/prioritizerRequestMock.json";
 import {
   callPrioritize,
@@ -19,6 +18,7 @@ import {
 import type { PipelineResult, RankedAction, LegalData, LegalExcludedAction } from "@/lib/scoringPipeline";
 import { PIPELINE_RESULT_SCHEMA_VERSION, deriveEmissions } from "@/lib/scoringPipeline";
 import { getInventoryAsEmissionsData } from "@/lib/cityInventory";
+import { loadActionCatalog, type CatalogAction } from "@/lib/actionCatalog";
 
 // ─── Internal types matching the API response shape ───────────────────────────
 
@@ -101,21 +101,10 @@ type HardFilterEvidence = {
   } | null;
 };
 
-// ─── Local action lookup ──────────────────────────────────────────────────────
-
-type LocalActionRecord = {
-  actionId: string;
-  actionName: string;
-  actionCategory: string;
-  actionSubcategory: string;
-  costInvestmentNeeded: string;
-  timelineForImplementation: string;
-  description: string;
-  emissions?: { gpc_reference_number: string[] };
-};
-
-const LOCAL_ACTIONS = (actionsData as { actions: LocalActionRecord[] }).actions;
-const LOCAL_ACTION_MAP = new Map(LOCAL_ACTIONS.map((a) => [a.actionId, a]));
+// Action metadata (names, descriptions, GPC refs) is resolved from the live
+// catalog — see actionCatalog.ts. The map is loaded once per run and threaded
+// into adaptApiResult so name/description text comes from the authoritative
+// source rather than the stale bundled snapshot.
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -287,7 +276,8 @@ export function buildCityInput(locode: string): FrontendCityInput {
 export function adaptApiResult(
   apiResult: PrioritizerApiCityResult,
   emissionsData: FrontendCityEmissionsData,
-  topN: number
+  topN: number,
+  actionCatalog: Map<string, CatalogAction>
 ): PipelineResult {
   const legalExcluded: LegalExcludedAction[] = [];
   const legalFlagged: LegalExcludedAction[] = [];
@@ -308,7 +298,7 @@ export function adaptApiResult(
 
     if (!isBlocked && !isMissingAssessment) continue;
 
-    const local = LOCAL_ACTION_MAP.get(actionId);
+    const local = actionCatalog.get(actionId);
     const gpcRefs = local?.emissions?.gpc_reference_number ?? [];
     const sectorTag =
       gpcRefs.length > 0
@@ -348,7 +338,7 @@ export function adaptApiResult(
   }
 
   const ranked: RankedAction[] = (apiResult.ranked_actions ?? []).map((a) => {
-    const local = LOCAL_ACTION_MAP.get(a.action_id);
+    const local = actionCatalog.get(a.action_id);
     const score = a.final_score;
     const ev = (a.evidence_summary ?? {}) as EvidenceSummary;
 
@@ -425,12 +415,12 @@ export function adaptApiResult(
   const counts = apiResult.metadata?.counts as Record<string, number> | undefined;
 
   // validActionsCount: prefer API-supplied value; fall back to deriving it from
-  // LOCAL_ACTION_MAP minus hard-blocked actions (legalExcluded contains only
+  // the action catalog minus hard-blocked actions (legalExcluded contains only
   // verdict="blocked" entries — flagged/conditional ones are in legalFlagged and
   // are still included in the ranking).
   const validActionsCount =
     counts?.valid_actions ??
-    (LOCAL_ACTION_MAP.size - legalExcluded.length);
+    (actionCatalog.size - legalExcluded.length);
 
   return {
     schemaVersion: PIPELINE_RESULT_SCHEMA_VERSION,
@@ -473,12 +463,17 @@ export async function runPipelineForCity(
     cityDataList: [cityInput],
   };
 
-  const [apiResult] = await callPrioritize(requestData);
+  // Fetch the ranked results and the live action catalog in parallel — action
+  // names/descriptions are joined from the catalog, not the bundled snapshot.
+  const [[apiResult], actionCatalog] = await Promise.all([
+    callPrioritize(requestData),
+    loadActionCatalog(),
+  ]);
 
   // Backend computes the full 3-way feasibility score (legal + mitigation + financial)
   // and returns all component evidence in evidence_summary.feasibility — no client-side
   // re-computation needed.
-  const result = adaptApiResult(apiResult, cityInput.cityEmissionsData, topN);
+  const result = adaptApiResult(apiResult, cityInput.cityEmissionsData, topN, actionCatalog);
 
   localStorage.setItem(`hiap:${locode}:results`, JSON.stringify(result));
 
