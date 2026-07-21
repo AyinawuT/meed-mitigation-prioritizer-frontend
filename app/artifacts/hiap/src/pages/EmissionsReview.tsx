@@ -265,7 +265,7 @@ export function EmissionsReview({ params }: EmissionsReviewProps) {
                         return (
                           <tr key={`${i}-${j}`} style={{ background: "#FAFAFA", borderBottom: isLastSubRow ? "none" : "1px solid #F5F5F5" }}>
                             <td style={{ padding: "9px 16px 9px 38px" }}>
-                              <div style={{ fontSize: "12px", color: "#374151" }}>{sub.name}</div>
+                              <div style={{ fontSize: "12px", color: "#374151" }}>{t(sub.name)}</div>
                               <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "1px", fontFamily: "monospace" }}>{sub.ref}</div>
                             </td>
                             <td style={{ padding: "9px 16px", fontSize: "11px", color: "#9CA3AF" }}>—</td>

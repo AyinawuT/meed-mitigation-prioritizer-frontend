@@ -18,6 +18,7 @@ import { recommendations } from "@/lib/translations/recommendations";
 import { methodology } from "@/lib/translations/methodology";
 import { about } from "@/lib/translations/about";
 import { definitions } from "@/lib/translations/definitions";
+import { gate } from "@/lib/translations/gate";
 
 export type Lang = "en" | "es";
 
@@ -62,6 +63,7 @@ const ES: Record<string, string> = {
   ...methodology,
   ...about,
   ...definitions,
+  ...gate,
 };
 
 // ─── Hook ──────────────────────────────────────────────────────────────────────

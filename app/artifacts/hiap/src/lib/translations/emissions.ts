@@ -1,4 +1,24 @@
 export const emissions: Record<string, string> = {
+  // ── GPC sub-sector names (localized at render from inventory data) ────
+  "Residential buildings": "Edificios residenciales",
+  "Commercial and institutional buildings and facilities": "Edificios e instalaciones comerciales e institucionales",
+  "Manufacturing industries and construction": "Industrias manufactureras y de la construcción",
+  "Energy industries": "Industrias de la energía",
+  "Agriculture, forestry and fishing activities": "Actividades agrícolas, forestales y pesqueras",
+  "On-road transportation": "Transporte por carretera",
+  "Off-road transportation": "Transporte fuera de carretera",
+  "Railways": "Ferrocarriles",
+  "Waterborne navigation": "Navegación acuática",
+  "Aviation": "Aviación",
+  "Solid waste disposal": "Disposición de residuos sólidos",
+  "Biological treatment of waste": "Tratamiento biológico de residuos",
+  "Incineration and open burning": "Incineración y quema a cielo abierto",
+  "Wastewater treatment and discharge": "Tratamiento y descarga de aguas residuales",
+  "Emissions from industrial processes occurring within the city boundary": "Emisiones de procesos industriales que ocurren dentro del límite de la ciudad",
+  "Emissions from livestock within the city boundary": "Emisiones del ganado dentro del límite de la ciudad",
+  "Emissions from land within the city boundary": "Emisiones del suelo dentro del límite de la ciudad",
+  "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary": "Emisiones de fuentes agregadas y de fuentes distintas al CO2 en el suelo dentro del límite de la ciudad",
+
   // ── City not found ──────────────────────────────────────────────────
   "City not found.": "Ciudad no encontrada.",
 

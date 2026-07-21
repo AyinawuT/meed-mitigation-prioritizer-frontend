@@ -14,6 +14,7 @@ import { Recommendations } from "@/pages/Recommendations";
 import { Methodology } from "@/pages/Methodology";
 import { About } from "@/pages/About";
 import NotFound from "@/pages/not-found";
+import { PasswordGate } from "@/components/PasswordGate";
 
 const queryClient = new QueryClient();
 
@@ -41,9 +42,11 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-        <Router />
-      </WouterRouter>
+      <PasswordGate>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <Router />
+        </WouterRouter>
+      </PasswordGate>
     </QueryClientProvider>
   );
 }
