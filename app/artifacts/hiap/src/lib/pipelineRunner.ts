@@ -328,6 +328,8 @@ export function adaptApiResult(
       actionName: local?.actionName ?? actionId,
       sectorTag,
       legalData,
+      nameI18n: local?.nameI18n,
+      descriptionI18n: local?.descriptionI18n,
     };
 
     if (isBlocked) {
@@ -370,7 +372,14 @@ export function adaptApiResult(
     const actionName = local?.actionName ?? a.action_id;
 
     if (legalEv !== null && legalData?.assessment_missing === true) {
-      legalFlagged.push({ actionId: a.action_id, actionName, sectorTag, legalData });
+      legalFlagged.push({
+        actionId: a.action_id,
+        actionName,
+        sectorTag,
+        legalData,
+        nameI18n: local?.nameI18n,
+        descriptionI18n: local?.descriptionI18n,
+      });
     }
 
     return {
@@ -407,6 +416,10 @@ export function adaptApiResult(
       matchedEmissions: 0,
       explanation: a.explanations?.en ?? "",
       priority: score >= 0.7 ? "high" : score >= 0.4 ? "medium" : "low",
+      nameI18n: local?.nameI18n,
+      descriptionI18n: local?.descriptionI18n,
+      impactText: local?.emissions?.impact_text ?? null,
+      impactNumeric: local?.emissions?.impact_numeric ?? null,
     };
   });
 

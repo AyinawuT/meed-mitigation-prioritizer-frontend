@@ -19,6 +19,11 @@ import { callReportOutputPlan, loadSnapshot } from "@/lib/reportApi";
 import { generateAndDownloadPdf } from "@/lib/reportGenerator";
 import { InfoTip } from "@/components/InfoTip";
 import { DEFS } from "@/lib/definitions";
+import {
+  localizedActionName, localizedActionDescription,
+  reductionLevel, reductionLevelLabel, reductionLevelColor, REDUCTION_SEGMENTS,
+} from "@/lib/actionDisplay";
+import { computePolicyAggregates, type PolicyAggregates } from "@/lib/policyAggregates";
 
 // Pick the timeline definition matching an action's implementation horizon.
 function timelineDef(score: number | null | undefined): string {
@@ -198,24 +203,6 @@ const TIMELINE_LABEL: Record<string, string> = {
   ">10 years":  "More than 10 years",
 };
 
-function reductionLabel(priority: string) {
-  if (priority === "high") return "High";
-  if (priority === "medium") return "Medium";
-  return "Low";
-}
-
-function reductionColor(priority: string) {
-  if (priority === "high") return "#16A34A";
-  if (priority === "medium") return "#F59E0B";
-  return "#9CA3AF";
-}
-
-function reductionSegments(priority: string) {
-  if (priority === "high") return 3;
-  if (priority === "medium") return 2;
-  return 1;
-}
-
 function levelLabel(l: string | undefined) {
   if (!l) return "—";
   return l.charAt(0).toUpperCase() + l.slice(1);
@@ -267,19 +254,18 @@ function lifecycleStyle(s?: string) {
 
 // ─── Reduction potential bar (segmented) ────────────────────────────────────
 
-function ReductionBar({ priority }: { priority: string }) {
-  const filled = reductionSegments(priority);
-  const color = reductionColor(priority);
+function ReductionBar({ level }: { level: number }) {
+  const color = reductionLevelColor(level);
   return (
     <div style={{ display: "flex", gap: "4px" }}>
-      {[0, 1, 2].map((i) => (
+      {Array.from({ length: REDUCTION_SEGMENTS }, (_, i) => (
         <div
           key={i}
           style={{
             height: "5px",
             flex: 1,
             borderRadius: "3px",
-            background: i < filled ? color : "#E5E7EB",
+            background: i < level ? color : "#E5E7EB",
           }}
         />
       ))}
@@ -435,7 +421,7 @@ function DetailPanel({
   onGenerate: () => void;
   isGenerating: boolean;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const cobenefits = actionCoBenefitsMap[action.actionId] ?? [];
   const barriers = actionBarriersMap[action.actionId] ?? [];
   const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
@@ -525,7 +511,7 @@ function DetailPanel({
             {t(gpcSectorName(action.gpcRefs))}
           </div>
           <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#111827", margin: "0 0 10px", lineHeight: "1.35" }}>
-            {action.actionName}
+            {localizedActionName(action, lang)}
           </h2>
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
             {action.gpcRefs.map((ref) => (
@@ -545,7 +531,7 @@ function DetailPanel({
           {/* Description */}
           <div style={{ marginBottom: "22px" }}>
             <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>{t("Action description")}</div>
-            <p style={{ fontSize: "13px", color: "#4B5563", lineHeight: "1.65", margin: 0 }}>{action.description}</p>
+            <p style={{ fontSize: "13px", color: "#4B5563", lineHeight: "1.65", margin: 0 }}>{localizedActionDescription(action, lang)}</p>
           </div>
 
           {/* Why this ranking */}
@@ -851,9 +837,11 @@ function TopPickCard({
   onGenerate: () => void;
   isGenerating: boolean;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const tl = TIMELINE_LABEL[action.timelineForImplementation] ?? action.timelineForImplementation;
   const sector = gpcSectorName(action.gpcRefs);
+  const displayName = localizedActionName(action, lang);
+  const displayDesc = localizedActionDescription(action, lang);
 
   return (
     <div style={{
@@ -887,27 +875,34 @@ function TopPickCard({
 
       {/* Title */}
       <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827", lineHeight: "1.35", marginBottom: "8px" }}>
-        {action.actionName.length > 70 ? action.actionName.slice(0, 70) + "…" : action.actionName}
+        {displayName.length > 70 ? displayName.slice(0, 70) + "…" : displayName}
       </div>
 
       {/* Description */}
       <div style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", marginBottom: "14px" }}>
-        {action.description.length > 110 ? action.description.slice(0, 110) + "…" : action.description}
+        {displayDesc.length > 110 ? displayDesc.slice(0, 110) + "…" : displayDesc}
       </div>
 
       {/* Spacer — absorbs extra height so the bar row aligns across cards */}
       <div style={{ flex: 1 }} />
 
-      {/* Reduction bar */}
-      <div style={{ marginBottom: "6px" }}>
-        <ReductionBar priority={action.priority} />
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-        <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{t("Reduction potential")}</span>
-        <span style={{ fontSize: "13px", fontWeight: "700", color: reductionColor(action.priority) }}>
-          {t(reductionLabel(action.priority))}
-        </span>
-      </div>
+      {/* Reduction bar — 5-level scale from the action's emissions impact */}
+      {(() => {
+        const level = reductionLevel(action);
+        return (
+          <>
+            <div style={{ marginBottom: "6px" }}>
+              <ReductionBar level={level} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+              <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{t("Reduction potential")}</span>
+              <span style={{ fontSize: "13px", fontWeight: "700", color: reductionLevelColor(level) }}>
+                {t(reductionLevelLabel(level))}
+              </span>
+            </div>
+          </>
+        );
+      })()}
 
       {/* Divider */}
       <div style={{ borderTop: "1px solid #F0F0F4", marginBottom: "12px" }} />
@@ -988,7 +983,7 @@ function RankingTable({
   pickMode: boolean;
   onTogglePickMode: () => void;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [showDownload, setShowDownload] = useState(false);
   const dlRef = useRef<HTMLDivElement>(null);
 
@@ -1004,9 +999,9 @@ function RankingTable({
     const header = [t("Rank"), t("Action"), t("GPC Sector"), t("Reduction Potential"), t("Impact Score"), t("Alignment Score"), t("Feasibility Score"), t("Final Score")];
     const rows = actions.map(a => [
       a.rank,
-      `"${a.actionName.replace(/"/g, '""')}"`,
+      `"${localizedActionName(a, lang).replace(/"/g, '""')}"`,
       gpcSectorName(a.gpcRefs),
-      reductionLabel(a.priority),
+      t(reductionLevelLabel(reductionLevel(a))),
       (a.impactScore * 100).toFixed(0),
       (a.alignmentScore * 100).toFixed(0),
       (a.feasibilityScore * 100).toFixed(0),
@@ -1127,22 +1122,27 @@ function RankingTable({
                     #{action.rank}
                   </td>
                   <td style={{ padding: "10px 14px", fontSize: "12px", color: "#111827", maxWidth: "280px" }}>
-                    {action.actionName}
+                    {localizedActionName(action, lang)}
                   </td>
                   <td style={{ padding: "10px 14px", fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
                     {t(gpcSectorName(action.gpcRefs))}
                   </td>
                   <td style={{ padding: "10px 14px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ display: "flex", gap: "3px", width: "80px" }}>
-                        {[0, 1, 2].map((i) => (
-                          <div key={i} style={{ flex: 1, height: "6px", borderRadius: "3px", background: i < reductionSegments(action.priority) ? "#001EA7" : "#EEF2FF" }} />
-                        ))}
-                      </div>
-                      <span style={{ fontSize: "11px", color: reductionColor(action.priority), fontWeight: "600" }}>
-                        {t(reductionLabel(action.priority))}
-                      </span>
-                    </div>
+                    {(() => {
+                      const level = reductionLevel(action);
+                      return (
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <div style={{ display: "flex", gap: "3px", width: "80px" }}>
+                            {Array.from({ length: REDUCTION_SEGMENTS }, (_, i) => (
+                              <div key={i} style={{ flex: 1, height: "6px", borderRadius: "3px", background: i < level ? reductionLevelColor(level) : "#EEF2FF" }} />
+                            ))}
+                          </div>
+                          <span style={{ fontSize: "11px", color: reductionLevelColor(level), fontWeight: "600" }}>
+                            {t(reductionLevelLabel(level))}
+                          </span>
+                        </div>
+                      );
+                    })()}
                   </td>
                   <td style={{ padding: "10px 14px" }}>
                     <button
@@ -1172,6 +1172,7 @@ function ContextBreakdownTab({
   locode,
   feasibilityRows,
   natPolicyScore,
+  policyAggregates,
   policyScoresByAction,
   navigate,
 }: {
@@ -1181,6 +1182,7 @@ function ContextBreakdownTab({
   locode: string;
   feasibilityRows: FeasibilityRow[];
   natPolicyScore: number | null;
+  policyAggregates: PolicyAggregates | null;
   policyScoresByAction: Record<string, number>;
   navigate: (to: string) => void;
 }) {
@@ -1361,17 +1363,25 @@ function ContextBreakdownTab({
         const moderateBacking = hasPolicyData
           ? ranked.filter(a => { const s = policyScoresByAction[a.actionId] ?? 0; return s >= 0.5 && s < 0.75; }).length
           : ranked.filter(a => a.policyComponent >= 0.5 && a.policyComponent < 0.75).length;
-        const displayScore = natPolicyScore !== null
-          ? `${(natPolicyScore * 100).toFixed(0)}%`
-          : "—";
+        const pct = (v: number | null | undefined) =>
+          v !== null && v !== undefined ? `${(v * 100).toFixed(0)}%` : "—";
+        const nationalScore = policyAggregates?.national ?? natPolicyScore;
+        const regionalScore = policyAggregates?.regional ?? null;
+        const municipalScore = policyAggregates?.municipal ?? null;
         return (
           <div>
             {sectionHead(ClipboardList, t("Policy Alignment"))}
             <div style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px", lineHeight: "1.5" }}>
-              {t("How well ranked actions are backed by existing national policy frameworks.")}
+              {t("How well ranked actions are backed by existing national, regional and municipal policy frameworks.")}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-              {statCard(t("Avg. national alignment"), displayScore, t("city-wide · all assessed actions"))}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "12px" }}>
+              {statCard(t("Avg. national alignment"), pct(nationalScore), t("city-wide · all assessed actions"))}
+              {statCard(t("Avg. regional alignment"), pct(regionalScore),
+                regionalScore !== null ? t("across actions with regional plan coverage") : t("no regional plan coverage"))}
+              {statCard(t("Avg. municipal alignment"), pct(municipalScore),
+                municipalScore !== null ? t("across actions with municipal plan coverage") : t("no municipal plan coverage"))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
               {statCard(t("Strongly backed"), String(strongBacking), t("of {n} ranked actions · score above 75%", { n: String(ranked.length) }))}
               {statCard(t("Moderate backing"), String(moderateBacking), t("of {n} ranked actions · score 50–75%", { n: String(ranked.length) }))}
             </div>
@@ -1413,6 +1423,7 @@ export function Recommendations({ params }: Props) {
   const [feasibilityRows, setFeasibilityRows] = useState<FeasibilityRow[]>([]);
   const [natPolicyScore, setNatPolicyScore] = useState<number | null>(null);
   const [policyScoresByAction, setPolicyScoresByAction] = useState<Record<string, number>>({});
+  const [policyAggregates, setPolicyAggregates] = useState<PolicyAggregates | null>(null);
   const [indicatorCount, setIndicatorCount] = useState<number | null>(null);
   useEffect(() => {
     fetch(`https://ccglobal.openearth.dev/api/v0/city_attributes/${encodeURIComponent(locode)}`)
@@ -1470,7 +1481,7 @@ export function Recommendations({ params }: Props) {
       });
       await generateAndDownloadPdf({
         cityName,
-        actionName: action.actionName,
+        actionName: localizedActionName(action, lang),
         chapters: report.chapters,
         lang,
       });
@@ -1537,6 +1548,8 @@ export function Recommendations({ params }: Props) {
         setPolicyScoresByAction(byAction);
         const vals = rawScores.map(s => s.policy_support_score);
         setNatPolicyScore(vals.reduce((a, b) => a + b, 0) / vals.length);
+        // Regional/municipal aggregates from per-action scope evidence.
+        setPolicyAggregates(computePolicyAggregates(polRes.scores));
       }
     }).catch(() => {});
   }, [locode, countryCode]);
@@ -1972,6 +1985,7 @@ export function Recommendations({ params }: Props) {
             locode={locode}
             feasibilityRows={feasibilityRows}
             natPolicyScore={natPolicyScore}
+            policyAggregates={policyAggregates}
             policyScoresByAction={policyScoresByAction}
             navigate={navigate}
           />

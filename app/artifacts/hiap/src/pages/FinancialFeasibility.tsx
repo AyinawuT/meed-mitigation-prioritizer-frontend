@@ -924,13 +924,6 @@ export function FinancialFeasibility({ params }: Props) {
           </div>
         )}
 
-        {/* Score note */}
-        {feasibility.length > 0 && (
-          <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "8px", padding: "14px 18px", marginTop: "16px", fontSize: "12px", color: "#1D4ED8", lineHeight: "1.65" }}>
-            <strong>{t("How this is calculated:")}</strong> {t("Each score weighs the action's cost and complexity against {city}'s profile above, plus the funds catalogued for its sector. It estimates financing difficulty — not the odds of winning a specific fund.", { city: cityName })}
-          </div>
-        )}
-
         {/* Footer nav */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "32px" }}>
           <button onClick={() => navigate(`/city/${citySlug}/policy`)}

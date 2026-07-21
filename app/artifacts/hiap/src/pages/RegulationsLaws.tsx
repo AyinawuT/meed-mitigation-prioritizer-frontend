@@ -8,6 +8,7 @@ import type { PipelineResult, LegalExcludedAction, RankedAction } from "@/lib/sc
 import { PIPELINE_RESULT_SCHEMA_VERSION } from "@/lib/scoringPipeline";
 import { runPipelineForCity } from "@/lib/pipelineRunner";
 import { useLanguage } from "@/lib/i18n";
+import { localizedActionName } from "@/lib/actionDisplay";
 import { InfoTip } from "@/components/InfoTip";
 import { DEFS } from "@/lib/definitions";
 import { Scale, CircleCheck, CircleX, TriangleAlert } from "lucide-react";
@@ -83,7 +84,7 @@ function sectorBreakdown(
 // ─── Excluded action card ─────────────────────────────────────────────────────
 
 function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [justOpen, setJustOpen] = useState(false);
   const [refsOpen, setRefsOpen] = useState(false);
@@ -101,7 +102,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
       {/* Always-visible header row */}
       <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "14px 16px", flexWrap: "wrap" }}>
         <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", flex: 1, minWidth: "120px" }}>
-          {action.actionName}
+          {localizedActionName(action, lang)}
         </span>
         <SectorChip tag={action.sectorTag} />
         <span style={{
@@ -219,7 +220,7 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
 // ─── Flagged action card ──────────────────────────────────────────────────────
 
 function FlaggedActionCard({ action }: { action: LegalExcludedAction }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   return (
     <div style={{
       background: "white", border: "1px solid #FDE68A", borderRadius: "10px",
@@ -227,7 +228,7 @@ function FlaggedActionCard({ action }: { action: LegalExcludedAction }) {
     }}>
       <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", flexWrap: "wrap", marginBottom: "8px" }}>
         <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827", flex: 1, minWidth: "120px" }}>
-          {action.actionName}
+          {localizedActionName(action, lang)}
         </span>
         <SectorChip tag={action.sectorTag} />
         <span style={{

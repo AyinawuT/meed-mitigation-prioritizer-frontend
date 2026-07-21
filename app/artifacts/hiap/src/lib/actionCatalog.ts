@@ -28,7 +28,13 @@ export interface CatalogAction {
   costInvestmentNeeded: string;
   timelineForImplementation: string;
   description: string;
-  emissions?: { gpc_reference_number: string[] };
+  emissions?: {
+    gpc_reference_number: string[];
+    /** Emissions-reduction potential, 5-level: "very low" … "very high". */
+    impact_text?: string | null;
+    /** Numeric counterpart of impact_text, 1 (very low) … 5 (very high). */
+    impact_numeric?: number | null;
+  };
   /** Localized name/description from the live catalog (en/es/pt), when available. */
   nameI18n?: Record<string, string>;
   descriptionI18n?: Record<string, string>;
@@ -48,7 +54,14 @@ interface ApiActionRecord {
   description?: string;
   costInvestmentNeeded?: string;
   timelineForImplementation?: string;
-  emissions?: { gpcReferenceNumber?: string[]; gpc_reference_number?: string[] };
+  emissions?: {
+    gpcReferenceNumber?: string[];
+    gpc_reference_number?: string[];
+    impactText?: string | null;
+    impact_text?: string | null;
+    impactNumeric?: number | null;
+    impact_numeric?: number | null;
+  };
   nameI18n?: Record<string, string>;
   descriptionI18n?: Record<string, string>;
 }
@@ -62,6 +75,16 @@ function normalizeApiRecord(
     a.emissions?.gpc_reference_number ??
     fallback?.emissions?.gpc_reference_number ??
     [];
+  const impactText =
+    a.emissions?.impactText ??
+    a.emissions?.impact_text ??
+    fallback?.emissions?.impact_text ??
+    null;
+  const impactNumeric =
+    a.emissions?.impactNumeric ??
+    a.emissions?.impact_numeric ??
+    fallback?.emissions?.impact_numeric ??
+    null;
   return {
     actionId: a.actionId,
     actionName: a.actionName ?? fallback?.actionName ?? a.actionId,
@@ -73,9 +96,13 @@ function normalizeApiRecord(
     timelineForImplementation:
       a.timelineForImplementation ?? fallback?.timelineForImplementation ?? "",
     description: a.description ?? fallback?.description ?? "",
-    emissions: { gpc_reference_number: gpc },
-    nameI18n: a.nameI18n,
-    descriptionI18n: a.descriptionI18n,
+    emissions: {
+      gpc_reference_number: gpc,
+      impact_text: impactText,
+      impact_numeric: impactNumeric,
+    },
+    nameI18n: a.nameI18n ?? fallback?.nameI18n,
+    descriptionI18n: a.descriptionI18n ?? fallback?.descriptionI18n,
   };
 }
 
