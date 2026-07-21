@@ -62,6 +62,12 @@ export interface RankedAction {
   priority: "high" | "medium" | "low";
   financialFeasibilityRoute: string | null;
   financialFeasibilityReason: string | null;
+  // Localized name/description variants (en/es/pt) from the catalog.
+  nameI18n?: Record<string, string>;
+  descriptionI18n?: Record<string, string>;
+  // Emissions-reduction potential from the catalog (5-level scale).
+  impactText?: string | null;
+  impactNumeric?: number | null;
 }
 
 export interface DiscardedAction {
@@ -93,12 +99,18 @@ export interface LegalExcludedAction {
   actionName: string;
   sectorTag: string;
   legalData: LegalData;
+  // Localized name variants (en/es/pt) from the catalog.
+  nameI18n?: Record<string, string>;
+  descriptionI18n?: Record<string, string>;
 }
 
 // v6: action names/descriptions now sourced from the live /api/v1/action-pathways
 // catalog instead of the bundled snapshot — bump invalidates cached results that
 // still carry the stale, country-specific bundled text.
-export const PIPELINE_RESULT_SCHEMA_VERSION = 6;
+// v7: results now carry per-language name/description variants and the catalog's
+// impact_text/impact_numeric (5-level reduction potential) — bump so cached v6
+// results are re-fetched with the new fields.
+export const PIPELINE_RESULT_SCHEMA_VERSION = 7;
 
 export interface PipelineResult {
   schemaVersion?: number;

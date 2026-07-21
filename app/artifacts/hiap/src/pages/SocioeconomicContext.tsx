@@ -653,26 +653,6 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
           </table>
         </div>
 
-        {/* Context note */}
-        <div style={{
-          background: "#F0F9FF",
-          border: "1px solid #BAE6FD",
-          borderRadius: "8px",
-          padding: "12px 16px",
-          marginBottom: "20px",
-          fontSize: "12px",
-          color: "#0369A1",
-          display: "flex",
-          gap: "10px",
-          alignItems: "flex-start",
-        }}>
-          <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
-          <span>
-            <strong>{t("How ALM uses this data:")}</strong>{" "}
-            {t("Socioeconomic conditions feed into the mitigation feasibility component, which makes up 33% of the feasibility score, which in turn shapes 23% of the final action ranking by default. They adjust scores to account for feasibility constraints (e.g. low income limits capital-intensive actions) and amplify co-benefits (e.g. green jobs matter more where unemployment is high).")}
-          </span>
-        </div>
-
         {/* Footer navigation */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button
