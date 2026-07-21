@@ -125,7 +125,7 @@ export function Landing() {
           <div style={{ fontSize: "12px", fontWeight: "600", color: "#9DB4FF", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
             {t("Climate mitigation planning for Chilean cities")}
           </div>
-          <h1 style={{ fontSize: "38px", fontWeight: "700", color: "#FFFFFF", margin: "0 0 16px", lineHeight: "1.15", letterSpacing: "-0.02em" }}>
+          <h1 style={{ fontSize: "48px", fontWeight: "700", color: "#FFFFFF", margin: "0 0 18px", lineHeight: "1.1", letterSpacing: "-0.025em" }}>
             {t("Find the best path")}<br />{t("to your city's climate action")}
           </h1>
           <p style={{ color: "#C7D2FE", fontSize: "15px", lineHeight: "1.6", margin: "0 auto 32px", maxWidth: "600px" }}>
