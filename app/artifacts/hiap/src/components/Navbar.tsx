@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
+import { Languages, ChevronDown, Check } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 interface NavbarProps {
@@ -37,7 +38,7 @@ export function Navbar({ cityName }: NavbarProps) {
     >
       <button
         onClick={() => navigate("/")}
-        style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", padding: 0, cursor: "pointer" }}
+        style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", padding: 0, cursor: "pointer", minWidth: 0, flexShrink: 1 }}
       >
         <div
           style={{
@@ -45,21 +46,33 @@ export function Navbar({ cityName }: NavbarProps) {
             borderRadius: "6px",
             width: "28px",
             height: "28px",
+            flexShrink: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "11px",
+            fontSize: "9px",
             fontWeight: "700",
             color: "white",
           }}
         >
-          M+
+          ALM
         </div>
-        <span style={{ color: "white", fontWeight: "500", fontSize: "14px" }}>
-          MEED+
+        <span style={{ color: "white", fontWeight: "500", fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          Aceleradora Local de Mitigación
         </span>
-        <span style={{ color: "#93C5FD", fontSize: "12px", marginLeft: "4px" }}>
-          · HIAP
+        <span style={{
+          flexShrink: 0,
+          fontSize: "10px",
+          fontWeight: "600",
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          color: "#BFDBFE",
+          background: "rgba(255,255,255,0.14)",
+          border: "1px solid rgba(255,255,255,0.22)",
+          borderRadius: "999px",
+          padding: "1px 7px",
+        }}>
+          Beta
         </span>
       </button>
 
@@ -103,9 +116,9 @@ export function Navbar({ cityName }: NavbarProps) {
             onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
           >
-            <span>{lang === "en" ? "🇬🇧" : "🇨🇱"}</span>
+            <Languages size={15} style={{ flexShrink: 0 }} />
             <span style={{ fontWeight: "500" }}>{lang === "en" ? "EN" : "ES"}</span>
-            <span style={{ fontSize: "10px" }}>▾</span>
+            <ChevronDown size={12} style={{ flexShrink: 0 }} />
           </button>
 
           {open && (
@@ -142,14 +155,14 @@ export function Navbar({ cityName }: NavbarProps) {
                   onMouseEnter={(e) => { if (lang !== l) (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"; }}
                   onMouseLeave={(e) => { if (lang !== l) (e.currentTarget as HTMLButtonElement).style.background = "white"; }}
                 >
-                  <span style={{ fontSize: "16px" }}>{l === "en" ? "🇬🇧" : "🇨🇱"}</span>
+                  <Languages size={16} color="#6B7280" style={{ flexShrink: 0 }} />
                   <div>
                     <div>{l === "en" ? "English" : "Español"}</div>
                     <div style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: "400" }}>
                       {l === "en" ? "English" : "Castellano"}
                     </div>
                   </div>
-                  {lang === l && <span style={{ marginLeft: "auto", color: "#001EA7", fontSize: "14px" }}>✓</span>}
+                  {lang === l && <Check size={14} color="#001EA7" style={{ marginLeft: "auto", flexShrink: 0 }} />}
                 </button>
               ))}
             </div>

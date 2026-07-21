@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { useLanguage } from "@/lib/i18n";
 
 const STEPS = [
   "Emissions data",
@@ -27,6 +28,7 @@ interface StepBarProps {
 
 export function StepBar({ activeStep, citySlug }: StepBarProps) {
   const [, navigate] = useLocation();
+  const { t } = useLanguage();
 
   return (
     <div style={{
@@ -71,7 +73,7 @@ export function StepBar({ activeStep, citySlug }: StepBarProps) {
             }}
           >
             {isDone && <span style={{ color: "inherit", fontSize: "11px" }}>✓</span>}
-            <span>{i + 1}. {step}</span>
+            <span>{i + 1}. {t(step)}</span>
           </div>
         );
       })}

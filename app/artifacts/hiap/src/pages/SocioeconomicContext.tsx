@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
+import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
+import { Users, TriangleAlert } from "lucide-react";
 
 type Category = "very high" | "high" | "medium" | "low" | "very low";
 
@@ -371,8 +375,8 @@ const CATEGORY_STYLES: Record<Category, { bg: string; color: string; label: stri
   "very low":  { bg: "#F9FAFB", color: "#6B7280", label: "Very Low" },
 };
 
-const CONCERN_ICON: Record<string, string> = {
-  risk:        "⚠",
+const CONCERN_ICON: Record<string, ReactNode> = {
+  risk:        <TriangleAlert size={13} style={{ flexShrink: 0 }} />,
   opportunity: "↑",
   neutral:     "→",
 };
@@ -420,6 +424,7 @@ interface SocioeconomicContextProps {
 }
 
 export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
+  const { t } = useLanguage();
   const [, navigate] = useLocation();
   const search = useSearch();
   const fromPreflight = search.includes("from=preflight");
@@ -450,9 +455,9 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
       <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <p style={{ color: "#6B7280" }}>City not found.</p>
+          <p style={{ color: "#6B7280" }}>{t("City not found.")}</p>
           <button onClick={() => navigate("/")} style={{ marginTop: "16px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", cursor: "pointer" }}>
-            ← Back to cities
+            {t("← Back to cities")}
           </button>
         </div>
       </div>
@@ -499,26 +504,26 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
             <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
-              Cities
+              {t("Cities")}
             </button>
             <span>›</span>
             <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>
               {city.name}
             </button>
             <span>›</span>
-            <span style={{ color: "#374151" }}>Socioeconomic Context</span>
+            <span style={{ color: "#374151" }}>{t("Socioeconomic Context")}</span>
           </div>
 
           <div>
             <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-              Socioeconomic Context
+              {t("Socioeconomic Context")}
             </h1>
             <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-              MEED+ HIAP uses socioeconomic indicators to assess how feasible each climate action is for {city.name}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.
+              {t("Aceleradora Local de Mitigación uses socioeconomic indicators to assess how feasible each climate action is for {city}. Indicators such as income levels, employment, and urban density shape which actions are realistically deliverable.", { city: city.name })}
             </p>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
               <span style={{ fontSize: "11px", background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: "4px", fontWeight: "600" }}>
-                {indicators.length} indicators loaded
+                {t("{n} indicators loaded", { n: String(indicators.length) })}
               </span>
               <div style={{
                 display: "inline-flex", alignItems: "center", gap: "6px",
@@ -526,8 +531,8 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 borderRadius: "6px", padding: "5px 12px",
                 fontSize: "11px", color: "#15803D", fontWeight: "600",
               }}>
-                <span>👥</span>
-                <span>MEED+ FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking</span>
+                <Users size={14} color="#15803D" style={{ flexShrink: 0 }} />
+                <span>{t("ALM FEASIBILITY: Mitigation feasibility shapes 33% of feasibility score · Feasibility shapes 23% of ranking")}</span>
               </div>
             </div>
           </div>
@@ -554,7 +559,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                 boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
               }}>
                 <div style={{ fontSize: "11px", color: "#9CA3AF", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                  {ind.label}
+                  {t(ind.label)}
                 </div>
                 <div style={{ fontSize: "20px", fontWeight: "700", color: "#111827", marginBottom: "6px" }}>
                   {formatValue(ind)}
@@ -567,7 +572,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                   borderRadius: "4px",
                   fontWeight: "600",
                 }}>
-                  {style.label}
+                  {t(style.label)}
                 </span>
               </div>
             );
@@ -586,7 +591,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #F0F0F0", background: "#FAFAFA" }}>
-                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "MEED+ CLIMATE RELEVANCE"].map((h, i) => (
+                {["INDICATOR", "VALUE", "RELATIVE LEVEL", "ALM CLIMATE RELEVANCE"].map((h, i) => (
                   <th key={i} style={{
                     padding: "10px 16px",
                     fontSize: "11px",
@@ -596,7 +601,8 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                     letterSpacing: "0.04em",
                     whiteSpace: "nowrap",
                   }}>
-                    {h}
+                    {t(h)}
+                    {h === "RELATIVE LEVEL" && <InfoTip text={DEFS.relativeLevel} />}
                   </th>
                 ))}
               </tr>
@@ -617,11 +623,11 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                       <td style={{ padding: "12px 16px", minWidth: "200px" }}>
                         {isFirstInGroup && (
                           <div style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>
-                            {theme}
+                            {t(theme)}
                           </div>
                         )}
                         <div style={{ fontSize: "13px", fontWeight: "500", color: "#111827" }}>
-                          {ind.label}
+                          {t(ind.label)}
                         </div>
                         <div style={{ fontSize: "11px", color: "#C4C4C4", marginTop: "2px" }}>
                           {ind.source}
@@ -632,12 +638,12 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
                       </td>
                       <td style={{ padding: "12px 16px" }}>
                         <span style={{ fontSize: "11px", background: style.bg, color: style.color, padding: "3px 10px", borderRadius: "4px", fontWeight: "600", whiteSpace: "nowrap" }}>
-                          {style.label}
+                          {t(style.label)}
                         </span>
                       </td>
                       <td style={{ padding: "12px 16px", fontSize: "12px", color: "#6B7280" }}>
                         <span style={{ marginRight: "6px", fontSize: "13px" }}>{icon}</span>
-                        {ind.relevance}
+                        {t(ind.relevance)}
                       </td>
                     </tr>
                   );
@@ -662,11 +668,8 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
         }}>
           <span style={{ fontSize: "14px", flexShrink: 0 }}>ℹ</span>
           <span>
-            <strong>How MEED+ HIAP uses this data:</strong> Socioeconomic conditions feed into the mitigation feasibility component, which makes up 33% of the
-            feasibility score, which in turn shapes 23% of the final action ranking by default.
-            They adjust scores to account for feasibility constraints (e.g. low income limits
-            capital-intensive actions) and amplify co-benefits (e.g. green jobs matter more
-            where unemployment is high).
+            <strong>{t("How ALM uses this data:")}</strong>{" "}
+            {t("Socioeconomic conditions feed into the mitigation feasibility component, which makes up 33% of the feasibility score, which in turn shapes 23% of the final action ranking by default. They adjust scores to account for feasibility constraints (e.g. low income limits capital-intensive actions) and amplify co-benefits (e.g. green jobs matter more where unemployment is high).")}
           </span>
         </div>
 
@@ -685,7 +688,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               fontWeight: "500",
             }}
           >
-            ← Emissions Data
+            ← {t("Emissions Data")}
           </button>
 
           <button
@@ -702,7 +705,7 @@ export function SocioeconomicContext({ params }: SocioeconomicContextProps) {
               boxShadow: "0 2px 6px rgba(22,163,74,0.3)",
             }}
           >
-            {fromRecommendations ? "Save & return to context breakdown →" : fromPreflight ? "Save & return to pre-flight →" : "Regulations & laws →"}
+            {fromRecommendations ? t("Save & return to context breakdown →") : fromPreflight ? t("Save & return to pre-flight →") : t("Regulations & laws →")}
           </button>
         </div>
       </div>

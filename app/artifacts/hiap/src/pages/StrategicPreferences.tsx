@@ -4,6 +4,10 @@ import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
+import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { Target } from "lucide-react";
+import { DEFS } from "@/lib/definitions";
 
 const ALL_SECTORS = [
   "Stationary Energy",
@@ -35,6 +39,7 @@ interface Props { params: { locode: string } }
 export function StrategicPreferences({ params }: Props) {
   const [, navigate] = useLocation();
   const search = useSearch();
+  const { t } = useLanguage();
   const fromPreflight = search.includes("from=preflight");
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -84,8 +89,8 @@ export function StrategicPreferences({ params }: Props) {
       <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <p style={{ color: "#6B7280" }}>City not found.</p>
-          <button onClick={() => navigate("/")} style={{ marginTop: "16px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", cursor: "pointer" }}>← Back</button>
+          <p style={{ color: "#6B7280" }}>{t("City not found.")}</p>
+          <button onClick={() => navigate("/")} style={{ marginTop: "16px", background: "#001EA7", color: "white", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", cursor: "pointer" }}>{t("← Back")}</button>
         </div>
       </div>
     );
@@ -171,17 +176,17 @@ export function StrategicPreferences({ params }: Props) {
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>Cities</button>
+            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>{t("Cities")}</button>
             <span>›</span>
             <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>{city.name}</button>
             <span>›</span>
-            <span style={{ color: "#374151" }}>Strategic Preferences</span>
+            <span style={{ color: "#374151" }}>{t("Strategic Preferences")}</span>
           </div>
           <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>
-            Strategic Preferences
+            {t("Strategic Preferences")}
           </h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 6px" }}>
-            Tell MEED+ HIAP which sectors and goals matter most to your city, how quickly actions must be implementable, and whether any types of actions should be excluded from the ranking.
+            {t("Tell Aceleradora Local de Mitigación which sectors and goals matter most to your city, how quickly actions must be implementable, and whether any types of actions should be excluded from the ranking.")}
           </p>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: "6px",
@@ -189,8 +194,8 @@ export function StrategicPreferences({ params }: Props) {
             borderRadius: "6px", padding: "5px 12px",
             fontSize: "11px", color: "#15803D", fontWeight: "600",
           }}>
-            <span>🎯</span>
-            <span>MEED+ ALIGNMENT: Alignment shapes 22% of ranking — priority sectors 15% · timeframe preference 5% · strategic priorities 5%</span>
+            <Target size={14} color="#15803D" style={{ flexShrink: 0 }} />
+            <span>{t("ALM ALIGNMENT: Alignment shapes 22% of ranking — priority sectors 15% · timeframe preference 5% · strategic priorities 5%")}</span>
           </div>
         </div>
       </div>
@@ -198,9 +203,9 @@ export function StrategicPreferences({ params }: Props) {
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 64px 60px", display: "flex", flexDirection: "column", gap: "16px" }}>
 
         {/* Priority Sectors */}
-        <Section title="Priority Sectors" required badge="ALIGNMENT · 15%">
+        <Section title={t("Priority Sectors")} required badge={t("ALIGNMENT · 15%")}>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            Select the sectors your city wants to prioritise. Actions in these sectors will receive a higher alignment score.
+            {t("Select the sectors your city wants to prioritise. Actions in these sectors will receive a higher alignment score.")}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
             {ALL_SECTORS.map((s) => {
@@ -221,22 +226,22 @@ export function StrategicPreferences({ params }: Props) {
                     transition: "all 0.12s",
                   }}
                 >
-                  {s}
+                  {t(s)}
                 </button>
               );
             })}
           </div>
           {sectors.size > 0 && (
             <p style={{ fontSize: "12px", color: "#16A34A", margin: "10px 0 0", fontWeight: "500" }}>
-              ✓ {sectors.size} sector{sectors.size !== 1 ? "s" : ""} selected
+              ✓ {t(sectors.size !== 1 ? "{n} sectors selected" : "{n} sector selected", { n: String(sectors.size) })}
             </p>
           )}
         </Section>
 
         {/* Strategic Priorities — co-benefit checkboxes */}
-        <Section title="Strategic Priorities" required badge="ALIGNMENT · 5%">
+        <Section title={t("Strategic Priorities")} required badge={t("ALIGNMENT · 5%")}>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            Select the co-benefits your city wants to emphasise. Actions that deliver these co-benefits alongside emissions reductions will score higher in the alignment ranking.
+            {t("Select the co-benefits your city wants to emphasise. Actions that deliver these co-benefits alongside emissions reductions will score higher in the alignment ranking.")}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
             {CO_BENEFITS.map(({ key, label }) => {
@@ -268,7 +273,7 @@ export function StrategicPreferences({ params }: Props) {
                     {on && <span style={{ color: "white", fontSize: "11px", lineHeight: 1 }}>✓</span>}
                   </span>
                   <span style={{ fontSize: "13px", fontWeight: on ? "600" : "400", color: on ? "#001EA7" : "#374151" }}>
-                    {label}
+                    {t(label)}
                   </span>
                 </button>
               );
@@ -276,15 +281,15 @@ export function StrategicPreferences({ params }: Props) {
           </div>
           {priorities.size > 0 && (
             <p style={{ fontSize: "12px", color: "#16A34A", margin: "10px 0 0", fontWeight: "500" }}>
-              ✓ {priorities.size} co-benefit{priorities.size !== 1 ? "s" : ""} selected
+              ✓ {t(priorities.size !== 1 ? "{n} co-benefits selected" : "{n} co-benefit selected", { n: String(priorities.size) })}
             </p>
           )}
         </Section>
 
         {/* Implementation Timeline */}
-        <Section title="Implementation Timeline" required badge="ALIGNMENT · 5%">
+        <Section title={t("Implementation Timeline")} required badge={t("ALIGNMENT · 5%")}>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>
-            Select your city's preferred implementation horizon. Actions whose timeline matches your preference receive a higher alignment score.
+            {t("Select your city's preferred implementation horizon. Actions whose timeline matches your preference receive a higher alignment score.")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {TIMELINE_OPTIONS.map((opt) => {
@@ -324,7 +329,10 @@ export function StrategicPreferences({ params }: Props) {
                     )}
                   </div>
                   <div style={{ fontSize: "13px", fontWeight: on ? "600" : "400", color: on ? "#001EA7" : "#111827" }}>
-                    {opt.label}
+                    {t(opt.label)}
+                    {opt.value === "short" && <InfoTip text={DEFS.timelineShort} />}
+                    {opt.value === "medium" && <InfoTip text={DEFS.timelineMedium} />}
+                    {opt.value === "long" && <InfoTip text={DEFS.timelineLong} />}
                   </div>
                 </button>
               );
@@ -333,14 +341,14 @@ export function StrategicPreferences({ params }: Props) {
         </Section>
 
         {/* Actions to Exclude — structured */}
-        <Section title="Actions to Exclude" badge="OPTIONAL">
+        <Section title={t("Actions to Exclude")} badge={t("OPTIONAL")}>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 18px" }}>
-            Specify which types of actions your city wants to exclude from the ranking. In the pre-flight summary, you will be able to review and confirm which specific actions are proposed for exclusion before running the ranking.
+            {t("Specify which types of actions your city wants to exclude from the ranking. In the pre-flight summary, you will be able to review and confirm which specific actions are proposed for exclusion before running the ranking.")}
           </p>
 
           {/* Exclude by sector */}
-          <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 4px" }}>Exclude by sector</p>
-          <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 10px" }}>All actions belonging to these sectors will be proposed for exclusion.</p>
+          <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 4px" }}>{t("Exclude by sector")}</p>
+          <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 10px" }}>{t("All actions belonging to these sectors will be proposed for exclusion.")}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "8px" }}>
             {ALL_SECTORS.map((s) => {
               const on = excludedSectors.has(s);
@@ -360,21 +368,21 @@ export function StrategicPreferences({ params }: Props) {
                     transition: "all 0.12s",
                   }}
                 >
-                  {s}
+                  {t(s)}
                 </button>
               );
             })}
           </div>
           {excludedSectors.size > 0 && (
             <p style={{ fontSize: "12px", color: "#DC2626", margin: "0 0 18px", fontWeight: "500" }}>
-              {excludedSectors.size} sector{excludedSectors.size !== 1 ? "s" : ""} marked for exclusion
+              {t(excludedSectors.size !== 1 ? "{n} sectors marked for exclusion" : "{n} sector marked for exclusion", { n: String(excludedSectors.size) })}
             </p>
           )}
           {excludedSectors.size === 0 && <div style={{ marginBottom: "18px" }} />}
 
           {/* Exclude by co-benefit impact */}
-          <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 4px" }}>Exclude by co-benefit impact</p>
-          <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 10px" }}>Actions that have a negative effect on the selected co-benefits will be proposed for exclusion.</p>
+          <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 4px" }}>{t("Exclude by co-benefit impact")}</p>
+          <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 10px" }}>{t("Actions that have a negative effect on the selected co-benefits will be proposed for exclusion.")}</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "8px" }}>
             {CO_BENEFITS.map(({ key, label }) => {
               const on = excludedCoBenefits.has(key);
@@ -405,7 +413,7 @@ export function StrategicPreferences({ params }: Props) {
                     {on && <span style={{ color: "white", fontSize: "11px", lineHeight: 1 }}>✓</span>}
                   </span>
                   <span style={{ fontSize: "13px", fontWeight: on ? "600" : "400", color: on ? "#DC2626" : "#374151" }}>
-                    {label}
+                    {t(label)}
                   </span>
                 </button>
               );
@@ -413,22 +421,22 @@ export function StrategicPreferences({ params }: Props) {
           </div>
           {excludedCoBenefits.size > 0 && (
             <p style={{ fontSize: "12px", color: "#DC2626", margin: "0 0 18px", fontWeight: "500" }}>
-              {excludedCoBenefits.size} co-benefit{excludedCoBenefits.size !== 1 ? "s" : ""} selected — actions with negative impact on these will be proposed for exclusion
+              {t(excludedCoBenefits.size !== 1 ? "{n} co-benefits selected — actions with negative impact on these will be proposed for exclusion" : "{n} co-benefit selected — actions with negative impact on these will be proposed for exclusion", { n: String(excludedCoBenefits.size) })}
             </p>
           )}
           {excludedCoBenefits.size === 0 && <div style={{ marginBottom: "18px" }} />}
 
           {/* Additional exclusion criteria */}
           <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 4px" }}>
-            Additional exclusion criteria <span style={{ fontWeight: "400", textTransform: "none", letterSpacing: 0, color: "#9CA3AF" }}>(optional)</span>
+            {t("Additional exclusion criteria")} <span style={{ fontWeight: "400", textTransform: "none", letterSpacing: 0, color: "#9CA3AF" }}>{t("(optional)")}</span>
           </p>
           <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 8px" }}>
-            Describe any other actions to exclude — for example, actions already under way, politically infeasible, or outside your mandate.
+            {t("Describe any other actions to exclude — for example, actions already under way, politically infeasible, or outside your mandate.")}
           </p>
           <textarea
             value={excludeText}
             onChange={(e) => setExcludeText(e.target.value)}
-            placeholder="Do not include actions related to electric vehicles or electric mobility"
+            placeholder={t("Do not include actions related to electric vehicles or electric mobility")}
             rows={3}
             style={{
               width: "100%",
@@ -449,13 +457,13 @@ export function StrategicPreferences({ params }: Props) {
           />
           {excludeText.trim() && (
             <p style={{ fontSize: "12px", color: "#DC2626", margin: "8px 0 0", fontWeight: "500" }}>
-              Additional exclusion criteria recorded
+              {t("Additional exclusion criteria recorded")}
             </p>
           )}
 
           {!hasAnyExclusion && (
             <p style={{ fontSize: "12px", color: "#9CA3AF", margin: "12px 0 0", fontStyle: "italic" }}>
-              No exclusion criteria set — all actions will be included in the ranking.
+              {t("No exclusion criteria set — all actions will be included in the ranking.")}
             </p>
           )}
         </Section>
@@ -476,7 +484,7 @@ export function StrategicPreferences({ params }: Props) {
               cursor: canSave ? "pointer" : "not-allowed",
             }}
           >
-            {fromPreflight ? "Save & return to pre-flight →" : "Save & continue →"}
+            {t(fromPreflight ? "Save & return to pre-flight →" : "Save & continue →")}
           </button>
         </div>
       </div>
@@ -492,6 +500,7 @@ interface SectionProps {
 }
 
 function Section({ title, badge, required, children }: SectionProps) {
+  const { t } = useLanguage();
   return (
     <div style={{
       background: "white",
@@ -503,7 +512,7 @@ function Section({ title, badge, required, children }: SectionProps) {
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
         <h2 style={{ fontSize: "14px", fontWeight: "700", color: "#111827", margin: 0 }}>{title}</h2>
         {required && (
-          <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "500" }}>REQUIRED</span>
+          <span style={{ fontSize: "10px", color: "#9CA3AF", fontWeight: "500" }}>{t("REQUIRED")}</span>
         )}
         {badge && (
           <span style={{ marginLeft: "auto", fontSize: "10px", background: "#F0F9FF", color: "#0369A1", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em" }}>

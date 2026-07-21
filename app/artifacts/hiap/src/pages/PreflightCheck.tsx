@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { TriangleAlert, Zap } from "lucide-react";
 import { useLocation } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { getStepProgress, setStepProgress, type StepProgress } from "@/lib/stepProgress";
 import { callExclusionsPreview } from "@/lib/hiapApi";
+import { useLanguage } from "@/lib/i18n";
+import { InfoTip } from "@/components/InfoTip";
+import { DEFS } from "@/lib/definitions";
 import policyPlansData from "@/data/policyPlans.json";
 import actionsRaw from "@/data/actions.json";
 
@@ -213,6 +217,7 @@ function confidenceLabel(pct: number, progMap: Record<string, StepProgress>): { 
 interface Props { params: { locode: string } }
 
 export function PreflightCheck({ params }: Props) {
+  const { t } = useLanguage();
   const [, navigate] = useLocation();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
@@ -387,7 +392,7 @@ export function PreflightCheck({ params }: Props) {
       <div style={{ fontFamily: "Inter, system-ui, sans-serif", background: "#F5F5F7", minHeight: "100vh" }}>
         <Navbar />
         <div style={{ maxWidth: "1100px", margin: "80px auto", padding: "0 64px", textAlign: "center" }}>
-          <p style={{ color: "#6B7280" }}>City not found.</p>
+          <p style={{ color: "#6B7280" }}>{t("City not found.")}</p>
         </div>
       </div>
     );
@@ -414,7 +419,7 @@ export function PreflightCheck({ params }: Props) {
     socioeconomic: progMap["socioeconomic"]?.sub ?? "",
     regulations:   progMap["regulations"]?.sub ?? "",
     strategic:     strategicDetail,
-    policy:        progMap["policy"]?.sub ?? "Optional — skipped",
+    policy:        progMap["policy"]?.sub ?? t("Optional — skipped"),
   };
 
   return (
@@ -426,15 +431,15 @@ export function PreflightCheck({ params }: Props) {
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "16px 64px 18px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>Cities</button>
+            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>{t("Cities")}</button>
             <span>›</span>
             <button onClick={() => navigate(`/city/${citySlug}`)} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", fontSize: "12px", cursor: "pointer", textDecoration: "underline", textDecorationColor: "#D1D5DB" }}>{city.name}</button>
             <span>›</span>
-            <span style={{ color: "#374151" }}>Pre-flight Check</span>
+            <span style={{ color: "#374151" }}>{t("Pre-flight Check")}</span>
           </div>
-          <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>Pre-flight Summary</h1>
+          <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>{t("Pre-flight Summary")}</h1>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-            Review data completeness before generating action recommendations for {city.name}.
+            {t("Review data completeness before generating action recommendations for {name}.", { name: city.name })}
           </p>
         </div>
       </div>
@@ -444,7 +449,7 @@ export function PreflightCheck({ params }: Props) {
 
           {/* ── Left: Data completeness ── */}
           <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "22px 24px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-            <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 18px" }}>Data completeness</h2>
+            <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 18px" }}>{t("Data completeness")}</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {STEPS.map((step, i) => {
                 const prog = progMap[step.key] ?? { visited: false };
@@ -461,14 +466,14 @@ export function PreflightCheck({ params }: Props) {
                     borderBottom: i < STEPS.length - 1 ? "1px solid #F3F4F6" : "none",
                   }}>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "5px" }}>{step.label}</div>
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#111827", marginBottom: "5px" }}>{t(step.label)}</div>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                         <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 7px", borderRadius: "4px", background: ss.bg, color: ss.text, border: `1px solid ${ss.border}`, letterSpacing: "0.04em" }}>
-                          {status}
+                          {t(status)}
                         </span>
                         {detail && (
                           <span style={{ fontSize: "12px", color: isPartial ? "#B45309" : isNotEntered ? "#9CA3AF" : "#6B7280", display: "flex", alignItems: "center", gap: "4px" }}>
-                            {isPartial && <span style={{ fontSize: "13px" }}>⚠</span>}
+                            {isPartial && <TriangleAlert size={13} color="#B45309" style={{ flexShrink: 0 }} />}
                             {detail}
                           </span>
                         )}
@@ -478,7 +483,7 @@ export function PreflightCheck({ params }: Props) {
                       onClick={() => navigate(`/city/${citySlug}/${step.route}?from=preflight`)}
                       style={{ fontSize: "11px", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0, flexShrink: 0, marginTop: "2px", textDecoration: "underline", textDecorationColor: "#C7D2FE" }}
                     >
-                      {status === "COMPLETE" ? "Edit" : "Enter data"}
+                      {status === "COMPLETE" ? t("Edit") : t("Enter data")}
                     </button>
                   </div>
                 );
@@ -491,7 +496,7 @@ export function PreflightCheck({ params }: Props) {
 
             {/* Model confidence */}
             <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>Model confidence</h2>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>{t("Model confidence")}<InfoTip text={DEFS.modelConfidence} /></h2>
 
               <div style={{ position: "relative", marginBottom: "8px" }}>
                 <div style={{ height: "8px", borderRadius: "5px", background: "linear-gradient(to right, #F23D33 0%, #F9A200 40%, #16A34A 100%)", marginBottom: "4px" }} />
@@ -499,28 +504,28 @@ export function PreflightCheck({ params }: Props) {
                   <div style={{ width: "14px", height: "14px", borderRadius: "50%", background: confColor, border: "2px solid white", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px" }}>
-                  <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Low</span>
-                  <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Moderate</span>
-                  <span style={{ fontSize: "10px", color: "#9CA3AF" }}>High</span>
+                  <span style={{ fontSize: "10px", color: "#9CA3AF" }}>{t("Low")}</span>
+                  <span style={{ fontSize: "10px", color: "#9CA3AF" }}>{t("Moderate")}</span>
+                  <span style={{ fontSize: "10px", color: "#9CA3AF" }}>{t("High")}</span>
                 </div>
               </div>
 
               <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginTop: "12px" }}>
                 <span style={{ fontSize: "36px", fontWeight: "700", color: confColor, lineHeight: "1", flexShrink: 0 }}>{confidence}%</span>
-                <span style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", paddingTop: "4px" }}>{confLabel}</span>
+                <span style={{ fontSize: "12px", color: "#6B7280", lineHeight: "1.5", paddingTop: "4px" }}>{t(confLabel)}</span>
               </div>
 
               {confHint && (
                 <div style={{ marginTop: "12px", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "7px", padding: "10px 12px", fontSize: "12px", color: "#B45309", display: "flex", gap: "6px", alignItems: "flex-start" }}>
-                  <span style={{ flexShrink: 0 }}>⚠</span>
-                  <span>{confHint}</span>
+                  <TriangleAlert size={14} color="#B45309" style={{ flexShrink: 0 }} />
+                  <span>{t(confHint)}</span>
                 </div>
               )}
             </div>
 
             {/* Pilot data availability */}
             <div style={{ background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>Pilot data availability</h2>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>{t("Pilot data availability")}</h2>
               <DataRow label="Impact"      dots={pilot.impact.dots}      total={3} ratingLabel={pilot.impact.label}      color={pilot.impact.color} />
               <DataRow label="Alignment"   dots={pilot.alignment.dots}   total={3} ratingLabel={pilot.alignment.label}   color={pilot.alignment.color} />
               <DataRow label="Feasibility" dots={pilot.feasibility.dots} total={3} ratingLabel={pilot.feasibility.label} color={pilot.feasibility.color} />
@@ -531,21 +536,21 @@ export function PreflightCheck({ params }: Props) {
         {/* ── Scoring Weights ── */}
         <div style={{ marginTop: "20px", background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "22px 24px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
-            <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: 0 }}>Scoring Weights</h2>
+            <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: 0 }}>{t("Scoring Weights")}</h2>
             {isCustomWeights && (
               <span style={{ fontSize: "11px", color: "#F59E0B", fontWeight: "600", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "5px", padding: "2px 8px" }}>
-                Custom weights active
+                {t("Custom weights active")}
               </span>
             )}
             <span style={{ marginLeft: "auto", fontSize: "10px", background: "#F0F9FF", color: "#0369A1", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em" }}>
-              OPTIONAL
+              {t("OPTIONAL")}
             </span>
           </div>
           <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 4px" }}>
-            Adjust how much each pillar contributes to the final ranking. Moving one slider redistributes the remainder proportionally across the other two.
+            {t("Adjust how much each pillar contributes to the final ranking. Moving one slider redistributes the remainder proportionally across the other two.")}
           </p>
           <p style={{ fontSize: "12px", color: "#9CA3AF", margin: "0 0 20px" }}>
-            Default weights follow the MEED+ HIAP methodology: Impact {DEFAULT_WEIGHTS.impact}% · Alignment {DEFAULT_WEIGHTS.alignment}% · Feasibility {DEFAULT_WEIGHTS.feasibility}%
+            {t("Default weights follow the Aceleradora Local de Mitigación methodology: Impact {impact}% · Alignment {alignment}% · Feasibility {feasibility}%", { impact: String(DEFAULT_WEIGHTS.impact), alignment: String(DEFAULT_WEIGHTS.alignment), feasibility: String(DEFAULT_WEIGHTS.feasibility) })}
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "24px" }}>
@@ -581,7 +586,7 @@ export function PreflightCheck({ params }: Props) {
               background: "#F0FDF4", border: "1px solid #BBF7D0",
               borderRadius: "6px", padding: "4px 12px",
             }}>
-              Total: {weights.impact + weights.alignment + weights.feasibility}%
+              {t("Total: {n}%", { n: String(weights.impact + weights.alignment + weights.feasibility) })}
             </div>
             {isCustomWeights && (
               <button
@@ -594,7 +599,7 @@ export function PreflightCheck({ params }: Props) {
                 onMouseOver={(e) => { (e.target as HTMLElement).style.borderColor = "#9CA3AF"; }}
                 onMouseOut={(e) => { (e.target as HTMLElement).style.borderColor = "#E5E7EB"; }}
               >
-                Reset to defaults
+                {t("Reset to defaults")}
               </button>
             )}
           </div>
@@ -604,36 +609,36 @@ export function PreflightCheck({ params }: Props) {
         {hasExclusionCriteria && (
           <div style={{ marginTop: "20px", background: "white", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "22px 24px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
-              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: 0 }}>Exclusion Review</h2>
-              <span style={{ marginLeft: "auto", fontSize: "10px", background: "#FEF2F2", color: "#DC2626", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em", border: "1px solid #FECACA" }}>OPTIONAL</span>
+              <h2 style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: 0 }}>{t("Exclusion Review")}</h2>
+              <span style={{ marginLeft: "auto", fontSize: "10px", background: "#FEF2F2", color: "#DC2626", padding: "2px 8px", borderRadius: "4px", fontWeight: "600", letterSpacing: "0.03em", border: "1px solid #FECACA" }}>{t("OPTIONAL")}</span>
             </div>
             <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>
-              You have set exclusion preferences in Strategic Preferences. Preview which actions would be excluded and confirm your selection before generating the ranking.
+              {t("You have set exclusion preferences in Strategic Preferences. Preview which actions would be excluded and confirm your selection before generating the ranking.")}
             </p>
 
             {/* Summary card */}
             <div style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "14px 16px", marginBottom: "14px" }}>
               <div style={{ fontSize: "13px", color: "#374151", marginBottom: "5px" }}>
-                <strong>Sectors to exclude:</strong>{" "}
-                {exclusionForm!.excludedSectors.length > 0 ? exclusionForm!.excludedSectors.join(", ") : <span style={{ color: "#9CA3AF" }}>None</span>}
+                <strong>{t("Sectors to exclude:")}</strong>{" "}
+                {exclusionForm!.excludedSectors.length > 0 ? exclusionForm!.excludedSectors.map(s => t(s)).join(", ") : <span style={{ color: "#9CA3AF" }}>{t("None")}</span>}
               </div>
               <div style={{ fontSize: "13px", color: "#374151", marginBottom: "5px" }}>
-                <strong>Co-benefits (negative impact):</strong>{" "}
+                <strong>{t("Co-benefits (negative impact):")}</strong>{" "}
                 {exclusionForm!.excludedCoBenefits.length > 0
-                  ? exclusionForm!.excludedCoBenefits.map(k => CO_BENEFIT_LABELS[k] ?? k).join(", ")
-                  : <span style={{ color: "#9CA3AF" }}>None</span>}
+                  ? exclusionForm!.excludedCoBenefits.map(k => t(CO_BENEFIT_LABELS[k] ?? k)).join(", ")
+                  : <span style={{ color: "#9CA3AF" }}>{t("None")}</span>}
               </div>
               <div style={{ fontSize: "13px", color: "#374151", marginBottom: "10px" }}>
-                <strong>Free text:</strong>{" "}
+                <strong>{t("Free text:")}</strong>{" "}
                 {exclusionForm!.excludeText.trim()
                   ? <em>"{exclusionForm!.excludeText.trim()}"</em>
-                  : <span style={{ color: "#9CA3AF" }}>None</span>}
+                  : <span style={{ color: "#9CA3AF" }}>{t("None")}</span>}
               </div>
               <button
                 onClick={() => navigate(`/city/${citySlug}/strategic?from=preflight`)}
                 style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}
               >
-                Edit exclusion criteria →
+                {t("Edit exclusion criteria →")}
               </button>
             </div>
 
@@ -642,15 +647,17 @@ export function PreflightCheck({ params }: Props) {
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "10px 14px", marginBottom: "12px" }}>
                 <div>
                   <span style={{ fontSize: "13px", fontWeight: "700", color: "#DC2626" }}>
-                    {confirmedIds.length} action{confirmedIds.length !== 1 ? "s" : ""} confirmed for exclusion
+                    {confirmedIds.length !== 1
+                      ? t("{n} actions confirmed for exclusion", { n: String(confirmedIds.length) })
+                      : t("{n} action confirmed for exclusion", { n: String(confirmedIds.length) })}
                   </span>
-                  <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>These will be removed from the ranking when you generate recommendations.</div>
+                  <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>{t("These will be removed from the ranking when you generate recommendations.")}</div>
                 </div>
                 <button
                   onClick={clearExclusions}
                   style={{ fontSize: "12px", color: "#6B7280", background: "white", border: "1px solid #E5E7EB", borderRadius: "6px", padding: "5px 12px", cursor: "pointer", flexShrink: 0, marginLeft: "12px" }}
                 >
-                  Clear
+                  {t("Clear")}
                 </button>
               </div>
             )}
@@ -662,7 +669,7 @@ export function PreflightCheck({ params }: Props) {
                 disabled={previewLoading}
                 style={{ fontSize: "13px", fontWeight: "600", color: "#374151", background: "white", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "10px 18px", cursor: previewLoading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: "6px", opacity: previewLoading ? 0.7 : 1 }}
               >
-                {previewLoading ? "Loading preview…" : "Preview proposed exclusions →"}
+                {previewLoading ? t("Loading preview…") : t("Preview proposed exclusions →")}
               </button>
             )}
 
@@ -671,15 +678,15 @@ export function PreflightCheck({ params }: Props) {
               <div>
                 {previewFallback && (
                   <div style={{ fontSize: "12px", color: "#B45309", background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "6px", padding: "6px 10px", marginBottom: "10px" }}>
-                    Preview generated locally (backend unavailable). Free-text matching is approximate.
+                    {t("Preview generated locally (backend unavailable). Free-text matching is approximate.")}
                   </div>
                 )}
                 <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>
-                  <strong>{proposals.length} action{proposals.length !== 1 ? "s" : ""}</strong> matched your exclusion criteria. Select which ones to exclude from the ranking.
+                  <strong>{proposals.length !== 1 ? t("{n} actions", { n: String(proposals.length) }) : t("{n} action", { n: String(proposals.length) })}</strong> {t("matched your exclusion criteria. Select which ones to exclude from the ranking.")}
                 </p>
                 <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
-                  <button onClick={() => setPreviewSelected(new Set(proposals.map(p => p.actionId)))} style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}>Select all</button>
-                  <button onClick={() => setPreviewSelected(new Set())} style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}>Deselect all</button>
+                  <button onClick={() => setPreviewSelected(new Set(proposals.map(p => p.actionId)))} style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}>{t("Select all")}</button>
+                  <button onClick={() => setPreviewSelected(new Set())} style={{ fontSize: "12px", color: "#001EA7", background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline" }}>{t("Deselect all")}</button>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "6px", maxHeight: "360px", overflowY: "auto", marginBottom: "14px" }}>
                   {proposals.map(p => {
@@ -721,7 +728,7 @@ export function PreflightCheck({ params }: Props) {
                           <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "3px" }}>
                             {p.reasons.map((r, i) => (
                               <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginRight: "6px" }}>
-                                Action has negative impact on selected co-benefit(s): {r.label.toLowerCase()}
+                                {t("Action has negative impact on selected co-benefit(s): {label}", { label: r.label.toLowerCase() })}
                               </span>
                             ))}
                           </div>
@@ -730,7 +737,7 @@ export function PreflightCheck({ params }: Props) {
                               <span key={i} style={{ fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "4px",
                                 background: r.type === "Sector" ? "#EEF2FF" : r.type === "Co-benefit" ? "#EEF2FF" : "#FEF3C7",
                                 color: r.type === "Free text" ? "#92400E" : "#4338CA",
-                              }}>{r.type}</span>
+                              }}>{t(r.type)}</span>
                             ))}
                           </div>
                         </div>
@@ -743,10 +750,12 @@ export function PreflightCheck({ params }: Props) {
                     onClick={confirmExclusions}
                     style={{ fontSize: "13px", fontWeight: "700", color: "white", background: "#DC2626", border: "none", borderRadius: "8px", padding: "11px 22px", cursor: "pointer" }}
                   >
-                    Confirm {previewSelected.size} exclusion{previewSelected.size !== 1 ? "s" : ""}
+                    {previewSelected.size !== 1
+                      ? t("Confirm {n} exclusions", { n: String(previewSelected.size) })
+                      : t("Confirm {n} exclusion", { n: String(previewSelected.size) })}
                   </button>
-                  <button onClick={() => setShowPreview(false)} style={{ fontSize: "13px", color: "#6B7280", background: "none", border: "none", padding: 0, cursor: "pointer" }}>Cancel</button>
-                  <span style={{ marginLeft: "auto", fontSize: "12px", color: "#6B7280" }}>{previewSelected.size} of {proposals.length} selected</span>
+                  <button onClick={() => setShowPreview(false)} style={{ fontSize: "13px", color: "#6B7280", background: "none", border: "none", padding: 0, cursor: "pointer" }}>{t("Cancel")}</button>
+                  <span style={{ marginLeft: "auto", fontSize: "12px", color: "#6B7280" }}>{t("{sel} of {total} selected", { sel: String(previewSelected.size), total: String(proposals.length) })}</span>
                 </div>
               </div>
             )}
@@ -761,8 +770,8 @@ export function PreflightCheck({ params }: Props) {
             <div style={{ marginTop: "20px" }}>
               {!canGenerate && (
                 <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "12px 16px", fontSize: "13px", color: "#B91C1C", marginBottom: "12px", display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                  <span style={{ flexShrink: 0, fontWeight: "700" }}>⚠</span>
-                  <span><strong>Emissions data required.</strong> Confirm at least one emissions sector before generating recommendations. Without it, there is no city-specific data to rank actions against.</span>
+                  <TriangleAlert size={14} color="#B91C1C" style={{ flexShrink: 0 }} />
+                  <span><strong>{t("Emissions data required.")}</strong> {t("Confirm at least one emissions sector before generating recommendations. Without it, there is no city-specific data to rank actions against.")}</span>
                 </div>
               )}
               <button
@@ -780,8 +789,8 @@ export function PreflightCheck({ params }: Props) {
                   transition: "all 0.15s",
                 }}
               >
-                <span style={{ fontSize: "16px" }}>⚡</span>
-                {canGenerate ? "Generate recommendations — confirm you're ready" : "Enter emissions data to continue"}
+                <Zap size={16} style={{ flexShrink: 0 }} />
+                {canGenerate ? t("Generate recommendations — confirm you're ready") : t("Enter emissions data to continue")}
               </button>
             </div>
           );
@@ -803,13 +812,14 @@ interface WeightSliderProps {
 }
 
 function WeightSlider({ label, description, value, defaultValue, color, onChange }: WeightSliderProps) {
+  const { t } = useLanguage();
   const isDefault = value === defaultValue;
   return (
     <div>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "6px" }}>
         <div>
-          <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{label}</span>
-          <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px" }}>{description}</div>
+          <span style={{ fontSize: "13px", fontWeight: "700", color: "#111827" }}>{t(label)}</span>
+          <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "1px" }}>{t(description)}</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0, marginLeft: "8px" }}>
           {!isDefault && (
@@ -862,7 +872,7 @@ function WeightSlider({ label, description, value, defaultValue, color, onChange
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "2px" }}>
         <span style={{ fontSize: "10px", color: "#D1D5DB" }}>5%</span>
         <span style={{ fontSize: "10px", color: "#9CA3AF" }}>
-          Default: {defaultValue}%{!isDefault && <span style={{ color, marginLeft: "4px" }}>· adjusted</span>}
+          {t("Default: {n}%", { n: String(defaultValue) })}{!isDefault && <span style={{ color, marginLeft: "4px" }}>{t("· adjusted")}</span>}
         </span>
         <span style={{ fontSize: "10px", color: "#D1D5DB" }}>90%</span>
       </div>
@@ -875,15 +885,16 @@ function WeightSlider({ label, description, value, defaultValue, color, onChange
 function DataRow({ label, dots, total, ratingLabel, color }: {
   label: string; dots: number; total: number; ratingLabel: string; color: string;
 }) {
+  const { t } = useLanguage();
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-      <span style={{ fontSize: "13px", color: "#374151", width: "80px", flexShrink: 0 }}>{label}</span>
+      <span style={{ fontSize: "13px", color: "#374151", width: "80px", flexShrink: 0 }}>{t(label)}</span>
       <div style={{ display: "flex", gap: "4px" }}>
         {Array.from({ length: total }).map((_, i) => (
           <span key={i} style={{ width: "14px", height: "14px", borderRadius: "50%", background: i < dots ? color : "#E5E7EB", display: "inline-block" }} />
         ))}
       </div>
-      <span style={{ fontSize: "13px", fontWeight: "600", color }}>{ratingLabel}</span>
+      <span style={{ fontSize: "13px", fontWeight: "600", color }}>{t(ratingLabel)}</span>
     </div>
   );
 }
