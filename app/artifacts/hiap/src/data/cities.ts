@@ -47,7 +47,7 @@ export const CITIES: CityData[] = [
   },
   {
     locode: 'CL01401',
-    name: 'Tocopilla',
+    name: 'Pozo Almonte',
     country: 'Chile',
     region: 'Tarapacá',
     comunaCode: 'CL01401',
