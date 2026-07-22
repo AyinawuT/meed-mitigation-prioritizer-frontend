@@ -236,6 +236,7 @@ export const recommendations: Record<string, string> = {
   "Air Quality": "Calidad del aire",
   "Water Quality": "Calidad del agua",
   "Habitat & Biodiversity": "Hábitat y biodiversidad",
+  "Habitat": "Hábitat",
   "Housing": "Vivienda",
   "Stakeholder Engagement": "Participación de actores",
   "Cost of Living": "Costo de vida",

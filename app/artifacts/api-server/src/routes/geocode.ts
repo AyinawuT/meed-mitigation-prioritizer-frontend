@@ -5,6 +5,33 @@ const router = Router();
 
 const cache = new Map<string, { lat: number; lon: number } | null>();
 
+// Rank a Photon feature by how likely it is to be the actual municipality
+// (comuna) rather than the surrounding region/province. Photon frequently
+// returns the metropolitan region first and omits country_code, so a naive
+// "first CL hit" pick lands on the region centroid — e.g. Santiago resolved
+// to "Santiago Metropolitan Region" instead of the Santiago comuna.
+const MUNICIPAL = new Set(["city", "town", "municipality", "village"]);
+const REGIONAL = new Set(["state", "region", "province", "county", "district"]);
+
+function scoreFeature(f: any, name: string): number {
+  const p = f?.properties ?? {};
+  const key = String(p.osm_key ?? "").toLowerCase();
+  const val = String(p.osm_value ?? "").toLowerCase();
+  const type = String(p.type ?? "").toLowerCase();
+  let score = 0;
+
+  if (key === "place" && MUNICIPAL.has(val)) score += 100;
+  else if (MUNICIPAL.has(type)) score += 90;
+  else if (key === "boundary" && val === "administrative") score += 40;
+
+  if (REGIONAL.has(val) || REGIONAL.has(type)) score -= 100;
+
+  if (p.country_code === "CL" || String(p.country ?? "").toLowerCase().includes("chile")) score += 20;
+  if (String(p.name ?? "").toLowerCase() === name.toLowerCase()) score += 30;
+
+  return score;
+}
+
 function fetchPhoton(name: string, region: string): Promise<{ lat: number; lon: number } | null> {
   return new Promise((resolve) => {
     const q = encodeURIComponent(`${name} ${region} Chile`);
@@ -17,15 +44,23 @@ function fetchPhoton(name: string, region: string): Promise<{ lat: number; lon: 
         try {
           const json = JSON.parse(data);
           const features: any[] = json.features ?? [];
-          const match =
-            features.find((f) => f.properties?.country_code === "CL") ??
-            features[0];
-          if (match) {
-            const [lon, lat] = match.geometry.coordinates as [number, number];
-            resolve({ lat, lon });
-          } else {
+          if (features.length === 0) {
             resolve(null);
+            return;
           }
+          // Pick the best-scored feature; ties keep Photon's relevance order
+          // (strict > never replaces an equal-scored earlier feature).
+          let best = features[0];
+          let bestScore = -Infinity;
+          for (const f of features) {
+            const s = scoreFeature(f, name);
+            if (s > bestScore) {
+              bestScore = s;
+              best = f;
+            }
+          }
+          const [lon, lat] = best.geometry.coordinates as [number, number];
+          resolve({ lat, lon });
         } catch {
           resolve(null);
         }

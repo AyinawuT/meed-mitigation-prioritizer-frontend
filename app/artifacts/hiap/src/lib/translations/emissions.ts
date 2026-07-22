@@ -15,6 +15,7 @@ export const emissions: Record<string, string> = {
   "Incineration and open burning": "Incineración y quema a cielo abierto",
   "Wastewater treatment and discharge": "Tratamiento y descarga de aguas residuales",
   "Emissions from industrial processes occurring within the city boundary": "Emisiones de procesos industriales que ocurren dentro del límite de la ciudad",
+  "Emissions from product use occurring within the city boundary": "Emisiones del uso de productos que ocurre dentro del límite de la ciudad",
   "Emissions from livestock within the city boundary": "Emisiones del ganado dentro del límite de la ciudad",
   "Emissions from land within the city boundary": "Emisiones del suelo dentro del límite de la ciudad",
   "Emissions from aggregate sources and non-CO2 emission sources on land within the city boundary": "Emisiones de fuentes agregadas y de fuentes distintas al CO2 en el suelo dentro del límite de la ciudad",
