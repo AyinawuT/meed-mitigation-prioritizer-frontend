@@ -1764,56 +1764,13 @@ export function Recommendations({ params }: Props) {
       {/* Page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          {/* Breadcrumb */}
-          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>
-              {t("Cities")}
-            </button>
-            {" › "}{cityName}{" › "}{t("Mitigation actions")}
-          </div>
-
-          {/* Title row */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
-            <div>
-              <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
-                {t("Top mitigation actions for {name}", { name: cityName })}
-              </h1>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-                {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
-              </p>
-            </div>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", flexShrink: 0 }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
-              <button
-                onClick={handleGenerateMultiple}
-                disabled={generatingIds.length > 0 || pickedIds.length === 0}
-                style={{
-                  background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
-                  color: "white", border: "none", borderRadius: "8px",
-                  padding: "10px 20px", fontSize: "12px", fontWeight: "700",
-                  cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
-                  letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
-                  display: "flex", alignItems: "center", gap: "8px",
-                  opacity: pickedIds.length === 0 ? 0.5 : 1,
-                }}
-              >
-                {generatingIds.length > 0 ? (
-                  <>
-                    <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-                    {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={14} style={{ flexShrink: 0 }} />
-                    {t("Generate multi-action report")}
-                  </>
-                )}
+          {/* Breadcrumb + page-level re-run control */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+            <div style={{ fontSize: "12px", color: "#9CA3AF", display: "flex", alignItems: "center", gap: "6px", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>
+                {t("Cities")}
               </button>
-              {pickedIds.length === 0 && (
-                <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "right", maxWidth: "220px", lineHeight: "1.4" }}>
-                  {t("Check one or more actions below to create a combined report.")}
-                </span>
-              )}
+              {" › "}{cityName}{" › "}{t("Mitigation actions")}
             </div>
 
             {/* Re-run ranking */}
@@ -1823,11 +1780,11 @@ export function Recommendations({ params }: Props) {
                 style={{
                   background: rerunOpen ? "#F5F5F7" : "white",
                   border: "1px solid #DDDDE1", borderRadius: "8px",
-                  padding: "9px 16px", fontSize: "12px", fontWeight: "600", color: "#374151",
+                  padding: "6px 12px", fontSize: "12px", fontWeight: "600", color: "#374151",
                   cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", whiteSpace: "nowrap",
                 }}
               >
-                <RotateCcw size={14} style={{ flexShrink: 0 }} /> {t("Re-run ranking")}
+                <RotateCcw size={13} style={{ flexShrink: 0 }} /> {t("Re-run ranking")}
                 <ChevronDown size={13} style={{ flexShrink: 0, opacity: 0.6 }} />
               </button>
               {rerunOpen && (
@@ -1864,6 +1821,49 @@ export function Recommendations({ params }: Props) {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Title row */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
+            <div>
+              <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
+                {t("Top mitigation actions for {name}", { name: cityName })}
+              </h1>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
+                {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
+              </p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
+              <button
+                onClick={handleGenerateMultiple}
+                disabled={generatingIds.length > 0 || pickedIds.length === 0}
+                style={{
+                  background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
+                  color: "white", border: "none", borderRadius: "8px",
+                  padding: "10px 20px", fontSize: "12px", fontWeight: "700",
+                  cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
+                  letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
+                  display: "flex", alignItems: "center", gap: "8px",
+                  opacity: pickedIds.length === 0 ? 0.5 : 1,
+                }}
+              >
+                {generatingIds.length > 0 ? (
+                  <>
+                    <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                    {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={14} style={{ flexShrink: 0 }} />
+                    {t("Generate multi-action report")}
+                  </>
+                )}
+              </button>
+              {pickedIds.length === 0 && (
+                <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "right", maxWidth: "220px", lineHeight: "1.4" }}>
+                  {t("Check one or more actions below to create a combined report.")}
+                </span>
+              )}
             </div>
           </div>
 
