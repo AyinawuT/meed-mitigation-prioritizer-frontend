@@ -82,6 +82,25 @@ export const financial: Record<string, string> = {
     "Esta acción es viable con el presupuesto propio de la ciudad — no se requiere financiamiento externo. Los fondos del sector que aparecen a continuación son fuentes opcionales que la ciudad podría utilizar si lo desea.",
   "Show all {n} sector funds >": "Mostrar los {n} fondos del sector >",
   "self-fundable": "autofinanciable",
+  // Opportunity status badges
+  "Ongoing": "En curso",
+  "Open": "Abierto",
+  "Closed": "Cerrado",
+  "Emerging": "Emergente",
+  "In rollout": "En implementación",
+  "Periodic": "Periódico",
+  // Instrument badges
+  "Grant": "Subvención",
+  "Loan": "Préstamo",
+  "Blended": "Combinado",
+  "Subsidy": "Subsidio",
+  "Co-financing": "Cofinanciamiento",
+  "Technical assistance": "Asistencia técnica",
+  // Project lifecycle badges
+  "Completed": "Completado",
+  "Financed": "Financiado",
+  "Formulated": "Formulado",
+  "In execution": "En ejecución",
   "No matched funds yet": "Aún no hay fondos coincidentes",
   "No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added.":
     "Ningún fondo catalogado en el sistema nacional de inversiones (BIP/SNI) ni en los registros de adjudicaciones coincide actualmente con esta acción. Esto se actualizará automáticamente a medida que se agreguen nuevas rondas de ejecución.",

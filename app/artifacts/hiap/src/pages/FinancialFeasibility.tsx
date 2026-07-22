@@ -193,6 +193,34 @@ function instrumentStyle(s?: string) {
   return { bg: "#F3F4F6", color: "#6B7280", label: s };
 }
 
+// ─── Enum badge labels ────────────────────────────────────────────────────────
+// The finance API returns snake_case enum values (status, instrument, lifecycle).
+// Map them to clean English labels so they read well AND resolve through t() —
+// rendered raw, they showed English (e.g. "grant", "in_rollout") in the ES UI.
+
+const OPP_STATUS_LABEL: Record<string, string> = {
+  ongoing: "Ongoing", open: "Open", closed: "Closed",
+  emerging: "Emerging", in_rollout: "In rollout", periodic: "Periodic",
+};
+const INSTRUMENT_LABEL: Record<string, string> = {
+  grant: "Grant", loan: "Loan", blended: "Blended", subsidy: "Subsidy",
+  co_financing: "Co-financing", technical_assistance: "Technical assistance",
+};
+const LIFECYCLE_LABEL: Record<string, string> = {
+  completed: "Completed", financed: "Financed",
+  formulated: "Formulated", "in-execution": "In execution",
+};
+
+// Resolve a raw enum value to its display label, falling back to a humanized
+// form (snake/kebab → spaced, capitalized) for any value not in the map.
+function enumLabel(raw: string | undefined, map: Record<string, string>): string {
+  if (!raw) return "";
+  const key = raw.toLowerCase().trim();
+  if (map[key]) return map[key];
+  const spaced = key.replace(/[_-]+/g, " ");
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
 // ─── InfoTooltip ──────────────────────────────────────────────────────────────
 
 function InfoTooltip({ text }: { text: string }) {
@@ -554,8 +582,8 @@ function DetailPane({ row, cityName, onClose }: {
                             {opp.opportunity_name ?? t("Funding opportunity")}
                           </div>
                           <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-                            {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{opp.status}</span>}
-                            {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{opp.instrument}</span>}
+                            {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.status, OPP_STATUS_LABEL))}</span>}
+                            {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.instrument, INSTRUMENT_LABEL))}</span>}
                           </div>
                         </div>
                         {opp.funder_name && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: snippet ? "4px" : 0 }}>{opp.funder_name}</div>}
@@ -622,7 +650,7 @@ function DetailPane({ row, cityName, onClose }: {
                           </div>
                           <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
                             {conf && <span style={{ fontSize: "10px", fontWeight: "600", color: conf.color, background: conf.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(conf.label)}</span>}
-                            {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{proj.lifecycle_stage.replace(/-/g, " ")}</span>}
+                            {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(proj.lifecycle_stage, LIFECYCLE_LABEL))}</span>}
                           </div>
                         </div>
                         {nameEs && nameEs !== proj.project_name && (
