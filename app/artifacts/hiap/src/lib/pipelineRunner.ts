@@ -148,6 +148,10 @@ function toSectorTags(displayNames: string[]): string[] {
 
 const VALID_TIMEFRAMES = new Set(["short", "medium", "long", "no_preference"]);
 
+// Languages requested from the prioritizer / report backend. The backend returns
+// explanations and report chapters keyed by these; the UI picks the active one.
+const SUPPORTED_LANGUAGES = ["en", "es"];
+
 // ─── Sanitize emissions ───────────────────────────────────────────────────────
 
 export function sanitizeEmissionsData(
@@ -414,7 +418,10 @@ export function adaptApiResult(
       sectorTag,
       gpcRefs,
       matchedEmissions: 0,
-      explanation: a.explanations?.en ?? "",
+      // Canonical (English) explanation plus the full per-language map; the UI
+      // renders explanationI18n[activeLanguage] and falls back to this string.
+      explanation: a.explanations?.en ?? Object.values(a.explanations ?? {})[0] ?? "",
+      explanationI18n: a.explanations ?? undefined,
       priority: score >= 0.7 ? "high" : score >= 0.4 ? "medium" : "low",
       nameI18n: local?.nameI18n,
       descriptionI18n: local?.descriptionI18n,
@@ -464,19 +471,15 @@ export function adaptApiResult(
  */
 export async function runPipelineForCity(
   locode: string,
-  options: { topN?: number; createExplanations?: boolean; language?: string } = {}
+  options: { topN?: number; createExplanations?: boolean } = {}
 ): Promise<PipelineResult> {
-  const { topN = 20, createExplanations = false, language } = options;
+  const { topN = 20, createExplanations = false } = options;
   const cityInput = buildCityInput(locode);
 
-  // Always request English (the UI reads explanations.en and translates client-side),
-  // and additionally request the selected language so the stored prioritization
-  // snapshot carries localized text for the report backend to build on.
-  const requestedLanguages =
-    language && language !== "en" ? ["en", language] : ["en"];
-
   const requestData = {
-    requestedLanguages,
+    // Request both supported languages so ranked explanations and the stored
+    // snapshot carry en + es; the UI reads explanations[activeLanguage].
+    requestedLanguages: SUPPORTED_LANGUAGES,
     topN,
     createExplanations,
     cityDataList: [cityInput],
