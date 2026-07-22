@@ -1486,11 +1486,13 @@ export function Recommendations({ params }: Props) {
     setGeneratingIds(prev => [...prev, action.actionId]);
 
     try {
-      // Generate the plan in both languages once; render the active one.
+      // Generate the plan in the active language only. The contract accepts a
+      // language list; requesting both roughly doubles backend LLM time and was
+      // tripping the gateway timeout (502/504), so we request just what we render.
       const report = await callReportOutputPlan({
         locode,
         actionId: action.actionId,
-        language: ["en", "es"],
+        language: [lang],
         prioritizationSnapshot: snapshot,
       });
       await generateAndDownloadPdf({
