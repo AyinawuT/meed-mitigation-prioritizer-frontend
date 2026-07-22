@@ -81,9 +81,11 @@ export const recommendations: Record<string, string> = {
   "Add to selection": "Agregar a la selección",
   "Remove from selection": "Quitar de la selección",
   "See more details": "Ver más detalles",
-  "Generate output for this action": "Generar resultado para esta acción",
+  "Generate action report": "Generar informe de acción",
+  "Generate multi-action report": "Generar informe de múltiples acciones",
   "Generating…": "Generando…",
   "Generating report…": "Generando informe…",
+  "Generating {n} reports…": "Generando {n} informes…",
   "{n} matched project": "{n} proyecto coincidente",
   "{n} matched projects": "{n} proyectos coincidentes",
 
@@ -196,8 +198,6 @@ export const recommendations: Record<string, string> = {
   // ── Results overview tab ──────────────────────────────────────────────
   "Results overview": "Vista general de resultados",
   "Context breakdown": "Desglose del contexto",
-  "Generate output for {n} actions": "Generar resultado para {n} acciones",
-  "Generate output for selected actions": "Generar resultado para las acciones seleccionadas",
   "Top actions for {name}": "Principales acciones para {name}",
   "Highest-ranked actions based on {name}'s data and priorities. Check a card to select it for output generation.": "Acciones mejor clasificadas según los datos y prioridades de {name}. Marca una tarjeta para seleccionarla y generar su resultado.",
   "See full ranking ↓": "Ver ranking completo ↓",
@@ -220,8 +220,8 @@ export const recommendations: Record<string, string> = {
   "Full ranking": "Ranking completo",
   "{n} actions ranked": "{n} acciones clasificadas",
   "Next steps": "Próximos pasos",
-  "{n} actions selected for a combined generated output. Use \"Generate output for this action\" on any single card for a one-off note instead.": "{n} acciones seleccionadas para un resultado combinado. Usa \"Generar resultado para esta acción\" en una tarjeta individual para una nota puntual.",
-  "Select more than one action for a combined generated output, or use \"Generate output for this action\" on any single card for a one-off note instead.": "Selecciona más de una acción para un resultado combinado, o usa \"Generar resultado para esta acción\" en una tarjeta individual para una nota puntual.",
+  "{n} actions selected for a combined generated output. Use \"Generate action report\" on any single card for a one-off note instead.": "{n} acciones seleccionadas para un resultado combinado. Usa \"Generar informe de acción\" en una tarjeta individual para una nota puntual.",
+  "Select more than one action for a combined generated output, or use \"Generate action report\" on any single card for a one-off note instead.": "Selecciona más de una acción para un resultado combinado, o usa \"Generar informe de acción\" en una tarjeta individual para una nota puntual.",
   "Browse full ranking ↓": "Explorar ranking completo ↓",
   // timeline values (TIMELINE_LABEL)
   "Less than 5 years": "Menos de 5 años",

@@ -64,7 +64,7 @@ interface Props { params: { locode: string } }
 
 export function Processing({ params }: Props) {
   const [, navigate] = useLocation();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const urlLocode = params.locode ?? "";
   const locode = urlLocode.replace("-", " ");
   const city = CITIES.find(c => c.locode.toLowerCase() === locode.toLowerCase());
@@ -98,7 +98,7 @@ export function Processing({ params }: Props) {
   useEffect(() => {
     async function run() {
       try {
-        await runPipelineForCity(locode, { topN: 20, createExplanations: true });
+        await runPipelineForCity(locode, { topN: 20, createExplanations: true, language: lang });
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         setPipelineError(msg || "Prioritization API error");

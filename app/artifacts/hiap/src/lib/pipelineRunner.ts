@@ -464,13 +464,19 @@ export function adaptApiResult(
  */
 export async function runPipelineForCity(
   locode: string,
-  options: { topN?: number; createExplanations?: boolean } = {}
+  options: { topN?: number; createExplanations?: boolean; language?: string } = {}
 ): Promise<PipelineResult> {
-  const { topN = 20, createExplanations = false } = options;
+  const { topN = 20, createExplanations = false, language } = options;
   const cityInput = buildCityInput(locode);
 
+  // Always request English (the UI reads explanations.en and translates client-side),
+  // and additionally request the selected language so the stored prioritization
+  // snapshot carries localized text for the report backend to build on.
+  const requestedLanguages =
+    language && language !== "en" ? ["en", language] : ["en"];
+
   const requestData = {
-    requestedLanguages: ["en"],
+    requestedLanguages,
     topN,
     createExplanations,
     cityDataList: [cityInput],
