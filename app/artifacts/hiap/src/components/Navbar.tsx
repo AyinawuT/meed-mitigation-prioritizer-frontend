@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
-import { Languages, ChevronDown, Check } from "lucide-react";
+import { Languages, ChevronDown, Check, Bell } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+
+const NOTIFY_FORM_URL = "https://forms.gle/DjFiV4jezipPm4gj7";
 
 interface NavbarProps {
   cityName?: string;
@@ -11,7 +13,17 @@ export function Navbar({ cityName }: NavbarProps) {
   const [, navigate] = useLocation();
   const { lang, setLang, t } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [notifyOpen, setNotifyOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!notifyOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setNotifyOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [notifyOpen]);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -22,6 +34,7 @@ export function Navbar({ cityName }: NavbarProps) {
   }, []);
 
   return (
+    <>
     <nav
       style={{
         background: "#001EA7",
@@ -94,6 +107,31 @@ export function Navbar({ cityName }: NavbarProps) {
           style={{ background: "none", border: "none", padding: 0, color: "#93C5FD", fontSize: "13px", cursor: "pointer" }}
         >
           {t("About")}
+        </button>
+
+        {/* Notify — highlighted call-to-action */}
+        <button
+          onClick={() => setNotifyOpen(true)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            background: "#16A34A",
+            border: "none",
+            borderRadius: "999px",
+            padding: "6px 14px",
+            color: "white",
+            fontSize: "13px",
+            fontWeight: "600",
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+            transition: "background 0.15s",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#15803D")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#16A34A")}
+        >
+          <Bell size={14} style={{ flexShrink: 0 }} />
+          {t("Get notified")}
         </button>
 
         {/* Language switcher */}
@@ -183,5 +221,101 @@ export function Navbar({ cityName }: NavbarProps) {
         )}
       </div>
     </nav>
+
+    {/* Notify modal */}
+    {notifyOpen && (
+      <div
+        onClick={() => setNotifyOpen(false)}
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(15,23,42,0.55)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "24px",
+          zIndex: 200,
+          fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+        }}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: "relative",
+            background: "white",
+            borderRadius: "16px",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+            maxWidth: "420px",
+            width: "100%",
+            padding: "32px 32px 28px",
+            textAlign: "center",
+          }}
+        >
+          {/* Close */}
+          <button
+            onClick={() => setNotifyOpen(false)}
+            aria-label={t("Close")}
+            style={{
+              position: "absolute",
+              top: "14px",
+              right: "16px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "#9CA3AF",
+              fontSize: "20px",
+              lineHeight: 1,
+              padding: "4px",
+            }}
+          >
+            ×
+          </button>
+
+          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "44px", height: "44px", borderRadius: "12px", background: "#DCFCE7", marginBottom: "16px" }}>
+            <Bell size={22} color="#16A34A" />
+          </div>
+
+          <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#111827", margin: "0 0 10px" }}>
+            {t("Stay in the loop")}
+          </h2>
+
+          <p style={{ fontSize: "13.5px", color: "#4B5563", lineHeight: "1.6", margin: "0 0 20px" }}>
+            {t("We're building the Aceleradora Local de Mitigación alongside the cities that use it. Scan the code — or open the ")}
+            <a
+              href={NOTIFY_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#001EA7", fontWeight: "600", textDecoration: "underline" }}
+            >
+              {t("form")}
+            </a>
+            {t(" — to hear first about new features, city releases and product updates.")}
+          </p>
+
+          {/* QR */}
+          <a
+            href={NOTIFY_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-block", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "14px", background: "white" }}
+          >
+            <img
+              src="/notify-form-qr.svg"
+              alt={t("QR code linking to the updates form")}
+              width={168}
+              height={168}
+              style={{ display: "block", width: "168px", height: "168px" }}
+            />
+          </a>
+
+          <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "12px" }}>
+            {t("Scan with your phone camera to open the form")}
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
