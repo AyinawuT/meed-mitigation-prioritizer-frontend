@@ -1,5 +1,5 @@
 import jsPDF from "jspdf";
-import type { ReportChapter } from "@/lib/reportApi";
+import { type ReportChapter, resolveI18nText } from "@/lib/reportApi";
 import { preloadReportLogos, type LogoImage } from "@/lib/pdfAssets";
 
 // ─── Page constants (A4 in mm) ────────────────────────────────────────────────
@@ -346,11 +346,14 @@ export interface GeneratePdfOptions {
   actionName: string;
   chapters: ReportChapter[];
   lang?: "en" | "es";
+  /** Languages the backend generated the plan in (response.language); used to resolve chapter text. */
+  availableLanguages?: string[];
 }
 
 export async function generateAndDownloadPdf(options: GeneratePdfOptions): Promise<void> {
-  const { cityName, actionName, chapters } = options;
-  const chrome = CHROME[options.lang ?? "en"];
+  const { cityName, actionName, chapters, availableLanguages } = options;
+  const lang = options.lang ?? "en";
+  const chrome = CHROME[lang];
   // Localize the page-footer prefix for this report (read by addPageFrame).
   footerPrefix = `${chrome.title} · `;
 
@@ -480,7 +483,7 @@ export async function generateAndDownloadPdf(options: GeneratePdfOptions): Promi
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(11);
     pdf.setTextColor(...NAVY);
-    pdf.text(chapter.title, MARGIN_X, y);
+    pdf.text(resolveI18nText(chapter.title, lang, availableLanguages), MARGIN_X, y);
     y += 10;
 
     // Thin navy rule
@@ -490,7 +493,7 @@ export async function generateAndDownloadPdf(options: GeneratePdfOptions): Promi
     y += 7;
 
     // ── Markdown content ───────────────────────────────────────────────────
-    const blocks = parseMarkdown(chapter.markdown);
+    const blocks = parseMarkdown(resolveI18nText(chapter.markdown, lang, availableLanguages));
 
     for (const block of blocks) {
       if (block.type === "h1") {
