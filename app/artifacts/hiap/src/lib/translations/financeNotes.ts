@@ -195,8 +195,24 @@ export const INSTRUMENT_LABEL: Record<string, string> = {
   co_financing: "Co-financing", technical_assistance: "Technical assistance",
 };
 export const LIFECYCLE_LABEL: Record<string, string> = {
-  completed: "Completed", financed: "Financed",
+  completed: "Completed", financed: "Financed", appraised: "Appraised",
   formulated: "Formulated", "in-execution": "In execution",
+};
+
+// Matched-project sector + funding-channel enums. The project feed mixes
+// snake_case tags (stationary_energy) with prose labels (Housing and Urban
+// Development); both normalize here to a canonical English label that resolves
+// through t() (ES entries in translations/financial.ts).
+export const PROJECT_SECTOR_LABEL: Record<string, string> = {
+  transport: "Transport", waste: "Waste", water: "Water", energy: "Energy",
+  afolu: "AFOLU", stationary_energy: "Stationary Energy",
+  "housing and urban development": "Housing and Urban Development",
+  "natural resources and environment": "Natural Resources and Environment",
+};
+export const PROJECT_CHANNEL_LABEL: Record<string, string> = {
+  "public investment": "Public investment",
+  "competitive fund": "Competitive fund",
+  "intermediated multilateral": "Intermediated multilateral",
 };
 
 export function enumLabel(raw: string | undefined, map: Record<string, string>): string {
@@ -205,6 +221,21 @@ export function enumLabel(raw: string | undefined, map: Record<string, string>):
   if (map[key]) return map[key];
   const spaced = key.replace(/[_-]+/g, " ");
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
+// Matched projects carry the source (Spanish, from BIP/SNI) name plus an English
+// translation in project_name_i18n. Show the active language's name as primary
+// and the other as a secondary reference line.
+export function localizeProjectName(
+  proj: { project_name?: string; project_name_i18n?: { en?: string; es?: string } },
+  lang: string,
+): { primary: string; alt: string | null } {
+  const es = proj.project_name_i18n?.es;
+  const en = proj.project_name_i18n?.en ?? proj.project_name;
+  const primary = (lang === "es" ? es ?? en : en ?? es) ?? proj.project_name ?? "";
+  const altRaw = lang === "es" ? en : es;
+  const alt = altRaw && altRaw !== primary ? altRaw : null;
+  return { primary, alt };
 }
 
 // ─── Finance route reason ─────────────────────────────────────────────────────

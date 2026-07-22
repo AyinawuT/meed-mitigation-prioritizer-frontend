@@ -23,7 +23,7 @@ import {
   localizedActionName, localizedActionDescription,
   reductionLevel, reductionLevelLabel, reductionLevelColor, REDUCTION_SEGMENTS,
 } from "@/lib/actionDisplay";
-import { localizeFinanceNote, localizeFinanceReason, enumLabel, OPP_STATUS_LABEL, INSTRUMENT_LABEL } from "@/lib/translations/financeNotes";
+import { localizeFinanceNote, localizeFinanceReason, enumLabel, OPP_STATUS_LABEL, INSTRUMENT_LABEL, LIFECYCLE_LABEL, PROJECT_SECTOR_LABEL, PROJECT_CHANNEL_LABEL, localizeProjectName } from "@/lib/translations/financeNotes";
 import { computePolicyAggregates, type PolicyAggregates } from "@/lib/policyAggregates";
 
 // Multi-action "pick" selection is hidden for now: selecting actions in the full
@@ -450,6 +450,9 @@ function DetailPanel({
 
   // Fetch projects for this action from ccglobal
   const [projects, setProjects] = useState<Project[]>([]);
+  // The projects endpoint paginates (default 50); meta.total is the real match
+  // count — the same figure the action card shows as "N matched projects".
+  const [projectsTotal, setProjectsTotal] = useState(0);
   const [projLoading, setProjLoading] = useState(false);
   const [actionOpps, setActionOpps] = useState<Opportunity[]>([]);
   const [showAllOpps, setShowAllOpps] = useState(false);
@@ -459,9 +462,16 @@ function DetailPanel({
     const relUrl = feasRow?.links?.projects;
     if (!relUrl) return;
     setProjLoading(true);
-    fetch(`https://ccglobal.openearth.dev${relUrl}`)
+    setProjects([]);
+    setProjectsTotal(0);
+    const sep = relUrl.includes("?") ? "&" : "?";
+    fetch(`https://ccglobal.openearth.dev${relUrl}${sep}limit=100`)
       .then(r => r.ok ? r.json() : null)
-      .then(res => setProjects(res?.data ?? []))
+      .then(res => {
+        const rows = res?.data ?? [];
+        setProjects(rows);
+        setProjectsTotal(res?.meta?.total ?? rows.length);
+      })
       .catch(() => {})
       .finally(() => setProjLoading(false));
   }, [feasRow?.links?.projects]);
@@ -739,7 +749,7 @@ function DetailPanel({
               <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t("Matched Projects")}</div>
               {!projLoading && projects.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
-                  {t("{n} TOTAL", { n: String(projects.length) })}
+                  {t("{n} TOTAL", { n: String(projectsTotal) })}
                 </div>
               )}
             </div>
@@ -763,29 +773,29 @@ function DetailPanel({
                   const conf = topMatch ? confidenceStyle(topMatch.confidence) : null;
                   const lc = lifecycleStyle(proj.lifecycle_stage);
                   const cost = formatClpMillions(proj.cost_total);
-                  const nameEs = proj.project_name_i18n?.es;
+                  const { primary: projName, alt: projNameAlt } = localizeProjectName(proj, lang);
                   const funder = proj.funding_sources?.[0]?.funder_name;
                   return (
                     <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "2px" }}>
                         <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", lineHeight: "1.35" }}>
-                          {proj.project_name ?? t("Project")}
+                          {projName || t("Project")}
                         </div>
                         <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
                           {conf && <span style={{ fontSize: "10px", fontWeight: "600", color: conf.color, background: conf.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(conf.label)}</span>}
-                          {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{proj.lifecycle_stage.replace(/-/g, " ")}</span>}
+                          {proj.lifecycle_stage && <span style={{ fontSize: "10px", fontWeight: "600", color: lc.color, background: lc.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(proj.lifecycle_stage, LIFECYCLE_LABEL))}</span>}
                         </div>
                       </div>
-                      {nameEs && nameEs !== proj.project_name && (
-                        <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{nameEs}</div>
+                      {projNameAlt && (
+                        <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "3px" }}>{projNameAlt}</div>
                       )}
                       {proj.jurisdiction && (
                         <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: "4px", display: "flex", alignItems: "center", gap: "4px" }}><MapPin size={12} style={{ flexShrink: 0 }} /> {proj.jurisdiction}</div>
                       )}
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: "11px", color: "#6B7280", marginTop: "5px" }}>
                         {cost && <span>{t("Cost:")} <strong style={{ color: "#374151" }}>{cost}</strong></span>}
-                        {proj.sector && <span>{t("Sector:")} <strong style={{ color: "#374151" }}>{proj.sector}</strong></span>}
-                        {proj.funding_channel && <span>{t("Channel:")} <strong style={{ color: "#374151" }}>{proj.funding_channel}</strong></span>}
+                        {proj.sector && <span>{t("Sector:")} <strong style={{ color: "#374151" }}>{t(enumLabel(proj.sector, PROJECT_SECTOR_LABEL))}</strong></span>}
+                        {proj.funding_channel && <span>{t("Channel:")} <strong style={{ color: "#374151" }}>{t(enumLabel(proj.funding_channel, PROJECT_CHANNEL_LABEL))}</strong></span>}
                         {funder && <span>{t("Funder:")} <strong style={{ color: "#374151" }}>{funder}</strong></span>}
                         {proj.funding_sources?.[0]?.cycle && <span>{t("Cycle:")} <strong style={{ color: "#374151" }}>{proj.funding_sources[0].cycle}</strong></span>}
                       </div>
@@ -797,6 +807,11 @@ function DetailPanel({
                     style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
                     {showAllProj ? t("Show fewer projects") : t("Show all {n} matched projects >", { n: String(projects.length) })}
                   </button>
+                )}
+                {projectsTotal > projects.length && (
+                  <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: showAllProj ? "8px" : "2px" }}>
+                    {t("Showing the first {shown} of {total} matched projects.", { shown: String(projects.length), total: String(projectsTotal) })}
+                  </div>
                 )}
               </div>
             )}
