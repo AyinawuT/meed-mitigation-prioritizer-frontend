@@ -51,6 +51,10 @@ export const recommendations: Record<string, string> = {
   "REDUCTION POTENTIAL": "POTENCIAL DE REDUCCIÓN",
   "Reduction Potential": "Potencial de reducción",
   "Reduction potential": "Potencial de reducción",
+  // Reduction-potential level labels (feminine, agreeing with "reducción").
+  // Low/Medium/High resolve to Baja/Media/Alta via other modules; add the ends.
+  "Very low": "Muy baja",
+  "Very high": "Muy alta",
   "Impact Score": "Puntuación de impacto",
   "Alignment Score": "Puntuación de alineación",
   "Feasibility Score": "Puntuación de viabilidad",

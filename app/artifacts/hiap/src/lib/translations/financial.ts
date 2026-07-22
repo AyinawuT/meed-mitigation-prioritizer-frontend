@@ -56,6 +56,9 @@ export const financial: Record<string, string> = {
   "Self-deliverable": "Autoejecutable",
   "Needs co-finance": "Necesita cofinanciamiento",
   "Needs finance & support": "Necesita financiamiento y apoyo",
+  // Route values that arrive unmapped from the finance API (title-cased fallback).
+  "Needs Technical Assistance": "Necesita asistencia técnica",
+  "Own-Budget Feasible": "Viable con presupuesto propio",
   "Unknown": "Desconocida",
   "Low-cost — the city can fund and run it alone.":
     "Bajo costo — la ciudad puede financiarla y ejecutarla por sí sola.",
