@@ -67,6 +67,7 @@ export const recommendations: Record<string, string> = {
   // ── Ranking table ─────────────────────────────────────────────────────
   "Ranked actions": "Acciones clasificadas",
   "All {count} actions. Select multiple for a combined concept note, or click an action name for full detail.": "Las {count} acciones. Selecciona varias para una nota conceptual combinada, o haz clic en el nombre de una acción para ver el detalle completo.",
+  "All {count} actions. Click an action name for full detail.": "Las {count} acciones. Haz clic en el nombre de una acción para ver el detalle completo.",
   "Pick top actions": "Elegir mejores acciones",
   "Download": "Descargar",
   "Export as CSV": "Exportar como CSV",
@@ -234,6 +235,7 @@ export const recommendations: Record<string, string> = {
   "Next steps": "Próximos pasos",
   "{n} actions selected for a combined generated output. Use \"Generate action report\" on any single card for a one-off note instead.": "{n} acciones seleccionadas para un resultado combinado. Usa \"Generar informe de acción\" en una tarjeta individual para una nota puntual.",
   "Select more than one action for a combined generated output, or use \"Generate action report\" on any single card for a one-off note instead.": "Selecciona más de una acción para un resultado combinado, o usa \"Generar informe de acción\" en una tarjeta individual para una nota puntual.",
+  "Use \"Generate action report\" on any action card for a ready-to-use concept note.": "Usa \"Generar informe de acción\" en cualquier tarjeta de acción para obtener una nota conceptual lista para usar.",
   "Browse full ranking ↓": "Explorar ranking completo ↓",
   // timeline values (TIMELINE_LABEL)
   "Less than 5 years": "Menos de 5 años",
