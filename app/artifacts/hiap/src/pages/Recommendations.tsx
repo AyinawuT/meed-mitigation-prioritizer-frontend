@@ -132,13 +132,25 @@ type ActionCoBenefitRecord = {
 const actionCoBenefitsMap: Record<string, string[]> = {};
 const actionBarriersMap: Record<string, string[]> = {};
 
+// Humanize a snake_case key into a Title Case label, keeping minor words
+// lowercase (e.g. cost_of_living → "Cost of Living") so the result matches the
+// exact-match keys in the ES dictionary. Blindly upper-casing every word
+// produced "Cost Of Living", which missed the dictionary and rendered English.
+const LABEL_STOP_WORDS = new Set(["of", "and", "to", "the", "in", "for", "a", "an", "or"]);
+function humanizeKey(key: string): string {
+  return key
+    .split("_")
+    .map((w, i) => (i > 0 && LABEL_STOP_WORDS.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)))
+    .join(" ");
+}
+
 const rawActions = (actionsRaw as { actions: ActionCoBenefitRecord[] }).actions;
 rawActions.forEach((a) => {
   if (!a.coBenefits) return;
   const pos: string[] = [];
   const neg: string[] = [];
   Object.entries(a.coBenefits).forEach(([key, val]) => {
-    const label = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    const label = humanizeKey(key);
     if (val.impact_relationship === "positive") pos.push(label);
     else neg.push(label);
   });

@@ -14,7 +14,7 @@ function buildEmbedUrl(lat: number, lon: number, delta = 0.12): string {
 
 export function MapEmbed({ cityName, regionName, height = "220px" }: MapEmbedProps) {
   const { t } = useLanguage();
-  const cacheKey = `hiap:map3:${cityName}:${regionName}`;
+  const cacheKey = `hiap:map4:${cityName}:${regionName}`;
 
   const [embedUrl, setEmbedUrl] = useState<string | null>(() => {
     try { return sessionStorage.getItem(cacheKey); } catch { return null; }

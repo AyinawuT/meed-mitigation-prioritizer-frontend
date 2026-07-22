@@ -89,9 +89,19 @@ function ExcludedActionCard({ action }: { action: LegalExcludedAction }) {
   const [justOpen, setJustOpen] = useState(false);
   const [refsOpen, setRefsOpen] = useState(false);
   const ld = action.legalData;
-  const ownershipDesc = ld.ownership_description || ld.ownership_description_es;
-  const restrictionsDesc = ld.restrictions_description || ld.restrictions_description_es;
-  const justification = ld.legal_justification_en || ld.legal_justification;
+  // Field naming: *_es holds Spanish, base ownership/restrictions hold English;
+  // for justification the base field is the native Spanish and *_en is the
+  // English translation. Prefer the variant matching the active language.
+  const isEs = lang === "es";
+  const ownershipDesc = isEs
+    ? (ld.ownership_description_es || ld.ownership_description)
+    : (ld.ownership_description || ld.ownership_description_es);
+  const restrictionsDesc = isEs
+    ? (ld.restrictions_description_es || ld.restrictions_description)
+    : (ld.restrictions_description || ld.restrictions_description_es);
+  const justification = isEs
+    ? (ld.legal_justification || ld.legal_justification_en)
+    : (ld.legal_justification_en || ld.legal_justification);
   const hasDetail = ld.ownership_category || ld.restrictions_category || justification || ld.legal_references.length > 0;
 
   return (

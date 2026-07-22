@@ -79,6 +79,19 @@ function gpcSectorPrefix(ref: string): string {
   return ref.split(".")[0];
 }
 
+// Canonical GPC sub-sector names keyed by two-part ref. The bundled inventory
+// JSONs mislabel IV.2 with IV.1's name ("industrial processes …") in every
+// file, so the two IPPU sub-sectors render identically. Override the source
+// field for refs listed here; anything not listed keeps its inventory name.
+const GPC_SUBSECTOR_NAME: Record<string, string> = {
+  "IV.1": "Emissions from industrial processes occurring within the city boundary",
+  "IV.2": "Emissions from product use occurring within the city boundary",
+};
+
+function canonicalSubsectorName(subRef: string, raw: string | null): string {
+  return GPC_SUBSECTOR_NAME[subRef] ?? raw ?? subRef;
+}
+
 // ─── Parser ───────────────────────────────────────────────────────────────────
 
 function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
@@ -109,16 +122,6 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
       0
     );
 
-    // Unique sub-sector names, deduplicated, joined with " · "
-    const subNames = [
-      ...new Set(
-        values
-          .map((v) => v.subSector?.subsectorName)
-          .filter((n): n is string => Boolean(n))
-      ),
-    ];
-    const sub = subNames.length > 0 ? subNames.join(" · ") : refRange;
-
     // Group values by sub-sector reference — first two GPC parts, e.g.
     // "I.1.2" → "I.1" (IPPU/AFOLU refs like "IV.1" are already two-part)
     const groups = new Map<string, { name: string | null; emissions: number }>();
@@ -132,11 +135,15 @@ function parseInventory(raw: CityCatalystInventory): ParsedCityInventory {
     const subRows: EmissionSubSectorRow[] = [...groups.entries()]
       .map(([subRef, g]) => ({
         ref: subRef,
-        name: g.name ?? subRef,
+        name: canonicalSubsectorName(subRef, g.name),
         emissions: Math.round(g.emissions),
         share: null,
       }))
       .sort((a, b) => b.emissions - a.emissions);
+
+    // Collapsed summary — unique canonical sub-sector names, joined with " · "
+    const subNames = [...new Set(subRows.map((r) => r.name).filter(Boolean))];
+    const sub = subNames.length > 0 ? subNames.join(" · ") : refRange;
 
     return {
       sector: name,

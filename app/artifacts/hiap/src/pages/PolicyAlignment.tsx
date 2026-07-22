@@ -9,6 +9,8 @@ import { InfoTip } from "@/components/InfoTip";
 import { ClipboardList, FileText } from "lucide-react";
 import { DEFS } from "@/lib/definitions";
 import actionNames from "@/data/actionNames.json";
+import { loadActionCatalog, type CatalogAction } from "@/lib/actionCatalog";
+import { localizedActionName } from "@/lib/actionDisplay";
 
 interface ActionMeta { name: string; category: string; subcategory: string }
 const ACTION_NAMES = actionNames as Record<string, ActionMeta>;
@@ -184,6 +186,12 @@ export function PolicyAlignment({ params }: Props) {
   const [munDragOver, setMunDragOver] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  // Live action catalog — used to render Spanish action names (nameI18n).
+  const [catalog, setCatalog] = useState<Map<string, CatalogAction>>(new Map());
+  useEffect(() => {
+    loadActionCatalog().then(setCatalog).catch(() => {});
+  }, []);
+
   useEffect(() => {
     const url = `https://ccglobal.openearth.dev/api/v1/cities/${encodeURIComponent(locode)}/action-policy-scores?top_evidence_limit=5`;
     fetch(url)
@@ -320,6 +328,7 @@ export function PolicyAlignment({ params }: Props) {
               open={!!expanded[plan.name]}
               onToggle={() => toggle(plan.name)}
               perActionScores={perActionScores}
+              catalog={catalog}
             />
           ))}
         </ScopeSection>
@@ -337,6 +346,7 @@ export function PolicyAlignment({ params }: Props) {
               open={!!expanded[plan.name]}
               onToggle={() => toggle(plan.name)}
               perActionScores={perActionScores}
+              catalog={catalog}
             />
           ))}
         </ScopeSection>
@@ -360,6 +370,7 @@ export function PolicyAlignment({ params }: Props) {
                 open={!!expanded[plan.name]}
                 onToggle={() => toggle(plan.name)}
                 perActionScores={perActionScores}
+                catalog={catalog}
               />
             ))
           ) : !munFile ? (
@@ -491,12 +502,18 @@ function ScopeSection({ title, subtitle, badge, children }: {
   );
 }
 
-function PlanCard({ plan, open, onToggle, perActionScores }: {
+function PlanCard({ plan, open, onToggle, perActionScores, catalog }: {
   plan: Plan; open: boolean; onToggle: () => void;
   perActionScores: Record<string, ActionScore>;
+  catalog: Map<string, CatalogAction>;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const knownActions = plan.actions.filter(a => !!ACTION_NAMES[a.id]);
+  // Prefer the live catalog's localized name; fall back to the English bundle.
+  const nameOf = (id: string) => {
+    const c = catalog.get(id);
+    return c ? localizedActionName(c, lang) : (ACTION_NAMES[id]?.name ?? id);
+  };
   const highCount = knownActions.filter(a => a.strength === "high").length;
   const medCount  = knownActions.filter(a => a.strength === "medium").length;
 
@@ -554,7 +571,7 @@ function PlanCard({ plan, open, onToggle, perActionScores }: {
             return (
               <div key={a.id} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: col, flexShrink: 0 }} />
-                <span style={{ fontSize: "12px", color: "#374151", flex: 1, lineHeight: "1.4" }}>{meta.name}</span>
+                <span style={{ fontSize: "12px", color: "#374151", flex: 1, lineHeight: "1.4" }}>{nameOf(a.id)}</span>
                 <span style={{ fontSize: "11px", color: "#9CA3AF", flexShrink: 0, minWidth: "80px" }}>{t(TYPE_LABEL[a.signalType])}</span>
                 {ps ? (
                   <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0, minWidth: "110px", justifyContent: "flex-end" }}>

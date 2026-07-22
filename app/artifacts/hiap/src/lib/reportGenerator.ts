@@ -151,6 +151,13 @@ function parseMarkdown(md: string): Block[] {
 
 // ─── Footer / header helpers ──────────────────────────────────────────────────
 
+// Localized footer prefix for the current report. Set at the start of
+// generateAndDownloadPdf (which knows the language); read by addPageFrame,
+// itself invoked deep inside ensureSpace. A module-level value avoids threading
+// the prefix through every ensureSpace/renderTable call — safe because PDF
+// generation runs once at a time in the browser.
+let footerPrefix = "City Action Output · ";
+
 function addPageFrame(pdf: jsPDF, actionName: string): void {
   const n = pdf.getNumberOfPages();
 
@@ -169,7 +176,7 @@ function addPageFrame(pdf: jsPDF, actionName: string): void {
 
   // Build footer label and truncate with ellipsis so it never overflows
   const maxFooterW = CONTENT_W * 0.78;
-  const prefix = "City Action Output · ";
+  const prefix = footerPrefix;
   let label = prefix + stripInline(actionName);
   while (label.length > prefix.length && pdf.getTextWidth(label) > maxFooterW) {
     label = label.slice(0, -1);
@@ -344,6 +351,8 @@ export interface GeneratePdfOptions {
 export async function generateAndDownloadPdf(options: GeneratePdfOptions): Promise<void> {
   const { cityName, actionName, chapters } = options;
   const chrome = CHROME[options.lang ?? "en"];
+  // Localize the page-footer prefix for this report (read by addPageFrame).
+  footerPrefix = `${chrome.title} · `;
 
   // Logos degrade independently to null; the PDF always renders.
   const logos = await preloadReportLogos().catch(() => ({ oef: null, ssg: null, corfo: null }));
