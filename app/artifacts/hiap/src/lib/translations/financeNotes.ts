@@ -179,3 +179,69 @@ export function localizeFinanceNote(text: string | null | undefined, lang: strin
   if (lang !== "es") return text;
   return FINANCE_NOTES_ES[text.trim()] ?? text;
 }
+
+// ─── Enum badge labels ────────────────────────────────────────────────────────
+// The finance API returns snake_case enum values (status, instrument, lifecycle).
+// enumLabel maps them to clean English labels that then resolve through t()
+// (ES entries live in translations/financial.ts). Shared by the finance screen
+// AND the recommendations action drawer, which render the same opportunities.
+
+export const OPP_STATUS_LABEL: Record<string, string> = {
+  ongoing: "Ongoing", open: "Open", closed: "Closed",
+  emerging: "Emerging", in_rollout: "In rollout", periodic: "Periodic",
+};
+export const INSTRUMENT_LABEL: Record<string, string> = {
+  grant: "Grant", loan: "Loan", blended: "Blended", subsidy: "Subsidy",
+  co_financing: "Co-financing", technical_assistance: "Technical assistance",
+};
+export const LIFECYCLE_LABEL: Record<string, string> = {
+  completed: "Completed", financed: "Financed",
+  formulated: "Formulated", "in-execution": "In execution",
+};
+
+export function enumLabel(raw: string | undefined, map: Record<string, string>): string {
+  if (!raw) return "";
+  const key = raw.toLowerCase().trim();
+  if (map[key]) return map[key];
+  const spaced = key.replace(/[_-]+/g, " ");
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
+// ─── Finance route reason ─────────────────────────────────────────────────────
+// The API `reason` is a templated sentence: a base clause (with an optional
+// "via N fund(s)") plus an optional " N comparable project(s) on record." tail.
+// Translate the base template and re-insert the numbers.
+
+const REASON_BASE_ES: Record<string, string> = {
+  "Capacity is the constraint, not money; needs technical assistance.":
+    "La restricción es la capacidad, no el dinero; necesita asistencia técnica.",
+  "Capital need exceeds the city's autonomy; co-finance available via {n} fund(s) the city can apply to directly.":
+    "La necesidad de capital supera la autonomía de la ciudad; hay cofinanciamiento disponible mediante {n} fondo(s) al/a los que la ciudad puede postular directamente.",
+  "Capital need exceeds the city's autonomy; co-finance available via {n} fund(s), awarded competitively.":
+    "La necesidad de capital supera la autonomía de la ciudad; hay cofinanciamiento disponible mediante {n} fondo(s), adjudicado(s) por concurso.",
+  "High capital and preparation needs; external finance plus technical support, via {n} fund(s) the city can apply to directly.":
+    "Altas necesidades de capital y de preparación; financiamiento externo más apoyo técnico, mediante {n} fondo(s) al/a los que la ciudad puede postular directamente.",
+  "High capital and preparation needs; external finance plus technical support, via {n} fund(s), awarded competitively.":
+    "Altas necesidades de capital y de preparación; financiamiento externo más apoyo técnico, mediante {n} fondo(s), adjudicado(s) por concurso.",
+  "Low-capital action the city can deliver itself.":
+    "Acción de bajo capital que la ciudad puede ejecutar por sí misma.",
+  "Within the city's own budget and capacity.":
+    "Dentro del presupuesto y la capacidad propios de la ciudad.",
+};
+
+export function localizeFinanceReason(reason: string | null | undefined, lang: string): string {
+  if (!reason) return "";
+  if (lang !== "es") return reason;
+  let base = reason.trim();
+  let tail = "";
+  const m = base.match(/\s*(\d+) comparable project\(s\) on record\.\s*$/);
+  if (m) {
+    tail = ` ${m[1]} proyecto(s) comparable(s) registrado(s).`;
+    base = base.slice(0, m.index).trim();
+  }
+  let fundN: string | null = null;
+  const key = base.replace(/via (\d+) fund\(s\)/, (_full, n) => { fundN = n as string; return "via {n} fund(s)"; });
+  const esBase = REASON_BASE_ES[key];
+  if (!esBase) return reason; // unknown template → leave untouched rather than half-translate
+  return (fundN !== null ? esBase.replace("{n}", fundN) : esBase) + tail;
+}
