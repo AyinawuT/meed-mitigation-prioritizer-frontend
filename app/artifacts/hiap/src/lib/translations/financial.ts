@@ -101,6 +101,17 @@ export const financial: Record<string, string> = {
   "Financed": "Financiado",
   "Formulated": "Formulado",
   "In execution": "En ejecución",
+  "Appraised": "Evaluado",
+  // Project sector badges (labels not already covered by other screens:
+  // Waste/Energy/AFOLU/Stationary Energy resolve via their own modules)
+  "Transport": "Transporte",
+  "Water": "Agua",
+  "Housing and Urban Development": "Vivienda y desarrollo urbano",
+  "Natural Resources and Environment": "Recursos naturales y medio ambiente",
+  // Project funding-channel badges
+  "Public investment": "Inversión pública",
+  "Competitive fund": "Fondo concursable",
+  "Intermediated multilateral": "Multilateral intermediado",
   "No matched funds yet": "Aún no hay fondos coincidentes",
   "No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added.":
     "Ningún fondo catalogado en el sistema nacional de inversiones (BIP/SNI) ni en los registros de adjudicaciones coincide actualmente con esta acción. Esto se actualizará automáticamente a medida que se agreguen nuevas rondas de ejecución.",
@@ -125,6 +136,7 @@ export const financial: Record<string, string> = {
   "Cycle:": "Ciclo:",
   "Show fewer projects": "Mostrar menos proyectos",
   "Show all {n} matched projects >": "Mostrar los {n} proyectos coincidentes >",
+  "Showing the first {shown} of {total} matched projects.": "Mostrando los primeros {shown} de {total} proyectos coincidentes.",
 
   // ── Table & filters ─────────────────────────────────────────────────
   "What's financially aligned — and what isn't": "Qué está financieramente alineado — y qué no",
