@@ -288,7 +288,7 @@ function SummaryCard({
 interface Props { params: { locode: string } }
 
 export function RegulationsLaws({ params }: Props) {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const [, navigate] = useLocation();
   const search = useSearch();
   const urlLocode = params.locode ?? "";
@@ -326,7 +326,7 @@ export function RegulationsLaws({ params }: Props) {
     // Strategic preferences default gracefully when not yet filled in (steps 4–6).
     setLegalLoading(true);
     setLegalError(null);
-    runPipelineForCity(locode, { topN: 20, createExplanations: false, language: lang })
+    runPipelineForCity(locode, { topN: 20, createExplanations: false })
       .then((r) => setResult(r))
       .catch((err) => setLegalError(err instanceof Error ? err.message : String(err)))
       .finally(() => setLegalLoading(false));
@@ -479,7 +479,7 @@ export function RegulationsLaws({ params }: Props) {
               onClick={() => {
                 setLegalLoading(true);
                 setLegalError(null);
-                runPipelineForCity(locode, { topN: 20, createExplanations: false, language: lang })
+                runPipelineForCity(locode, { topN: 20, createExplanations: false })
                   .then((r) => setResult(r))
                   .catch((err) => setLegalError(err instanceof Error ? err.message : String(err)))
                   .finally(() => setLegalLoading(false));

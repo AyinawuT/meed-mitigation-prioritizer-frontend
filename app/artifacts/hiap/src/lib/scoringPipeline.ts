@@ -59,6 +59,8 @@ export interface RankedAction {
   gpcRefs: string[];
   matchedEmissions: number;
   explanation: string;
+  /** Per-language explanation variants (en/es) from the prioritizer. */
+  explanationI18n?: Record<string, string>;
   priority: "high" | "medium" | "low";
   financialFeasibilityRoute: string | null;
   financialFeasibilityReason: string | null;
@@ -110,7 +112,10 @@ export interface LegalExcludedAction {
 // v7: results now carry per-language name/description variants and the catalog's
 // impact_text/impact_numeric (5-level reduction potential) — bump so cached v6
 // results are re-fetched with the new fields.
-export const PIPELINE_RESULT_SCHEMA_VERSION = 7;
+// v8: prioritization now requests en+es, so ranked actions carry explanationI18n
+// and the stored snapshot holds both languages — bump so cached v7 results
+// (English-only snapshot/explanations) are re-fetched.
+export const PIPELINE_RESULT_SCHEMA_VERSION = 8;
 
 export interface PipelineResult {
   schemaVersion?: number;

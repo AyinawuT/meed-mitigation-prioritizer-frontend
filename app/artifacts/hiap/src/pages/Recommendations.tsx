@@ -15,7 +15,7 @@ import { getInventoryAsEmissionsData } from "@/lib/cityInventory";
 import actionsRaw from "@/data/actions.json";
 import { useLanguage } from "@/lib/i18n";
 import { callTranslateExplanations } from "@/lib/hiapApi";
-import { callReportOutputPlan, loadSnapshot } from "@/lib/reportApi";
+import { callReportOutputPlan, loadSnapshot, availableLanguages } from "@/lib/reportApi";
 import { generateAndDownloadPdf } from "@/lib/reportGenerator";
 import { InfoTip } from "@/components/InfoTip";
 import { DEFS } from "@/lib/definitions";
@@ -548,10 +548,10 @@ function DetailPanel({
           </div>
 
           {/* Why this ranking */}
-          {action.explanation && (
+          {(action.explanationI18n?.[lang] || action.explanation) && (
             <div style={{ marginBottom: "22px" }}>
               <div style={{ fontSize: "13px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>{t("Why this ranking")}</div>
-              <p style={{ fontSize: "13px", color: "#4B5563", lineHeight: "1.65", margin: 0, fontStyle: "italic" }}>{action.explanation}</p>
+              <p style={{ fontSize: "13px", color: "#4B5563", lineHeight: "1.65", margin: 0, fontStyle: "italic" }}>{action.explanationI18n?.[lang] || action.explanation}</p>
             </div>
           )}
 
@@ -1486,10 +1486,11 @@ export function Recommendations({ params }: Props) {
     setGeneratingIds(prev => [...prev, action.actionId]);
 
     try {
+      // Generate the plan in both languages once; render the active one.
       const report = await callReportOutputPlan({
         locode,
         actionId: action.actionId,
-        language: lang,
+        language: ["en", "es"],
         prioritizationSnapshot: snapshot,
       });
       await generateAndDownloadPdf({
@@ -1497,6 +1498,7 @@ export function Recommendations({ params }: Props) {
         actionName: localizedActionName(action, lang),
         chapters: report.chapters,
         lang,
+        availableLanguages: availableLanguages(report),
       });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -1567,13 +1569,16 @@ export function Recommendations({ params }: Props) {
     }).catch(() => {});
   }, [locode, countryCode]);
 
-  // Translate explanations
+  // Explanations arrive per-language from the prioritizer (explanationI18n).
+  // Fallback for a partial backend rollout: if the active language's variant is
+  // missing, translate the canonical (English) text client-side and cache it
+  // into explanationI18n so it isn't re-fetched.
   useEffect(() => {
     if (!result || lang === "en") return;
-    const actionsWithExplanations = result.ranked.filter(a => a.explanation);
-    if (actionsWithExplanations.length === 0) return;
+    const needTranslation = result.ranked.filter(a => a.explanation && !a.explanationI18n?.[lang]);
+    if (needTranslation.length === 0) return;
     callTranslateExplanations(
-      actionsWithExplanations.map(a => ({ actionId: a.actionId, canonicalExplanation: a.explanation })),
+      needTranslation.map(a => ({ actionId: a.actionId, canonicalExplanation: a.explanation })),
       [lang]
     ).then(translations => {
       const byId = new Map(translations.map(t => [t.actionId, t.explanations]));
@@ -1583,7 +1588,7 @@ export function Recommendations({ params }: Props) {
           ...prev,
           ranked: prev.ranked.map(a => {
             const translated = byId.get(a.actionId)?.[lang];
-            return translated ? { ...a, explanation: translated } : a;
+            return translated ? { ...a, explanationI18n: { ...a.explanationI18n, [lang]: translated } } : a;
           }),
         };
       });
