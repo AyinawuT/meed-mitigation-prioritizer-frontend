@@ -6,6 +6,7 @@ import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
+import { localizeFinanceNote } from "@/lib/translations/financeNotes";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -401,7 +402,7 @@ function DetailPane({ row, cityName, onClose }: {
   cityName: string;
   onClose: () => void;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const rm = getRouteMeta(row.route);
   const inp = row.inputs ?? {};
   const selfFundable = isSelfFundable(row.route);
@@ -574,7 +575,7 @@ function DetailPane({ row, cityName, onClose }: {
                       : opp.status === "open" ? { bg: "#DBEAFE", color: "#1D4ED8" }
                       : { bg: "#F3F4F6", color: "#6B7280" };
                     const instrColor = instrumentStyle(opp.instrument);
-                    const snippet = opp.amount_note ?? opp.notes ?? "";
+                    const snippet = localizeFinanceNote(opp.amount_note ?? opp.notes, lang);
                     return (
                       <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
