@@ -5,7 +5,7 @@ import {
   Wallet, ClipboardList, Globe, BarChart3, MapPin, TriangleAlert, Star, Wind, HeartPulse, Bird, Leaf,
   HardHat, TrendingUp, HeartHandshake, BatteryCharging, Waves, Droplet,
   VolumeX, Sun, Wheat, Mountain, GraduationCap, Lightbulb, Building2, Home,
-  Handshake, Bike, Trees, Brain, Recycle, CircleCheck, type LucideIcon,
+  Handshake, Bike, Trees, Brain, Recycle, CircleCheck, RotateCcw, SlidersHorizontal, Trash2, ChevronDown, type LucideIcon,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { CITIES } from "@/data/cities";
@@ -1461,6 +1461,30 @@ export function Recommendations({ params }: Props) {
   const [showFullRanking, setShowFullRanking] = useState(false);
   const rankingRef = useRef<HTMLDivElement>(null);
 
+  // Re-run ranking: adjust indicators (back to pre-flight) or reset the city fully
+  const [rerunOpen, setRerunOpen] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const rerunRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (rerunRef.current && !rerunRef.current.contains(e.target as Node)) setRerunOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  function resetCityEvaluation() {
+    // Wipe every input this city has stored locally (step data, weights,
+    // exclusions, the ranking result + snapshot) so the wizard starts clean.
+    try {
+      const prefix = `hiap:${locode}:`;
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith(prefix))
+        .forEach((k) => localStorage.removeItem(k));
+    } catch {}
+    navigate(`/city/${citySlug}`);
+  }
+
   // ccglobal data
   const [feasibilityRows, setFeasibilityRows] = useState<FeasibilityRow[]>([]);
   const [natPolicyScore, setNatPolicyScore] = useState<number | null>(null);
@@ -1728,6 +1752,47 @@ export function Recommendations({ params }: Props) {
         />
       )}
 
+      {/* Reset-evaluation confirmation */}
+      {showResetConfirm && (
+        <div
+          onClick={() => setShowResetConfirm(false)}
+          style={{ position: "fixed", inset: 0, background: "rgba(15,23,42,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px", zIndex: 200 }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            style={{ background: "white", borderRadius: "14px", boxShadow: "0 20px 60px rgba(0,0,0,0.25)", maxWidth: "420px", width: "100%", padding: "26px 28px 22px" }}
+          >
+            <div style={{ display: "flex", gap: "12px", alignItems: "flex-start", marginBottom: "10px" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "38px", height: "38px", borderRadius: "10px", background: "#FEF2F2", flexShrink: 0 }}>
+                <Trash2 size={18} color="#DC2626" />
+              </div>
+              <div>
+                <h2 style={{ fontSize: "17px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>{t("Reset city evaluation?")}</h2>
+                <p style={{ fontSize: "13px", color: "#6B7280", lineHeight: "1.55", margin: 0 }}>
+                  {t("This clears every input for {name} — emissions, indicators, preferences, exclusions and the current ranking — and restarts the evaluation from the beginning. This can't be undone.", { name: cityName })}
+                </p>
+              </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "18px" }}>
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                style={{ background: "white", border: "1px solid #DDDDE1", borderRadius: "8px", padding: "9px 16px", fontSize: "13px", fontWeight: "600", color: "#374151", cursor: "pointer" }}
+              >
+                {t("Cancel")}
+              </button>
+              <button
+                onClick={resetCityEvaluation}
+                style={{ background: "#DC2626", border: "none", borderRadius: "8px", padding: "9px 16px", fontSize: "13px", fontWeight: "700", color: "white", cursor: "pointer", display: "flex", alignItems: "center", gap: "7px" }}
+              >
+                <Trash2 size={14} style={{ flexShrink: 0 }} /> {t("Reset & start over")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
@@ -1783,6 +1848,55 @@ export function Recommendations({ params }: Props) {
               )}
             </div>
             )}
+
+            {/* Re-run ranking */}
+            <div ref={rerunRef} style={{ position: "relative", flexShrink: 0 }}>
+              <button
+                onClick={() => setRerunOpen((o) => !o)}
+                style={{
+                  background: rerunOpen ? "#F5F5F7" : "white",
+                  border: "1px solid #DDDDE1", borderRadius: "8px",
+                  padding: "9px 16px", fontSize: "12px", fontWeight: "600", color: "#374151",
+                  cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", whiteSpace: "nowrap",
+                }}
+              >
+                <RotateCcw size={14} style={{ flexShrink: 0 }} /> {t("Re-run ranking")}
+                <ChevronDown size={13} style={{ flexShrink: 0, opacity: 0.6 }} />
+              </button>
+              {rerunOpen && (
+                <div style={{
+                  position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 30,
+                  background: "white", border: "1px solid #E5E7EB", borderRadius: "10px",
+                  boxShadow: "0 8px 28px rgba(0,0,0,0.14)", overflow: "hidden", width: "290px",
+                }}>
+                  <button
+                    onClick={() => { setRerunOpen(false); navigate(`/city/${citySlug}/preflight`); }}
+                    style={{ display: "flex", gap: "10px", alignItems: "flex-start", width: "100%", textAlign: "left", background: "none", border: "none", padding: "13px 15px", cursor: "pointer" }}
+                    onMouseOver={(e) => (e.currentTarget.style.background = "#F9FAFB")}
+                    onMouseOut={(e) => (e.currentTarget.style.background = "none")}
+                  >
+                    <SlidersHorizontal size={16} color="#001EA7" style={{ flexShrink: 0, marginTop: "1px" }} />
+                    <span>
+                      <span style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#111827" }}>{t("Adjust indicators")}</span>
+                      <span style={{ display: "block", fontSize: "11px", color: "#6B7280", marginTop: "2px", lineHeight: "1.45" }}>{t("Return to the pre-flight check to tweak weights and exclusions, then regenerate.")}</span>
+                    </span>
+                  </button>
+                  <div style={{ height: "1px", background: "#F0F0F4" }} />
+                  <button
+                    onClick={() => { setRerunOpen(false); setShowResetConfirm(true); }}
+                    style={{ display: "flex", gap: "10px", alignItems: "flex-start", width: "100%", textAlign: "left", background: "none", border: "none", padding: "13px 15px", cursor: "pointer" }}
+                    onMouseOver={(e) => (e.currentTarget.style.background = "#FEF2F2")}
+                    onMouseOut={(e) => (e.currentTarget.style.background = "none")}
+                  >
+                    <Trash2 size={16} color="#DC2626" style={{ flexShrink: 0, marginTop: "1px" }} />
+                    <span>
+                      <span style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#111827" }}>{t("Reset city evaluation")}</span>
+                      <span style={{ display: "block", fontSize: "11px", color: "#6B7280", marginTop: "2px", lineHeight: "1.45" }}>{t("Clear everything entered for this city and start the evaluation over.")}</span>
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Tabs */}

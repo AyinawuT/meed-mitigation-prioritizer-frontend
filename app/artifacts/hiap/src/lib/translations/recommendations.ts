@@ -5,6 +5,19 @@ export const recommendations: Record<string, string> = {
   "excluded (legal filter)": "excluidas (filtro legal)",
   "Total city emissions": "Emisiones totales de la ciudad",
 
+  // ── Re-run ranking ──────────────────────────────────────────────────
+  "Re-run ranking": "Volver a generar el ranking",
+  "Adjust indicators": "Ajustar indicadores",
+  "Return to the pre-flight check to tweak weights and exclusions, then regenerate.":
+    "Vuelve a la verificación previa para ajustar los pesos y las exclusiones, y luego genera de nuevo.",
+  "Reset city evaluation": "Reiniciar la evaluación de la ciudad",
+  "Clear everything entered for this city and start the evaluation over.":
+    "Borra todo lo ingresado para esta ciudad y comienza la evaluación de nuevo.",
+  "Reset city evaluation?": "¿Reiniciar la evaluación de la ciudad?",
+  "This clears every input for {name} — emissions, indicators, preferences, exclusions and the current ranking — and restarts the evaluation from the beginning. This can't be undone.":
+    "Esto borra todo lo ingresado para {name} — emisiones, indicadores, preferencias, exclusiones y el ranking actual — y reinicia la evaluación desde el principio. No se puede deshacer.",
+  "Reset & start over": "Reiniciar y empezar de nuevo",
+
   // ── Top picks ───────────────────────────────────────────────────────
   "My top picks": "Mis selecciones",
   "Top 3 mitigation actions": "Top 3 acciones de mitigación",
