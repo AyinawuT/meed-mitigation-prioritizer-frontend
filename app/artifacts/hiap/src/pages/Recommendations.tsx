@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation, useSearch } from "wouter";
 import {
-  Inbox, Sparkles, Bookmark, Folder, SquareCheck, Factory, Users, Scale,
+  Inbox, Sparkles, Bookmark, Folder, Factory, Users, Scale,
   Wallet, ClipboardList, Globe, BarChart3, MapPin, TriangleAlert, Star, Wind, HeartPulse, Bird, Leaf,
   HardHat, TrendingUp, HeartHandshake, BatteryCharging, Waves, Droplet,
   VolumeX, Sun, Wheat, Mountain, GraduationCap, Lightbulb, Building2, Home,
@@ -25,11 +25,6 @@ import {
 } from "@/lib/actionDisplay";
 import { localizeFinanceNote, localizeFinanceReason, enumLabel, OPP_STATUS_LABEL, INSTRUMENT_LABEL, LIFECYCLE_LABEL, PROJECT_SECTOR_LABEL, PROJECT_CHANNEL_LABEL, localizeProjectName } from "@/lib/translations/financeNotes";
 import { computePolicyAggregates, type PolicyAggregates } from "@/lib/policyAggregates";
-
-// Multi-action "pick" selection is hidden for now: selecting actions in the full
-// ranking didn't reflect at the top or affect the ranking. Flip to re-enable the
-// checkboxes, the "Pick top actions" toggle and the combined multi-action report.
-const SHOW_MULTI_PICK = false;
 
 // Pick the timeline definition matching an action's implementation horizon.
 function timelineDef(score: number | null | undefined): string {
@@ -891,22 +886,20 @@ function TopPickCard({
           <Bookmark size={14} color="#001EA7" style={{ flexShrink: 0 }} />
           <span style={{ fontSize: "11px", fontWeight: "700", color: "#001EA7", letterSpacing: "0.06em" }}>{t("TOP PICK")}</span>
         </div>
-        {/* Checkbox */}
-        {SHOW_MULTI_PICK && (
-          <button
-            onClick={() => onTogglePick(action.actionId)}
-            title={isPicked ? t("Remove from selection") : t("Add to selection")}
-            style={{
-              width: "20px", height: "20px", borderRadius: "5px",
-              border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
-              background: isPicked ? "#001EA7" : "white",
-              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              padding: 0, flexShrink: 0,
-            }}
-          >
-            {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
-          </button>
-        )}
+        {/* Checkbox — select this action for a combined multi-action report */}
+        <button
+          onClick={() => onTogglePick(action.actionId)}
+          title={isPicked ? t("Remove from selection") : t("Add to selection")}
+          style={{
+            width: "20px", height: "20px", borderRadius: "5px",
+            border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
+            background: isPicked ? "#001EA7" : "white",
+            cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            padding: 0, flexShrink: 0,
+          }}
+        >
+          {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
+        </button>
       </div>
 
       {/* Title */}
@@ -1009,15 +1002,11 @@ function RankingTable({
   onSelect,
   pickedIds,
   onTogglePick,
-  pickMode,
-  onTogglePickMode,
 }: {
   actions: RankedAction[];
   onSelect: (a: RankedAction) => void;
   pickedIds: string[];
   onTogglePick: (id: string) => void;
-  pickMode: boolean;
-  onTogglePickMode: () => void;
 }) {
   const { t, lang } = useLanguage();
   const [showDownload, setShowDownload] = useState(false);
@@ -1060,29 +1049,10 @@ function RankingTable({
         <div>
           <div style={{ fontSize: "15px", fontWeight: "700", color: "#111827" }}>{t("Ranked actions")}</div>
           <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>
-            {SHOW_MULTI_PICK
-              ? t("All {count} actions. Select multiple for a combined concept note, or click an action name for full detail.", { count: String(actions.length) })
-              : t("All {count} actions. Click an action name for full detail.", { count: String(actions.length) })}
+            {t("All {count} actions. Check any to build a combined report, or click an action name for full detail.", { count: String(actions.length) })}
           </div>
         </div>
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          {SHOW_MULTI_PICK && (
-            <button
-              onClick={onTogglePickMode}
-              style={{
-                background: pickMode ? "#EEF2FF" : "white",
-                border: `1px solid ${pickMode ? "#6366F1" : "#DDDDE1"}`,
-                borderRadius: "8px", padding: "7px 14px",
-                fontSize: "12px", color: pickMode ? "#4338CA" : "#6B7280",
-                cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-                fontWeight: pickMode ? "600" : "400",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <SquareCheck size={15} style={{ flexShrink: 0 }} /> {t("Pick top actions")}
-            </button>
-          )}
-
           <div ref={dlRef} style={{ position: "relative" }}>
             <button
               onClick={() => setShowDownload(v => !v)}
@@ -1128,7 +1098,7 @@ function RankingTable({
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ background: "#FAFAFA", borderBottom: "1px solid #F0F0F0" }}>
-              {pickMode && <th style={{ padding: "10px 14px", width: "40px" }} />}
+              <th style={{ padding: "10px 14px", width: "40px" }} />
               <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>{t("RANK")}</th>
               <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>{t("ACTION")}</th>
               <th style={{ padding: "10px 14px", fontSize: "11px", color: "#9CA3AF", fontWeight: "500", textAlign: "left", letterSpacing: "0.03em" }}>{t("SECTOR")}</th>
@@ -1144,22 +1114,21 @@ function RankingTable({
                   key={action.actionId}
                   style={{ borderBottom: "1px solid #F5F5F5", background: isPicked ? "#F0F9FF" : "white", transition: "background 0.1s" }}
                 >
-                  {pickMode && (
-                    <td style={{ padding: "10px 14px" }}>
-                      <button
-                        onClick={() => onTogglePick(action.actionId)}
-                        style={{
-                          width: "18px", height: "18px", borderRadius: "4px",
-                          border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
-                          background: isPicked ? "#001EA7" : "white",
-                          cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-                          padding: 0, flexShrink: 0,
-                        }}
-                      >
-                        {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
-                      </button>
-                    </td>
-                  )}
+                  <td style={{ padding: "10px 14px" }}>
+                    <button
+                      onClick={() => onTogglePick(action.actionId)}
+                      title={isPicked ? t("Remove from selection") : t("Add to selection")}
+                      style={{
+                        width: "18px", height: "18px", borderRadius: "4px",
+                        border: `2px solid ${isPicked ? "#001EA7" : "#D1D5DB"}`,
+                        background: isPicked ? "#001EA7" : "white",
+                        cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                        padding: 0, flexShrink: 0,
+                      }}
+                    >
+                      {isPicked && <span style={{ color: "white", fontSize: "11px", fontWeight: "700", lineHeight: 1 }}>✓</span>}
+                    </button>
+                  </td>
                   <td style={{ padding: "10px 14px", fontSize: "13px", fontWeight: "700", color: "#001EA7", whiteSpace: "nowrap" }}>
                     #{action.rank}
                   </td>
@@ -1520,9 +1489,8 @@ export function Recommendations({ params }: Props) {
     }
   })();
 
-  // Pick top actions state
+  // Actions selected (via card / ranking checkboxes) for a combined report
   const [pickedIds, setPickedIds] = useState<string[]>([]);
-  const [pickMode, setPickMode] = useState(false);
 
   // Report generation state
   const [generatingIds, setGeneratingIds] = useState<string[]>([]);
@@ -1796,58 +1764,14 @@ export function Recommendations({ params }: Props) {
       {/* Page header */}
       <div style={{ background: "#FFFFFF", borderBottom: "1px solid #EBEBEB", padding: "20px 48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          {/* Breadcrumb */}
-          <div style={{ fontSize: "12px", color: "#9CA3AF", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>
-              {t("Cities")}
-            </button>
-            {" › "}{cityName}{" › "}{t("Mitigation actions")}
-          </div>
-
-          {/* Title row */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
-            <div>
-              <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
-                {t("Top mitigation actions for {name}", { name: cityName })}
-              </h1>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
-                {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
-              </p>
-            </div>
-            {SHOW_MULTI_PICK && (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
-              <button
-                onClick={handleGenerateMultiple}
-                disabled={generatingIds.length > 0 || pickedIds.length === 0}
-                style={{
-                  background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
-                  color: "white", border: "none", borderRadius: "8px",
-                  padding: "10px 20px", fontSize: "12px", fontWeight: "700",
-                  cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
-                  letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
-                  display: "flex", alignItems: "center", gap: "8px",
-                  opacity: pickedIds.length === 0 ? 0.5 : 1,
-                }}
-              >
-                {generatingIds.length > 0 ? (
-                  <>
-                    <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-                    {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={14} style={{ flexShrink: 0 }} />
-                    {t("Generate multi-action report")}
-                  </>
-                )}
+          {/* Breadcrumb + page-level re-run control */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+            <div style={{ fontSize: "12px", color: "#9CA3AF", display: "flex", alignItems: "center", gap: "6px", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <button onClick={() => navigate("/")} style={{ background: "none", border: "none", padding: 0, color: "#9CA3AF", cursor: "pointer", fontSize: "12px" }}>
+                {t("Cities")}
               </button>
-              {pickedIds.length === 0 && (
-                <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "right", maxWidth: "220px", lineHeight: "1.4" }}>
-                  {t("Select multiple actions from the list to create a combined report.")}
-                </span>
-              )}
+              {" › "}{cityName}{" › "}{t("Mitigation actions")}
             </div>
-            )}
 
             {/* Re-run ranking */}
             <div ref={rerunRef} style={{ position: "relative", flexShrink: 0 }}>
@@ -1856,11 +1780,11 @@ export function Recommendations({ params }: Props) {
                 style={{
                   background: rerunOpen ? "#F5F5F7" : "white",
                   border: "1px solid #DDDDE1", borderRadius: "8px",
-                  padding: "9px 16px", fontSize: "12px", fontWeight: "600", color: "#374151",
+                  padding: "6px 12px", fontSize: "12px", fontWeight: "600", color: "#374151",
                   cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", whiteSpace: "nowrap",
                 }}
               >
-                <RotateCcw size={14} style={{ flexShrink: 0 }} /> {t("Re-run ranking")}
+                <RotateCcw size={13} style={{ flexShrink: 0 }} /> {t("Re-run ranking")}
                 <ChevronDown size={13} style={{ flexShrink: 0, opacity: 0.6 }} />
               </button>
               {rerunOpen && (
@@ -1895,6 +1819,50 @@ export function Recommendations({ params }: Props) {
                     </span>
                   </button>
                 </div>
+              )}
+            </div>
+          </div>
+
+          {/* Title row */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
+            <div>
+              <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
+                {t("Top mitigation actions for {name}", { name: cityName })}
+              </h1>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
+                {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
+              </p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
+              <button
+                onClick={handleGenerateMultiple}
+                disabled={generatingIds.length > 0 || pickedIds.length === 0}
+                style={{
+                  background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
+                  color: "white", border: "none", borderRadius: "8px",
+                  padding: "10px 20px", fontSize: "12px", fontWeight: "700",
+                  cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
+                  letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
+                  display: "flex", alignItems: "center", gap: "8px",
+                  opacity: pickedIds.length === 0 ? 0.5 : 1,
+                }}
+              >
+                {generatingIds.length > 0 ? (
+                  <>
+                    <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                    {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={14} style={{ flexShrink: 0 }} />
+                    {t("Generate multi-action report")}
+                  </>
+                )}
+              </button>
+              {pickedIds.length === 0 && (
+                <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "right", maxWidth: "220px", lineHeight: "1.4" }}>
+                  {t("Check one or more actions below to create a combined report.")}
+                </span>
               )}
             </div>
           </div>
@@ -1934,9 +1902,7 @@ export function Recommendations({ params }: Props) {
                     {t("Top actions for {name}", { name: cityName })}
                   </div>
                   <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "3px" }}>
-                    {SHOW_MULTI_PICK
-                      ? t("Highest-ranked actions based on {name}'s data and priorities. Check a card to select it for output generation.", { name: cityName })
-                      : t("Highest-ranked actions based on {name}'s data and priorities.", { name: cityName })}
+                    {t("Highest-ranked actions based on {name}'s data and priorities. Check a card to add it to a combined report.", { name: cityName })}
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: "10px", alignItems: "center", flexShrink: 0 }}>
@@ -2098,11 +2064,9 @@ export function Recommendations({ params }: Props) {
               <div>
                 <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "6px" }}>{t("Next steps")}</div>
                 <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)", lineHeight: "1.55", maxWidth: "520px" }}>
-                  {SHOW_MULTI_PICK
-                    ? (pickedIds.length >= 2
-                        ? t("{n} actions selected for a combined generated output. Use \"Generate action report\" on any single card for a one-off note instead.", { n: String(pickedIds.length) })
-                        : t("Select more than one action for a combined generated output, or use \"Generate action report\" on any single card for a one-off note instead."))
-                    : t("Use \"Generate action report\" on any action card for a ready-to-use concept note.")}
+                  {pickedIds.length >= 2
+                    ? t("{n} actions selected for a combined generated output. Use \"Generate action report\" on any single card for a one-off note instead.", { n: String(pickedIds.length) })
+                    : t("Select more than one action for a combined generated output, or use \"Generate action report\" on any single card for a one-off note instead.")}
                 </div>
               </div>
               <button
@@ -2125,8 +2089,6 @@ export function Recommendations({ params }: Props) {
                   onSelect={setSelectedAction}
                   pickedIds={pickedIds}
                   onTogglePick={togglePick}
-                  pickMode={pickMode}
-                  onTogglePickMode={() => setPickMode(v => !v)}
                 />
 
                 {/* Discarded */}
