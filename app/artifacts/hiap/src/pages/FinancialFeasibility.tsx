@@ -83,6 +83,15 @@ function getRouteMeta(route: string | null): RouteMeta {
   return { label: route.replace(/\b\w/g, c => c.toUpperCase()), prefix: "●", color: "#6B7280", bg: "#F9FAFB", border: "#E5E7EB", tagline: "" };
 }
 
+// Actions the city can fund from its own budget don't need external financing.
+// The report omits funding opportunities for these, so the UI shouldn't headline
+// the (sector-level) reachable funds as if they were required for the action —
+// it reframes them as optional. See getRouteMeta for the route vocabulary.
+function isSelfFundable(route: string | null | undefined): boolean {
+  const k = (route ?? "").toLowerCase();
+  return k.includes("self-deliverable") || k.includes("own-budget") || k.includes("own budget");
+}
+
 function RoutePrefix({ prefix, size = 12 }: { prefix: string; size?: number }) {
   if (prefix === "★") return <Star size={size} fill="currentColor" style={{ flexShrink: 0, verticalAlign: "middle" }} />;
   return <>{prefix}</>;
@@ -367,6 +376,7 @@ function DetailPane({ row, cityName, onClose }: {
   const { t } = useLanguage();
   const rm = getRouteMeta(row.route);
   const inp = row.inputs ?? {};
+  const selfFundable = isSelfFundable(row.route);
   const ciLevel = numericToLevel(inp.action?.capital_intensity);
   const pcLevel = numericToLevel(inp.action?.preparation_complexity);
   const profAttrs = profileToAttrs(inp.city?.profile);
@@ -506,12 +516,22 @@ function DetailPane({ row, cityName, onClose }: {
           <div style={{ marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
               <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t("Fund Access")}</div>
-              {actionOpps.length > 0 && (
+              {selfFundable ? (
+                <div style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", background: "#F0FDF4", border: "1px solid #BBF7D0", padding: "2px 8px", borderRadius: "4px" }}>
+                  {t("Fundable from own budget")}
+                </div>
+              ) : actionOpps.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
                   {t("{n} DIRECT", { n: String(inp.finance?.n_reachable_opportunities ?? actionOpps.length) })}
                 </div>
               )}
             </div>
+
+            {selfFundable && (
+              <p style={{ fontSize: "12px", color: "#15803D", lineHeight: "1.55", margin: "0 0 12px", background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "8px", padding: "10px 12px" }}>
+                {t("This action is feasible from the city's own budget — external funding is not required. Any sector funds below are optional sources the city could choose to use.")}
+              </p>
+            )}
 
             {actionOpps.length === 0 ? (
               <EmptyState
@@ -557,7 +577,7 @@ function DetailPane({ row, cityName, onClose }: {
                 {actionOpps.length > 2 && (
                   <button onClick={() => setShowAllOpps(v => !v)}
                     style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                    {showAllOpps ? t("Show fewer funds") : t("Show all {n} matched funds >", { n: String(actionOpps.length) })}
+                    {showAllOpps ? t("Show fewer funds") : selfFundable ? t("Show all {n} sector funds >", { n: String(actionOpps.length) }) : t("Show all {n} matched funds >", { n: String(actionOpps.length) })}
                   </button>
                 )}
               </>
@@ -644,6 +664,7 @@ function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) 
   const { t } = useLanguage();
   const rm = getRouteMeta(row.route);
   const fc = row.inputs?.finance?.n_reachable_opportunities ?? 0;
+  const selfFundable = isSelfFundable(row.route);
   return (
     <tr style={{ borderBottom: "1px solid #F3F4F6" }}
       onMouseEnter={e => (e.currentTarget.style.background = "#FAFAFA")}
@@ -663,7 +684,7 @@ function TableRow({ row, onView }: { row: FeasibilityRow; onView: () => void }) 
         {row.financial_feasibility.toFixed(2)}
       </td>
       <td style={{ padding: "11px 12px", fontSize: "12px", verticalAlign: "middle" }}>
-        {fc > 0 ? <><strong style={{ color: "#374151" }}>{fc}</strong> <span style={{ color: "#9CA3AF" }}>{t("direct")}</span></> : <span style={{ color: "#D1D5DB" }}>—</span>}
+        {selfFundable ? <span style={{ color: "#9CA3AF" }}>{t("self-fundable")}</span> : fc > 0 ? <><strong style={{ color: "#374151" }}>{fc}</strong> <span style={{ color: "#9CA3AF" }}>{t("direct")}</span></> : <span style={{ color: "#D1D5DB" }}>—</span>}
       </td>
       <td style={{ padding: "11px 16px", verticalAlign: "middle" }}>
         <button onClick={onView} style={{ fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap" }}>

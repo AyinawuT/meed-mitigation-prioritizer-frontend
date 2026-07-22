@@ -77,6 +77,11 @@ export const financial: Record<string, string> = {
   "What determined this route": "Qué determinó esta ruta",
   "Fund Access": "Acceso a Fondos",
   "{n} DIRECT": "{n} DIRECTOS",
+  "Fundable from own budget": "Financiable con presupuesto propio",
+  "This action is feasible from the city's own budget — external funding is not required. Any sector funds below are optional sources the city could choose to use.":
+    "Esta acción es viable con el presupuesto propio de la ciudad — no se requiere financiamiento externo. Los fondos del sector que aparecen a continuación son fuentes opcionales que la ciudad podría utilizar si lo desea.",
+  "Show all {n} sector funds >": "Mostrar los {n} fondos del sector >",
+  "self-fundable": "autofinanciable",
   "No matched funds yet": "Aún no hay fondos coincidentes",
   "No catalogued funds in the national investment system (BIP/SNI) or award records currently match this action. This will update automatically as new delivery rounds are added.":
     "Ningún fondo catalogado en el sistema nacional de inversiones (BIP/SNI) ni en los registros de adjudicaciones coincide actualmente con esta acción. Esto se actualizará automáticamente a medida que se agreguen nuevas rondas de ejecución.",
