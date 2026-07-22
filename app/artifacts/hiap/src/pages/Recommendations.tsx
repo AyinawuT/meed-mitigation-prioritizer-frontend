@@ -23,6 +23,7 @@ import {
   localizedActionName, localizedActionDescription,
   reductionLevel, reductionLevelLabel, reductionLevelColor, REDUCTION_SEGMENTS,
 } from "@/lib/actionDisplay";
+import { localizeFinanceNote, localizeFinanceReason, enumLabel, OPP_STATUS_LABEL, INSTRUMENT_LABEL } from "@/lib/translations/financeNotes";
 import { computePolicyAggregates, type PolicyAggregates } from "@/lib/policyAggregates";
 
 // Pick the timeline definition matching an action's implementation horizon.
@@ -655,7 +656,7 @@ function DetailPanel({
                   </span>
                 </div>
                 <div style={{ fontSize: "12px", color: "#4B5563" }}>
-                  {action.financialFeasibilityReason ?? feasRow?.reason ?? (rm.tagline ? t(rm.tagline) : "")}
+                  {localizeFinanceReason(action.financialFeasibilityReason ?? feasRow?.reason, lang) || (rm.tagline ? t(rm.tagline) : "")}
                 </div>
               </div>
             </div>
@@ -687,7 +688,7 @@ function DetailPanel({
                   const statusColor = opp.status === "ongoing" ? { bg: "#D1FAE5", color: "#065F46" }
                     : opp.status === "open" ? { bg: "#DBEAFE", color: "#1D4ED8" }
                     : { bg: "#F3F4F6", color: "#6B7280" };
-                  const snippet = opp.amount_note ?? (opp as Record<string, unknown>).notes as string ?? "";
+                  const snippet = localizeFinanceNote(opp.amount_note ?? ((opp as Record<string, unknown>).notes as string), lang);
                   return (
                     <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
@@ -695,8 +696,8 @@ function DetailPanel({
                           {opp.opportunity_name ?? t("Funding opportunity")}
                         </div>
                         <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-                          {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px", textTransform: "capitalize" }}>{opp.status}</span>}
-                          {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{opp.instrument}</span>}
+                          {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.status, OPP_STATUS_LABEL))}</span>}
+                          {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.instrument, INSTRUMENT_LABEL))}</span>}
                         </div>
                       </div>
                       {opp.funder_name && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: snippet ? "4px" : 0 }}>{opp.funder_name}</div>}

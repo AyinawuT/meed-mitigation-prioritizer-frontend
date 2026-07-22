@@ -6,7 +6,7 @@ import { StepBar } from "@/components/StepBar";
 import { CITIES, type CityData } from "@/data/cities";
 import { setStepProgress, confirmStep } from "@/lib/stepProgress";
 import { useLanguage } from "@/lib/i18n";
-import { localizeFinanceNote } from "@/lib/translations/financeNotes";
+import { localizeFinanceNote, localizeFinanceReason, enumLabel, OPP_STATUS_LABEL, INSTRUMENT_LABEL, LIFECYCLE_LABEL } from "@/lib/translations/financeNotes";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -192,34 +192,6 @@ function instrumentStyle(s?: string) {
   if (l.includes("grant")) return { bg: "#DCFCE7", color: "#15803D", label: s };
   if (l.includes("loan") || l.includes("debt")) return { bg: "#EFF6FF", color: "#2563EB", label: s };
   return { bg: "#F3F4F6", color: "#6B7280", label: s };
-}
-
-// ─── Enum badge labels ────────────────────────────────────────────────────────
-// The finance API returns snake_case enum values (status, instrument, lifecycle).
-// Map them to clean English labels so they read well AND resolve through t() —
-// rendered raw, they showed English (e.g. "grant", "in_rollout") in the ES UI.
-
-const OPP_STATUS_LABEL: Record<string, string> = {
-  ongoing: "Ongoing", open: "Open", closed: "Closed",
-  emerging: "Emerging", in_rollout: "In rollout", periodic: "Periodic",
-};
-const INSTRUMENT_LABEL: Record<string, string> = {
-  grant: "Grant", loan: "Loan", blended: "Blended", subsidy: "Subsidy",
-  co_financing: "Co-financing", technical_assistance: "Technical assistance",
-};
-const LIFECYCLE_LABEL: Record<string, string> = {
-  completed: "Completed", financed: "Financed",
-  formulated: "Formulated", "in-execution": "In execution",
-};
-
-// Resolve a raw enum value to its display label, falling back to a humanized
-// form (snake/kebab → spaced, capitalized) for any value not in the map.
-function enumLabel(raw: string | undefined, map: Record<string, string>): string {
-  if (!raw) return "";
-  const key = raw.toLowerCase().trim();
-  if (map[key]) return map[key];
-  const spaced = key.replace(/[_-]+/g, " ");
-  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
 // ─── InfoTooltip ──────────────────────────────────────────────────────────────
@@ -479,7 +451,7 @@ function DetailPane({ row, cityName, onClose }: {
                 {row.financial_feasibility.toFixed(2)}
               </span>
             </div>
-            <div style={{ fontSize: "12px", color: "#4B5563" }}>{row.reason ?? t(rm.tagline)}</div>
+            <div style={{ fontSize: "12px", color: "#4B5563" }}>{localizeFinanceReason(row.reason, lang) || t(rm.tagline)}</div>
           </div>
 
           {/* Factor breakdown */}
