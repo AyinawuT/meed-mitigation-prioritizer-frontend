@@ -114,6 +114,7 @@ function profileToAttrs(profile: string | undefined) {
   if (p.includes("financially-strong") || p.includes("self-sufficient")) return { label: "Financially strong city", fa: "high", dc: "high" };
   if (p.includes("revenue-strong")) return { label: "Revenue-strong city", fa: "high", dc: "lower" };
   if (p.includes("capacity-rich")) return { label: "Capacity-rich city", fa: "lower", dc: "higher" };
+  if (p.includes("support-ready")) return { label: "Support-ready city", fa: undefined, dc: undefined };
   return { label: profile ? `${profile.replace(/[_-]/g, " ")} city` : "City profile", fa: undefined, dc: undefined };
 }
 
@@ -815,7 +816,7 @@ function DetailPanel({
                 {t("Generating report…")}
               </>
             ) : (
-              <><Sparkles size={13} style={{ marginRight: "4px", flexShrink: 0 }} /> {t("Generate output for this action")}</>
+              <><Sparkles size={13} style={{ marginRight: "4px", flexShrink: 0 }} /> {t("Generate action report")}</>
             )}
           </button>
         </div>
@@ -971,7 +972,7 @@ function TopPickCard({
             {t("Generating…")}
           </>
         ) : (
-          <><Sparkles size={14} style={{ flexShrink: 0 }} /> {t("Generate output for this action")}</>
+          <><Sparkles size={14} style={{ flexShrink: 0 }} /> {t("Generate action report")}</>
         )}
       </button>
     </div>
@@ -1712,31 +1713,38 @@ export function Recommendations({ params }: Props) {
                 {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
-            <button
-              onClick={handleGenerateMultiple}
-              disabled={generatingIds.length > 0 || pickedIds.length === 0}
-              style={{
-                background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
-                color: "white", border: "none", borderRadius: "8px",
-                padding: "10px 20px", fontSize: "12px", fontWeight: "700",
-                cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
-                letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
-                display: "flex", alignItems: "center", gap: "8px",
-                opacity: pickedIds.length === 0 ? 0.5 : 1,
-              }}
-            >
-              {generatingIds.length > 0 ? (
-                <>
-                  <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-                  Generating {generatingIds.length > 1 ? `${generatingIds.length} reports…` : "report…"}
-                </>
-              ) : (
-                <>
-                  <Sparkles size={14} style={{ flexShrink: 0 }} />
-                  {pickedIds.length > 0 ? t("Generate output for {n} actions", { n: String(pickedIds.length) }) : t("Generate output for selected actions")}
-                </>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
+              <button
+                onClick={handleGenerateMultiple}
+                disabled={generatingIds.length > 0 || pickedIds.length === 0}
+                style={{
+                  background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
+                  color: "white", border: "none", borderRadius: "8px",
+                  padding: "10px 20px", fontSize: "12px", fontWeight: "700",
+                  cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
+                  letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
+                  display: "flex", alignItems: "center", gap: "8px",
+                  opacity: pickedIds.length === 0 ? 0.5 : 1,
+                }}
+              >
+                {generatingIds.length > 0 ? (
+                  <>
+                    <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                    {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={14} style={{ flexShrink: 0 }} />
+                    {t("Generate multi-action report")}
+                  </>
+                )}
+              </button>
+              {pickedIds.length === 0 && (
+                <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "right", maxWidth: "220px", lineHeight: "1.4" }}>
+                  {t("Select multiple actions from the list to create a combined report.")}
+                </span>
               )}
-            </button>
+            </div>
           </div>
 
           {/* Tabs */}
@@ -1937,8 +1945,8 @@ export function Recommendations({ params }: Props) {
                 <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "6px" }}>{t("Next steps")}</div>
                 <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)", lineHeight: "1.55", maxWidth: "520px" }}>
                   {pickedIds.length >= 2
-                    ? t("{n} actions selected for a combined generated output. Use \"Generate output for this action\" on any single card for a one-off note instead.", { n: String(pickedIds.length) })
-                    : t("Select more than one action for a combined generated output, or use \"Generate output for this action\" on any single card for a one-off note instead.")}
+                    ? t("{n} actions selected for a combined generated output. Use \"Generate action report\" on any single card for a one-off note instead.", { n: String(pickedIds.length) })
+                    : t("Select more than one action for a combined generated output, or use \"Generate action report\" on any single card for a one-off note instead.")}
                 </div>
               </div>
               <button
