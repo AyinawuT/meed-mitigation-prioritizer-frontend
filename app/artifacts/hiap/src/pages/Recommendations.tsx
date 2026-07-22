@@ -114,6 +114,7 @@ function profileToAttrs(profile: string | undefined) {
   if (p.includes("financially-strong") || p.includes("self-sufficient")) return { label: "Financially strong city", fa: "high", dc: "high" };
   if (p.includes("revenue-strong")) return { label: "Revenue-strong city", fa: "high", dc: "lower" };
   if (p.includes("capacity-rich")) return { label: "Capacity-rich city", fa: "lower", dc: "higher" };
+  if (p.includes("support-ready")) return { label: "Support-ready city", fa: undefined, dc: undefined };
   return { label: profile ? `${profile.replace(/[_-]/g, " ")} city` : "City profile", fa: undefined, dc: undefined };
 }
 
@@ -1712,31 +1713,38 @@ export function Recommendations({ params }: Props) {
                 {ranked.length} {t("actions ranked")} · {legalExcluded.length} {t("excluded (legal filter)")} · {t("Total city emissions")} {(totalCityEmissions / 1_000_000).toFixed(2)} Mt CO₂e
               </p>
             </div>
-            <button
-              onClick={handleGenerateMultiple}
-              disabled={generatingIds.length > 0 || pickedIds.length === 0}
-              style={{
-                background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
-                color: "white", border: "none", borderRadius: "8px",
-                padding: "10px 20px", fontSize: "12px", fontWeight: "700",
-                cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
-                letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
-                display: "flex", alignItems: "center", gap: "8px",
-                opacity: pickedIds.length === 0 ? 0.5 : 1,
-              }}
-            >
-              {generatingIds.length > 0 ? (
-                <>
-                  <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-                  {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
-                </>
-              ) : (
-                <>
-                  <Sparkles size={14} style={{ flexShrink: 0 }} />
-                  {t("Generate multi-action report")}
-                </>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
+              <button
+                onClick={handleGenerateMultiple}
+                disabled={generatingIds.length > 0 || pickedIds.length === 0}
+                style={{
+                  background: (generatingIds.length > 0 || pickedIds.length === 0) ? "#6B7280" : "#001EA7",
+                  color: "white", border: "none", borderRadius: "8px",
+                  padding: "10px 20px", fontSize: "12px", fontWeight: "700",
+                  cursor: (generatingIds.length > 0 || pickedIds.length === 0) ? "not-allowed" : "pointer",
+                  letterSpacing: "0.04em", textTransform: "uppercase", flexShrink: 0,
+                  display: "flex", alignItems: "center", gap: "8px",
+                  opacity: pickedIds.length === 0 ? 0.5 : 1,
+                }}
+              >
+                {generatingIds.length > 0 ? (
+                  <>
+                    <span style={{ display: "inline-block", width: "11px", height: "11px", border: "2px solid rgba(255,255,255,0.35)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                    {generatingIds.length > 1 ? t("Generating {n} reports…", { n: String(generatingIds.length) }) : t("Generating report…")}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={14} style={{ flexShrink: 0 }} />
+                    {t("Generate multi-action report")}
+                  </>
+                )}
+              </button>
+              {pickedIds.length === 0 && (
+                <span style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "right", maxWidth: "220px", lineHeight: "1.4" }}>
+                  {t("Select multiple actions from the list to create a combined report.")}
+                </span>
               )}
-            </button>
+            </div>
           </div>
 
           {/* Tabs */}
