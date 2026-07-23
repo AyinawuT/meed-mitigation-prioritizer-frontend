@@ -24,6 +24,7 @@ import {
   reductionLevel, reductionLevelLabel, reductionLevelColor, REDUCTION_SEGMENTS,
 } from "@/lib/actionDisplay";
 import { localizeFinanceNote, localizeFinanceReason, enumLabel, OPP_STATUS_LABEL, INSTRUMENT_LABEL, LIFECYCLE_LABEL, PROJECT_SECTOR_LABEL, PROJECT_CHANNEL_LABEL, localizeProjectName } from "@/lib/translations/financeNotes";
+import { opportunitiesRequestUrl, selectOpportunities } from "@/lib/opportunitySelect";
 import { computePolicyAggregates, type PolicyAggregates } from "@/lib/policyAggregates";
 
 // Pick the timeline definition matching an action's implementation horizon.
@@ -59,6 +60,9 @@ type Opportunity = {
   funder_level?: string;
   instrument?: string;
   status?: string;
+  recurrence?: string;
+  climate_relevance?: string;
+  city_application?: string[];
   gpc_sectors?: string[];
   eligible_actor?: string[];
   source_url?: string;
@@ -418,6 +422,41 @@ function EmptyState({ title, body }: { title: string; body: string }) {
   );
 }
 
+// One funding-opportunity card (used for both the current and monitor groups).
+function OpportunityRow({ opp, muted }: { opp: Opportunity; muted?: boolean }) {
+  const { t, lang } = useLanguage();
+  const instrColor = instrumentStyle(opp.instrument);
+  const statusColor = opp.status === "ongoing" ? { bg: "#D1FAE5", color: "#065F46" }
+    : opp.status === "open" ? { bg: "#DBEAFE", color: "#1D4ED8" }
+    : { bg: "#F3F4F6", color: "#6B7280" };
+  const snippet = localizeFinanceNote(opp.amount_note ?? ((opp as Record<string, unknown>).notes as string), lang);
+  return (
+    <div style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px", opacity: muted ? 0.85 : 1 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
+        <div style={{ fontSize: "13px", fontWeight: "600", color: muted ? "#6B7280" : "#0D9488", lineHeight: "1.35" }}>
+          {opp.opportunity_name ?? t("Funding opportunity")}
+        </div>
+        <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
+          {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.status, OPP_STATUS_LABEL))}</span>}
+          {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.instrument, INSTRUMENT_LABEL))}</span>}
+        </div>
+      </div>
+      {opp.funder_name && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: snippet ? "4px" : 0 }}>{opp.funder_name}</div>}
+      {snippet && (
+        <p style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.55", margin: "0" }}>
+          {snippet.length > 160 ? snippet.slice(0, 160) + "…" : snippet}
+        </p>
+      )}
+      {opp.source_url && (
+        <a href={opp.source_url} target="_blank" rel="noopener noreferrer"
+          style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#001EA7", background: "#EEF2FF", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
+          {t("View fund ↗")}
+        </a>
+      )}
+    </div>
+  );
+}
+
 // ─── Detail panel (right drawer) ──────────────────────────────────────────────
 
 function DetailPanel({
@@ -450,7 +489,6 @@ function DetailPanel({
   const [projectsTotal, setProjectsTotal] = useState(0);
   const [projLoading, setProjLoading] = useState(false);
   const [actionOpps, setActionOpps] = useState<Opportunity[]>([]);
-  const [showAllOpps, setShowAllOpps] = useState(false);
   const [showAllProj, setShowAllProj] = useState(false);
 
   useEffect(() => {
@@ -471,18 +509,24 @@ function DetailPanel({
       .finally(() => setProjLoading(false));
   }, [feasRow?.links?.projects]);
 
-  // Fetch opportunities for this specific action
+  // Fetch opportunities for this specific action. The municipality + limit
+  // params and the client-side selection below mirror the report backend so
+  // the funds shown here match the funds written into the generated report.
   useEffect(() => {
     setActionOpps([]);
     const relUrl = feasRow?.links?.opportunities;
     if (!relUrl) return;
-    fetch(`https://ccglobal.openearth.dev${relUrl}`)
+    fetch(`https://ccglobal.openearth.dev${opportunitiesRequestUrl(relUrl)}`)
       .then(r => r.ok ? r.json() : null)
       .then(res => setActionOpps(res?.data ?? []))
       .catch(() => {});
   }, [feasRow?.links?.opportunities]);
 
-  const visibleOpps = showAllOpps ? actionOpps : actionOpps.slice(0, 2);
+  const oppRoute = action.financialFeasibilityRoute ?? feasRow?.route ?? null;
+  const { current: oppsCurrent, monitor: oppsMonitor } = useMemo(
+    () => selectOpportunities(actionOpps, oppRoute, 5),
+    [actionOpps, oppRoute],
+  );
   const visibleProjs = showAllProj ? projects : projects.slice(0, 3);
 
   const timelineDesc =
@@ -679,57 +723,30 @@ function DetailPanel({
           <div style={{ marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
               <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t("Fund Access")}</div>
-              {actionOpps.length > 0 && (
+              {oppsCurrent.length > 0 && (
                 <div style={{ fontSize: "11px", fontWeight: "700", color: "#374151", background: "#F3F4F6", padding: "2px 8px", borderRadius: "4px" }}>
-                  {t("{n} DIRECT", { n: String(feasRow?.inputs?.finance?.n_reachable_opportunities ?? actionOpps.length) })}
+                  {t("{n} AVAILABLE", { n: String(oppsCurrent.length) })}
                 </div>
               )}
             </div>
 
-            {actionOpps.length === 0 ? (
+            {oppsCurrent.length === 0 && oppsMonitor.length === 0 ? (
               <EmptyState
                 title={t("No direct fund matches")}
                 body={t("No funding opportunities currently match this action's sector in the climate finance database. Check back as new rounds open.")}
               />
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {visibleOpps.map((opp, i) => {
-                  const instrColor = instrumentStyle(opp.instrument);
-                  const statusColor = opp.status === "ongoing" ? { bg: "#D1FAE5", color: "#065F46" }
-                    : opp.status === "open" ? { bg: "#DBEAFE", color: "#1D4ED8" }
-                    : { bg: "#F3F4F6", color: "#6B7280" };
-                  const snippet = localizeFinanceNote(opp.amount_note ?? ((opp as Record<string, unknown>).notes as string), lang);
-                  return (
-                    <div key={i} style={{ border: "1px solid #E5E7EB", borderRadius: "8px", padding: "12px 14px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px", marginBottom: "3px" }}>
-                        <div style={{ fontSize: "13px", fontWeight: "600", color: "#0D9488", lineHeight: "1.35" }}>
-                          {opp.opportunity_name ?? t("Funding opportunity")}
-                        </div>
-                        <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-                          {opp.status && <span style={{ fontSize: "10px", fontWeight: "600", color: statusColor.color, background: statusColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.status, OPP_STATUS_LABEL))}</span>}
-                          {instrColor && <span style={{ fontSize: "10px", fontWeight: "600", color: instrColor.color, background: instrColor.bg, padding: "2px 6px", borderRadius: "4px" }}>{t(enumLabel(opp.instrument, INSTRUMENT_LABEL))}</span>}
-                        </div>
-                      </div>
-                      {opp.funder_name && <div style={{ fontSize: "11px", color: "#6B7280", marginBottom: snippet ? "4px" : 0 }}>{opp.funder_name}</div>}
-                      {snippet && (
-                        <p style={{ fontSize: "11px", color: "#4B5563", lineHeight: "1.55", margin: "0" }}>
-                          {snippet.length > 160 ? snippet.slice(0, 160) + "…" : snippet}
-                        </p>
-                      )}
-                      {opp.source_url && (
-                        <a href={opp.source_url} target="_blank" rel="noopener noreferrer"
-                          style={{ display: "inline-block", marginTop: "8px", fontSize: "11px", fontWeight: "600", color: "#001EA7", background: "#EEF2FF", padding: "3px 8px", borderRadius: "4px", textDecoration: "none" }}>
-                          {t("View fund ↗")}
-                        </a>
-                      )}
+                {oppsCurrent.map((opp, i) => <OpportunityRow key={`c${i}`} opp={opp} />)}
+
+                {oppsMonitor.length > 0 && (
+                  <>
+                    <div style={{ marginTop: oppsCurrent.length > 0 ? "8px" : 0 }}>
+                      <div style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>{t("Worth monitoring")}</div>
+                      <div style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{t("Closed now, but these programmes reopen on a regular cycle.")}</div>
                     </div>
-                  );
-                })}
-                {actionOpps.length > 2 && (
-                  <button onClick={() => setShowAllOpps(v => !v)}
-                    style={{ marginTop: "10px", fontSize: "12px", fontWeight: "600", color: "#001EA7", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                    {showAllOpps ? t("Show fewer funds") : t("Show all {n} matched funds >", { n: String(actionOpps.length) })}
-                  </button>
+                    {oppsMonitor.map((opp, i) => <OpportunityRow key={`m${i}`} opp={opp} muted />)}
+                  </>
                 )}
               </div>
             )}
