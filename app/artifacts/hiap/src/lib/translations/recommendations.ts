@@ -164,6 +164,9 @@ export const recommendations: Record<string, string> = {
 
   // ── Detail panel — funds & projects ───────────────────────────────────
   "{n} DIRECT": "{n} DIRECTAS",
+  "{n} AVAILABLE": "{n} DISPONIBLES",
+  "Worth monitoring": "Vale la pena seguir",
+  "Closed now, but these programmes reopen on a regular cycle.": "Cerradas ahora, pero estos programas se reabren de forma periódica.",
   "{n} TOTAL": "{n} TOTAL",
   "No direct fund matches": "Sin coincidencias directas de financiamiento",
   "No funding opportunities currently match this action's sector in the climate finance database. Check back as new rounds open.": "Actualmente no hay oportunidades de financiamiento que coincidan con el sector de esta acción en la base de datos de finanzas climáticas. Vuelve a revisar cuando se abran nuevas rondas.",
